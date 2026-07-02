@@ -1,0 +1,880 @@
+{
+  "meta": {
+    "designSystemId": "new-bricks",
+    "title": "New Bricks Design System",
+    "figmaFileKey": "ZGl9LhEtqlE9JiMKBuYrdT",
+    "figmaUrl": "https://www.figma.com/design/ZGl9LhEtqlE9JiMKBuYrdT/New-Bricks-Design-System?node-id=123-3",
+    "entryNodeId": "123:3",
+    "entryPageName": "⚒️ Tokens",
+    "lastSyncedAt": "2026-06-17T08:18:49.573Z",
+    "lastSyncSource": "figma-talkto-mcp-get_styles",
+    "talkToFigmaChannel": "omsn9jta"
+  },
+  "modes": {},
+  "tokens": {},
+  "styles": {
+    "paint": [],
+    "text": [
+      {
+        "id": "S:f817d7a44b38dc4125b989d6a38440fdbc2d7c70,",
+        "name": "Display/Web/XLarge",
+        "key": "f817d7a44b38dc4125b989d6a38440fdbc2d7c70",
+        "fontSize": 56,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Bold"
+        }
+      },
+      {
+        "id": "S:c3df486bc7c36cfee4aea446135afe413ef7ccf3,",
+        "name": "Display/Web/Large",
+        "key": "c3df486bc7c36cfee4aea446135afe413ef7ccf3",
+        "fontSize": 48,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Bold"
+        }
+      },
+      {
+        "id": "S:eda5f2edf8b0da9449c37f23626b8a3e7ca226be,",
+        "name": "Display/Web/Medium",
+        "key": "eda5f2edf8b0da9449c37f23626b8a3e7ca226be",
+        "fontSize": 40,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:292894d7316959dc603f0c18069b26449bb70398,",
+        "name": "Display/Web/Small",
+        "key": "292894d7316959dc603f0c18069b26449bb70398",
+        "fontSize": 32,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:1351e74db216854189b6c7502b30380cf1090c72,",
+        "name": "Display/Mobile/Large",
+        "key": "1351e74db216854189b6c7502b30380cf1090c72",
+        "fontSize": 40,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Bold"
+        }
+      },
+      {
+        "id": "S:1a9bd31b5a19580f2c7418fb0e4537492c53a056,",
+        "name": "Display/Mobile/Medium",
+        "key": "1a9bd31b5a19580f2c7418fb0e4537492c53a056",
+        "fontSize": 32,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Bold"
+        }
+      },
+      {
+        "id": "S:9b1c8b1e2e0b8073e3a65813242d838b8696d6fe,",
+        "name": "Display/Mobile/Small",
+        "key": "9b1c8b1e2e0b8073e3a65813242d838b8696d6fe",
+        "fontSize": 28,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:f5c0c3a9c42e2d93ed848e6e70dfe3348061a734,",
+        "name": "Heading/Web/H1",
+        "key": "f5c0c3a9c42e2d93ed848e6e70dfe3348061a734",
+        "fontSize": 28,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:fe1050b3c4a0a789466dccda5efaaf1f3c1d7e01,",
+        "name": "Heading/Web/H2",
+        "key": "fe1050b3c4a0a789466dccda5efaaf1f3c1d7e01",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:4261aca07a127301913b3f0f5937f27c048e06fc,",
+        "name": "Heading/Web/H3",
+        "key": "4261aca07a127301913b3f0f5937f27c048e06fc",
+        "fontSize": 20,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:f08954d00e61369c66c1bc63b099990a67f371f9,",
+        "name": "Heading/Web/H4",
+        "key": "f08954d00e61369c66c1bc63b099990a67f371f9",
+        "fontSize": 18,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:5a2b1c28616d49f734bc8723c59d4ca35efec542,",
+        "name": "Heading/Mobile/H1",
+        "key": "5a2b1c28616d49f734bc8723c59d4ca35efec542",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:0e009216b61d2da7025144de97c67d152c2799ca,",
+        "name": "Heading/Mobile/H2",
+        "key": "0e009216b61d2da7025144de97c67d152c2799ca",
+        "fontSize": 20,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:62be64d97324891ef964c2baaca66ee5842e1d2a,",
+        "name": "Heading/Mobile/H3",
+        "key": "62be64d97324891ef964c2baaca66ee5842e1d2a",
+        "fontSize": 18,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:f6a0600f81567e7e005326eff2fb7d5e1b860a11,",
+        "name": "Heading/Mobile/H4",
+        "key": "f6a0600f81567e7e005326eff2fb7d5e1b860a11",
+        "fontSize": 16,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:47231eceb2d69acd8cef1009d56c5aaebe493d68,",
+        "name": "Paragraph/Web/Large/Regular",
+        "key": "47231eceb2d69acd8cef1009d56c5aaebe493d68",
+        "fontSize": 18,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:0a439d13f15e4cb692d77736455a495dc5f3d99b,",
+        "name": "Paragraph/Web/Large/Medium",
+        "key": "0a439d13f15e4cb692d77736455a495dc5f3d99b",
+        "fontSize": 18,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:7facc36437b72e9ed42537071b9388e7a39f2e6e,",
+        "name": "Paragraph/Web/Medium/Regular",
+        "key": "7facc36437b72e9ed42537071b9388e7a39f2e6e",
+        "fontSize": 16,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:7c5def5ba4873cd5b7c7d7b5a83c9c0c90e7b681,",
+        "name": "Paragraph/Web/Medium/Medium",
+        "key": "7c5def5ba4873cd5b7c7d7b5a83c9c0c90e7b681",
+        "fontSize": 16,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:6f8d58549b9b5cced522300318ef203872ab348f,",
+        "name": "Paragraph/Web/Small/Regular",
+        "key": "6f8d58549b9b5cced522300318ef203872ab348f",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:4ca441ac09a88e65ee8af2837f2e7d45c3a5fb3a,",
+        "name": "Paragraph/Web/Small/Medium",
+        "key": "4ca441ac09a88e65ee8af2837f2e7d45c3a5fb3a",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:18b68363e68685b6d06805c73a6a606864674ede,",
+        "name": "Paragraph/Mobile/Large/Regular",
+        "key": "18b68363e68685b6d06805c73a6a606864674ede",
+        "fontSize": 18,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:110f05b29e79750a78f1c7aff3651ccdcf491344,",
+        "name": "Paragraph/Mobile/Large/Medium",
+        "key": "110f05b29e79750a78f1c7aff3651ccdcf491344",
+        "fontSize": 18,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:fdc05cf951ae226f1077fba343f5c929a15287a8,",
+        "name": "Paragraph/Mobile/Medium/Regular",
+        "key": "fdc05cf951ae226f1077fba343f5c929a15287a8",
+        "fontSize": 16,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:d37c3b0dcf23e7e2431b352c659e784ecf799b0e,",
+        "name": "Paragraph/Mobile/Medium/Medium",
+        "key": "d37c3b0dcf23e7e2431b352c659e784ecf799b0e",
+        "fontSize": 16,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:6a096d3516133a9a260bcbbac635bd065ffd4072,",
+        "name": "Paragraph/Mobile/Small/Regular",
+        "key": "6a096d3516133a9a260bcbbac635bd065ffd4072",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:0522acccb1b048ba4368241449a8e38922a71212,",
+        "name": "Paragraph/Mobile/Small/Medium",
+        "key": "0522acccb1b048ba4368241449a8e38922a71212",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:b61e547f674ef659bbce6a6f9fa5f9a8a3416265,",
+        "name": "Caption/Web/Medium",
+        "key": "b61e547f674ef659bbce6a6f9fa5f9a8a3416265",
+        "fontSize": 12,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:8f26b24b5b25047d87dcdd49bc6c394c2faef047,",
+        "name": "Caption/Mobile/Medium",
+        "key": "8f26b24b5b25047d87dcdd49bc6c394c2faef047",
+        "fontSize": 12,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:26fff1ba29bcebd8906ef0431b74ad6a71238871,",
+        "name": "Caption/Mobile/Small",
+        "key": "26fff1ba29bcebd8906ef0431b74ad6a71238871",
+        "fontSize": 10,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Regular"
+        }
+      },
+      {
+        "id": "S:945f99f2da7f588a15faf9a0994c3b9f2a4d8ef3,",
+        "name": "Others/CTA/Large",
+        "key": "945f99f2da7f588a15faf9a0994c3b9f2a4d8ef3",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:4a0fcb0d91928bccaeec5c6347deaa86f8d58066,",
+        "name": "Others/CTA/Medium",
+        "key": "4a0fcb0d91928bccaeec5c6347deaa86f8d58066",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:11152f4678e9ac0c54343cac740313ec3b690662,",
+        "name": "Others/CTA/Small",
+        "key": "11152f4678e9ac0c54343cac740313ec3b690662",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:afbd74a5cfe45d9963c5600ebb825068b24458d9,",
+        "name": "Others/Label/Large/SemiBold",
+        "key": "afbd74a5cfe45d9963c5600ebb825068b24458d9",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:1b47f7db279084e48d2d7e6bb359b910ff9deee3,",
+        "name": "Others/Label/Large/Medium",
+        "key": "1b47f7db279084e48d2d7e6bb359b910ff9deee3",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      },
+      {
+        "id": "S:db43e7d64a97f6c8dd00fe8fa964313e3d67af95,",
+        "name": "Others/Label/Medium/SemiBold",
+        "key": "db43e7d64a97f6c8dd00fe8fa964313e3d67af95",
+        "fontSize": 12,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "SemiBold"
+        }
+      },
+      {
+        "id": "S:e006e6799fb0819427a39fe60338cd18b6be79f6,",
+        "name": "Others/Label/Medium/Medium",
+        "key": "e006e6799fb0819427a39fe60338cd18b6be79f6",
+        "fontSize": 12,
+        "fontName": {
+          "family": "Google Sans Flex",
+          "style": "Medium"
+        }
+      }
+    ],
+    "effect": [
+      {
+        "id": "S:6190643fc6717938cf165db49cde7a8ee4caf898,",
+        "name": "elevation/00",
+        "key": "6190643fc6717938cf165db49cde7a8ee4caf898"
+      },
+      {
+        "id": "S:60299d99450fa57371e7d77dfb740f6f75b16b79,",
+        "name": "elevation/01",
+        "key": "60299d99450fa57371e7d77dfb740f6f75b16b79"
+      },
+      {
+        "id": "S:1de65efb1082b76e5831271969c96bdf997e5a46,",
+        "name": "elevation/02",
+        "key": "1de65efb1082b76e5831271969c96bdf997e5a46"
+      },
+      {
+        "id": "S:5280bf25a67a93ad06b7d06850acf7250063b51f,",
+        "name": "elevation/03",
+        "key": "5280bf25a67a93ad06b7d06850acf7250063b51f"
+      },
+      {
+        "id": "S:1c236d6f02df897d865767993f83fe18ca0cf0a4,",
+        "name": "elevation/04",
+        "key": "1c236d6f02df897d865767993f83fe18ca0cf0a4"
+      },
+      {
+        "id": "S:56f30429fc1594194c3212d968c9ebee20d5e6ac,",
+        "name": "elevation/05",
+        "key": "56f30429fc1594194c3212d968c9ebee20d5e6ac"
+      },
+      {
+        "id": "S:7b9d94529538ec4d694bf5d557efad97e76c31d8,",
+        "name": "elevation/06",
+        "key": "7b9d94529538ec4d694bf5d557efad97e76c31d8"
+      },
+      {
+        "id": "S:e86edf1b668bd30af7a495bd4aff5a974e21ac62,",
+        "name": "elevation/07",
+        "key": "e86edf1b668bd30af7a495bd4aff5a974e21ac62"
+      },
+      {
+        "id": "S:fe573fd61715ab8c649a5cbb6bde2375dce70848,",
+        "name": "elevation/08",
+        "key": "fe573fd61715ab8c649a5cbb6bde2375dce70848"
+      }
+    ],
+    "grid": []
+  },
+  "figma": {
+    "documentInfo": {
+      "name": "⚒️ Tokens",
+      "id": "123:3",
+      "type": "PAGE",
+      "currentPage": {
+        "id": "123:3",
+        "name": "⚒️ Tokens",
+        "childCount": 0
+      },
+      "pages": [
+        {
+          "id": "123:3",
+          "name": "⚒️ Tokens",
+          "childCount": 0
+        }
+      ]
+    },
+    "getStyles": {
+      "colors": [],
+      "texts": [
+        {
+          "id": "S:f817d7a44b38dc4125b989d6a38440fdbc2d7c70,",
+          "name": "Display/Web/XLarge",
+          "key": "f817d7a44b38dc4125b989d6a38440fdbc2d7c70",
+          "fontSize": 56,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Bold"
+          }
+        },
+        {
+          "id": "S:c3df486bc7c36cfee4aea446135afe413ef7ccf3,",
+          "name": "Display/Web/Large",
+          "key": "c3df486bc7c36cfee4aea446135afe413ef7ccf3",
+          "fontSize": 48,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Bold"
+          }
+        },
+        {
+          "id": "S:eda5f2edf8b0da9449c37f23626b8a3e7ca226be,",
+          "name": "Display/Web/Medium",
+          "key": "eda5f2edf8b0da9449c37f23626b8a3e7ca226be",
+          "fontSize": 40,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:292894d7316959dc603f0c18069b26449bb70398,",
+          "name": "Display/Web/Small",
+          "key": "292894d7316959dc603f0c18069b26449bb70398",
+          "fontSize": 32,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:1351e74db216854189b6c7502b30380cf1090c72,",
+          "name": "Display/Mobile/Large",
+          "key": "1351e74db216854189b6c7502b30380cf1090c72",
+          "fontSize": 40,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Bold"
+          }
+        },
+        {
+          "id": "S:1a9bd31b5a19580f2c7418fb0e4537492c53a056,",
+          "name": "Display/Mobile/Medium",
+          "key": "1a9bd31b5a19580f2c7418fb0e4537492c53a056",
+          "fontSize": 32,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Bold"
+          }
+        },
+        {
+          "id": "S:9b1c8b1e2e0b8073e3a65813242d838b8696d6fe,",
+          "name": "Display/Mobile/Small",
+          "key": "9b1c8b1e2e0b8073e3a65813242d838b8696d6fe",
+          "fontSize": 28,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:f5c0c3a9c42e2d93ed848e6e70dfe3348061a734,",
+          "name": "Heading/Web/H1",
+          "key": "f5c0c3a9c42e2d93ed848e6e70dfe3348061a734",
+          "fontSize": 28,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:fe1050b3c4a0a789466dccda5efaaf1f3c1d7e01,",
+          "name": "Heading/Web/H2",
+          "key": "fe1050b3c4a0a789466dccda5efaaf1f3c1d7e01",
+          "fontSize": 24,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:4261aca07a127301913b3f0f5937f27c048e06fc,",
+          "name": "Heading/Web/H3",
+          "key": "4261aca07a127301913b3f0f5937f27c048e06fc",
+          "fontSize": 20,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:f08954d00e61369c66c1bc63b099990a67f371f9,",
+          "name": "Heading/Web/H4",
+          "key": "f08954d00e61369c66c1bc63b099990a67f371f9",
+          "fontSize": 18,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:5a2b1c28616d49f734bc8723c59d4ca35efec542,",
+          "name": "Heading/Mobile/H1",
+          "key": "5a2b1c28616d49f734bc8723c59d4ca35efec542",
+          "fontSize": 24,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:0e009216b61d2da7025144de97c67d152c2799ca,",
+          "name": "Heading/Mobile/H2",
+          "key": "0e009216b61d2da7025144de97c67d152c2799ca",
+          "fontSize": 20,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:62be64d97324891ef964c2baaca66ee5842e1d2a,",
+          "name": "Heading/Mobile/H3",
+          "key": "62be64d97324891ef964c2baaca66ee5842e1d2a",
+          "fontSize": 18,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:f6a0600f81567e7e005326eff2fb7d5e1b860a11,",
+          "name": "Heading/Mobile/H4",
+          "key": "f6a0600f81567e7e005326eff2fb7d5e1b860a11",
+          "fontSize": 16,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:47231eceb2d69acd8cef1009d56c5aaebe493d68,",
+          "name": "Paragraph/Web/Large/Regular",
+          "key": "47231eceb2d69acd8cef1009d56c5aaebe493d68",
+          "fontSize": 18,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:0a439d13f15e4cb692d77736455a495dc5f3d99b,",
+          "name": "Paragraph/Web/Large/Medium",
+          "key": "0a439d13f15e4cb692d77736455a495dc5f3d99b",
+          "fontSize": 18,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:7facc36437b72e9ed42537071b9388e7a39f2e6e,",
+          "name": "Paragraph/Web/Medium/Regular",
+          "key": "7facc36437b72e9ed42537071b9388e7a39f2e6e",
+          "fontSize": 16,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:7c5def5ba4873cd5b7c7d7b5a83c9c0c90e7b681,",
+          "name": "Paragraph/Web/Medium/Medium",
+          "key": "7c5def5ba4873cd5b7c7d7b5a83c9c0c90e7b681",
+          "fontSize": 16,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:6f8d58549b9b5cced522300318ef203872ab348f,",
+          "name": "Paragraph/Web/Small/Regular",
+          "key": "6f8d58549b9b5cced522300318ef203872ab348f",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:4ca441ac09a88e65ee8af2837f2e7d45c3a5fb3a,",
+          "name": "Paragraph/Web/Small/Medium",
+          "key": "4ca441ac09a88e65ee8af2837f2e7d45c3a5fb3a",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:18b68363e68685b6d06805c73a6a606864674ede,",
+          "name": "Paragraph/Mobile/Large/Regular",
+          "key": "18b68363e68685b6d06805c73a6a606864674ede",
+          "fontSize": 18,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:110f05b29e79750a78f1c7aff3651ccdcf491344,",
+          "name": "Paragraph/Mobile/Large/Medium",
+          "key": "110f05b29e79750a78f1c7aff3651ccdcf491344",
+          "fontSize": 18,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:fdc05cf951ae226f1077fba343f5c929a15287a8,",
+          "name": "Paragraph/Mobile/Medium/Regular",
+          "key": "fdc05cf951ae226f1077fba343f5c929a15287a8",
+          "fontSize": 16,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:d37c3b0dcf23e7e2431b352c659e784ecf799b0e,",
+          "name": "Paragraph/Mobile/Medium/Medium",
+          "key": "d37c3b0dcf23e7e2431b352c659e784ecf799b0e",
+          "fontSize": 16,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:6a096d3516133a9a260bcbbac635bd065ffd4072,",
+          "name": "Paragraph/Mobile/Small/Regular",
+          "key": "6a096d3516133a9a260bcbbac635bd065ffd4072",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:0522acccb1b048ba4368241449a8e38922a71212,",
+          "name": "Paragraph/Mobile/Small/Medium",
+          "key": "0522acccb1b048ba4368241449a8e38922a71212",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:b61e547f674ef659bbce6a6f9fa5f9a8a3416265,",
+          "name": "Caption/Web/Medium",
+          "key": "b61e547f674ef659bbce6a6f9fa5f9a8a3416265",
+          "fontSize": 12,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:8f26b24b5b25047d87dcdd49bc6c394c2faef047,",
+          "name": "Caption/Mobile/Medium",
+          "key": "8f26b24b5b25047d87dcdd49bc6c394c2faef047",
+          "fontSize": 12,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:26fff1ba29bcebd8906ef0431b74ad6a71238871,",
+          "name": "Caption/Mobile/Small",
+          "key": "26fff1ba29bcebd8906ef0431b74ad6a71238871",
+          "fontSize": 10,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Regular"
+          }
+        },
+        {
+          "id": "S:945f99f2da7f588a15faf9a0994c3b9f2a4d8ef3,",
+          "name": "Others/CTA/Large",
+          "key": "945f99f2da7f588a15faf9a0994c3b9f2a4d8ef3",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:4a0fcb0d91928bccaeec5c6347deaa86f8d58066,",
+          "name": "Others/CTA/Medium",
+          "key": "4a0fcb0d91928bccaeec5c6347deaa86f8d58066",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:11152f4678e9ac0c54343cac740313ec3b690662,",
+          "name": "Others/CTA/Small",
+          "key": "11152f4678e9ac0c54343cac740313ec3b690662",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:afbd74a5cfe45d9963c5600ebb825068b24458d9,",
+          "name": "Others/Label/Large/SemiBold",
+          "key": "afbd74a5cfe45d9963c5600ebb825068b24458d9",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:1b47f7db279084e48d2d7e6bb359b910ff9deee3,",
+          "name": "Others/Label/Large/Medium",
+          "key": "1b47f7db279084e48d2d7e6bb359b910ff9deee3",
+          "fontSize": 14,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        },
+        {
+          "id": "S:db43e7d64a97f6c8dd00fe8fa964313e3d67af95,",
+          "name": "Others/Label/Medium/SemiBold",
+          "key": "db43e7d64a97f6c8dd00fe8fa964313e3d67af95",
+          "fontSize": 12,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "SemiBold"
+          }
+        },
+        {
+          "id": "S:e006e6799fb0819427a39fe60338cd18b6be79f6,",
+          "name": "Others/Label/Medium/Medium",
+          "key": "e006e6799fb0819427a39fe60338cd18b6be79f6",
+          "fontSize": 12,
+          "fontName": {
+            "family": "Google Sans Flex",
+            "style": "Medium"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "S:6190643fc6717938cf165db49cde7a8ee4caf898,",
+          "name": "elevation/00",
+          "key": "6190643fc6717938cf165db49cde7a8ee4caf898"
+        },
+        {
+          "id": "S:60299d99450fa57371e7d77dfb740f6f75b16b79,",
+          "name": "elevation/01",
+          "key": "60299d99450fa57371e7d77dfb740f6f75b16b79"
+        },
+        {
+          "id": "S:1de65efb1082b76e5831271969c96bdf997e5a46,",
+          "name": "elevation/02",
+          "key": "1de65efb1082b76e5831271969c96bdf997e5a46"
+        },
+        {
+          "id": "S:5280bf25a67a93ad06b7d06850acf7250063b51f,",
+          "name": "elevation/03",
+          "key": "5280bf25a67a93ad06b7d06850acf7250063b51f"
+        },
+        {
+          "id": "S:1c236d6f02df897d865767993f83fe18ca0cf0a4,",
+          "name": "elevation/04",
+          "key": "1c236d6f02df897d865767993f83fe18ca0cf0a4"
+        },
+        {
+          "id": "S:56f30429fc1594194c3212d968c9ebee20d5e6ac,",
+          "name": "elevation/05",
+          "key": "56f30429fc1594194c3212d968c9ebee20d5e6ac"
+        },
+        {
+          "id": "S:7b9d94529538ec4d694bf5d557efad97e76c31d8,",
+          "name": "elevation/06",
+          "key": "7b9d94529538ec4d694bf5d557efad97e76c31d8"
+        },
+        {
+          "id": "S:e86edf1b668bd30af7a495bd4aff5a974e21ac62,",
+          "name": "elevation/07",
+          "key": "e86edf1b668bd30af7a495bd4aff5a974e21ac62"
+        },
+        {
+          "id": "S:fe573fd61715ab8c649a5cbb6bde2375dce70848,",
+          "name": "elevation/08",
+          "key": "fe573fd61715ab8c649a5cbb6bde2375dce70848"
+        }
+      ],
+      "grids": []
+    }
+  }
+}

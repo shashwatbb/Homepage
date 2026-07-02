@@ -1,0 +1,3353 @@
+# Structure: PDP 
+
+- **.PDP** · `COMPONENT_SET` · 833×5008 · 2 children
+  - **Property 1=.Resale PDP** · `COMPONENT` · 360×2177 · vertical stack, gap 16px, padding 16/0/16/0px · 15 children
+    - **Frame 1000003893** · `FRAME` · 360×272 · vertical stack, gap 8px, padding 0/24/0/24px · 2 children
+      - **Frame 1000003890** · `FRAME` · 312×248 · vertical stack, gap 16px · 2 children
+        - **Frame 1000003873** · `FRAME` · 312×24 · horizontal row, gap 188px · 2 children
+          - **Group 1000003757** · `GROUP` · 24×24 · 1 children
+            - **Back Icon** · `GROUP` · 24×24 · 2 children
+              - **Mask** · `RECTANGLE` · 24×24
+              - **Group 1000004307** · `GROUP` · 16×14 · 3 children
+                - **Vector 794** · `VECTOR` · 7×7
+                - **Vector 795** · `VECTOR` · 7×7
+                - **Vector 795** · `VECTOR` · 16×0
+          - **Frame 1000003872** · `FRAME` · 104×24 · horizontal row, gap 16px · 3 children
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6079** · `RECTANGLE` · 24×24
+              - **share icon** · `GROUP` · 16×16 · 5 children
+                - **Line 4** · `VECTOR` · 7×4
+                - **Line 5** · `VECTOR` · 7×4
+                - **Oval** · `ELLIPSE` · 5×5
+                - **Oval Copy** · `ELLIPSE` · 5×5
+                - **Oval Copy 2** · `ELLIPSE` · 5×5
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6078** · `RECTANGLE` · 24×24
+              - **Group 1000004283** · `GROUP` · 16×14 · 1 children
+                - **Vector** · `VECTOR` · 16×14
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6080** · `RECTANGLE` · 24×24
+              - **Mask group** · `GROUP` · 16×15 · 1 children
+                - **Group 1756** · `GROUP` · 16×15
+                  - _…and 1 more_
+        - **Frame 1000003887** · `FRAME` · 584×208 · horizontal row, gap 8px · 2 children
+          - **Frame 1000003885** · `FRAME` · 288×208 · vertical stack, gap 160px, padding 8px · 2 children
+            - **Frame 1000003883** · `FRAME` · 154×16 · horizontal row, gap 4px · 3 children
+              - **Seen** · `GROUP` · 34×16 · 1 children
+                - **Frame 1000003874** · `FRAME` · 34×16 · horizontal row, gap 10px, padding 2/4/2/4px
+                  - _…and 1 more_
+              - **Group 11 Copy 2** · `GROUP` · 62×16 · 2 children
+                - **Group 1000003860** · `GROUP` · 62×16
+                  - _…and 1 more_
+                - **Group 1685** · `GROUP` · 13×12
+                  - _…and 2 more_
+              - **RERA** · `GROUP` · 50×16 · 1 children
+                - **Frame 1000003879** · `FRAME` · 50×16 · vertical stack, gap 10px
+                  - _…and 1 more_
+            - **Frame 1000003884** · `FRAME` · 272×16 · horizontal row, gap 229px · 2 children
+              - **Image Number** · `GROUP` · 31×16 · 1 children
+                - **Frame 1000003880** · `FRAME` · 31×16 · horizontal row, gap 10px, padding 2/4/2/4px
+                  - _…and 1 more_
+              - **Hall** · `GROUP` · 28×16 · 1 children
+                - **Frame 1000003881** · `FRAME` · 28×16 · horizontal row, gap 10px, padding 2/4/2/4px
+                  - _…and 1 more_
+          - **Frame 1000003886** · `FRAME` · 288×208 · vertical stack, gap 160px, padding 8px
+      - **Frame 1000003889** · `FRAME` · 390×16 · horizontal row, gap 2px · 7 children
+        - **Sikka Karnam Greens,** · `TEXT` · 115×16 · “2 years old property”
+        - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+          - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+            - **Oval** · `ELLIPSE` · 4×4
+        - **Pay 10% now and rest** · `TEXT` · 85×16 · “Ready to move”
+        - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+          - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+            - **Oval** · `ELLIPSE` · 4×4
+        - **Sikka Karnam Greens,** · `TEXT` · 65×16 · “East facing”
+        - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+          - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+            - **Oval** · `ELLIPSE` · 4×4
+        - **Sikka Karnam Greens,** · `TEXT` · 65×16 · “East facing”
+    - **Frame 1000003892** · `FRAME` · 360×60 · vertical stack, gap 4px, padding 0/24/0/24px · 2 children
+      - **Frame 1000003897** · `FRAME` · 312×40 · horizontal row · 2 children
+        - **Frame 1000003894** · `FRAME` · 100×40 · vertical stack, gap 4px · 2 children
+          - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 63×20 · “₹4.2 Cr”
+          - **Config** · `GROUP` · 100×16 · 1 children
+            - **Config** · `TEXT` · 100×16 · “2 BHK Apartment”
+        - **Group 1000004295** · `GROUP` · 130×16 · 1 children
+          - **Frame 1000003891** · `FRAME` · 130×16 · horizontal row · 2 children
+            - **Sumeet Agrawal** · `TEXT` · 114×16 · “View price breakup”
+            - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+              - **Rectangle 1050** · `RECTANGLE` · 16×16
+              - **Group 1564** · `GROUP` · 8×8 · 2 children
+                - **Rectangle 1051** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+      - **Frame 1000003895** · `FRAME` · 303×16 · horizontal row, gap 2px · 3 children
+        - **Frame 1000003896** · `FRAME` · 138×16 · horizontal row, gap 2px · 2 children
+          - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 76×16 · “Built-up area”
+          - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 60×16 · “1570 sq.ft.”
+        - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+          - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+            - **Oval** · `ELLIPSE` · 4×4
+        - **Group 1000004565** · `GROUP` · 145×16 · 2 children
+          - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 71×16 · “Carpet  area”
+          - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 72×16 · “1320 sq.ft.”
+    - **Frame 1000003899** · `FRAME` · 360×36 · horizontal row, gap 8px, padding 0/24/0/24px · 2 children
+      - **Frame 1000003898** · `FRAME` · 156×36 · vertical stack, gap 4px · 2 children
+        - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 156×16 · “Panchsheel Realty Towers”
+        - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 111×16 · “Vitthal Nagar, Pune”
+      - **Group 1000004325** · `GROUP` · 105×32 · 1 children
+        - **Group 1000003683** · `GROUP` · 105×32 · 1 children
+          - **Group 1695** · `GROUP` · 105×32 · 1 children
+            - **Group 1000003099** · `GROUP` · 105×32 · 1 children
+              - **Frame 1000003901** · `FRAME` · 105×32 · vertical stack, gap 10px, padding 8px · 1 children
+                - **Frame 1000003900** · `FRAME` · 89×16 · horizontal row, gap 4px
+                  - _…and 2 more_
+    - **Frame 1000003906** · `FRAME` · 360×119 · vertical stack, gap 24px · 2 children
+      - **Frame 1000003902** · `FRAME` · 360×27 · horizontal row, gap 24px · 1 children
+        - **Frame 1000003903** · `FRAME` · 360×27 · horizontal row, gap 24px, padding 0/0/0/24px · 4 children
+          - **Frame 1000003904** · `FRAME` · 64×27 · vertical stack, gap 8px · 2 children
+            - **Overview** · `TEXT` · 64×16 · “Overview”
+            - **Rectangle 4266** · `VECTOR` · 64×3
+          - **Highlights** · `TEXT` · 67×16 · “Highlights”
+          - **Property Tour** · `TEXT` · 89×16 · “Property Tour”
+          - **Data Insights** · `TEXT` · 86×16 · “Data Insights”
+      - **Frame 1000003910** · `FRAME` · 360×68 · vertical stack, gap 16px · 2 children
+        - **Frame 1000003905** · `FRAME` · 241×16 · horizontal row, gap 10px, padding 0/24/0/24px · 1 children
+          - **Project Specifications** · `TEXT` · 193×16 · “Project Specifications”
+        - **Frame 1000003908** · `FRAME` · 380×36 · horizontal row, gap 12px · 5 children
+          - **Frame 1000003907** · `FRAME` · 114×36 · vertical stack, gap 4px, padding 0/0/0/24px · 2 children
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 90×16 · “Avg. rate/ sq.ft.”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 90×16 · “₹30k”
+          - **Vector 100** · `VECTOR` · 0×36
+          - **Frame 1000003908** · `FRAME` · 77×36 · vertical stack, gap 4px · 2 children
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 64×16 · “Price trend”
+            - **Frame 1000003909** · `FRAME` · 77×16 · horizontal row, gap 4px · 2 children
+              - **Rectangle** · `VECTOR` · 9×9
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 60×16 · “12.7% YOY”
+          - **Vector 101** · `VECTOR` · 0×36
+          - **Frame 1000003909** · `FRAME` · 141×36 · vertical stack, gap 4px · 2 children
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 133×16 · “Built-up & Carpet  area”
+            - **Frame 1000003909** · `FRAME` · 141×16 · horizontal row, gap 4px · 1 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 141×16 · “1570 sq.ft. & 1320 sq.ft.”
+    - **Frame 1000003911** · `FRAME` · 360×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Line Divider** · `VECTOR` · 312×0
+    - **Frame 2087324551** · `FRAME` · 360×52 · horizontal row, gap 56px, padding 0/24/0/24px · 2 children
+      - **Seller Details** · `GROUP` · 158×52 · 1 children
+        - **Group 1000004292** · `GROUP` · 158×52 · 1 children
+          - **Group 1000004296** · `GROUP` · 158×52 · 1 children
+            - **Frame 2087324554** · `FRAME` · 158×52 · horizontal row, gap 8px · 2 children
+              - **Mask group** · `GROUP` · 32×32 · 3 children
+                - **Ellipse 11** · `ELLIPSE` · 32×32
+                - **Ellipse 593** · `ELLIPSE` · 32×32
+                - **Rectangle** · `RECTANGLE` · 36×36
+              - **Group 1000004295** · `GROUP` · 118×52 · 1 children
+                - **Group 1000004538** · `GROUP` · 118×52
+                  - _…and 1 more_
+      - **Frame 2087324556** · `FRAME` · 98×52 · vertical stack, gap 4px · 2 children
+        - **Free, fast & secure** · `TEXT` · 98×12 · “Free, fast & secure”
+        - **Group 1000004323** · `GROUP` · 98×32 · 1 children
+          - **Group 1000004322** · `GROUP` · 98×32 · 1 children
+            - **Frame 2087324555** · `FRAME` · 98×32 · vertical stack, gap 10px, padding 8/20/8/20px · 1 children
+              - **Group 1000004536** · `GROUP` · 58×16 · 1 children
+                - **Chat now** · `TEXT` · 58×16 · “Chat now”
+    - **Frame 2087324561** · `FRAME` · 360×160 · vertical stack, gap 10px, padding 24/24/8/24px · 1 children
+      - **Frame 1000004647** · `FRAME` · 312×128 · vertical stack, gap 10px, padding 8px · 1 children
+        - **Frame 2087324559** · `FRAME` · 296×112 · horizontal row, gap 8px · 2 children
+          - **Mask group** · `GROUP` · 102×112 · 2 children
+            - **Rectangle 4214** · `RECTANGLE` · 102×112
+            - **976055506** · `RECTANGLE` · 177×172
+          - **Frame 2087324560** · `FRAME` · 186×112 · vertical stack, gap 8px · 2 children
+            - **Group 1000003659** · `GROUP` · 186×72 · 1 children
+              - **Frame 2087324557** · `FRAME` · 186×72 · vertical stack, gap 4px · 3 children
+                - **Sunil Apartment Home** · `TEXT` · 186×16 · “Sunil Apartment Housing”
+                - **2,3,4 BHK Apartment** · `TEXT` · 186×32 · “3 BHK Apartment
+N Lane, Sector 46, New Gurgaon”
+                - **₹2.04 Cr. - ₹3.06 Cr** · `TEXT` · 186×16 · “₹2.04 Cr. - ₹3.06 Cr.”
+            - **Group 1000004327** · `GROUP` · 186×32 · 1 children
+              - **Frame 2087324558** · `FRAME` · 186×32 · vertical stack, gap 10px, padding 8/69/8/69px · 1 children
+                - **Group 1759** · `GROUP` · 48×16
+                  - _…and 1 more_
+    - **Frame 1000004579** · `FRAME` · 360×16 · horizontal row, padding 0/24/0/24px · 2 children
+      - **Sumeet Agrawal** · `TEXT` · 201×16 · “Access zero brokerage properties”
+      - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+        - **Rectangle 1050** · `RECTANGLE` · 16×16
+        - **Group 1564** · `GROUP` · 8×8 · 2 children
+          - **Rectangle 1051** · `RECTANGLE` · 8×8
+          - **Shape** · `VECTOR` · 5×8
+    - **Frame 2087324563** · `FRAME` · 360×156 · vertical stack, gap 10px, padding 24/24/8/24px · 1 children
+      - **Frame 2087324566** · `FRAME` · 288×124 · vertical stack, gap 16px · 2 children
+        - **Why Emaar Digi Homes** · `TEXT` · 288×16 · “About the property”
+        - **Frame 2087324565** · `FRAME` · 288×92 · vertical stack, gap 8px · 2 children
+          - **Frame 2087324567** · `FRAME` · 288×68 · vertical stack, gap 4px · 3 children
+            - **One of the best prop** · `TEXT` · 288×20 · “Eco-friendly environment”
+            - **One of the best prop** · `TEXT` · 288×20 · “Spacious clubhouse”
+            - **One of the best prop** · `TEXT` · 288×20 · “Remote working office setup”
+          - **Frame 2087324564** · `FRAME` · 76×16 · horizontal row, gap 2px · 2 children
+            - **Golf Course Extensio** · `TEXT` · 62×16 · “Read more”
+            - **Right Cheveron** · `GROUP` · 12×12 · 2 children
+              - **Rectangle 1050** · `RECTANGLE` · 12×12
+              - **Group 1564** · `GROUP` · 8×8 · 2 children
+                - **Rectangle 1051** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+    - **Frame 2087324564** · `FRAME` · 360×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Line Divider** · `VECTOR` · 312×0
+    - **Frame 2087324568** · `FRAME` · 360×248 · vertical stack, gap 24px, padding 10/24/10/24px · 2 children
+      - **Frame 2087324578** · `FRAME` · 312×172 · vertical stack, gap 16px · 2 children
+        - **Golf Course Extensio** · `TEXT` · 105×16 · “Additional details”
+        - **Frame 2087324577** · `FRAME` · 312×140 · vertical stack, gap 16px · 3 children
+          - **Frame 2087324570** · `FRAME` · 312×36 · horizontal row, gap 16px · 2 children
+            - **Frame 2087324569** · `FRAME` · 148×36 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Bedrooms”
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “3”
+            - **Frame 2087324571** · `FRAME` · 148×36 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Balcony”
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “5”
+          - **Frame 2087324571** · `FRAME` · 312×36 · horizontal row, gap 16px · 2 children
+            - **Frame 2087324569** · `FRAME` · 148×36 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Furnishing”
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Fully furnished”
+            - **Frame 2087324571** · `FRAME` · 148×36 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Parking”
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “1 Open, 2 Closed”
+          - **Frame 2087324572** · `FRAME` · 312×36 · horizontal row, gap 16px · 2 children
+            - **Frame 2087324569** · `FRAME` · 148×36 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Floor number”
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “18 out of 32”
+            - **Frame 2087324571** · `FRAME` · 148×36 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Ownership”
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 148×16 · “Leased”
+      - **Group CTAs** · `GROUP` · 312×32 · 1 children
+        - **Frame 2087324576** · `FRAME` · 312×32 · horizontal row, gap 8px · 3 children
+          - **Group 1000004323** · `GROUP` · 32×32 · 1 children
+            - **Group 1000004320** · `GROUP` · 32×32 · 1 children
+              - **Frame 2087324573** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 7/8/7/8px · 1 children
+                - **Mask group** · `GROUP` · 16×16
+                  - _…and 2 more_
+          - **Group 1000004322** · `GROUP` · 32×32 · 1 children
+            - **Frame 2087324574** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+              - **Mask group** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 6078** · `RECTANGLE` · 16×16
+                - **Group 1000004283** · `GROUP` · 16×14
+                  - _…and 1 more_
+          - **Group 1000004318** · `GROUP` · 232×32 · 1 children
+            - **Frame 2087324575** · `FRAME` · 232×32 · horizontal row, gap 10px, padding 8/56/8/56px · 1 children
+              - **Ask for more details** · `TEXT` · 119×16 · “Ask for more details”
+    - **Frame 2087324569** · `FRAME` · 360×308 · vertical stack, gap 10px, padding 24/24/8/24px · 1 children
+      - **Frame 2087324566** · `FRAME` · 312×276 · vertical stack, gap 16px · 2 children
+        - **Why Emaar Digi Homes** · `TEXT` · 312×16 · “Check availability & more information”
+        - **Frame 2087324581** · `FRAME` · 312×244 · vertical stack, gap 8px, padding 8px · 2 children
+          - **Frame 2087324589** · `FRAME` · 296×180 · vertical stack, gap 16px · 2 children
+            - **Frame 2087324582** · `FRAME` · 296×148 · vertical stack, gap 16px · 4 children
+              - **Group 1974** · `GROUP` · 280×16 · 1 children
+                - **Group 1973** · `GROUP` · 280×16
+                  - _…and 1 more_
+              - **Frame 2087324580** · `FRAME` · 118×44 · horizontal row, gap 8px · 2 children
+                - **Group 1000004455** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **Group 1000004515** · `GROUP` · 78×44
+                  - _…and 1 more_
+              - **Vector 880** · `VECTOR` · 296×0
+              - **Frame 2087324586** · `FRAME` · 296×40 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324584** · `FRAME` · 280×16 · horizontal row, gap 8px
+                  - _…and 2 more_
+                - **Frame 2087324585** · `FRAME` · 280×16 · horizontal row, gap 8px
+                  - _…and 2 more_
+            - **Group 1720** · `GROUP` · 253×16 · 1 children
+              - **Frame 2087324587** · `FRAME` · 253×16 · horizontal row, gap 8px · 2 children
+                - **Perfect/ Great** · `GROUP` · 17×16
+                  - _…and 2 more_
+                - **156 people are looki** · `TEXT` · 228×16 · “Perfect Choice! Users like you also liked this”
+          - **Frame 2087324588** · `FRAME` · 296×40 · horizontal row, gap 10px, padding 12/65/12/65px · 1 children
+            - **View 409 Properties** · `TEXT` · 166×16 · “Check availibility with seller”
+    - **Frame 2087324570** · `FRAME` · 360×406 · vertical stack, gap 10px, padding 24/24/8/24px · 1 children
+      - **Frame 2087324566** · `FRAME` · 312×374 · vertical stack, gap 16px · 2 children
+        - **Frame 2087324590** · `FRAME` · 312×16 · horizontal row, gap 27px · 2 children
+          - **Golf Course Extensio** · `TEXT` · 246×16 · “Buyers like you are also interested in”
+          - **Group 1000004345** · `GROUP` · 39×16 · 1 children
+            - **See all** · `TEXT` · 39×16 · “See all”
+        - **Frame 2087324606** · `FRAME` · 336×342 · horizontal row, gap 12px · 3 children
+          - **Frame 2087324594** · `FRAME` · 228×342 · vertical stack, gap 16px, padding 8px · 3 children
+            - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+              - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px · 2 children
+                - **RERA** · `GROUP` · 50×16
+                  - _…and 1 more_
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+              - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324596** · `FRAME` · 138×16 · horizontal row, gap 4px
+                  - _…and 3 more_
+                - **Frame 2087324597** · `FRAME` · 184×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+            - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+              - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px · 2 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 184×16 · “DLF The Belaire”
+                - **mktd by Godrej Realt** · `TEXT` · 184×16 · “Sadhu Vaswani Road, East Kharadi, Pune”
+              - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px · 3 children
+                - **mktd by Godrej Realt** · `TEXT` · 102×16 · “1438 - 1500 sq.ft. ”
+                - **Frame 2087324595** · `FRAME` · 12×12 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+                - **mktd by Godrej Realt** · `TEXT` · 86×16 · “₹29.29K/ sq.ft.”
+            - **Frame 2087324603** · `FRAME` · 212×32 · horizontal row, gap 8px · 2 children
+              - **Group 1000004358** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324601** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px
+                  - _…and 1 more_
+              - **Frame 2087324602** · `FRAME` · 172×32 · vertical stack, gap 10px, padding 8/51/8/51px · 1 children
+                - **Group 1759** · `GROUP` · 70×16
+                  - _…and 1 more_
+          - **Frame 2087324595** · `FRAME` · 228×342 · vertical stack, gap 16px, padding 8px · 3 children
+            - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+              - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px · 2 children
+                - **RERA** · `GROUP` · 50×16
+                  - _…and 1 more_
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+              - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324596** · `FRAME` · 138×16 · horizontal row, gap 4px
+                  - _…and 3 more_
+                - **Frame 2087324597** · `FRAME` · 184×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+            - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+              - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px · 2 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 184×16 · “DLF The Belaire”
+                - **mktd by Godrej Realt** · `TEXT` · 184×16 · “Sadhu Vaswani Road, East Kharadi, Pune”
+              - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px · 3 children
+                - **mktd by Godrej Realt** · `TEXT` · 102×16 · “1438 - 1500 sq.ft. ”
+                - **Frame 2087324595** · `FRAME` · 12×12 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+                - **mktd by Godrej Realt** · `TEXT` · 86×16 · “₹29.29K/ sq.ft.”
+            - **Frame 2087324603** · `FRAME` · 212×32 · horizontal row, gap 8px · 2 children
+              - **Group 1000004358** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324601** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px
+                  - _…and 1 more_
+              - **Frame 2087324602** · `FRAME` · 172×32 · vertical stack, gap 10px, padding 8/51/8/51px · 1 children
+                - **Group 1759** · `GROUP` · 70×16
+                  - _…and 1 more_
+          - **Frame 2087324596** · `FRAME` · 228×342 · vertical stack, gap 16px, padding 8px · 3 children
+            - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+              - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px · 2 children
+                - **RERA** · `GROUP` · 50×16
+                  - _…and 1 more_
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+              - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324596** · `FRAME` · 138×16 · horizontal row, gap 4px
+                  - _…and 3 more_
+                - **Frame 2087324597** · `FRAME` · 184×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+            - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+              - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px · 2 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 184×16 · “DLF The Belaire”
+                - **mktd by Godrej Realt** · `TEXT` · 184×16 · “Sadhu Vaswani Road, East Kharadi, Pune”
+              - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px · 3 children
+                - **mktd by Godrej Realt** · `TEXT` · 102×16 · “1438 - 1500 sq.ft. ”
+                - **Frame 2087324595** · `FRAME` · 12×12 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+                - **mktd by Godrej Realt** · `TEXT` · 86×16 · “₹29.29K/ sq.ft.”
+            - **Frame 2087324603** · `FRAME` · 212×32 · horizontal row, gap 8px · 2 children
+              - **Group 1000004358** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324601** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px
+                  - _…and 1 more_
+              - **Frame 2087324602** · `FRAME` · 172×32 · vertical stack, gap 10px, padding 8/51/8/51px · 1 children
+                - **Group 1759** · `GROUP` · 70×16
+                  - _…and 1 more_
+    - **Frame 2087324571** · `FRAME` · 360×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Line Divider** · `VECTOR` · 312×0
+    - **Frame 1000003676** · `FRAME` · 352×88 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Group 1000002637** · `GROUP` · 304×88 · 1 children
+        - **Frame 2087324609** · `FRAME` · 304×88 · vertical stack, gap 16px · 2 children
+          - **Frame 2087324607** · `FRAME` · 304×40 · horizontal row, gap 12px · 2 children
+            - **Group 1000003687** · `GROUP` · 40×40 · 2 children
+              - **Ellipse 592** · `ELLIPSE` · 40×40
+              - **Mask group** · `GROUP` · 40×40 · 2 children
+                - **Ellipse 593** · `ELLIPSE` · 40×40
+                - **Group 1000003686** · `GROUP` · 52×35
+                  - _…and 4 more_
+            - **Personalise your home search journey with 3 quick answers !** · `TEXT` · 240×40 · “Personalise your home search journey with 3 quick answers !”
+          - **Group 9063** · `GROUP` · 296×32 · 1 children
+            - **Frame 2087324608** · `FRAME` · 296×32 · horizontal row, gap 10px, padding 8/115/8/115px · 1 children
+              - **Let’s begin** · `TEXT` · 65×16 · “Let’s begin”
+- **Documentation / Header** · `FRAME` · 833×107 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+  - **Frame** · `FRAME` · 435×22 · vertical stack, gap 4px · 1 children
+    - **DON’T USE: FIX & REBUILD BEFORE PUBLISHING** · `TEXT` · 435×22 · “DON’T USE: FIX & REBUILD BEFORE PUBLISHING”
+- **PDP** · `SECTION` · 2963×25004 · 40 children
+  - **PDP / Android / NP** · `COMPONENT` · 360×5275 · vertical stack · 4 children
+    - **Frame 2087324867** · `FRAME` · 360×40 · horizontal row, gap 230px, padding 0/16/0/16px · 2 children
+      - **12:00** · `TEXT` · 34×17 · “12:00”
+      - **Frame 2087324866** · `FRAME` · 52×14 · horizontal row, gap 6px · 3 children
+        - **Vector 1** · `VECTOR` · 14×14
+        - **Ellipse 2** · `VECTOR` · 17×13
+        - **Union** · `BOOLEAN_OPERATION` · 8×13 · 2 children
+          - **Rectangle 1** · `RECTANGLE` · 8×12
+          - **Rectangle 2** · `VECTOR` · 4×1
+    - **Frame 2087324787** · `FRAME` · 360×552 · vertical stack · 2 children
+      - **Frame 2087324616** · `FRAME` · 360×380 · vertical stack, gap 168px, padding 16/26/16/26px · 2 children
+        - **Frame 2087324617** · `FRAME` · 308×32 · horizontal row, gap 116px · 2 children
+          - **Share Button** · `GROUP` · 32×32 · 1 children
+            - **Share Button** · `GROUP` · 32×32 · 1 children
+              - **Frame 2087324610** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 4px · 1 children
+                - **Back Navigation** · `GROUP` · 24×24
+                  - _…and 2 more_
+          - **Frame 2087324614** · `FRAME` · 128×32 · horizontal row, gap 16px · 3 children
+            - **Share Button** · `GROUP` · 32×32 · 1 children
+              - **Share Button** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324611** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+            - **Share Button** · `GROUP` · 32×32 · 1 children
+              - **Share Button** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324612** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+            - **Share Button** · `GROUP` · 32×32 · 1 children
+              - **Share Button** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324613** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+        - **Frame 2087324633** · `FRAME` · 308×100 · vertical stack, gap 16px · 3 children
+          - **Frame 2087324628** · `FRAME` · 308×16 · horizontal row, gap 45px · 2 children
+            - **Frame 2087324624** · `FRAME` · 212×16 · horizontal row, gap 4px · 3 children
+              - **Frame 2087324620** · `FRAME` · 92×16 · horizontal row, gap 4px · 2 children
+                - **Frame 2087324619** · `FRAME` · 16×16 · horizontal row, gap 10px, padding 1/2/1/2px
+                  - _…and 1 more_
+                - **Verified** · `TEXT` · 63×12 · “New Launch”
+              - **rating** · `GROUP` · 50×16 · 1 children
+                - **Frame 2087324622** · `FRAME` · 50×16 · vertical stack, gap 10px
+                  - _…and 1 more_
+              - **rating** · `GROUP` · 62×16 · 1 children
+                - **Frame 2087324623** · `FRAME` · 62×16 · horizontal row, gap 10px, padding 2/4/2/4px
+                  - _…and 1 more_
+            - **Group 1000003694** · `GROUP` · 55×16 · 1 children
+              - **Image Number** · `GROUP` · 55×16 · 1 children
+                - **Frame 2087324627** · `FRAME` · 55×16 · horizontal row, gap 4px
+                  - _…and 2 more_
+          - **Frame 2087324632** · `FRAME` · 182×20 · horizontal row, gap 4px · 1 children
+            - **Golf Course Extensio** · `TEXT` · 135×20 · “Evolvus Phase I”
+          - **Frame 2087324636** · `FRAME` · 308×32 · horizontal row, gap 16px · 2 children
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 184×32 · “Enclave Main Road, East Kharadi, Pune ”
+            - **Frame 2087324635** · `FRAME` · 105×24 · vertical stack, gap 10px, padding 4/8/4/8px · 1 children
+              - **Frame 2087324634** · `FRAME` · 89×16 · horizontal row, gap 4px · 2 children
+                - **Mask group** · `GROUP` · 16×16
+                  - _…and 2 more_
+                - **Shopping** · `TEXT` · 69×16 · “See on map”
+      - **Frame 2087324684** · `FRAME` · 360×172 · vertical stack, gap 16px, padding 16px · 3 children
+        - **Frame 2087324745** · `FRAME` · 328×72 · vertical stack, gap 12px · 2 children
+          - **Frame 1000003889** · `FRAME` · 328×16 · horizontal row, gap 2px · 7 children
+            - **Sikka Karnam Greens,** · `TEXT` · 87×16 · “Zero brokerage”
+            - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+              - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+                - **Oval** · `ELLIPSE` · 4×4
+            - **Pay 10% now and rest** · `TEXT` · 143×16 · “Possession by Aug, 2027”
+            - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+              - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+                - **Oval** · `ELLIPSE` · 4×4
+            - **Sikka Karnam Greens,** · `TEXT` · 74×16 · “Average rate ”
+            - **Dot Text Divider** · `GROUP` · 16×16 · 1 children
+              - **Frame 1000003888** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 6px · 1 children
+                - **Oval** · `ELLIPSE` · 4×4
+            - **Sikka Karnam Greens,** · `TEXT` · 65×16 · “East facing”
+          - **Frame 2087324638** · `FRAME` · 328×44 · vertical stack, gap 8px · 2 children
+            - **Frame 2087324637** · `FRAME` · 328×20 · horizontal row, gap 8px · 2 children
+              - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 122×20 · “₹1 Cr - ₹3.5 Cr”
+              - **Information** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 33** · `RECTANGLE` · 16×16
+                - **Group** · `GROUP` · 12×12
+                  - _…and 1 more_
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 128×16 · “2, 3, 4 BHK Apartment”
+        - **Frame 2087324744** · `FRAME` · 0×328 · horizontal row, gap 10px, padding 0/0/1/0px · 1 children
+          - **Vector 103** · `VECTOR` · 0×327
+        - **Tab** · `INSTANCE` · 452×36 · horizontal row, gap 12px · instance of Tab
+    - **Frame 2087324786** · `FRAME` · 360×4683 · vertical stack, gap 16px, padding 0/16/0/16px · 14 children
+      - **Frame 2087324685** · `FRAME` · 328×185 · vertical stack, gap 14px, padding 16px · 1 children
+        - **Frame 2087324475** · `FRAME` · 296×153 · vertical stack, gap 16px · 2 children
+          - **Why Emaar Digi Homes** · `TEXT` · 296×16 · “Project Configurations”
+          - **Frame 2087324639** · `FRAME` · 358×121 · horizontal row, gap 16px · 2 children
+            - **Frame 2087324474** · `FRAME` · 144×121 · vertical stack, gap 10px, padding 8px · 1 children
+              - **Frame 2087324473** · `FRAME` · 128×105 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324472** · `FRAME` · 128×81 · vertical stack, gap 8px
+                  - _…and 2 more_
+                - **Group 1000003727** · `GROUP` · 101×16
+                  - _…and 1 more_
+            - **Group 1000003733** · `GROUP` · 144×121 · 1 children
+              - **Group 1000003722** · `GROUP` · 144×121 · 1 children
+                - **Group 1000003717** · `GROUP` · 144×121
+                  - _…and 1 more_
+      - **Frame 2087324686** · `FRAME` · 328×312 · vertical stack, gap 14px, padding 16px · 1 children
+        - **Frame 2087324543** · `FRAME` · 296×280 · vertical stack, gap 16px · 2 children
+          - **Frame 2087324476** · `FRAME` · 296×16 · horizontal row, gap 4px · 2 children
+            - **Why Emaar Digi Homes** · `TEXT` · 116×16 · “Payment Plan for”
+            - **Frame 1000003766** · `FRAME` · 53×16 · horizontal row, gap 4px · 2 children
+              - **₹80L** · `TEXT` · 41×16 · “2 BHK”
+              - **Group 1564** · `GROUP` · 8×8 · 2 children
+                - **Rectangle 1051** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+          - **Widget** · `FRAME` · 296×248 · vertical stack, gap 16px, padding 8px · 3 children
+            - **Frame 2087324129** · `FRAME` · 280×112 · vertical stack, gap 16px, padding 12px · 2 children
+              - **Frame 2087324503** · `FRAME` · 256×56 · vertical stack, gap 12px · 3 children
+                - **Frame 2087324533** · `FRAME` · 184×16 · vertical stack, gap 12px
+                  - _…and 1 more_
+                - **Frame 2087324504** · `FRAME` · 0×256 · horizontal row, gap 10px, padding 0/0/2/0px
+                  - _…and 1 more_
+                - **Frame 2087324518** · `FRAME` · 188×16 · horizontal row, gap 8px
+                  - _…and 3 more_
+              - **Group 1000003727** · `GROUP` · 101×16 · 1 children
+                - **Frame 2087324532** · `FRAME` · 101×16 · horizontal row, gap 5px
+                  - _…and 2 more_
+            - **One of the best prop** · `TEXT` · 280×40 · “Property price hike could add <>/month EMI, in next 6 months”
+            - **.demand_primary** · `INSTANCE` · 280×48 · horizontal row, gap 4px, padding 0/16/0/16px · instance of .demand_primary
+      - **Frame 2087324687** · `FRAME` · 328×84 · vertical stack, gap 14px, padding 16px · 1 children
+        - **Frame 2087324551** · `FRAME` · 296×52 · horizontal row, gap 56px · 2 children
+          - **Seller Details** · `GROUP` · 158×52 · 1 children
+            - **Group 1000004292** · `GROUP` · 158×52 · 1 children
+              - **Group 1000004296** · `GROUP` · 158×52 · 1 children
+                - **Frame 2087324554** · `FRAME` · 158×52 · horizontal row, gap 8px
+                  - _…and 2 more_
+          - **Frame 2087324556** · `FRAME` · 98×52 · vertical stack, gap 4px · 2 children
+            - **Free, fast & secure** · `TEXT` · 98×12 · “Free, fast & secure”
+            - **button** · `INSTANCE` · 98×32 · horizontal row · instance of button
+      - **Frame 2087324688** · `FRAME` · 328×428 · vertical stack, gap 14px, padding 16px · 3 children
+        - **Frame 2087324566** · `FRAME` · 296×124 · vertical stack, gap 16px · 2 children
+          - **Why Emaar Digi Homes** · `TEXT` · 296×16 · “About the property”
+          - **Frame 2087324565** · `FRAME` · 296×92 · vertical stack, gap 8px · 2 children
+            - **Frame 2087324567** · `FRAME` · 288×68 · vertical stack, gap 4px · 3 children
+              - **One of the best prop** · `TEXT` · 288×20 · “Eco-friendly environment”
+              - **One of the best prop** · `TEXT` · 288×20 · “Spacious clubhouse”
+              - **One of the best prop** · `TEXT` · 288×20 · “Remote working office setup”
+            - **Frame 2087324564** · `FRAME` · 76×16 · horizontal row, gap 2px · 2 children
+              - **Golf Course Extensio** · `TEXT` · 62×16 · “Read more”
+              - **Right Cheveron** · `GROUP` · 12×12 · 2 children
+                - **Rectangle 1050** · `RECTANGLE` · 12×12
+                - **Group 1564** · `GROUP` · 8×8
+                  - _…and 2 more_
+        - **Frame 2087324504** · `FRAME` · 0×296 · horizontal row, gap 10px, padding 0/0/2/0px · 1 children
+          - **Vector 103** · `VECTOR` · 0×294
+        - **Frame 2087324689** · `FRAME` · 296×244 · vertical stack, gap 24px · 2 children
+          - **Frame 2087324578** · `FRAME` · 296×172 · vertical stack, gap 16px · 2 children
+            - **Golf Course Extensio** · `TEXT` · 105×16 · “Additional details”
+            - **Frame 2087324577** · `FRAME` · 296×140 · vertical stack, gap 16px · 3 children
+              - **Frame 2087324570** · `FRAME` · 296×36 · horizontal row, gap 16px · 2 children
+                - **Frame 2087324569** · `FRAME` · 148×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Frame 2087324571** · `FRAME` · 148×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+              - **Frame 2087324571** · `FRAME` · 296×36 · horizontal row, gap 16px · 2 children
+                - **Frame 2087324569** · `FRAME` · 148×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Frame 2087324571** · `FRAME` · 148×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+              - **Frame 2087324572** · `FRAME` · 296×36 · horizontal row, gap 16px · 2 children
+                - **Frame 2087324569** · `FRAME` · 148×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Frame 2087324571** · `FRAME` · 148×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+          - **Group CTAs** · `GROUP` · 296×48 · 1 children
+            - **Frame 2087324576** · `FRAME` · 296×48 · horizontal row, gap 8px · 3 children
+              - **Group 1000004323** · `GROUP` · 48×48 · 1 children
+                - **Group 1000004320** · `GROUP` · 48×48
+                  - _…and 1 more_
+              - **Frame 2087324574** · `FRAME` · 48×48 · horizontal row, gap 10px, padding 8px · 1 children
+                - **Mask group** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **.demand_primary** · `INSTANCE` · 184×48 · horizontal row, gap 4px, padding 0/16/0/16px · instance of .demand_primary
+      - **Frame 2087324689** · `FRAME` · 328×336 · vertical stack, gap 14px, padding 16px · 1 children
+        - **Group 1000004404** · `GROUP` · 296×304 · 1 children
+          - **Frame 2087324680** · `FRAME` · 296×304 · vertical stack, gap 24px · 2 children
+            - **Frame 2087324673** · `FRAME` · 296×232 · vertical stack, gap 16px · 2 children
+              - **Golf Course Extensio** · `TEXT` · 296×16 · “Project brochure”
+              - **Rectangle 6160** · `RECTANGLE` · 296×200
+            - **Group 1000004318** · `GROUP` · 296×48 · 1 children
+              - **Group 1000004394** · `GROUP` · 296×48 · 1 children
+                - **Frame 2087324679** · `FRAME` · 296×48 · horizontal row, gap 8px
+                  - _…and 2 more_
+      - **Frame 2087324691** · `FRAME` · 328×368 · vertical stack, gap 16px, padding 16px · 1 children
+        - **Frame 2087324692** · `FRAME` · 296×336 · vertical stack, gap 16px · 3 children
+          - **Frame 2087324566** · `FRAME` · 296×72 · vertical stack, gap 16px, padding 0/16/0/0px · 2 children
+            - **Frame 2087324641** · `FRAME` · 280×16 · vertical stack, gap 4px · 1 children
+              - **Why Emaar Digi Homes** · `TEXT` · 280×16 · “Explore on map”
+            - **Frame 2087324650** · `FRAME` · 280×40 · vertical stack, gap 10px, padding 8/16/8/16px · 1 children
+              - **Frame 2087324649** · `FRAME` · 263×24 · horizontal row, gap 8px · 2 children
+                - **Search** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **Group 1000004397** · `GROUP` · 231×16
+                  - _…and 2 more_
+          - **Group 1000004551** · `GROUP` · 296×160 · 6 children
+            - **image 103** · `RECTANGLE` · 296×160
+            - **Vector 933** · `VECTOR` · 10×17
+            - **Vector 930** · `VECTOR` · 19×18
+            - **Vector 931** · `VECTOR` · 117×34
+            - **Vector 932** · `VECTOR` · 62×20
+            - **Group 1000004400** · `GROUP` · 194×37 · 1 children
+              - **tooltip** · `GROUP` · 194×37 · 3 children
+                - **Union** · `BOOLEAN_OPERATION` · 194×30
+                  - _…and 2 more_
+                - **Request seller for location** · `TEXT` · 167×25 · “Request seller for location”
+                - **Right Cheveron** · `GROUP` · 14×13
+                  - _…and 2 more_
+          - **Frame 2087324659** · `FRAME` · 296×72 · vertical stack, gap 8px · 2 children
+            - **Frame 2087324657** · `FRAME` · 458×32 · horizontal row, gap 16px · 4 children
+              - **Frame 2087324654** · `FRAME` · 123×32 · horizontal row, gap 4px, padding 4/8/4/8px · 3 children
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **2 BHK** · `TEXT` · 59×16 · “Education”
+                - **Right Cheveron** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **Frame 2087324655** · `FRAME` · 128×32 · horizontal row, gap 4px, padding 4/8/4/8px · 3 children
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **2 BHK** · `TEXT` · 64×16 · “Healthcare”
+                - **Right Cheveron** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **Frame 2087324656** · `FRAME` · 123×32 · horizontal row, gap 4px, padding 4/8/4/8px · 3 children
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **2 BHK** · `TEXT` · 59×16 · “Shopping”
+                - **Right Cheveron** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **Frame 2087324657** · `FRAME` · 36×32 · horizontal row, gap 4px, padding 4/8/4/8px · 3 children
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **2 BHK** · `TEXT` · 59×16 · “Shopping”
+                - **Right Cheveron** · `GROUP` · 16×16
+                  - _…and 2 more_
+            - **Frame 2087324658** · `FRAME` · 260×32 · horizontal row, gap 16px · 2 children
+              - **Frame 2087324654** · `FRAME` · 121×32 · horizontal row, gap 4px, padding 4/8/4/8px · 3 children
+                - **Shopping Copy 2** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **2 BHK** · `TEXT` · 57×16 · “Commute”
+                - **Right Cheveron** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **Frame 2087324655** · `FRAME` · 123×32 · horizontal row, gap 4px, padding 4/8/4/8px · 3 children
+                - **Groceries** · `GROUP` · 24×24
+                  - _…and 2 more_
+                - **2 BHK** · `TEXT` · 59×16 · “Groceries”
+                - **Right Cheveron** · `GROUP` · 16×16
+                  - _…and 2 more_
+      - **Details** · `INSTANCE` · 328×446 · vertical stack, gap 32px · instance of Details
+      - **Frame 2087324699** · `FRAME` · 328×414 · vertical stack, gap 16px, padding 16/0/16/16px · 1 children
+        - **Frame 2087324567** · `FRAME` · 312×382 · vertical stack, gap 16px · 2 children
+          - **Frame 2087324590** · `FRAME` · 312×16 · horizontal row, gap 27px, padding 0/16/0/0px · 2 children
+            - **Project Ratings & Re** · `TEXT` · 149×16 · “Better priced projects”
+            - **Group 1000004345** · `GROUP` · 39×16 · 1 children
+              - **See all** · `TEXT` · 39×16 · “See all”
+          - **Frame 2087324606** · `FRAME` · 374×350 · horizontal row, gap 12px · 3 children
+            - **Frame 2087324594** · `FRAME` · 228×350 · vertical stack, gap 16px, padding 8px · 3 children
+              - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px
+                  - _…and 2 more_
+                - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px
+                  - _…and 2 more_
+                - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324603** · `FRAME` · 212×40 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 40×40
+                  - _…and 1 more_
+                - **button** · `INSTANCE` · 164×40 · horizontal row · instance of button
+            - **Frame 2087324595** · `FRAME` · 228×350 · vertical stack, gap 16px, padding 8px · 3 children
+              - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px
+                  - _…and 2 more_
+                - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px
+                  - _…and 2 more_
+                - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324606** · `FRAME` · 212×40 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 40×40
+                  - _…and 1 more_
+                - **button** · `INSTANCE` · 164×40 · horizontal row · instance of button
+            - **Frame 2087324596** · `FRAME` · 228×342 · vertical stack, gap 16px, padding 8px · 3 children
+              - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px
+                  - _…and 2 more_
+                - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px
+                  - _…and 2 more_
+                - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324603** · `FRAME` · 212×32 · horizontal row, gap 8px · 2 children
+                - **Group 1000004358** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **Frame 2087324602** · `FRAME` · 172×32 · vertical stack, gap 10px, padding 8/51/8/51px
+                  - _…and 1 more_
+      - **Frame 2087324698** · `FRAME` · 328×510 · vertical stack, gap 16px, padding 16px · 2 children
+        - **Frame 2087324692** · `FRAME` · 296×414 · vertical stack, gap 16px · 2 children
+          - **Paragraph** · `FRAME` · 215×16 · 1 children
+            - **Compare with similar properties** · `TEXT` · 216×16 · “Compare with similar properties”
+          - **Group 1000004609** · `GROUP` · 496×382 · 1 children
+            - **Frame 2087324704** · `FRAME` · 496×382 · horizontal row, gap 10px, padding 0/8/0/8px · 5 children
+              - **Frame 2087324703** · `FRAME` · 146×382 · vertical stack, gap 8px, padding 8/0/8/0px · 2 children
+                - **Frame 2087324702** · `FRAME` · 146×318 · vertical stack, gap 16px
+                  - _…and 2 more_
+                - **button** · `INSTANCE` · 146×32 · horizontal row · instance of button
+              - **Rectangle 6143** · `RECTANGLE` · 1×382
+              - **Frame 2087324704** · `FRAME` · 146×382 · vertical stack, gap 8px, padding 8/0/8/0px · 2 children
+                - **Frame 2087324702** · `FRAME` · 146×318 · vertical stack, gap 16px
+                  - _…and 2 more_
+                - **button** · `INSTANCE` · 146×32 · horizontal row · instance of button
+              - **Rectangle 6144** · `RECTANGLE` · 1×382
+              - **Frame 2087324705** · `FRAME` · 146×382 · vertical stack, gap 8px, padding 8/0/8/0px · 2 children
+                - **Frame 2087324702** · `FRAME` · 146×318 · vertical stack, gap 16px
+                  - _…and 2 more_
+                - **button** · `INSTANCE` · 146×32 · horizontal row · instance of button
+        - **button** · `INSTANCE` · 296×48 · horizontal row · instance of button
+      - **Frame 2087324693** · `FRAME` · 328×414 · vertical stack, gap 16px, padding 16/0/16/16px · 1 children
+        - **Frame 2087324567** · `FRAME` · 312×382 · vertical stack, gap 16px · 2 children
+          - **Frame 2087324590** · `FRAME` · 312×16 · horizontal row, gap 27px, padding 0/16/0/0px · 2 children
+            - **Golf Course Extensio** · `TEXT` · 246×16 · “Buyers like you are also interested in”
+            - **Group 1000004345** · `GROUP` · 39×16 · 1 children
+              - **See all** · `TEXT` · 39×16 · “See all”
+          - **Frame 2087324606** · `FRAME` · 374×350 · horizontal row, gap 12px · 3 children
+            - **Frame 2087324594** · `FRAME` · 228×350 · vertical stack, gap 16px, padding 8px · 3 children
+              - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px
+                  - _…and 2 more_
+                - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px
+                  - _…and 2 more_
+                - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324603** · `FRAME` · 212×40 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 40×40
+                  - _…and 1 more_
+                - **button** · `INSTANCE` · 164×40 · horizontal row · instance of button
+            - **Frame 2087324595** · `FRAME` · 228×350 · vertical stack, gap 16px, padding 8px · 3 children
+              - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px
+                  - _…and 2 more_
+                - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px
+                  - _…and 2 more_
+                - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324606** · `FRAME` · 212×40 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 40×40
+                  - _…and 1 more_
+                - **button** · `INSTANCE` · 164×40 · horizontal row · instance of button
+            - **Frame 2087324596** · `FRAME` · 228×342 · vertical stack, gap 16px, padding 8px · 3 children
+              - **Frame 2087324604** · `FRAME` · 212×203 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324593** · `FRAME` · 212×135 · horizontal row, gap 134px, padding 8px
+                  - _…and 2 more_
+                - **Frame 2087324598** · `FRAME` · 184×60 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324605** · `FRAME` · 212×59 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324599** · `FRAME` · 184×35 · vertical stack, gap 3px
+                  - _…and 2 more_
+                - **Frame 2087324600** · `FRAME` · 212×16 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324603** · `FRAME` · 212×32 · horizontal row, gap 8px · 2 children
+                - **Group 1000004358** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **Frame 2087324602** · `FRAME` · 172×32 · vertical stack, gap 10px, padding 8/51/8/51px
+                  - _…and 1 more_
+      - **Frame 2087324694** · `FRAME` · 328×368 · vertical stack, gap 16px, padding 16px · 2 children
+        - **Frame 2087324567** · `FRAME` · 296×272 · vertical stack, gap 16px · 3 children
+          - **Why Emaar Digi Homes** · `TEXT` · 234×16 · “Active sellers you may contact (12)”
+          - **Frame 2087324667** · `FRAME` · 296×208 · vertical stack, gap 8px · 3 children
+            - **Frame 2087324662** · `FRAME` · 296×64 · horizontal row, gap 8px, padding 8px · 2 children
+              - **Frame 2087324666** · `FRAME` · 137×48 · horizontal row, gap 8px · 2 children
+                - **Group 1000004301** · `GROUP` · 48×48
+                  - _…and 1 more_
+                - **Group 1000004458** · `GROUP` · 81×48
+                  - _…and 1 more_
+              - **Frame 2087324665** · `FRAME` · 112×32 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **Group 1000004318** · `GROUP` · 72×32
+                  - _…and 1 more_
+            - **Frame 2087324664** · `FRAME` · 296×64 · horizontal row, gap 8px, padding 8px · 2 children
+              - **Frame 2087324666** · `FRAME` · 160×48 · horizontal row, gap 8px · 2 children
+                - **Group 1000004459** · `GROUP` · 48×48
+                  - _…and 1 more_
+                - **Group 1000004458** · `GROUP` · 104×48
+                  - _…and 1 more_
+              - **Frame 2087324667** · `FRAME` · 112×32 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **button** · `INSTANCE` · 72×32 · horizontal row · instance of button
+            - **Frame 2087324663** · `FRAME` · 296×64 · horizontal row, gap 8px, padding 8px · 2 children
+              - **Frame 2087324666** · `FRAME` · 137×48 · horizontal row, gap 8px · 2 children
+                - **Group 1000004459** · `GROUP` · 48×48
+                  - _…and 1 more_
+                - **Group 1000004458** · `GROUP` · 81×48
+                  - _…and 1 more_
+              - **Frame 2087324667** · `FRAME` · 112×32 · horizontal row, gap 8px · 2 children
+                - **Group 1000004324** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **button** · `INSTANCE` · 72×32 · horizontal row · instance of button
+          - **Frame 2087324668** · `FRAME` · 104×16 · horizontal row · 2 children
+            - **View all sellers** · `TEXT` · 88×16 · “View all sellers”
+            - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+              - **Rectangle 1050** · `RECTANGLE` · 16×16
+              - **Group 1564** · `GROUP` · 8×8 · 2 children
+                - **Rectangle 1051** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+        - **med_impact_button** · `INSTANCE` · 296×48 · horizontal row, gap 4px, padding 8/16/8/16px · instance of med_impact_button
+      - **RecommendedInsightsSection** · `FRAME` · 328×192 · vertical stack, gap 16px, padding 16/0/16/16px · 2 children
+        - **Container** · `FRAME` · 364×40 · vertical stack, gap 4px · 2 children
+          - **Paragraph** · `FRAME` · 348×20 · 1 children
+            - **Recommended Insights** · `TEXT` · 182×20 · “Recommended Insights”
+          - **Paragraph** · `FRAME` · 348×16 · 1 children
+            - **Based on your Top Preference** · `TEXT` · 172×16 · “Based on your Top Preference”
+        - **Container** · `FRAME` · 364×104 · horizontal row, gap 12px · 3 children
+          - **InsightCard** · `FRAME` · 140×104 · vertical stack, padding 12px · 1 children
+            - **Frame 2087324713** · `FRAME` · 116×80 · vertical stack, gap 12px · 2 children
+              - **Container** · `FRAME` · 116×16 · horizontal row, gap 8px · 2 children
+                - **Container** · `FRAME` · 16×16 · horizontal row
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 92×16 · vertical stack, gap 8px
+                  - _…and 1 more_
+              - **Frame 2087324712** · `FRAME` · 116×52 · vertical stack, gap 4px · 2 children
+                - **Sector 33, Sohna** · `TEXT` · 60×32 · “Sector 33, Sohna”
+                - **Paragraph** · `FRAME` · 90×16
+                  - _…and 1 more_
+          - **InsightCard** · `FRAME` · 140×104 · vertical stack, padding 12px · 1 children
+            - **Frame 2087324713** · `FRAME` · 116×80 · vertical stack, gap 12px · 2 children
+              - **Frame 2087324714** · `FRAME` · 116×16 · vertical stack, gap 10px · 1 children
+                - **Container** · `FRAME` · 116×16 · horizontal row, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324712** · `FRAME` · 116×52 · vertical stack, gap 4px · 2 children
+                - **Sector 33, Sohna** · `TEXT` · 60×32 · “Sector 33, Sohna”
+                - **Paragraph** · `FRAME` · 90×16
+                  - _…and 1 more_
+          - **InsightCard** · `FRAME` · 140×104 · vertical stack, padding 12px · 1 children
+            - **Frame 2087324713** · `FRAME` · 116×80 · vertical stack, gap 12px · 2 children
+              - **Container** · `FRAME` · 116×16 · horizontal row, gap 8px · 2 children
+                - **Container** · `FRAME` · 16×16 · horizontal row
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 92×16 · vertical stack, gap 8px
+                  - _…and 1 more_
+              - **Frame 2087324712** · `FRAME` · 116×52 · vertical stack, gap 4px · 2 children
+                - **Sector 33, Sohna** · `TEXT` · 60×32 · “Sector 33, Sohna”
+                - **Paragraph** · `FRAME` · 90×16
+                  - _…and 1 more_
+      - **Frame 2087324696** · `FRAME` · 328×136 · vertical stack, gap 16px, padding 16px · 1 children
+        - **Group 1000002637** · `GROUP` · 296×104 · 1 children
+          - **Frame 2087324609** · `FRAME` · 296×104 · vertical stack, gap 16px · 2 children
+            - **Frame 2087324607** · `FRAME` · 296×40 · horizontal row, gap 12px · 2 children
+              - **Group 1000003687** · `GROUP` · 40×40 · 2 children
+                - **Ellipse 592** · `ELLIPSE` · 40×40
+                - **Mask group** · `GROUP` · 40×40
+                  - _…and 2 more_
+              - **Personalise your home search journey with 3 quick answers !** · `TEXT` · 244×40 · “Personalise your home search journey with 3 quick answers !”
+            - **button** · `INSTANCE` · 296×48 · horizontal row · instance of button
+      - **RecommendedInsightsSection** · `FRAME` · 328×282 · vertical stack, gap 16px, padding 16px · 1 children
+        - **Disclaimer** · `GROUP` · 296×250 · 2 children
+          - **Housing.com is a not a marketing partner for this real estate project (“Project”) and is not acting on behalf of the developer of this Project. The Project has been displayed for information purposes only. The information displayed here is not provided by the developer hence shall not be construed as an offer for sale or an advertisement for sale by Housing.com or by the developer. Housing.com does not in any way facilitate the sales between the developer of this Project and the visitors/users of the website. The information and data published on this Project are collected from publicly available sources. Housing.com does not and shall not be deemed to validate or confirm the veracity of the information or guarantee its authenticity. The pictures / photos / visuals / videos shown here include artist’s impression of the property being displayed and have been provided by the developers. The actual properties may vary from, and may be inconsistent with, such representations. The actual properties may vary from, and may be inconsistent with, such representations. Further pictures/photos/ representations of furniture and fixtures, surroundings, roads etc. are merely illustrative and shall not be construed to be available with the listed properties or as part of the offerings. Before deciding to purchase or taking any other action, you are requested to exercise due caution and to independently validate and verify all information and details from the aforesaid sources and and to go through the terms and conditions as included in the documents. The developer/the Project may be required to register with the concerned authority under the Act and to otherwise comply with the Real Estate (Regulation and Development), 2016 (“Act”). We do not guarantee that the developer / Project has registered under the Act or is compliant with the same. We may contact you to solicit feedback of your experience and to provide any additional services that you would be eligible for, either as a customer or as a visitor. There is no intention of violating any intellectual property or ancillary rights. If there is any violation, we request that the same be promptly brought to our attention. Neither Housing nor any person having any ownership or other interest in either of them and their respective directors, employees, agents and other representatives shall be responsible or liable to you or any other person (a) for any error, falsity, or inaccuracy in the information provided herein or for any omission of information; (b) for any action taken, cost / expenses / losses incurred, by you or any other person, based on the information given on the portal; or (c) for any act or omission of the developers or any default or failure or breach on their part, including with respect to delivery of any services or amenities advertised and any delay in delivery or completion of the property. Please note that this disclaimer is in addition to the provisions of any other disclaimer displayed / listed on Housing.com.** · `TEXT` · 296×218 · “Housing.com is a not a marketing partner for this real estate project (“Project””
+          - **Group 1000004471** · `GROUP` · 90×16 · 1 children
+            - **Load more** · `TEXT` · 90×16 · “Read disclaimer”
+    - **Group1000004563** · `FRAME` · 360×73 · horizontal row, gap 12px, padding 0/16/0/16px · 3 children
+      - **Button** · `FRAME` · 75×40 · horizontal row, gap 4px, padding 12/13/12/13px · 2 children
+        - **Frame** · `FRAME` · 16×16 · 1 children
+          - **Vector** · `VECTOR` · 14×13
+        - **Paragraph** · `FRAME` · 29×16 · 1 children
+          - **Chat** · `TEXT` · 29×16 · “Chat”
+      - **button** · `INSTANCE` · 115×40 · horizontal row · instance of button
+      - **.demand_primary** · `INSTANCE` · 115×40 · horizontal row, gap 4px, padding 8/12/8/12px · instance of .demand_primary
+  - **PDP** · `FRAME` · 844×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 37×22 · vertical stack, gap 4px · 1 children
+      - **PDP** · `TEXT` · 37×22 · “PDP”
+  - **PDP** · `FRAME` · 844×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 131×22 · vertical stack, gap 4px · 1 children
+      - **Bottom sheets** · `TEXT` · 131×22 · “Bottom sheets”
+  - **PDP** · `FRAME` · 401×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 126×22 · vertical stack, gap 4px · 1 children
+      - **Book site visit** · `TEXT` · 126×22 · “Book site visit”
+  - **PDP** · `FRAME` · 483×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 164×22 · vertical stack, gap 4px · 1 children
+      - **Bottom navigation** · `TEXT` · 164×22 · “Bottom navigation”
+  - **PDP** · `FRAME` · 483×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 81×22 · vertical stack, gap 4px · 1 children
+      - **Info strip** · `TEXT` · 81×22 · “Info strip”
+  - **PDP** · `FRAME` · 360×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 102×22 · vertical stack, gap 4px · 1 children
+      - **Scroll state** · `TEXT` · 102×22 · “Scroll state”
+  - **PDP / M-web/ Bottom sheets** · `FRAME` · 360×800 · 3 children
+    - **PDP / m-web / NP** · `INSTANCE` · 360×800 · vertical stack, gap 8px · instance of PDP / m-web / NP
+    - **Rectangle 4300** · `RECTANGLE` · 360×800
+    - **RERA** · `INSTANCE` · 360×536 · vertical stack · instance of RERA
+  - **PDP / m-web / NP** · `COMPONENT` · 360×6626 · vertical stack, gap 8px · 21 children
+    - **Frame 2087324923** · `FRAME` · 360×420 · vertical stack · 1 children
+      - **Frame 2087324922** · `FRAME` · 360×420 · horizontal row, gap 10px, padding 32/16/16/16px · 1 children
+        - **Frame 2087324921** · `FRAME` · 328×372 · horizontal row, gap 182px · 3 children
+          - **Frame 2087324988** · `FRAME` · 328×32 · vertical stack · 1 children
+            - **Top panel** · `FRAME` · 328×32 · horizontal row, gap 11px · 1 children
+              - **Top panel** · `FRAME` · 328×32 · horizontal row, gap 11px · 1 children
+                - **Top panel** · `INSTANCE` · 328×32 · horizontal row, gap 11px · instance of Top panel
+          - **Image counting ** · `INSTANCE` · 82×23 · instance of Image counting 
+          - **Group 1000004727** · `GROUP` · 64×23 · 1 children
+            - **Image Tag** · `INSTANCE` · 64×23 · horizontal row · instance of Image Tag
+    - **Cards** · `FRAME` · 361×253 · vertical stack, gap 8px · 1 children
+      - **Project name** · `FRAME` · 361×253 · vertical stack, gap 16px, padding 16px · 3 children
+        - **Frame 2087324798** · `FRAME` · 329×153 · vertical stack, gap 8px · 1 children
+          - **Frame 2087324797** · `FRAME` · 329×153 · vertical stack, gap 8px · 1 children
+            - **Frame 2087324796** · `FRAME` · 329×153 · vertical stack, gap 12px · 2 children
+              - **new launch tag** · `FRAME` · 329×23 · vertical stack, gap 8px · 1 children
+                - **new launch tag** · `FRAME` · 329×23 · horizontal row, gap 4px
+                  - _…and 3 more_
+              - **Frame 2087324977** · `FRAME` · 329×118 · vertical stack, gap 16px · 2 children
+                - **Frame 2087324795** · `FRAME` · 329×62 · horizontal row, gap 8px
+                  - _…and 2 more_
+                - **Frame 2087324767** · `FRAME` · 329×40 · vertical stack, gap 12px
+                  - _…and 1 more_
+        - **Line 59** · `LINE` · 328×0
+        - **Seller detail** · `FRAME` · 329×36 · horizontal row, gap 56px · 2 children
+          - **Seller Details** · `FRAME` · 158×36 · vertical stack, gap 10px · 1 children
+            - **Profile** · `GROUP` · 158×36 · 1 children
+              - **Seller Info** · `FRAME` · 158×36 · horizontal row, gap 8px · 2 children
+                - **Mask group** · `GROUP` · 32×32
+                  - _…and 3 more_
+                - **Detail** · `GROUP` · 118×36
+                  - _…and 1 more_
+          - **Seller Action Button** · `FRAME` · 110×32 · vertical stack, gap 4px · 1 children
+            - **Seller Action Container** · `FRAME` · 110×32 · horizontal row, gap 10px, padding 16px · 1 children
+              - **View phone** · `TEXT` · 78×16 · “View phone”
+    - **Project name** · `FRAME` · 361×72 · vertical stack, gap 16px, padding 16px · 1 children
+      - **Seller detail** · `FRAME` · 329×40 · horizontal row, gap 12px · 2 children
+        - **Frame 2087330164** · `FRAME` · 40×40 · horizontal row, gap 10px · 1 children
+          - **WarningOctagon** · `INSTANCE` · 20×20 · instance of WarningOctagon
+        - **Frame 2087330163** · `FRAME` · 184×36 · vertical stack, gap 4px · 2 children
+          - **Think this property is yours?** · `TEXT` · 184×16 · “Think this property is yours?”
+          - **button** · `INSTANCE` · 116×16 · horizontal row · instance of button
+    - **floor plan** · `FRAME` · 360×424 · vertical stack, gap 16px, padding 16px · 3 children
+      - **Frame 2087324736** · `FRAME` · 328×20 · horizontal row, gap 10px · 1 children
+        - **Title** · `FRAME` · 150×20 · horizontal row, gap -16px · 2 children
+          - **Floor Plan & Pricing** · `TEXT` · 241×20 · “Floor Plan & Pricing”
+          - ***1 sq.m = 10.76 sq.ft.** · `TEXT` · 107×12 · “*1 sq.m = 10.76 sq.ft.”
+      - **.tab bars** · `FRAME` · 326×40 · horizontal row, gap 10px · 1 children
+        - **Frame 2087324738** · `FRAME` · 326×40 · horizontal row, gap 12px · 4 children
+          - **.tabs_premium** · `INSTANCE` · 79×40 · horizontal row, padding 6/16/6/16px · instance of .tabs_premium
+          - **.tabs_premium** · `FRAME` · 79×40 · vertical stack, padding 6/16/6/16px · 2 children
+            - **Label** · `TEXT` · 35×16 · “2 BHK”
+            - **2 Sizes** · `TEXT` · 37×12 · “2 Sizes”
+          - **.tabs_premium** · `FRAME` · 79×40 · vertical stack, padding 6/16/6/16px · 2 children
+            - **3 BHK** · `TEXT` · 35×16 · “3 BHK”
+            - **3 Sizes** · `TEXT` · 37×12 · “3 Sizes”
+          - **.tabs_premium** · `FRAME` · 79×40 · vertical stack, padding 6/16/6/16px · 2 children
+            - **4 BHK** · `TEXT` · 35×16 · “4 BHK”
+            - **1 Sizes** · `TEXT` · 35×12 · “1 Sizes”
+      - **Frame 2087324807** · `FRAME` · 516×300 · horizontal row, gap 16px · 3 children
+        - **Frame 2087324803** · `FRAME` · 164×300 · vertical stack, gap 7px, padding 12px · 3 children
+          - **image** · `RECTANGLE` · 140×124
+          - **Right Cheveron** · `INSTANCE` · 54×24 · horizontal row, gap 10px · instance of Right Cheveron
+          - **Frame 2087324814** · `FRAME` · 140×145 · vertical stack, gap 12px · 2 children
+            - **Frame 2087324805** · `FRAME` · 140×101 · vertical stack, gap 7px · 4 children
+              - **Pay 10% now and rest** · `TEXT` · 125×16 · “Possession by Dec 28”
+              - **Golf Course Extensio** · `TEXT` · 140×16 · “2 BHK”
+              - **Frame 2087324806** · `FRAME` · 106×32 · vertical stack, gap 4px · 2 children
+                - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 101×12 · “Super built-up area”
+                - **Frame 2087324804** · `FRAME` · 106×16 · horizontal row, gap 4px
+                  - _…and 2 more_
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 118×16 · “₹2.25 Cr - 2.55 Cr”
+            - **Frame 2087324665** · `FRAME` · 140×32 · horizontal row, gap 8px · 2 children
+              - **Group 1000004324** · `GROUP` · 32×32 · 1 children
+                - **Group 1000004320** · `GROUP` · 32×32
+                  - _…and 1 more_
+              - **Group 1000004318** · `GROUP` · 100×32 · 1 children
+                - **button** · `INSTANCE` · 100×32 · horizontal row · instance of button
+        - **Frame 2087324805** · `FRAME` · 156×300 · vertical stack, gap 7px, padding 12px · 3 children
+          - **image** · `RECTANGLE` · 132×124
+          - **Right Cheveron** · `INSTANCE` · 54×24 · horizontal row, gap 10px · instance of Right Cheveron
+          - **Frame 2087324815** · `FRAME` · 132×145 · vertical stack, gap 12px · 2 children
+            - **Frame 2087324805** · `FRAME` · 132×101 · vertical stack, gap 7px · 4 children
+              - **Pay 10% now and rest** · `TEXT` · 125×16 · “Possession by Dec 28”
+              - **Golf Course Extensio** · `TEXT` · 132×16 · “3 BHK”
+              - **Frame 2087324806** · `FRAME` · 106×32 · vertical stack, gap 4px · 2 children
+                - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 101×12 · “Super built-up area”
+                - **Frame 2087324804** · `FRAME` · 106×16 · horizontal row, gap 4px
+                  - _…and 2 more_
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 128×16 · “₹2.85 Cr - ₹3.82 Cr”
+            - **Frame 2087324665** · `FRAME` · 132×32 · horizontal row, gap 8px · 2 children
+              - **Group 1000004324** · `GROUP` · 32×32 · 1 children
+                - **Group 1000004320** · `GROUP` · 32×32
+                  - _…and 1 more_
+              - **Group 1000004318** · `GROUP` · 92×32 · 1 children
+                - **button** · `INSTANCE` · 92×32 · horizontal row · instance of button
+        - **Frame 2087324804** · `FRAME` · 164×256 · vertical stack, gap 7px, padding 12px · 3 children
+          - **image** · `RECTANGLE` · 140×124
+          - **Frame 2087324805** · `FRAME` · 140×101 · vertical stack, gap 7px · 4 children
+            - **Pay 10% now and rest** · `TEXT` · 125×16 · “Possession by Dec 28”
+            - **Golf Course Extensio** · `TEXT` · 140×16 · “4 BHK”
+            - **Frame 2087324806** · `FRAME` · 101×32 · vertical stack, gap 4px · 2 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 101×12 · “Super built-up area”
+              - **Frame 2087324804** · `FRAME` · 101×16 · horizontal row, gap 4px · 2 children
+                - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 63×16 · “2850 sq.ft.”
+                - **Shape** · `VECTOR` · 5×8
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 56×16 · “₹4.27 Cr”
+          - **Right Cheveron** · `INSTANCE` · 54×24 · horizontal row, gap 10px · instance of Right Cheveron
+    - **Amenities** · `FRAME` · 360×80 · vertical stack, gap 16px, padding 16px · 1 children
+      - **Frame 2087324736** · `FRAME` · 328×48 · horizontal row, gap 65px · 3 children
+        - **Title** · `FRAME` · 190×48 · vertical stack · 1 children
+          - **View resale property options in this project** · `TEXT` · 182×32 · “View resale property options in this project”
+        - **Group 1564** · `GROUP` · 8×8 · 1 children
+          - **Rectangle 1051** · `RECTANGLE` · 8×8
+        - **Frame 2087324728** · `FRAME` · 138×48 · vertical stack, gap 4px · 1 children
+          - **Frame 2087324727** · `FRAME` · 138×32 · horizontal row, gap 10px, padding 16px · 1 children
+            - **View properties** · `TEXT` · 106×16 · “View properties”
+    - **Affordibility** · `FRAME` · 360×220 · vertical stack, gap 16px, padding 16px · 3 children
+      - **Title** · `FRAME` · 106×20 · vertical stack, gap 4px · 1 children
+        - **Payment plan** · `TEXT` · 106×20 · “Payment plan”
+      - **Frame 2087324129** · `FRAME` · 328×104 · vertical stack, gap 16px, padding 16px · 2 children
+        - **Frame 2087324503** · `FRAME` · 296×40 · vertical stack, gap 8px · 2 children
+          - **Frame 2087324533** · `FRAME` · 232×16 · vertical stack, gap 12px · 1 children
+            - **Frame 2087324530** · `FRAME` · 232×16 · horizontal row, gap 2px · 1 children
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 232×16 · “EMI starts for 3BHK at ₹1.5L/month”
+          - **Frame 2087324518** · `FRAME` · 188×16 · horizontal row, gap 8px · 3 children
+            - **Frame 2087324448** · `FRAME` · 91×16 · horizontal row, gap 12px · 1 children
+              - **Frame 2087324051** · `FRAME` · 91×16 · vertical stack, gap 4px · 1 children
+                - **Frame 2087324449** · `FRAME` · 91×16 · horizontal row, gap 2px
+                  - _…and 2 more_
+            - **Ellipse 553** · `ELLIPSE` · 4×4
+            - **Frame 2087324505** · `FRAME` · 77×16 · horizontal row, gap 12px · 1 children
+              - **Frame 2087324051** · `FRAME` · 77×16 · vertical stack, gap 4px · 1 children
+                - **Frame 2087324449** · `FRAME` · 77×16 · horizontal row, gap 2px
+                  - _…and 2 more_
+        - **Frame 1000003727** · `FRAME` · 296×16 · vertical stack, gap 10px · 1 children
+          - **Frame 2087324532** · `FRAME` · 101×16 · horizontal row · 2 children
+            - **Golf Course Extensio** · `TEXT` · 137×16 · “View Payment Breakup”
+            - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+              - **Rectangle 1050** · `RECTANGLE` · 16×16
+              - **Group 1564** · `GROUP` · 8×8 · 2 children
+                - **Rectangle 1051** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+      - **med_impact_button** · `FRAME` · 328×32 · horizontal row, gap 4px, padding 8/12/8/12px · 6 children
+        - **Icon** · `GROUP` · 16×16 · 2 children
+          - **Clip 2** · `VECTOR` · 16×16
+          - **Fill 1** · `VECTOR` · 16×16
+        - **Contact** · `INSTANCE` · 16×16 · horizontal row, gap 10px, padding 4px · instance of Contact
+        - **Location** · `INSTANCE` · 16×16 · horizontal row, gap 10px, padding 0/2/0/2px · instance of Location
+        - **Label** · `TEXT` · 97×16 · “Contact Seller”
+        - **chevron_type1** · `INSTANCE` · 16×16 · horizontal row, gap 10px, padding 10px · instance of chevron_type1
+        - **Chevron** · `INSTANCE` · 16×16 · horizontal row, gap 10px, padding 2px · instance of Chevron
+    - **Master plan** · `FRAME` · 361×532 · vertical stack, gap 16px, padding 16px · 8 children
+      - **Frame 2087324736** · `FRAME` · 237×20 · horizontal row, gap 65px · 2 children
+        - **Title** · `FRAME` · 237×20 · vertical stack · 1 children
+          - **Project overview** · `TEXT` · 241×20 · “Project overview”
+        - **Group 1564** · `GROUP` · 8×13 · 1 children
+          - **Shape** · `VECTOR` · 8×13
+      - **Frame 2087324829** · `FRAME` · 329×128 · vertical stack, gap 12px · 2 children
+        - **Pointers** · `FRAME` · 329×58 · vertical stack, gap 12px · 2 children
+          - **Frame 1000003752** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Frame 2087324827** · `FRAME` · 94×16 · horizontal row, gap 8px · 2 children
+              - **Plot** · `INSTANCE` · 16×16 · instance of Plot
+              - **Golf Course Extensio** · `TEXT` · 70×16 · “Project area”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 78×16 · “12 acres”
+          - **Frame 1000003756** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Frame 2087324828** · `FRAME` · 113×16 · horizontal row, gap 8px · 2 children
+              - **Projects** · `INSTANCE` · 16×16 · instance of Projects
+              - **Golf Course Extensio** · `TEXT` · 89×16 · “Towers & floors”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 33×16 · “3 · 32”
+        - **Pointers** · `FRAME` · 329×58 · vertical stack, gap 12px · 2 children
+          - **Frame 1000003752** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Frame 2087324827** · `FRAME` · 98×16 · horizontal row, gap 8px · 2 children
+              - **Rest House for Drivers** · `INSTANCE` · 16×16 · instance of Rest House for Drivers
+              - **Golf Course Extensio** · `TEXT` · 74×16 · “Project units”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 78×16 · “657”
+          - **Frame 1000003756** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Frame 2087324828** · `FRAME` · 126×16 · horizontal row, gap 8px · 2 children
+              - **Possession** · `INSTANCE` · 16×16 · instance of Possession
+              - **Golf Course Extensio** · `TEXT` · 102×16 · “Possession starts”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 60×16 · “Nov. 2026”
+      - **Key highlights** · `TEXT` · 241×16 · “Key highlights”
+      - **Frame 2087324761** · `FRAME` · 329×112 · vertical stack, gap 16px · 4 children
+        - **content n Icon** · `FRAME` · 316×16 · horizontal row, gap 8px · 2 children
+          - **vector** · `VECTOR` · 12×14
+          - **Pay 10% now and rest** · `TEXT` · 296×16 · “Connected to South Delhi via Metro”
+        - **content n Icon** · `FRAME` · 329×16 · horizontal row, gap 8px · 2 children
+          - **vector** · `VECTOR` · 16×15
+          - **Pay 10% now and rest** · `TEXT` · 250×16 · “75% Green Space with Water Bodies”
+        - **Frame 2087324762** · `FRAME` · 324×16 · vertical stack, gap 16px · 1 children
+          - **content n Icon** · `FRAME` · 324×16 · horizontal row, gap 8px · 2 children
+            - **Library** · `INSTANCE` · 16×16 · instance of Library
+            - **Pay 10% now and rest** · `TEXT` · 300×16 · “Amphitheatre & Library Onsite”
+        - **Frame 1000004294** · `FRAME` · 72×16 · horizontal row · 2 children
+          - **Sumeet Agrawal** · `TEXT` · 56×16 · “See more”
+          - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+            - **Rectangle 1050** · `RECTANGLE` · 16×16
+            - **Group 1564** · `GROUP` · 8×8 · 2 children
+              - **Rectangle 1051** · `RECTANGLE` · 8×8
+              - **Shape** · `VECTOR` · 5×8
+      - **Frame 2087324775** · `FRAME` · 71×16 · horizontal row, gap 4px · 2 children
+        - **RERA ID** · `TEXT` · 55×16 · “RERA ID”
+        - **Information** · `GROUP` · 12×12 · 2 children
+          - **Rectangle 33** · `RECTANGLE` · 12×12
+          - **Group** · `GROUP` · 12×12 · 1 children
+            - **Group 2** · `GROUP` · 12×12 · 2 children
+              - **info-circle** · `BOOLEAN_OPERATION` · 12×12 · 3 children · ×2
+                - **Path** · `VECTOR` · 12×12
+                - **Path** · `VECTOR` · 2×2
+                - **Path** · `VECTOR` · 3×4
+      - **content n Icon** · `FRAME` · 151×16 · horizontal row, gap 4px · 2 children
+        - **Pay 10% now and rest** · `TEXT` · 131×16 · “GGM/415/147/2020/31 ”
+        - **Mask group** · `GROUP` · 16×16 · 2 children
+          - **Rectangle 4177** · `RECTANGLE` · 16×16
+          - **Group 1000003759** · `GROUP` · 11×12 · 2 children
+            - **Rectangle 4175** · `RECTANGLE` · 8×9
+            - **Rectangle 4176** · `VECTOR` · 8×9
+      - **Frame 2087324822** · `FRAME` · 171×48 · vertical stack, gap 16px · 2 children
+        - **Frame 2087324775** · `FRAME` · 63×16 · horizontal row, gap 4px · 1 children
+          - **Permit ID** · `TEXT` · 63×16 · “Permit ID”
+        - **content n Icon** · `FRAME` · 171×16 · vertical stack, gap 4px · 1 children
+          - **Frame 2087324820** · `FRAME` · 171×16 · horizontal row, gap 4px · 2 children
+            - **Pay 10% now and rest** · `TEXT` · 151×16 · “7865/GHTF/SLP/2026-BP”
+            - **Mask group** · `GROUP` · 16×16 · 2 children
+              - **Rectangle 4177** · `RECTANGLE` · 16×16
+              - **Group 1000003759** · `GROUP` · 11×12 · 2 children
+                - **Rectangle 4175** · `RECTANGLE` · 8×9
+                - **Rectangle 4176** · `VECTOR` · 8×9
+      - **Frame 2087324689** · `FRAME` · 329×32 · vertical stack, gap 24px · 1 children
+        - **Group CTAs** · `GROUP` · 329×32 · 1 children
+          - **Frame 2087324576** · `FRAME` · 329×32 · horizontal row, gap 8px · 3 children
+            - **Group 1000004323** · `GROUP` · 32×32 · 1 children
+              - **Group 1000004320** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324573** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 7/8/7/8px
+                  - _…and 1 more_
+            - **Frame 2087324574** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+              - **Mask group** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 6078** · `RECTANGLE` · 16×16
+                - **Group 1000004283** · `GROUP` · 16×16
+                  - _…and 1 more_
+            - **Group 1000004318** · `GROUP` · 329×32 · 1 children
+              - **Frame 2087324575** · `FRAME` · 329×32 · horizontal row, gap 10px, padding 8/56/8/56px · 1 children
+                - **Ask for more details** · `TEXT` · 134×16 · “Ask for more details”
+    - **Similier properties** · `FRAME` · 360×396 · vertical stack, gap 16px, padding 16px · 2 children
+      - **Frame 2087324736** · `FRAME` · 328×20 · horizontal row, gap 75px · 1 children
+        - **Title** · `FRAME` · 328×20 · horizontal row, gap 48px · 2 children
+          - **Better Priced Properties** · `TEXT` · 241×20 · “Better Priced Properties”
+          - **See all** · `TEXT` · 39×16 · “See all”
+      - **Frame 2087324745** · `FRAME` · 472×328 · horizontal row, gap 16px · 2 children
+        - **Group 1000003980** · `GROUP` · 228×328 · 4 children
+          - **Rectangle 6073** · `RECTANGLE` · 228×328
+          - **Group 1000004350** · `GROUP` · 212×32 · 3 children
+            - **Rectangle** · `RECTANGLE` · 172×32
+            - **Group 1000004358** · `GROUP` · 32×32 · 2 children
+              - **Rectangle** · `RECTANGLE` · 32×32
+              - **Contact** · `FRAME` · 16×16 · horizontal row, gap 10px, padding 4px · 1 children
+                - **WhatsApp_Logo_1** · `RECTANGLE` · 16×16
+            - **Group 1759** · `GROUP` · 79×16 · 1 children
+              - **Group 1000003109** · `GROUP` · 79×16 · 1 children
+                - **Locate on Map** · `TEXT` · 79×16 · “View Phone”
+          - **Group 1961** · `GROUP` · 220×268 · 3 children
+            - **Group 1956** · `GROUP` · 220×124 · 1 children
+              - **Mask group** · `GROUP` · 220×124 · 2 children
+                - **Rectangle 1124** · `RECTANGLE` · 220×124
+                - **Bitmap** · `RECTANGLE` · 251×131
+            - **Group 1962** · `GROUP` · 212×136 · 1 children
+              - **Group 1000003948** · `GROUP` · 212×136 · 4 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 90×16 · “₹1 Cr - ₹1.52 Cr”
+                - **2,3,4 BHK Sector 91,** · `TEXT` · 105×16 · “DLF The Belaire”
+                - **Group 1000003998** · `GROUP` · 209×16
+                  - _…and 2 more_
+                - **Group 1963** · `GROUP` · 212×92
+                  - _…and 1 more_
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6085** · `RECTANGLE` · 24×24
+              - **Group 1000004283** · `GROUP` · 16×14 · 2 children
+                - **Vector** · `VECTOR` · 16×14
+                - **Vector** · `VECTOR` · 16×14
+          - **RERA** · `GROUP` · 50×16 · 3 children
+            - **Rectangle 1183** · `RECTANGLE` · 50×16
+            - **RERA** · `TEXT` · 28×12 · “RERA”
+            - **Security** · `GROUP` · 16×16 · 4 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Mask** · `RECTANGLE` · 12×12
+              - **Union** · `VECTOR` · 10×11
+              - **Path** · `VECTOR` · 5×3
+        - **Group 1000004571** · `GROUP` · 228×328 · 4 children
+          - **Rectangle 6073** · `RECTANGLE` · 228×328
+          - **Group 1000004350** · `GROUP` · 212×32 · 3 children
+            - **Rectangle** · `RECTANGLE` · 172×32
+            - **Group 1000004358** · `GROUP` · 32×32 · 2 children
+              - **Rectangle** · `RECTANGLE` · 32×32
+              - **Contact** · `FRAME` · 16×16 · horizontal row, gap 10px, padding 4px · 1 children
+                - **WhatsApp_Logo_1** · `RECTANGLE` · 16×16
+            - **Group 1759** · `GROUP` · 79×16 · 1 children
+              - **Group 1000003109** · `GROUP` · 79×16 · 1 children
+                - **Locate on Map** · `TEXT` · 79×16 · “View Phone”
+          - **Group 1961** · `GROUP` · 220×268 · 3 children
+            - **Group 1956** · `GROUP` · 220×124 · 1 children
+              - **Mask group** · `GROUP` · 220×124 · 2 children
+                - **Rectangle 1124** · `RECTANGLE` · 220×124
+                - **image** · `RECTANGLE` · 244×136
+            - **Group 1962** · `GROUP` · 212×136 · 1 children
+              - **Group 1000003948** · `GROUP` · 212×136 · 4 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 103×16 · “₹1.5 Cr - ₹2.52 Cr”
+                - **2,3,4 BHK Sector 91,** · `TEXT` · 163×16 · “Emaar The Palm Springs”
+                - **Group 1000003998** · `GROUP` · 209×16
+                  - _…and 2 more_
+                - **Group 1963** · `GROUP` · 212×92
+                  - _…and 1 more_
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6085** · `RECTANGLE` · 24×24
+              - **Group 1000004283** · `GROUP` · 16×14 · 2 children
+                - **Vector** · `VECTOR` · 16×14
+                - **Vector** · `VECTOR` · 16×14
+          - **RERA** · `GROUP` · 50×16 · 3 children
+            - **Rectangle 1183** · `RECTANGLE` · 50×16
+            - **RERA** · `TEXT` · 28×12 · “RERA”
+            - **Security** · `GROUP` · 16×16 · 4 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Mask** · `RECTANGLE` · 12×12
+              - **Union** · `VECTOR` · 10×11
+              - **Path** · `VECTOR` · 5×3
+    - **Affordibility** · `FRAME` · 360×380 · vertical stack, gap 16px, padding 16px · 4 children
+      - **Investment insights** · `TEXT` · 241×20 · “Investment insights”
+      - **Group 1000004685** · `GROUP` · 312×24 · 2 children
+        - **Bahadur Shah Zafar R** · `TEXT` · 243×16 · “Price appreciation seen in last 3 years”
+        - **Group 1000004678** · `GROUP` · 61×24 · 2 children
+          - **Rectangle 6125** · `RECTANGLE` · 61×24
+          - **Group 1000004677** · `GROUP` · 54×16 · 2 children
+            - **Group 1000004676** · `GROUP` · 16×16 · 1 children
+              - **Mask group** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 6124** · `RECTANGLE` · 16×16
+                - **Rectangle** · `VECTOR` · 10×10
+            - **4.44%** · `TEXT` · 34×16 · “15.3%”
+      - **Frame 2087324799** · `FRAME` · 328×224 · vertical stack, gap 10px, padding 16px · 1 children
+        - **Frame 2087324798** · `FRAME` · 296×192 · vertical stack, gap 10px · 1 children
+          - **Frame 1000005958** · `FRAME` · 296×192 · vertical stack, gap 16px · 5 children
+            - **If you invest today in 3BHK, 1900 sq.ft.** · `TEXT` · 256×16 · “If you invest today in 3BHK, 1900 sq.ft.”
+            - **Group 1000004486** · `GROUP` · 296×40 · 1 children
+              - **Group 1000004451** · `GROUP` · 296×40 · 1 children
+                - **Group 1000004450** · `GROUP` · 296×40
+                  - _…and 1 more_
+            - **Frame 2087324792** · `FRAME` · 296×16 · horizontal row, gap 16px · 2 children
+              - **Pay 10% now and rest** · `TEXT` · 76×16 · “Within 1 year”
+              - **Vector 105** · `VECTOR` · 204×0
+            - **Frame 2087324793** · `FRAME` · 296×40 · horizontal row, gap 24px · 2 children
+              - **Group 1000004683** · `GROUP` · 127×40 · 2 children
+                - **Pay 10% now and rest** · `TEXT` · 127×16 · “Potential ROI”
+                - **Group 1000004677** · `GROUP` · 112×20
+                  - _…and 3 more_
+              - **Group 1000004684** · `GROUP` · 124×40 · 3 children
+                - **Pay 10% now and rest** · `TEXT` · 124×16 · “Potential Gain”
+                - **Pay 10% now and rest** · `TEXT` · 43×12 · “(approx)”
+                - **Group 1000004677** · `GROUP` · 43×20
+                  - _…and 1 more_
+            - **Group 1000004294** · `GROUP` · 147×16 · 2 children
+              - **Sumeet Agrawal** · `TEXT` · 131×16 · “View detailed insights”
+              - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 1050** · `RECTANGLE` · 16×16
+                - **Group 1564** · `GROUP` · 8×8
+                  - _…and 2 more_
+      - **Group CTAs** · `GROUP` · 328×32 · 1 children
+        - **Frame 2087324575** · `FRAME` · 328×32 · horizontal row, gap 10px, padding 8/56/8/56px · 1 children
+          - **Contact Seller and Invest Now** · `TEXT` · 203×16 · “Contact Seller and Invest Now”
+    - **Similier properties** · `FRAME` · 360×396 · vertical stack, gap 16px, padding 16px · 2 children
+      - **Frame 2087324736** · `FRAME` · 326×20 · horizontal row, gap 65px · 1 children
+        - **Title** · `FRAME` · 326×20 · horizontal row, gap 46px · 2 children
+          - **Buyers Like You Also Liked** · `TEXT` · 241×20 · “Buyers Like You Also Liked”
+          - **See all** · `TEXT` · 39×16 · “See all”
+      - **Frame 2087324745** · `FRAME` · 472×328 · horizontal row, gap 16px · 2 children
+        - **Group 1000003980** · `GROUP` · 228×328 · 4 children
+          - **Rectangle 6073** · `RECTANGLE` · 228×328
+          - **Group 1000004350** · `GROUP` · 212×32 · 3 children
+            - **Rectangle** · `RECTANGLE` · 172×32
+            - **Group 1000004358** · `GROUP` · 32×32 · 2 children
+              - **Rectangle** · `RECTANGLE` · 32×32
+              - **Contact** · `FRAME` · 16×16 · horizontal row, gap 10px, padding 4px · 1 children
+                - **WhatsApp_Logo_1** · `RECTANGLE` · 16×16
+            - **Group 1759** · `GROUP` · 79×16 · 1 children
+              - **Group 1000003109** · `GROUP` · 79×16 · 1 children
+                - **Locate on Map** · `TEXT` · 79×16 · “View Phone”
+          - **Group 1961** · `GROUP` · 220×268 · 3 children
+            - **Group 1956** · `GROUP` · 220×124 · 1 children
+              - **Mask group** · `GROUP` · 220×124 · 2 children
+                - **Rectangle 1124** · `RECTANGLE` · 220×124
+                - **Bitmap** · `RECTANGLE` · 251×131
+            - **Group 1962** · `GROUP` · 212×136 · 1 children
+              - **Group 1000003948** · `GROUP` · 212×136 · 4 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 108×16 · “₹90 Lac - ₹1.42 Cr”
+                - **2,3,4 BHK Sector 91,** · `TEXT` · 120×16 · “Shapoorji Joyville”
+                - **Group 1000003998** · `GROUP` · 191×16
+                  - _…and 2 more_
+                - **Group 1963** · `GROUP` · 212×92
+                  - _…and 1 more_
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6085** · `RECTANGLE` · 24×24
+              - **Group 1000004283** · `GROUP` · 16×14 · 2 children
+                - **Vector** · `VECTOR` · 16×14
+                - **Vector** · `VECTOR` · 16×14
+          - **RERA** · `GROUP` · 50×16 · 3 children
+            - **Rectangle 1183** · `RECTANGLE` · 50×16
+            - **RERA** · `TEXT` · 28×12 · “RERA”
+            - **Security** · `GROUP` · 16×16 · 4 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Mask** · `RECTANGLE` · 12×12
+              - **Union** · `VECTOR` · 10×11
+              - **Path** · `VECTOR` · 5×3
+        - **Group 1000004571** · `GROUP` · 228×328 · 4 children
+          - **Rectangle 6073** · `RECTANGLE` · 228×328
+          - **Group 1000004350** · `GROUP` · 212×32 · 3 children
+            - **Rectangle** · `RECTANGLE` · 172×32
+            - **Group 1000004358** · `GROUP` · 32×32 · 2 children
+              - **Rectangle** · `RECTANGLE` · 32×32
+              - **Contact** · `FRAME` · 16×16 · horizontal row, gap 10px, padding 4px · 1 children
+                - **WhatsApp_Logo_1** · `RECTANGLE` · 16×16
+            - **Group 1759** · `GROUP` · 79×16 · 1 children
+              - **Group 1000003109** · `GROUP` · 79×16 · 1 children
+                - **Locate on Map** · `TEXT` · 79×16 · “View Phone”
+          - **Group 1961** · `GROUP` · 220×268 · 3 children
+            - **Group 1956** · `GROUP` · 220×124 · 1 children
+              - **Mask group** · `GROUP` · 220×124 · 2 children
+                - **Rectangle 1124** · `RECTANGLE` · 220×124
+                - **image** · `RECTANGLE` · 244×136
+            - **Group 1962** · `GROUP` · 212×136 · 1 children
+              - **Group 1000003948** · `GROUP` · 212×136 · 4 children
+                - **₹3.79 Cr - ₹14.72 Cr** · `TEXT` · 92×16 · “₹1.2 Cr - ₹2.1 Cr”
+                - **2,3,4 BHK Sector 91,** · `TEXT` · 134×16 · “Godrej River Greens”
+                - **Group 1000003998** · `GROUP` · 209×16
+                  - _…and 2 more_
+                - **Group 1963** · `GROUP` · 212×92
+                  - _…and 1 more_
+            - **Mask group** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 6085** · `RECTANGLE` · 24×24
+              - **Group 1000004283** · `GROUP` · 16×14 · 2 children
+                - **Vector** · `VECTOR` · 16×14
+                - **Vector** · `VECTOR` · 16×14
+          - **RERA** · `GROUP` · 50×16 · 3 children
+            - **Rectangle 1183** · `RECTANGLE` · 50×16
+            - **RERA** · `TEXT` · 28×12 · “RERA”
+            - **Security** · `GROUP` · 16×16 · 4 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Mask** · `RECTANGLE` · 12×12
+              - **Union** · `VECTOR` · 10×11
+              - **Path** · `VECTOR` · 5×3
+    - **CRF** · `FRAME` · 360×386 · vertical stack, gap 16px, padding 16px · 2 children
+      - **Frame 2087324736** · `FRAME` · 288×24 · horizontal row, gap 35px · 1 children
+        - **Title** · `FRAME` · 288×24 · vertical stack · 2 children
+          - **Check availability & more information** · `TEXT` · 288×20 · “Check availability & more information”
+          - **Group 1564** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+      - **Group 1000004652** · `GROUP` · 328×314 · 1 children
+        - **CRF** · `GROUP` · 328×314 · 2 children
+          - **Vector 117** · `VECTOR` · 331×0
+          - **Group 1000004439** · `GROUP` · 328×314 · 1 children
+            - **Group 1000004438** · `GROUP` · 328×314 · 2 children
+              - **Group 1000002937** · `GROUP` · 328×314 · 1 children
+                - **Group 1000004456** · `GROUP` · 328×314
+                  - _…and 11 more_
+              - **Vector 880** · `VECTOR` · 311×0
+    - **Master plan** · `FRAME` · 360×316 · vertical stack, gap 16px, padding 16px · 3 children
+      - **Frame 2087324736** · `FRAME` · 237×20 · horizontal row, gap 65px · 2 children
+        - **Title** · `FRAME` · 237×20 · vertical stack · 1 children
+          - **Project Brochure** · `TEXT` · 241×20 · “Project Brochure”
+        - **Group 1564** · `GROUP` · 8×13 · 1 children
+          - **Shape** · `VECTOR` · 8×13
+      - **Group 1000004390** · `GROUP` · 329×200 · 2 children
+        - **Mask group** · `GROUP` · 329×200 · 3 children
+          - **Rectangle 6099** · `RECTANGLE` · 329×200
+          - **image 102** · `RECTANGLE` · 335×201
+          - **Group 1000004385** · `GROUP` · 329×200 · 1 children
+            - **Rectangle 6100** · `VECTOR` · 329×200
+        - **Group 1000004389** · `GROUP` · 312×184 · 4 children
+          - **Group 1000004383** · `GROUP` · 42×23 · 1 children
+            - **Image counting ** · `FRAME` · 42×23 · 1 children
+              - **Image counting ** · `GROUP` · 41×23 · 1 children
+                - **Image Number** · `GROUP` · 41×23
+                  - _…and 7 more_
+          - **Right Cheveron** · `GROUP` · 17×16 · 2 children
+            - **Rectangle 1050** · `RECTANGLE` · 17×16
+            - **Group 1564** · `GROUP` · 16×16 · 3 children
+              - **Rectangle 1050** · `RECTANGLE` · 16×16
+              - **Rectangle 1051** · `RECTANGLE` · 8×8
+              - **Shape** · `VECTOR` · 5×8
+          - **Right Cheveron** · `GROUP` · 25×24 · 2 children
+            - **Rectangle 1050** · `RECTANGLE` · 25×24
+            - **Group 1564** · `GROUP` · 25×24 · 3 children
+              - **Rectangle 1050** · `RECTANGLE` · 25×24
+              - **Group 1000004388** · `GROUP` · 12×11 · 2 children
+                - **Union** · `VECTOR` · 5×4 · ×2
+              - **Rectangle 1051** · `RECTANGLE` · 8×8
+          - **Left Cheveron** · `GROUP` · 16×16 · 1 children
+            - **Group 1000004384** · `GROUP` · 16×16 · 2 children
+              - **Rectangle 1050** · `RECTANGLE` · 16×16
+              - **Group 1564** · `GROUP` · 8×8 · 2 children
+                - **Rectangle 1051** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+      - **Frame 2087324778** · `FRAME` · 328×32 · horizontal row, gap 8px · 2 children
+        - **Frame 2087324737** · `FRAME` · 82×32 · vertical stack · 1 children
+          - **Frame 2087324576** · `FRAME` · 82×32 · horizontal row, gap 8px · 3 children
+            - **Group 1000004323** · `GROUP` · 32×32 · 1 children
+              - **Group 1000004320** · `GROUP` · 32×32 · 1 children
+                - **Frame 2087324573** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 7/8/7/8px
+                  - _…and 1 more_
+            - **Frame 2087324574** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+              - **Mask group** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 6078** · `RECTANGLE` · 16×16
+                - **Group 1000004283** · `GROUP` · 16×16
+                  - _…and 1 more_
+            - **Group 1000004318** · `GROUP` · 82×32 · 1 children
+              - **Frame 2087324575** · `FRAME` · 82×32 · horizontal row, gap 10px, padding 8/56/8/56px · 1 children
+                - **Share** · `TEXT` · 40×16 · “Share”
+        - **Frame 2087324689** · `FRAME` · 231×32 · vertical stack, gap 24px · 1 children
+          - **Group CTAs** · `GROUP` · 231×32 · 1 children
+            - **Frame 2087324576** · `FRAME` · 231×32 · horizontal row, gap 8px · 3 children
+              - **Group 1000004323** · `GROUP` · 32×32 · 1 children
+                - **Group 1000004320** · `GROUP` · 32×32
+                  - _…and 1 more_
+              - **Frame 2087324574** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+                - **Mask group** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **Group 1000004318** · `GROUP` · 240×32 · 1 children
+                - **Frame 2087324575** · `FRAME` · 240×32 · horizontal row, gap 10px, padding 8/56/8/56px
+                  - _…and 1 more_
+    - **Amenities** · `FRAME` · 360×68 · vertical stack, gap 16px, padding 16px · 2 children
+      - **Frame 2087324736** · `FRAME` · 237×36 · horizontal row, gap 65px · 2 children
+        - **Title** · `FRAME` · 237×36 · vertical stack · 2 children
+          - **See All Phases** · `TEXT` · 241×20 · “See All Phases”
+          - **Phase Wise Updates** · `TEXT` · 116×16 · “Phase Wise Updates”
+        - **Group 1564** · `GROUP` · 8×8 · 1 children
+          - **Rectangle 1051** · `RECTANGLE` · 8×8
+      - **Group 1564** · `GROUP` · 8×13 · 1 children
+        - **Shape** · `VECTOR` · 8×13
+    - **Amenities** · `FRAME` · 360×68 · vertical stack, gap 16px, padding 16px · 2 children
+      - **Frame 2087324736** · `FRAME` · 237×36 · horizontal row, gap 65px · 2 children
+        - **Title** · `FRAME` · 237×36 · vertical stack · 2 children
+          - **Amenities** · `TEXT` · 241×20 · “Amenities”
+          - **30+ World Class Amenities In This Project** · `TEXT` · 238×16 · “30+ World Class Amenities In This Project”
+        - **Group 1564** · `GROUP` · 8×8 · 1 children
+          - **Rectangle 1051** · `RECTANGLE` · 8×8
+      - **Group 1564** · `GROUP` · 8×13 · 1 children
+        - **Shape** · `VECTOR` · 8×13
+    - **Contrustion Detail** · `FRAME` · 360×68 · vertical stack, gap 16px, padding 16px · 1 children
+      - **Frame 2087324736** · `FRAME` · 237×36 · horizontal row, gap 65px · 1 children
+        - **Title** · `FRAME` · 237×36 · vertical stack · 3 children
+          - **Construction Details** · `TEXT` · 241×20 · “Construction Details ”
+          - **Vitrified tiles flooring with branded fittings** · `TEXT` · 245×16 · “Vitrified tiles flooring with branded fittings”
+          - **Group 1564** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+    - **Explore your neighbourhood** · `FRAME` · 360×70 · vertical stack, gap 16px, padding 16px · 1 children
+      - **Frame 2087324736** · `FRAME` · 241×38 · horizontal row, gap 65px · 1 children
+        - **Title** · `FRAME` · 241×38 · vertical stack, gap 2px · 3 children
+          - **Explore your neighbourhood** · `TEXT` · 241×20 · “Explore your neighbourhood”
+          - **Explore Map and Reviews** · `TEXT` · 146×16 · “Explore Map and Reviews”
+          - **Group 1564** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+    - **Compare** · `FRAME` · 360×462 · vertical stack, gap 16px, padding 16px · 2 children
+      - **Frame 2087324736** · `FRAME` · 237×24 · horizontal row, gap 65px · 1 children
+        - **Title** · `FRAME` · 237×24 · vertical stack · 2 children
+          - **Compare with Similar Properties** · `TEXT` · 251×20 · “Compare with Similar Properties”
+          - **Group 1564** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+      - **Group 1000004653** · `GROUP` · 480×390 · 1 children
+        - **Group 1000004644** · `GROUP` · 480×390 · 8 children
+          - **Ellipse 551** · `ELLIPSE` · 19×282
+          - **Ellipse 552** · `ELLIPSE` · 19×282
+          - **Rectangle 6142** · `RECTANGLE` · 160×382
+          - **Rectangle 4223** · `RECTANGLE` · 391×390
+          - **Vector 235** · `VECTOR` · 0×381
+          - **Group 1000004609** · `GROUP` · 146×358 · 7 children
+            - **Pay 10% now and rest** · `TEXT` · 146×16 · “Possession by May, 2028”
+            - **img wrap** · `GROUP` · 144×82 · 3 children
+              - **Mask** · `RECTANGLE` · 144×82
+              - **4_bhk_independent_builder_floor-for-sale-sushant_lok_i_sector_43-Gurgaon-hall 1** · `RECTANGLE` · 175×174
+              - **Rectangle 4148** · `RECTANGLE` · 10×9
+            - **Golf Course Extensio** · `TEXT` · 70×32 · “Sobha Auram”
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 144×32 · “Sector 1, Noida Extension, Uttar Pradesh”
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 65×20 · “₹2.85 Cr ”
+            - **Group 1000004604** · `GROUP` · 144×80 · 2 children
+              - **Group 1000004603** · `GROUP` · 144×80 · 2 children
+                - **Group 1000004600** · `GROUP` · 144×64
+                  - _…and 1 more_
+                - **Group 1000004600** · `GROUP` · 49×12
+                  - _…and 1 more_
+              - **Group 1000004603** · `GROUP` · 59×12 · 1 children
+                - **Carpet size** · `TEXT` · 59×12 · “Carpet size”
+            - **Group 1000004605** · `GROUP` · 80×32 · 2 children
+              - **Rectangle 6082** · `RECTANGLE` · 80×32
+              - **Contact** · `TEXT` · 55×16 · “Contact”
+          - **Group 1000004608** · `GROUP` · 152×381 · 8 children
+            - **Pay 10% now and rest** · `TEXT` · 112×16 · “Under construction”
+            - **img wrap** · `GROUP` · 144×82 · 3 children
+              - **Mask** · `RECTANGLE` · 144×82
+              - **image 4** · `RECTANGLE` · 189×98
+              - **Rectangle 4148** · `RECTANGLE` · 10×9
+            - **Golf Course Extensio** · `TEXT` · 126×32 · “Luxurion
+75 Residences”
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 108×32 · “KR Pet, Sector 39, Pune”
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 55×20 · “₹3.5 Cr ”
+            - **Group 1000004606** · `GROUP` · 144×80 · 2 children
+              - **Group 1000004603** · `GROUP` · 144×80 · 2 children
+                - **Group 1000004600** · `GROUP` · 144×64
+                  - _…and 1 more_
+                - **Group 1000004600** · `GROUP` · 49×12
+                  - _…and 1 more_
+              - **Group 1000004603** · `GROUP` · 59×12 · 1 children
+                - **Carpet size** · `TEXT` · 59×12 · “Carpet size”
+            - **Vector 236** · `VECTOR` · 0×381
+            - **Group 1000004607** · `GROUP` · 80×32 · 2 children
+              - **Rectangle 6082** · `RECTANGLE` · 80×32
+              - **Contact** · `TEXT` · 55×16 · “Contact”
+          - **Group 1000004610** · `GROUP` · 152×383 · 8 children
+            - **Pay 10% now and rest** · `TEXT` · 85×16 · “Ready to move”
+            - **img wrap** · `GROUP` · 144×82 · 3 children
+              - **Mask** · `RECTANGLE` · 144×82
+              - **image 5** · `RECTANGLE` · 187×225
+              - **Rectangle 4148** · `RECTANGLE` · 10×9
+            - **Golf Course Extensio** · `TEXT` · 126×32 · “SS Cendana Residence”
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 108×32 · “KR Pet, Sector 39, Pune”
+            - **₹17 L - ₹1.6 Cr. (Al** · `TEXT` · 55×20 · “₹2.5 Cr ”
+            - **Group 1000004606** · `GROUP` · 144×80 · 2 children
+              - **Group 1000004603** · `GROUP` · 144×80 · 2 children
+                - **Group 1000004600** · `GROUP` · 144×64
+                  - _…and 1 more_
+                - **Group 1000004600** · `GROUP` · 49×12
+                  - _…and 1 more_
+              - **Group 1000004603** · `GROUP` · 59×12 · 1 children
+                - **Carpet size** · `TEXT` · 59×12 · “Carpet size”
+            - **Vector 236** · `VECTOR` · 0×383
+            - **Group 1000004607** · `GROUP` · 80×32 · 2 children
+              - **Rectangle 6082** · `RECTANGLE` · 80×32
+              - **Contact** · `TEXT` · 55×16 · “Contact”
+    - **CRF** · `FRAME` · 358×700 · vertical stack, gap 16px, padding 16px · 4 children
+      - **Frame 2087324736** · `FRAME` · 237×24 · horizontal row, gap 35px · 1 children
+        - **Title** · `FRAME` · 237×24 · vertical stack · 2 children
+          - **Active Sellers you may contact** · `TEXT` · 237×20 · “Active Sellers you may contact”
+          - **Group 1564** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+      - **Group 1000004527** · `GROUP` · 328×240 · 2 children
+        - **Group 1000004463** · `GROUP` · 328×208 · 3 children
+          - **Group 1000004460** · `GROUP` · 328×64 · 2 children
+            - **Rectangle 6101** · `VECTOR` · 328×64
+            - **Group 1000004459** · `GROUP` · 311×48 · 3 children
+              - **Group 1000004350** · `GROUP` · 118×32 · 3 children
+                - **Rectangle** · `RECTANGLE` · 76×32
+                - **Group 1000004358** · `GROUP` · 34×32
+                  - _…and 2 more_
+                - **Group 1759** · `GROUP` · 50×16
+                  - _…and 1 more_
+              - **Group 1000004458** · `GROUP` · 122×48 · 3 children
+                - **Angel Bricks** · `TEXT` · 122×16 · “Angel Bricks”
+                - **Featured Agent** · `TEXT` · 85×12 · “Featured Agent”
+                - **₹1 Cr - ₹1.52 Cr** · `TEXT` · 80×12 · “₹1 Cr - ₹1.52 Cr”
+              - **Group 1000004301** · `GROUP` · 50×48 · 1 children
+                - **Mask group** · `GROUP` · 50×48
+                  - _…and 3 more_
+          - **Group 1000004461** · `GROUP` · 328×64 · 2 children
+            - **Rectangle 6101** · `VECTOR` · 328×64
+            - **Group 1000004459** · `GROUP` · 311×48 · 3 children
+              - **Group 1000004350** · `GROUP` · 76×32 · 2 children
+                - **Rectangle** · `RECTANGLE` · 76×32
+                - **Group 1759** · `GROUP` · 50×16
+                  - _…and 1 more_
+              - **Group 1000004458** · `GROUP` · 122×48 · 3 children
+                - **Provident Capital** · `TEXT` · 122×16 · “Provident Capital”
+                - **Seller** · `TEXT` · 32×12 · “Seller”
+                - **₹1.5 Cr - ₹2.3 Cr** · `TEXT` · 85×12 · “₹1.5 Cr - ₹2.3 Cr”
+              - **Group 1000004301** · `GROUP` · 50×48 · 1 children
+                - **Mask group** · `GROUP` · 50×48
+                  - _…and 3 more_
+          - **Group 1000004462** · `GROUP` · 328×64 · 2 children
+            - **Rectangle 6101** · `VECTOR` · 328×64
+            - **Group 1000004459** · `GROUP` · 311×48 · 3 children
+              - **Group 1000004350** · `GROUP` · 118×32 · 3 children
+                - **Rectangle** · `RECTANGLE` · 76×32
+                - **Group 1000004358** · `GROUP` · 34×32
+                  - _…and 2 more_
+                - **Group 1759** · `GROUP` · 50×16
+                  - _…and 1 more_
+              - **Group 1000004458** · `GROUP` · 122×48 · 3 children
+                - **Angel Bricks** · `TEXT` · 122×16 · “Angel Bricks”
+                - **Featured Agent** · `TEXT` · 85×12 · “Featured Agent”
+                - **₹1 Cr - ₹1.52 Cr** · `TEXT` · 80×12 · “₹1 Cr - ₹1.52 Cr”
+              - **Group 1000004301** · `GROUP` · 50×48 · 1 children
+                - **Mask group** · `GROUP` · 50×48
+                  - _…and 3 more_
+        - **Group 1000004526** · `GROUP` · 109×16 · 2 children
+          - **View all sellers** · `TEXT` · 93×16 · “View all sellers”
+          - **Right Cheveron** · `GROUP` · 17×16 · 2 children
+            - **Rectangle 1050** · `RECTANGLE` · 17×16
+            - **Group 1564** · `GROUP` · 9×8 · 2 children
+              - **Rectangle 1051** · `RECTANGLE` · 8×8
+              - **Shape** · `VECTOR` · 5×8
+      - **Line 59** · `LINE` · 328×0
+      - **Group 1000004652** · `GROUP` · 328×356 · 1 children
+        - **CRF** · `GROUP` · 328×356 · 2 children
+          - **Vector 117** · `VECTOR` · 331×0
+          - **Group 1000004439** · `GROUP` · 328×356 · 2 children
+            - **Group 1000004438** · `GROUP` · 328×324 · 2 children
+              - **Group 1000002937** · `GROUP` · 328×324 · 1 children
+                - **Group 1000004456** · `GROUP` · 328×324
+                  - _…and 11 more_
+              - **Vector 880** · `VECTOR` · 311×0
+            - **Golf Course Extensio** · `TEXT` · 289×16 · “Check availability & more information”
+    - **Developer detail** · `FRAME` · 360×795 · vertical stack, gap 16px, padding 16px · 8 children
+      - **Frame 2087324736** · `FRAME` · 237×24 · horizontal row, gap 65px · 1 children
+        - **Title** · `FRAME` · 237×24 · vertical stack · 2 children
+          - **Know about Sobha** · `TEXT` · 251×20 · “Know about Sobha”
+          - **Group 1564** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+      - **Frame 2087324750** · `FRAME` · 328×139 · vertical stack · 2 children
+        - **Rectangle 6187** · `RECTANGLE` · 328×139
+        - **Frame 2087324752** · `FRAME` · 60×60 · vertical stack · 1 children
+          - **Mask group** · `GROUP` · 60×60 · 1 children
+            - **image 4** · `RECTANGLE` · 60×60
+      - **Pointers** · `FRAME` · 328×80 · horizontal row, gap 14px · 3 children
+        - **Frame 1000003752** · `FRAME` · 100×80 · horizontal row, gap 10px · 1 children
+          - **Group 1000003730** · `GROUP` · 100×81 · 1 children
+            - **Group 1000003722** · `GROUP` · 100×81 · 2 children
+              - **Rectangle 4153** · `RECTANGLE` · 100×81
+              - **Group 1000003717** · `GROUP` · 89×58 · 1 children
+                - **Golf Course Extensio** · `TEXT` · 89×58 · “#1  trusted brand 30 years. ”
+        - **Frame 1000003750** · `FRAME` · 100×80 · horizontal row, gap 10px · 1 children
+          - **Group 1000003730** · `GROUP` · 100×81 · 1 children
+            - **Group 1000003722** · `GROUP` · 100×81 · 2 children
+              - **Rectangle 4153** · `RECTANGLE` · 100×81
+              - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 81×63 · “576 projects, 148 million sq.ft. delivered”
+        - **Frame 1000003753** · `FRAME` · 100×80 · horizontal row, gap 10px · 1 children
+          - **Group 1000003730** · `GROUP` · 100×81 · 1 children
+            - **Group 1000003722** · `GROUP` · 100×81 · 3 children
+              - **Rectangle 4153** · `RECTANGLE` · 100×81
+              - **Projects** · `INSTANCE` · 24×23 · instance of Projects
+              - **Golf Course Extensio** · `TEXT` · 91×31 · “1,456 checks. 100% in-house.”
+      - **Pointers** · `FRAME` · 328×120 · vertical stack, gap 8px · 5 children
+        - **Frame 2087324761** · `FRAME` · 329×40 · horizontal row, gap 16px, padding 8/0/0/0px · 1 children
+          - **content n Icon** · `FRAME` · 329×32 · horizontal row, gap 8px · 2 children
+            - **FourPointedStar** · `INSTANCE` · 16×16 · instance of FourPointedStar
+            - **Pay 10% now and rest** · `TEXT` · 304×32 · “Proven Delivery - 19 projects delivered, 11 underway.”
+        - **Frame 2087324722** · `FRAME` · 307×32 · vertical stack · 1 children
+          - **Frame 2087324717** · `FRAME` · 307×32 · horizontal row, gap 8px · 2 children
+            - **FourPointedStar** · `INSTANCE` · 16×16 · instance of FourPointedStar
+            - **Pay 10% now and rest** · `TEXT` · 294×32 · “NCR Expertise - 20+ years in premium NCR housing”
+        - **Line 7** · `LINE` · 328×0
+        - **Frame 2087324723** · `FRAME` · 328×32 · vertical stack · 1 children
+          - **Frame 2087324717** · `FRAME` · 313×32 · horizontal row, gap 8px · 2 children
+            - **FourPointedStar** · `INSTANCE` · 16×16 · instance of FourPointedStar
+            - **Pay 10% now and rest** · `TEXT` · 304×32 · “Trusted Quality - Known for reliability and timely delivery”
+        - **Line 8** · `LINE` · 328×0
+      - **Line 59** · `LINE` · 328×0
+      - **Projects by Sobha** · `TEXT` · 251×16 · “Projects by Sobha”
+      - **.tab bars** · `FRAME` · 328×40 · horizontal row, gap 8px · 1 children
+        - **Frame 2087324738** · `FRAME` · 328×40 · horizontal row, gap 12px · 3 children
+          - **.tabs_premium** · `INSTANCE` · 101×40 · horizontal row, padding 6/16/6/16px · instance of .tabs_premium
+          - **.tabs_premium** · `INSTANCE` · 109×40 · horizontal row, padding 6/16/6/16px · instance of .tabs_premium
+          - **.tabs_premium** · `INSTANCE` · 96×40 · horizontal row, padding 6/16/6/16px · instance of .tabs_premium
+      - **Group 1000004414** · `GROUP` · 472×328 · 1 children
+        - **Group 1000004361** · `GROUP` · 472×328 · 2 children
+          - **Group 1000003980** · `GROUP` · 228×328 · 4 children
+            - **Rectangle 6073** · `RECTANGLE` · 228×328
+            - **Group 1000004350** · `GROUP` · 212×32 · 3 children
+              - **Rectangle** · `RECTANGLE` · 172×32
+              - **Group 1000004358** · `GROUP` · 32×32 · 2 children
+                - **Rectangle** · `RECTANGLE` · 32×32
+                - **Contact** · `FRAME` · 16×16 · horizontal row, gap 10px, padding 4px
+                  - _…and 1 more_
+              - **Group 1759** · `GROUP` · 70×16 · 1 children
+                - **Group 1000003109** · `GROUP` · 70×16
+                  - _…and 1 more_
+            - **Group 1961** · `GROUP` · 220×268 · 3 children
+              - **Group 1956** · `GROUP` · 220×124 · 1 children
+                - **Mask group** · `GROUP` · 220×124
+                  - _…and 2 more_
+              - **Group 1962** · `GROUP` · 212×136 · 1 children
+                - **Group 1000003948** · `GROUP` · 212×136
+                  - _…and 4 more_
+              - **Mask group** · `GROUP` · 24×24 · 2 children
+                - **Rectangle 6085** · `RECTANGLE` · 24×24
+                - **Group 1000004283** · `GROUP` · 16×14
+                  - _…and 2 more_
+            - **RERA** · `GROUP` · 50×16 · 3 children
+              - **Rectangle 1183** · `RECTANGLE` · 50×16
+              - **RERA** · `TEXT` · 28×12 · “RERA”
+              - **Security** · `GROUP` · 16×16 · 4 children
+                - **Mask** · `RECTANGLE` · 16×16
+                - **Mask** · `RECTANGLE` · 12×12
+                - **Union** · `VECTOR` · 10×11
+                - **Path** · `VECTOR` · 5×3
+          - **Group 1000004574** · `GROUP` · 228×328 · 1 children
+            - **Group 1000003980** · `GROUP` · 228×328 · 4 children
+              - **Rectangle 6073** · `RECTANGLE` · 228×328
+              - **Group 1000004350** · `GROUP` · 212×32 · 3 children
+                - **Rectangle** · `RECTANGLE` · 172×32
+                - **Group 1000004358** · `GROUP` · 32×32
+                  - _…and 2 more_
+                - **Group 1759** · `GROUP` · 70×16
+                  - _…and 1 more_
+              - **Group 1961** · `GROUP` · 220×268 · 3 children
+                - **Group 1956** · `GROUP` · 220×124
+                  - _…and 1 more_
+                - **Group 1962** · `GROUP` · 212×136
+                  - _…and 1 more_
+                - **Mask group** · `GROUP` · 24×24
+                  - _…and 2 more_
+              - **RERA** · `GROUP` · 50×16 · 3 children
+                - **Rectangle 1183** · `RECTANGLE` · 50×16
+                - **RERA** · `TEXT` · 28×12 · “RERA”
+                - **Security** · `GROUP` · 16×16
+                  - _…and 4 more_
+    - **Curated solution** · `FRAME` · 360×303 · vertical stack, gap 16px, padding 16px · 1 children
+      - **DISCLAIMER** · `GROUP` · 328×271 · 3 children
+        - **Disclaimer** · `TEXT` · 313×16 · “Disclaimer”
+        - **Housing.com is a not a marketing partner for this real estate project (“Project”) and is not acting on behalf of the developer of this Project. The Project has been displayed for information purposes only. The information displayed here is not provided by the developer hence shall not be construed as an offer for sale or an advertisement for sale by Housing.com or by the developer. Housing.com does not in any way facilitate the sales between the developer of this Project and the visitors/users of the website. The information and data published on this Project are collected from publicly available sources. Housing.com does not and shall not be deemed to validate or confirm the veracity of the information or guarantee its authenticity. The pictures / photos / visuals / videos shown here include artist’s impression of the property being displayed and have been provided by the developers. The actual properties may vary from, and may be inconsistent with, such representations. The actual properties may vary from, and may be inconsistent with, such representations. Further pictures/photos/ representations of furniture and fixtures, surroundings, roads etc. are merely illustrative and shall not be construed to be available with the listed properties or as part of the offerings. Before deciding to purchase or taking any other action, you are requested to exercise due caution and to independently validate and verify all information and details from the aforesaid sources and and to go through the terms and conditions as included in the documents. The developer/the Project may be required to register with the concerned authority under the Act and to otherwise comply with the Real Estate (Regulation and Development), 2016 (“Act”). We do not guarantee that the developer / Project has registered under the Act or is compliant with the same. We may contact you to solicit feedback of your experience and to provide any additional services that you would be eligible for, either as a customer or as a visitor. There is no intention of violating any intellectual property or ancillary rights. If there is any violation, we request that the same be promptly brought to our attention. Neither Housing nor any person having any ownership or other interest in either of them and their respective directors, employees, agents and other representatives shall be responsible or liable to you or any other person (a) for any error, falsity, or inaccuracy in the information provided herein or for any omission of information; (b) for any action taken, cost / expenses / losses incurred, by you or any other person, based on the information given on the portal; or (c) for any act or omission of the developers or any default or failure or breach on their part, including with respect to delivery of any services or amenities advertised and any delay in delivery or completion of the property. Please note that this disclaimer is in addition to the provisions of any other disclaimer displayed / listed on Housing.com.** · `TEXT` · 328×219 · “Housing.com is a not a marketing partner for this real estate project (“Project””
+        - **txt link** · `GROUP` · 110×16 · 2 children
+          - **Guru Ji Builders And** · `TEXT` · 96×16 · “Read disclaimer”
+          - **Right Cheveron** · `GROUP` · 14×13 · 2 children
+            - **Rectangle 1050** · `RECTANGLE` · 14×13
+            - **Group 1564** · `GROUP` · 8×8 · 2 children
+              - **Rectangle 1051** · `RECTANGLE` · 8×8
+              - **Shape** · `VECTOR` · 5×8
+    - **Frame 2087324867** · `FRAME` · 360×32 · horizontal row, gap 230px, padding 8/16/8/16px · 2 children
+      - **12:00** · `TEXT` · 34×17 · “12:00”
+      - **Frame 2087324866** · `FRAME` · 52×14 · horizontal row, gap 6px · 3 children
+        - **Vector 1** · `VECTOR` · 14×14
+        - **Ellipse 2** · `VECTOR` · 17×13
+        - **Union** · `BOOLEAN_OPERATION` · 8×13 · 2 children
+          - **Rectangle 1** · `RECTANGLE` · 8×12
+          - **Rectangle 2** · `VECTOR` · 4×1
+  - **PDP** · `FRAME` · 413×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 371×22 · vertical stack, gap 4px · 1 children
+      - **Property recommendation on PDP gallery** · `TEXT` · 371×22 · “Property recommendation on PDP gallery”
+  - **!st fold - 800 H** · `FRAME` · 360×718 · 2 children
+    - **Cards** · `FRAME` · 361×244 · vertical stack, gap 8px · 2 children
+      - **Project name** · `FRAME` · 361×257 · vertical stack, gap 16px, padding 16px · 3 children
+        - **Frame 2087324797** · `FRAME` · 329×157 · vertical stack, gap 16px · 2 children
+          - **new launch tag** · `FRAME` · 329×23 · vertical stack, gap 8px · 1 children
+            - **new launch tag** · `FRAME` · 329×23 · horizontal row, gap 4px · 3 children
+              - **Image counting ** · `FRAME` · 95×23 · horizontal row, gap 4px, padding 0/8/0/8px · 2 children
+                - **NewLaunch** · `INSTANCE` · 12×12 · instance of NewLaunch
+                - **1/23** · `TEXT` · 63×12 · “New Launch”
+              - **Image counting ** · `FRAME` · 60×23 · horizontal row, gap 4px, padding 0/8/0/8px · 2 children
+                - **ReraShield** · `INSTANCE` · 12×12 · instance of ReraShield
+                - **1/23** · `TEXT` · 28×12 · “RERA”
+              - **Image counting ** · `FRAME` · 119×23 · horizontal row, gap 4px, padding 0/8/0/8px · 1 children
+                - **1/23** · `TEXT` · 103×12 · “Possession by 2028”
+          - **Frame 2087324977** · `FRAME` · 329×118 · vertical stack, gap 16px · 2 children
+            - **Frame 2087324795** · `FRAME` · 329×62 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324978** · `FRAME` · 244×62 · vertical stack, gap 4px · 2 children
+                - **Project Name n Ratings** · `FRAME` · 144×22 · horizontal row, gap 137px
+                  - _…and 1 more_
+                - **Frame 2087324975** · `FRAME` · 244×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+              - **Frame 2087324974** · `FRAME` · 55×62 · vertical stack, gap 2px · 2 children
+                - **Frame 2087324802** · `FRAME` · 44×44 · vertical stack, gap -44px
+                  - _…and 1 more_
+                - **View Map** · `TEXT` · 55×16 · “View Map”
+            - **Frame 2087324767** · `FRAME` · 329×40 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324803** · `FRAME` · 256×40 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324773** · `FRAME` · 235×20 · horizontal row, gap 4px
+                  - _…and 2 more_
+                - **(2, 3, 4 BHK Apartment & Villa)** · `TEXT` · 256×16 · “(2, 3, 4 BHK Apartment & Villa)”
+        - **Line 59** · `LINE` · 328×0
+        - **Seller detail** · `FRAME` · 329×36 · horizontal row, gap 56px · 2 children
+          - **Seller Details** · `GROUP` · 160×36 · 1 children
+            - **Profile** · `GROUP` · 160×36 · 1 children
+              - **Frame 2087324554** · `FRAME` · 160×36 · horizontal row, gap 8px · 2 children
+                - **Mask group** · `GROUP` · 34×34
+                  - _…and 3 more_
+                - **Detail** · `GROUP` · 118×36
+                  - _…and 1 more_
+          - **Frame 2087324728** · `FRAME` · 111×32 · vertical stack, gap 4px · 1 children
+            - **Frame 2087324727** · `FRAME` · 111×32 · horizontal row, gap 10px, padding 16px · 1 children
+              - **View Phone** · `TEXT` · 79×16 · “View Phone”
+      - **Frame 2087324977** · `FRAME` · 361×118 · vertical stack, gap 16px · 2 children
+        - **Frame 2087324795** · `FRAME` · 361×62 · horizontal row, gap 8px · 2 children
+          - **Frame 2087324978** · `FRAME` · 244×62 · vertical stack, gap 4px · 2 children
+            - **Project Name n Ratings** · `FRAME` · 144×22 · horizontal row, gap 137px · 1 children
+              - **Sobha Aurum** · `TEXT` · 144×22 · “Sobha Aurum”
+            - **Frame 2087324975** · `FRAME` · 244×36 · vertical stack, gap 4px · 2 children
+              - **Sector 1, Noida Extension, Gr. Noida, Uttar** · `TEXT` · 244×16 · “Sector 1, Noida Extension, Gr. Noida, Uttar”
+              - **Frame 2087324976** · `FRAME` · 94×16 · horizontal row, gap 4px · 1 children
+                - **Pradesh 200316** · `TEXT` · 94×16 · “Pradesh 200316   ”
+          - **Frame 2087324974** · `FRAME` · 55×62 · vertical stack, gap 2px · 2 children
+            - **Frame 2087324802** · `FRAME` · 44×44 · vertical stack, gap -44px · 1 children
+              - **Location** · `INSTANCE` · 16×16 · instance of Location
+            - **View Map** · `TEXT` · 55×16 · “View Map”
+        - **Frame 2087324767** · `FRAME` · 361×40 · vertical stack, gap 12px · 1 children
+          - **Frame 2087324803** · `FRAME` · 256×40 · vertical stack, gap 4px · 2 children
+            - **Frame 2087324773** · `FRAME` · 235×20 · horizontal row, gap 4px · 2 children
+              - **₹2.25 Cr - 4.27 Cr (₹15K / sq.ft.)** · `TEXT` · 215×20 · “₹2.25 Cr - 4.27 Cr (₹15K / sq.ft.)”
+              - **Info** · `INSTANCE` · 16×16 · instance of Info
+            - **(2, 3, 4 BHK Apartment & Villa)** · `TEXT` · 256×16 · “(2, 3, 4 BHK Apartment & Villa)”
+    - **Frame 2087324969** · `FRAME` · 361×462 · vertical stack · 1 children
+      - **Group 1000004675** · `GROUP` · 361×462 · 5 children
+        - **Frame 2087324970** · `FRAME` · 360×422 · horizontal row · 1 children
+          - **Hero image** · `RECTANGLE` · 360×422
+        - **Frame 2087324968** · `FRAME` · 360×422 · vertical stack, gap 10px, padding 10/10/190/10px · 1 children
+          - **button** · `INSTANCE` · 340×32 · horizontal row · instance of button
+        - **Frame 2087324937** · `FRAME` · 360×226 · vertical stack, gap 16px, padding 16px · 2 children
+          - **Frame 2087324961** · `FRAME` · 328×16 · horizontal row, gap 10px · 1 children
+            - **title** · `TEXT` · 279×16 · “More homes that match your preferences”
+          - **Frame 2087324967** · `COMPONENT` · 328×162 · vertical stack, gap 12px · 2 children
+            - **Frame 2087324964** · `FRAME` · 328×81 · vertical stack, gap 12px · 2 children
+              - **Frame 1000003695** · `INSTANCE` · 328×69 · horizontal row, gap 8px, padding 0/8/0/0px · instance of Frame 1000003695
+              - **Line 61** · `LINE` · 328×0
+            - **Frame 2087324966** · `INSTANCE` · 328×69 · vertical stack, gap 8px · instance of Frame 2087324966
+        - **Status bar** · `INSTANCE` · 361×40 · horizontal row · instance of Status bar
+        - **Top panel** · `FRAME` · 360×68 · horizontal row, gap 11px · 1 children
+          - **Top panel** · `INSTANCE` · 328×32 · horizontal row, gap 11px · instance of Top panel
+  - **Property recommendation on PDP gallery- option 2** · `COMPONENT_SET` · 371×632 · 3 children
+    - **Property 1=Double card** · `COMPONENT` · 158×184 · vertical stack, gap 8px · 1 children
+      - **Frame 1000003691** · `FRAME` · 158×74 · vertical stack, gap 5px, padding 8px · 3 children
+        - **Frame 2087324449** · `FRAME` · 142×16 · vertical stack, gap 4px · 1 children
+          - **Location** · `TEXT` · 142×16 · “Serene Residences”
+        - **Location** · `TEXT` · 142×16 · “Near Chandan Nagar...”
+        - **Frame 2087324450** · `FRAME` · 142×16 · vertical stack, gap 8px · 1 children
+          - **₹5.15 Cr - ₹9.87 Cr** · `TEXT` · 142×16 · “₹5.15 Cr - ₹9.87 Cr”
+  - **New PDP scroll state** · `COMPONENT` · 360×1465 · 3 children
+    - **Cards** · `FRAME` · 361×1375 · vertical stack, gap 8px · 5 children
+      - **Project name** · `FRAME` · 361×243 · vertical stack, gap 16px, padding 16px · 3 children
+        - **New Launch Details** · `FRAME` · 329×143 · vertical stack, gap 8px · 2 children
+          - **new launch tag** · `FRAME` · 329×23 · vertical stack, gap 8px · 1 children
+            - **new launch tag** · `FRAME` · 329×23 · horizontal row, gap 4px · 3 children
+              - **Image counting ** · `FRAME` · 95×23 · horizontal row, gap 4px, padding 0/8/0/8px · 2 children
+                - **New Launch Icon** · `INSTANCE` · 12×12 · instance of New Launch Icon
+                - **1/23** · `TEXT` · 63×12 · “New Launch”
+              - **Image counting ** · `FRAME` · 60×23 · horizontal row, gap 4px, padding 0/8/0/8px · 2 children
+                - **RERA Icon** · `INSTANCE` · 12×12 · instance of RERA Icon
+                - **1/23** · `TEXT` · 28×12 · “RERA”
+              - **Image counting ** · `FRAME` · 119×23 · horizontal row, gap 4px, padding 0/8/0/8px · 1 children
+                - **1/23** · `TEXT` · 103×12 · “Possession by 2028”
+          - **Property Details** · `FRAME` · 329×112 · vertical stack, gap 8px · 1 children
+            - **Property Details** · `FRAME` · 329×112 · vertical stack, gap 16px · 2 children
+              - **Property Name and Ratings** · `FRAME` · 329×56 · vertical stack, gap 8px · 1 children
+                - **Project Name n Ratings** · `FRAME` · 329×56 · horizontal row, gap 8px
+                  - _…and 2 more_
+              - **Pricing Details** · `FRAME` · 329×40 · vertical stack, gap 4px · 2 children
+                - **Price Range** · `FRAME` · 235×20 · horizontal row, gap 4px
+                  - _…and 2 more_
+                - **Property Type Text** · `TEXT` · 256×16 · “(2, 3, 4 BHK Apartment & Villa)”
+        - **Line 59** · `LINE` · 328×0
+        - **Seller detail** · `FRAME` · 329×36 · horizontal row, gap 56px · 2 children
+          - **Seller Details** · `GROUP` · 160×36 · 1 children
+            - **Profile** · `GROUP` · 160×36 · 1 children
+              - **Seller Info** · `FRAME` · 160×36 · horizontal row, gap 8px · 2 children
+                - **Mask group** · `GROUP` · 34×34
+                  - _…and 3 more_
+                - **Detail** · `GROUP` · 118×36
+                  - _…and 1 more_
+          - **Seller Action Button** · `FRAME` · 111×32 · vertical stack, gap 4px · 1 children
+            - **Seller Action Container** · `FRAME` · 111×32 · horizontal row, gap 10px, padding 16px · 1 children
+              - **View Phone Seller Text** · `TEXT` · 79×16 · “View Phone”
+      - **floor plan** · `FRAME` · 361×108 · vertical stack, padding 16px · 2 children
+        - **Line 1** · `LINE` · 326×0
+        - **Sponsored Property Container** · `FRAME` · 333×76 · horizontal row, gap 8px · 2 children
+          - **Sponsored Image Container** · `FRAME` · 84×76 · vertical stack, gap -16px · 2 children
+            - **Sponsored Image Details** · `FRAME` · 84×34 · vertical stack · 1 children
+              - **Sponsored Image Details** · `FRAME` · 84×34 · horizontal row, gap 1px, padding 4px · 2 children
+                - **Mask group** · `GROUP` · 12×12
+                  - _…and 2 more_
+                - **Sponsered** · `TEXT` · 55×12 · “Sponsored”
+            - **84 X 92** · `FRAME` · 84×58 · 2 children
+              - **Sponsored Background** · `RECTANGLE` · 84×58
+              - **Bitmap** · `RECTANGLE` · 136×59
+          - **Sponsored Property Info** · `FRAME` · 241×76 · vertical stack, gap 8px · 1 children
+            - **Sponsored Property Info** · `FRAME` · 241×76 · vertical stack, gap 4px · 2 children
+              - **Property Title Container** · `FRAME` · 241×36 · vertical stack, gap 4px · 2 children
+                - **Property Title and Action** · `FRAME` · 241×16 · horizontal row, gap 55px
+                  - _…and 2 more_
+                - **Location** · `TEXT` · 241×16 · “Gaurs - The Island, Jaypee”
+              - **Property Location Container** · `FRAME` · 241×36 · horizontal row, gap 110px · 2 children
+                - **Property Location and Price** · `FRAME` · 99×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **med_impact_button** · `INSTANCE` · 32×32 · horizontal row, gap 4px, padding 8px · instance of med_impact_button
+      - **floor plan** · `FRAME` · 361×380 · vertical stack, gap 16px, padding 16px · 3 children
+        - **Floor Plan and Pricing** · `FRAME` · 329×20 · horizontal row, gap 10px · 1 children
+          - **Title** · `FRAME` · 150×20 · horizontal row, gap -16px · 2 children
+            - **Floor Plan Title** · `TEXT` · 241×20 · “Floor Plan & Pricing”
+            - **Floor Plan Note** · `TEXT` · 107×12 · “*1 sq.m = 10.76 sq.ft.”
+        - **.tab bars** · `FRAME` · 326×40 · horizontal row, gap 10px · 1 children
+          - **Tab Container** · `FRAME` · 326×40 · horizontal row, gap 12px · 4 children
+            - **.tabs_premium** · `INSTANCE` · 79×40 · horizontal row, padding 6/16/6/16px · instance of .tabs_premium
+            - **.tabs_premium** · `FRAME` · 79×40 · vertical stack, padding 6/16/6/16px · 2 children
+              - **Tab 2 BHK** · `TEXT` · 35×16 · “2 BHK”
+              - **Tab 2 BHK Sizes** · `TEXT` · 37×12 · “2 Sizes”
+            - **.tabs_premium** · `FRAME` · 79×40 · vertical stack, padding 6/16/6/16px · 2 children
+              - **Tab 3 BHK** · `TEXT` · 35×16 · “3 BHK”
+              - **Tab 3 BHK Sizes** · `TEXT` · 37×12 · “3 Sizes”
+            - **.tabs_premium** · `FRAME` · 79×40 · vertical stack, padding 6/16/6/16px · 2 children
+              - **Tab 4 BHK** · `TEXT` · 35×16 · “4 BHK”
+              - **Tab 4 BHK Sizes** · `TEXT` · 35×12 · “1 Sizes”
+        - **Floor Plan Details** · `FRAME` · 336×256 · horizontal row, gap 16px · 2 children
+          - **Property Image 2 BHK** · `FRAME` · 164×256 · vertical stack, gap 7px, padding 12px · 3 children
+            - **image** · `RECTANGLE` · 140×124
+            - **Right Arrow Icon** · `INSTANCE` · 54×24 · horizontal row, gap 10px · instance of Right Arrow Icon
+            - **Property Details 2 BHK** · `FRAME` · 140×101 · vertical stack, gap 12px · 1 children
+              - **Floor Plan Text Container** · `FRAME` · 140×101 · vertical stack, gap 7px · 4 children
+                - **Pay 10% now and rest** · `TEXT` · 125×16 · “Possession by Dec 28”
+                - **Golf Course Extensio** · `TEXT` · 140×16 · “2 BHK”
+                - **Property Price Details** · `FRAME` · 106×32 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 118×16 · “₹2.25 Cr - 2.55 Cr”
+          - **Property Image 3 BHK** · `FRAME` · 156×256 · vertical stack, gap 7px, padding 12px · 3 children
+            - **image** · `RECTANGLE` · 132×124
+            - **Right Arrow Icon** · `INSTANCE` · 54×24 · horizontal row, gap 10px · instance of Right Arrow Icon
+            - **Property Details 3 BHK** · `FRAME` · 132×101 · vertical stack, gap 12px · 1 children
+              - **Floor Plan Text Container** · `FRAME` · 132×101 · vertical stack, gap 7px · 4 children
+                - **Pay 10% now and rest** · `TEXT` · 125×16 · “Possession by Dec 28”
+                - **Golf Course Extensio** · `TEXT` · 132×16 · “3 BHK”
+                - **Property Price Details** · `FRAME` · 106×32 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 128×16 · “₹2.85 Cr - ₹3.82 Cr”
+      - **Amenities** · `FRAME` · 360×72 · vertical stack, gap 16px, padding 16px · 1 children
+        - **Frame 2087324736** · `FRAME` · 328×40 · horizontal row, gap 65px · 3 children
+          - **Title** · `FRAME` · 190×40 · vertical stack · 1 children
+            - **View resale property options in this project** · `TEXT` · 182×40 · “View resale property options in this project”
+          - **Group 1564** · `GROUP` · 8×8 · 1 children
+            - **Rectangle 1051** · `RECTANGLE` · 8×8
+          - **Frame 2087324727** · `FRAME` · 138×32 · horizontal row, gap 10px, padding 16px · 1 children
+            - **View properties** · `TEXT` · 106×16 · “View properties”
+      - **Master plan** · `FRAME` · 361×540 · vertical stack, gap 16px, padding 16px · 9 children
+        - **Project Overview** · `FRAME` · 237×20 · horizontal row, gap 65px · 2 children
+          - **Title** · `FRAME` · 237×20 · vertical stack · 1 children
+            - **Overview Title** · `TEXT` · 241×20 · “Project overview”
+          - **Overview Icon** · `GROUP` · 8×13 · 1 children
+            - **Shape** · `VECTOR` · 8×13
+        - **Pointers** · `FRAME` · 329×58 · vertical stack, gap 12px · 2 children
+          - **Project Area Info** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Project Area Label** · `FRAME` · 94×16 · horizontal row, gap 8px · 2 children
+              - **Area Icon** · `INSTANCE` · 16×16 · instance of Area Icon
+              - **Golf Course Extensio** · `TEXT` · 70×16 · “Project area”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 78×16 · “12 acres”
+          - **Towers Info** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Towers Info Label** · `FRAME` · 113×16 · horizontal row, gap 8px · 2 children
+              - **Towers Info Icon** · `INSTANCE` · 16×16 · instance of Towers Info Icon
+              - **Golf Course Extensio** · `TEXT` · 89×16 · “Towers & floors”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 33×16 · “3 · 32”
+        - **Pointers** · `FRAME` · 329×58 · vertical stack, gap 12px · 2 children
+          - **Units Info** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Units Label** · `FRAME` · 98×16 · horizontal row, gap 8px · 2 children
+              - **Units Icon** · `INSTANCE` · 16×16 · instance of Units Icon
+              - **Golf Course Extensio** · `TEXT` · 74×16 · “Project units”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 78×16 · “657”
+          - **Possession Info** · `FRAME` · 159×58 · vertical stack, gap 10px, padding 8px · 2 children
+            - **Possession Label** · `FRAME` · 126×16 · horizontal row, gap 8px · 2 children
+              - **Possession Icon** · `INSTANCE` · 16×16 · instance of Possession Icon
+              - **Golf Course Extensio** · `TEXT` · 102×16 · “Possession starts”
+            - **₹35.4 L - ₹1.15 Cr** · `TEXT` · 60×16 · “Nov. 2026”
+        - **Key Highlights** · `TEXT` · 241×16 · “Key highlights”
+        - **Key Points** · `FRAME` · 329×116 · vertical stack, gap 16px · 4 children
+          - **content n Icon** · `FRAME` · 329×18 · horizontal row, gap 8px · 2 children
+            - **Key Points Item** · `FRAME` · 16×18 · horizontal row, gap 10px, padding 2px · 1 children
+              - **vector** · `VECTOR` · 12×14
+            - **Pay 10% now and rest** · `TEXT` · 296×16 · “Connected to South Delhi via Metro”
+          - **content n Icon** · `FRAME` · 329×18 · horizontal row, gap 8px · 2 children
+            - **Key Points Item** · `FRAME` · 17×18 · horizontal row, gap 10px, padding 2px · 1 children
+              - **vector** · `VECTOR` · 13×15
+            - **Pay 10% now and rest** · `TEXT` · 250×16 · “75% Green Space with Water Bodies”
+          - **Key Points Item Container** · `FRAME` · 329×16 · vertical stack, gap 16px · 1 children
+            - **content n Icon** · `FRAME` · 324×16 · horizontal row, gap 8px · 2 children
+              - **Key Points Library Icon** · `INSTANCE` · 16×16 · instance of Key Points Library Icon
+              - **Pay 10% now and rest** · `TEXT` · 300×16 · “Amphitheatre & Library Onsite”
+          - **See More** · `FRAME` · 72×16 · horizontal row · 2 children
+            - **Sumeet Agrawal** · `TEXT` · 56×16 · “See more”
+            - **Right Cheveron** · `GROUP` · 16×16 · 2 children
+              - **See More Icon Mask** · `RECTANGLE` · 16×16
+              - **See More Icon** · `GROUP` · 8×8 · 2 children
+                - **See More Icon Mask** · `RECTANGLE` · 8×8
+                - **Shape** · `VECTOR` · 5×8
+        - **RERA Info** · `FRAME` · 71×16 · horizontal row, gap 4px · 2 children
+          - **RERA Label** · `TEXT` · 55×16 · “RERA ID”
+          - **Information** · `GROUP` · 12×12 · 2 children
+            - **RERA Icon Background** · `RECTANGLE` · 12×12
+            - **Group** · `GROUP` · 12×12 · 1 children
+              - **RERA IconContainer** · `GROUP` · 12×12 · 2 children
+                - **info-circle** · `BOOLEAN_OPERATION` · 12×12 · ×2
+                  - _…and 3 more_
+        - **content n Icon** · `FRAME` · 151×16 · horizontal row, gap 4px · 2 children
+          - **Pay 10% now and rest** · `TEXT` · 131×16 · “GGM/415/147/2020/31 ”
+          - **Mask group** · `GROUP` · 16×16 · 2 children
+            - **Info Icon Mask** · `RECTANGLE` · 16×16
+            - **Info Icon Container** · `GROUP` · 11×12 · 2 children
+              - **Info Icon Mask** · `RECTANGLE` · 8×9
+              - **Rectangle 4176** · `VECTOR` · 8×9
+        - **Frame 2087324822** · `FRAME` · 171×48 · vertical stack, gap 16px · 2 children
+          - **Frame 2087324775** · `FRAME` · 63×16 · horizontal row, gap 4px · 1 children
+            - **Permit ID** · `TEXT` · 63×16 · “Permit ID”
+          - **content n Icon** · `FRAME` · 171×16 · vertical stack, gap 4px · 1 children
+            - **Frame 2087324820** · `FRAME` · 171×16 · horizontal row, gap 4px · 2 children
+              - **Pay 10% now and rest** · `TEXT` · 151×16 · “7865/GHTF/SLP/2026-BP”
+              - **Mask group** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 4177** · `RECTANGLE` · 16×16
+                - **Group 1000003759** · `GROUP` · 11×12
+                  - _…and 2 more_
+        - **Details CTA** · `FRAME` · 329×32 · vertical stack, gap 24px · 1 children
+          - **Group CTAs** · `GROUP` · 329×32 · 1 children
+            - **CTA Container** · `FRAME` · 329×32 · horizontal row, gap 8px · 3 children
+              - **Group 1000004323** · `GROUP` · 32×32 · 1 children
+                - **Group 1000004320** · `GROUP` · 32×32
+                  - _…and 1 more_
+              - **Frame 2087324574** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+                - **Mask group** · `GROUP` · 16×16
+                  - _…and 2 more_
+              - **CTA Background** · `GROUP` · 329×32 · 1 children
+                - **CTA Background** · `FRAME` · 329×32 · horizontal row, gap 10px, padding 8/56/8/56px
+                  - _…and 1 more_
+    - **Contact Options** · `FRAME` · 360×72 · horizontal row, gap 8px, padding 16px · 3 children
+      - **button** · `FRAME` · 69×40 · horizontal row · 1 children
+        - **.demand_secondary** · `FRAME` · 69×40 · horizontal row, gap 4px, padding 0/8/0/8px · 3 children
+          - **Chat Icon** · `INSTANCE` · 16×16 · instance of Chat Icon
+          - **Chat Text** · `TEXT` · 33×16 · “Chat”
+          - **ChevronRight** · `INSTANCE` · 12×12 · instance of ChevronRight
+      - **button** · `FRAME` · 93×40 · horizontal row · 1 children
+        - **.demand_secondary** · `FRAME` · 94×40 · horizontal row, gap 4px, padding 0/8/0/8px · 3 children
+          - **whatsapp** · `INSTANCE` · 12×12 · instance of whatsapp
+          - **View Phone Text** · `TEXT` · 78×16 · “View phone”
+          - **ChevronRight** · `INSTANCE` · 12×12 · instance of ChevronRight
+      - **button** · `FRAME` · 150×40 · horizontal row · 1 children
+        - **.demand_primary** · `FRAME` · 150×40 · horizontal row, gap 4px, padding 0/8/0/8px · 3 children
+          - **Call** · `INSTANCE` · 12×12 · instance of Call
+          - **Contact Seller Text** · `TEXT` · 97×16 · “Contact Seller”
+          - **ChevronRight** · `INSTANCE` · 12×12 · instance of ChevronRight
+    - **Top navigation** · `FRAME` · 360×68 · horizontal row, padding 16px · 2 children
+      - **Project Summary** · `FRAME` · 216×36 · horizontal row, gap 8px · 2 children
+        - **Back Icon** · `FRAME` · 24×24 · vertical stack, gap 10px, padding 5/4/5/4px · 2 children
+          - **Mask** · `RECTANGLE` · 24×24
+          - **Back Arrow** · `GROUP` · 16×14 · 3 children
+            - **Vector 794** · `VECTOR` · 7×7
+            - **Vector 795** · `VECTOR` · 7×7
+            - **Vector 795** · `VECTOR` · 16×0
+        - **Project Info** · `FRAME` · 156×36 · vertical stack, gap 4px · 2 children
+          - **Launch Date & Posses** · `TEXT` · 156×16 · “Sobha Auram”
+          - **Started Dec, 2019** · `TEXT` · 156×16 · “₹2.25 Cr - ₹4.27 Cr”
+      - **Action Buttons** · `FRAME` · 112×36 · horizontal row, gap 8px, padding 1/0/1/0px · 3 children
+        - **Button** · `FRAME` · 32×32 · horizontal row, padding 0/0.00672130798920989/0/0px · 1 children
+          - **Icon** · `FRAME` · 15×15 · 1 children
+            - **Vector** · `VECTOR` · 13×11
+        - **Button** · `FRAME` · 32×32 · horizontal row, padding 0/0.0066977497190237045/0/0px · 1 children
+          - **Icon** · `FRAME` · 15×15 · 5 children
+            - **Vector** · `VECTOR` · 4×4 · ×3
+            - **Vector** · `VECTOR` · 4×3 · ×2
+        - **Button** · `FRAME` · 32×32 · horizontal row · 1 children
+          - **Call Button** · `INSTANCE` · 16×16 · instance of Call Button
+  - **Web / Homepage / NP / PDP** · `COMPONENT` · 1512×14887 · vertical stack, gap 40px · 3 children
+    - **Frame 2087324462** · `FRAME` · 1512×13372 · vertical stack, gap 24px · 2 children
+      - **Headers** · `INSTANCE` · 1512×64 · horizontal row, gap 48px, padding 8/24/8/24px · instance of Headers
+      - **Frame 2087324464** · `FRAME` · 1200×13284 · horizontal row, gap 24px · 1 children
+        - **Frame 2087324465** · `FRAME` · 1200×13284 · vertical stack, gap 24px · 2 children
+          - **First fold** · `INSTANCE` · 1200×566 · horizontal row, gap 40px, padding 24px · instance of First fold
+          - **Frame 2147261424** · `FRAME` · 1200×12694 · horizontal row, gap 24px · 2 children
+            - **Frame 2147261425** · `FRAME` · 792×12694 · vertical stack, gap 24px · 23 children
+              - **Frame 2087324464** · `FRAME` · 792×428 · vertical stack, gap 24px, padding 24px · 3 children
+                - **About this property** · `TEXT` · 169×26 · “About this property”
+                - **Frame 2087324458** · `FRAME` · 744×208 · vertical stack, gap 20px
+                  - _…and 7 more_
+                - **Frame 2147261416** · `FRAME` · 744×98 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324465** · `FRAME` · 792×724 · vertical stack, gap 24px, padding 24/0/24/0px · 3 children
+                - **Frame 2147261417** · `FRAME` · 243×26 · horizontal row, gap 10px, padding 0/28/0/28px
+                  - _…and 1 more_
+                - **Frame 2087324427** · `FRAME` · 792×40 · vertical stack, gap 24px
+                  - _…and 1 more_
+                - **Frame 2147261416** · `FRAME` · 792×562 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 3 more_
+              - **Frame 2087324491** · `FRAME` · 792×194 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261417** · `FRAME` · 175×26 · horizontal row, gap 10px, padding 0/24/0/24px
+                  - _…and 1 more_
+                - **Frame 2147261416** · `FRAME` · 792×96 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 1 more_
+              - **Frame 2087324471** · `FRAME` · 792×450 · vertical stack, gap 24px, padding 24px · 4 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261434** · `FRAME` · 744×256 · vertical stack, gap 32px
+                  - _…and 2 more_
+                - **Line 6** · `LINE` · 744×0
+                - **Frame 2147261603** · `FRAME` · 139×48 · horizontal row, gap 24px
+                  - _…and 1 more_
+              - **Frame 2087324467** · `FRAME` · 792×188 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261417** · `FRAME` · 165×26 · horizontal row, gap 10px, padding 0/24/0/24px
+                  - _…and 1 more_
+                - **Frame 2147261416** · `FRAME` · 792×90 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 1 more_
+              - **Frame 2087324469** · `FRAME` · 792×442 · vertical stack, gap 24px, padding 24px · 4 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261466** · `FRAME` · 744×248 · horizontal row, gap 32px
+                  - _…and 2 more_
+                - **Line 6** · `LINE` · 744×0
+                - **Frame 2147261603** · `FRAME` · 200×48 · horizontal row, gap 24px
+                  - _…and 1 more_
+              - **Frame 2087324474** · `FRAME` · 792×842 · vertical stack, gap 24px, padding 24px · 3 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261478** · `FRAME` · 991×44 · horizontal row, gap 16px
+                  - _…and 5 more_
+                - **Frame 2147261522** · `FRAME` · 744×676 · vertical stack, gap 16px
+                  - _…and 1 more_
+              - **Frame 2087324470** · `FRAME` · 792×458 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261468** · `FRAME` · 744×26 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261570** · `FRAME` · 744×360 · vertical stack, gap 12px
+                  - _…and 2 more_
+              - **Frame 2087324475** · `FRAME` · 792×686 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261466** · `FRAME` · 744×588 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324477** · `FRAME` · 792×686 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261468** · `FRAME` · 744×588 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324478** · `FRAME` · 792×488 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Component 16** · `FRAME` · 744×390 · vertical stack, gap 32px, padding 24/10/24/10px
+                  - _…and 6 more_
+              - **Frame 2087324488** · `FRAME` · 792×686 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261469** · `FRAME` · 744×26 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261468** · `FRAME` · 744×588 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324483** · `FRAME` · 792×306 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261468** · `FRAME` · 744×26 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261503** · `FRAME` · 744×208 · horizontal row, gap 24px
+                  - _…and 2 more_
+              - **Rating and review** · `INSTANCE` · 792×640 · vertical stack, gap 24px, padding 24px · instance of Rating and review
+              - **Frame 2087324490** · `FRAME` · 792×708 · vertical stack, gap 24px, padding 24/0/24/0px · 4 children
+                - **Frame 2147261468** · `FRAME` · 792×26 · horizontal row, gap 60px, padding 0/24/0/24px
+                  - _…and 2 more_
+                - **Frame 2087324427** · `FRAME` · 792×40 · vertical stack, gap 24px
+                  - _…and 1 more_
+                - **Frame 2147261537** · `FRAME` · 210×44 · horizontal row, gap 16px, padding 0/24/0/24px
+                  - _…and 2 more_
+                - **Frame 2147261416** · `FRAME` · 792×478 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 3 more_
+              - **Frame 2087324487** · `FRAME` · 792×948 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261528** · `FRAME` · 792×34 · horizontal row, gap 24px, padding 0/24/0/24px
+                  - _…and 2 more_
+                - **Frame 2147261487** · `FRAME` · 792×842 · vertical stack, gap 24px
+                  - _…and 2 more_
+              - **Frame 2087324489** · `FRAME` · 792×262 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261417** · `FRAME` · 236×26 · horizontal row, gap 10px, padding 0/24/0/24px
+                  - _…and 1 more_
+                - **Frame 2147261416** · `FRAME` · 792×164 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 1 more_
+              - **Frame 2087324485** · `FRAME` · 792×1334 · vertical stack, gap 24px, padding 24/0/24/0px · 3 children
+                - **Frame 2147261614** · `FRAME` · 792×26 · vertical stack, gap 24px, padding 0/24/0/24px
+                  - _…and 1 more_
+                - **Frame 2147261598** · `FRAME` · 792×515 · horizontal row, gap 24px
+                  - _…and 1 more_
+                - **Frame 2147261615** · `FRAME` · 792×697 · vertical stack, gap 10px, padding 0/24/0/24px
+                  - _…and 1 more_
+              - **Frame 2087324480** · `FRAME` · 792×178 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261509** · `FRAME` · 707×80 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324486** · `FRAME` · 792×496 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261528** · `FRAME` · 744×34 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2147261484** · `FRAME` · 744×390 · vertical stack
+                  - _…and 3 more_
+              - **Frame 2087324482** · `FRAME` · 792×387 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261484** · `FRAME` · 744×289 · vertical stack
+                  - _…and 5 more_
+              - **Frame 2087324481** · `FRAME` · 792×481 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261481** · `FRAME` · 984×383 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324479** · `FRAME` · 792×154 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261480** · `FRAME` · 744×56 · horizontal row, gap 16px
+                  - _…and 1 more_
+            - **Frame 2147261624** · `FRAME` · 384×452 · vertical stack, gap 16px · 2 children
+              - **Frame 2087324455** · `FRAME` · 384×418 · vertical stack, padding 24/0/24/0px · 1 children
+                - **Frame 2087324470** · `FRAME` · 384×370 · vertical stack, gap 24px
+                  - _…and 2 more_
+              - **Button** · `INSTANCE` · 142×18 · horizontal row, gap 4px · instance of Button
+    - **Frame 2147261539** · `FRAME` · 1512×20 · vertical stack, gap 10px, padding 0/156/0/156px · 1 children
+      - **Breadcrumb ** · `FRAME` · 390×20 · horizontal row · 1 children
+        - **Breadcrumb main** · `FRAME` · 390×20 · horizontal row, gap 8px · 9 children
+          - **_Breadcrumb items core** · `INSTANCE` · 24×24 · horizontal row · instance of _Breadcrumb items core
+          - **chevron-right** · `INSTANCE` · 16×16 · instance of chevron-right
+          - **_Breadcrumb items core** · `INSTANCE` · 42×20 · horizontal row · instance of _Breadcrumb items core
+          - **Frame 2087324448** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+            - **CaretRight** · `INSTANCE` · 16×16 · instance of CaretRight
+          - **_Breadcrumb items core** · `INSTANCE` · 57×20 · horizontal row · instance of _Breadcrumb items core
+          - **Frame 2087324449** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+            - **CaretRight** · `INSTANCE` · 16×16 · instance of CaretRight
+          - **_Breadcrumb items core** · `INSTANCE` · 91×20 · horizontal row · instance of _Breadcrumb items core
+          - **Frame 2087324450** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+            - **CaretRight** · `INSTANCE` · 16×16 · instance of CaretRight
+          - **_Breadcrumb items core** · `INSTANCE` · 104×20 · horizontal row · instance of _Breadcrumb items core
+    - **Frame 2** · `FRAME` · 1512×1415 · vertical stack, gap 1px · 1 children
+      - **Footer** · `FRAME` · 1512×1415 · vertical stack · 1 children
+        - **Frame 2147261521** · `FRAME` · 1512×1415 · vertical stack, gap 1px · 3 children
+          - **Background** · `FRAME` · 1512×569 · vertical stack, gap 29.799999237060547px, padding 39.75/20/40/70px · 5 children
+            - **Container** · `FRAME` · 1422×97 · horizontal row, gap 63.689998626708984px · 2 children
+              - **TRENDING SEARCHES** · `TEXT` · 56×24 · “TRENDING SEARCHES”
+              - **Container** · `FRAME` · 1063×97 · 19 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×19
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×98 · horizontal row, gap 58.970001220703125px · 2 children
+              - **POPULAR LOCALITIES** · `TEXT` · 61×24 · “POPULAR LOCALITIES”
+              - **Container** · `FRAME` · 1292×98 · 20 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×20
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×59 · horizontal row, gap 19.770000457763672px · 2 children
+              - **NEW PROJECTS IN SECTOR 121** · `TEXT` · 82×24 · “NEW PROJECTS IN SECTOR 121”
+              - **Container** · `FRAME` · 1292×59 · 10 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×10
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×59 · horizontal row, gap 14.109999656677246px · 2 children
+              - **RESALE PROJECTS IN SECTOR 121** · `TEXT` · 97×24 · “RESALE PROJECTS IN SECTOR 121”
+              - **Container** · `FRAME` · 1292×59 · 10 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×10
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×59 · horizontal row, gap 2.4200000762939453px · 2 children
+              - **POPULAR SEARCHES** · `TEXT` · 56×24 · “POPULAR SEARCHES”
+              - **Container** · `FRAME` · 1292×59 · 12 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×12
+                  - _…and 1 more_
+          - **Background** · `FRAME` · 1512×124 · horizontal row, gap -1.4210854715202004e-14px, padding 36/0/36/0px · 2 children
+            - **Margin** · `FRAME` · 110×40 · vertical stack, padding 0/8/0/0px · 1 children
+              - **Part of** · `TEXT` · 102×40 · “Part of”
+            - **Container** · `FRAME` · 200×52 · vertical stack · 1 children
+              - **REA Group** · `FRAME` · 200×52
+          - **Frame 2147261520** · `FRAME` · 1512×720 · vertical stack · 1 children
+            - **Frame 2147261519** · `FRAME` · 1512×720 · vertical stack · 2 children
+              - **Background** · `FRAME` · 1512×333 · vertical stack, padding 30/0/30/0px · 1 children
+                - **Frame 2147261518** · `FRAME` · 1512×273 · horizontal row, gap 72px, padding 0/70/0/70px
+                  - _…and 4 more_
+              - **HorizontalBorder** · `FRAME` · 1512×387 · 3 children
+                - **Margin** · `FRAME` · 850×286 · vertical stack, padding 0/0/0/50px
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 267×286 · vertical stack, gap 22px
+                  - _…and 3 more_
+                - **Container** · `FRAME` · 375×200
+                  - _…and 4 more_
+  - **Page kit** · `INSTANCE` · 2755×140 · horizontal row, gap 9097px, padding 48/32/48/48px · instance of Page kit
+  - **Share and save** · `COMPONENT` · 100×42 · horizontal row, gap 16px · 2 children
+    - **Frame 2087324449** · `FRAME` · 42×42 · horizontal row, gap 10px, padding 12px · 1 children
+      - **Frame 2087324448** · `FRAME` · 18×18 · horizontal row, gap 4px · 1 children
+        - **Export** · `INSTANCE` · 18×18 · instance of Export
+    - **Component 17** · `INSTANCE` · 42×42 · horizontal row, gap 10px, padding 12px · instance of Component 17
+  - **Share** · `COMPONENT` · 600×394 · vertical stack · 3 children
+    - **Frame 2087324429** · `FRAME` · 600×70 · vertical stack, padding 24px · 1 children
+      - **Frame 2087324431** · `FRAME` · 552×22 · horizontal row, gap 18.209110260009766px · 2 children
+        - **Share this property** · `TEXT` · 146×22 · “Share this property”
+        - **X** · `INSTANCE` · 20×20 · instance of X
+    - **Line 2** · `LINE` · 600×0
+    - **Frame 2087324430** · `FRAME` · 600×320 · vertical stack, gap 24px, padding 24px · 2 children
+      - **Frame 2147261436** · `FRAME` · 552×54 · horizontal row, gap 12px · 2 children
+        - **Rectangle 69** · `RECTANGLE` · 52×54
+        - **Frame 2147261437** · `FRAME` · 488×54 · vertical stack, gap 8px · 2 children
+          - **Frame 2087324455** · `FRAME` · 488×26 · vertical stack, gap 16px · 1 children
+            - **Frame 2087324471** · `FRAME` · 488×26 · horizontal row, gap 16px · 1 children
+              - **Emaar MGF The Palm Drive** · `TEXT` · 488×26 · “Emaar MGF The Palm Drive”
+          - **Frame 2147261430** · `FRAME` · 261×20 · horizontal row, gap 8px · 3 children
+            - **Frame 2087324408** · `FRAME` · 130×20 · horizontal row, gap 12px · 1 children
+              - **Sector 66, Gurgaon** · `TEXT` · 130×20 · “Sector 66, Gurgaon”
+            - **Line 4** · `LINE` · 20×0
+            - **By EMAAR INDIA** · `TEXT` · 115×20 · “By EMAAR INDIA”
+      - **Frame 2147261545** · `FRAME` · 552×194 · vertical stack, gap 16px · 1 children
+        - **Frame 2147261544** · `FRAME` · 552×194 · horizontal row, gap 16px · 1 children
+          - **Frame 2147261546** · `FRAME` · 552×194 · vertical stack, gap 16px · 1 children
+            - **Frame 2147261548** · `FRAME` · 552×194 · vertical stack, gap 16px · 3 children
+              - **Frame 2147261558** · `FRAME` · 552×54 · horizontal row, gap 16px · 2 children
+                - **Header / Menu** · `FRAME` · 268×54 · horizontal row, gap 8px, padding 16px · ×2
+                  - _…and 1 more_
+              - **Frame 2147261559** · `FRAME` · 552×54 · horizontal row, gap 16px · 2 children
+                - **Header / Menu** · `FRAME` · 268×54 · horizontal row, gap 8px, padding 16px · ×2
+                  - _…and 1 more_
+              - **Frame 2147261560** · `FRAME` · 552×54 · horizontal row, gap 16px · 2 children
+                - **Header / Menu** · `FRAME` · 268×54 · horizontal row, gap 8px, padding 16px · ×2
+                  - _…and 1 more_
+  - **Read more** · `COMPONENT` · 740×700 · vertical stack · 3 children
+    - **Frame 2087324429** · `FRAME` · 740×70 · vertical stack, padding 24px · 1 children
+      - **Frame 2087324431** · `FRAME` · 692×22 · horizontal row, gap 18.209110260009766px · 2 children
+        - **About this property** · `TEXT` · 150×22 · “About this property”
+        - **X** · `INSTANCE` · 20×20 · instance of X
+    - **Line 2** · `LINE` · 740×0
+    - **Frame 2087324430** · `FRAME` · 740×1390 · vertical stack, gap 24px, padding 24px · 1 children
+      - **Welcome to our exceptional 3-bedroom, 3-bathroom apartment in prestigious Nine Elms. Stylish, spacious, and finished to a high standard, this elegant home sleeps up to 6 guests and features a beautiful private outdoor terrace. Perfect for families, business travellers, or groups, it offers a premium London stay in a modern riverside neighbourhood, with excellent transport links, a peaceful residential setting, and easy access to Battersea, Westminster, and top attractions. The space Sleeping Arrangements – Sleeps up to 6 guests: Bedroom 1: 1 King bed, sleeps 2 Bedroom 2: 1 King bed, sleeps 2 Bedroom 3: 1 King bed, sleeps 2 Bathroom 1: Full bathroom with shower, toilet and sink. Bathroom 2: Full bathroom with shower, toilet and sink. Bathroom 3: Full bathroom with shower/bath, toilet and sink. All bedrooms include premium bedding and storage space for a restful and comfortable stay. We provide fresh towels, a hairdryer, and a starter supply of toiletries such as shampoo, shower gel, and toilet paper to make your arrival comfortable. In the living area, enjoy a large Smart TV, fast WIFI, and a spacious open-plan layout ideal for relaxing, dining, or working. The apartment also benefits from a beautiful private outdoor terrace, creating a bright and stylish space to enjoy during your stay. The apartment includes a fully equipped kitchen with everything you need for a comfortable self-catering stay. A washer/dryer, iron, and ironing board are also available for your convenience. Approximate Travel Times to Top Attractions: U.S. Embassy – Very close by / visible from the balcony Battersea Power Station – Around 15–20 minutes on foot or a short journey by bus/tube Vauxhall Station – Around 15–20 minutes on foot or a short bus/taxi ride Waterloo – Around 10–15 minutes by tube from Nine Elms Leicester Square / Covent Garden – Around 15–20 minutes by tube via the Northern line Westminster / Big Ben – Around 15–20 minutes by tube or taxi Oxford Street / Tottenham Court Road – Around 20–25 minutes by tube Victoria Station – Around 10–15 minutes by taxi or public transport London City Airport – Around 35–45 minutes by public transport, depending on route Battersea Power Station is also well connected by bus, Tube, rail and river services, with nearby connections through Vauxhall, Victoria, Nine Elms and Battersea Power Station.** · `TEXT` · 692×1342 · “Welcome to our exceptional 3-bedroom, 3-bathroom apartment in prestigious Nine E”
+  - **Amenities** · `COMPONENT` · 740×648 · vertical stack · 4 children
+    - **Frame 2087324429** · `FRAME` · 740×70 · vertical stack, padding 24px · 1 children
+      - **Frame 2087324431** · `FRAME` · 692×22 · horizontal row, gap 18.209110260009766px · 2 children
+        - **Amenities** · `TEXT` · 77×22 · “Amenities”
+        - **X** · `INSTANCE` · 20×20 · instance of X
+    - **Line 2** · `LINE` · 740×0
+    - **Frame 2147261606** · `FRAME` · 740×664 · horizontal row · 2 children
+      - **Frame 2087324430** · `FRAME` · 370×664 · vertical stack, gap 16px, padding 24px · 9 children
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2087324462** · `FRAME` · 90×22 · horizontal row, gap 12px · 2 children
+            - **Gazebo_EldersCourt icon** · `INSTANCE` · 20×20 · instance of Gazebo_EldersCourt icon
+            - **Placeholder** · `TEXT` · 58×22 · “Gazebo”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261468** · `FRAME` · 135×22 · horizontal row, gap 12px · 2 children
+            - **Fire Sprinkler_Alarm** · `INSTANCE` · 20×20 · instance of Fire Sprinkler_Alarm
+            - **Placeholder** · `TEXT` · 103×22 · “Fire sprinklers”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261469** · `FRAME` · 120×22 · horizontal row, gap 12px · 2 children
+            - **Table Tennis** · `INSTANCE` · 20×20 · instance of Table Tennis
+            - **Placeholder** · `TEXT` · 88×22 · “Table tennis”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261470** · `FRAME` · 133×22 · horizontal row, gap 12px · 2 children
+            - **Doctor** · `INSTANCE` · 20×20 · instance of Doctor
+            - **Placeholder** · `TEXT` · 101×22 · “Medical store”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261471** · `FRAME` · 185×22 · horizontal row, gap 12px · 2 children
+            - **Water Softner Plant** · `INSTANCE` · 20×20 · instance of Water Softner Plant
+            - **Placeholder** · `TEXT` · 153×22 · “Water softener plant”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261470** · `FRAME` · 133×22 · horizontal row, gap 12px · 2 children
+            - **Doctor** · `INSTANCE` · 20×20 · instance of Doctor
+            - **Placeholder** · `TEXT` · 101×22 · “Medical store”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2087324462** · `FRAME` · 90×22 · horizontal row, gap 12px · 2 children
+            - **Gazebo_EldersCourt icon** · `INSTANCE` · 20×20 · instance of Gazebo_EldersCourt icon
+            - **Placeholder** · `TEXT` · 58×22 · “Gazebo”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261468** · `FRAME` · 135×22 · horizontal row, gap 12px · 2 children
+            - **Fire Sprinkler_Alarm** · `INSTANCE` · 20×20 · instance of Fire Sprinkler_Alarm
+            - **Placeholder** · `TEXT` · 103×22 · “Fire sprinklers”
+        - **Header / Menu** · `FRAME` · 322×56 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261551** · `FRAME` · 103×24 · horizontal row, gap 12px · 2 children
+            - **Copy** · `INSTANCE` · 20×20 · instance of Copy
+            - **Copy link** · `TEXT` · 71×24 · “Copy link”
+      - **Frame 2087324431** · `FRAME` · 370×664 · vertical stack, gap 16px, padding 24px · 9 children
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2087324462** · `FRAME` · 90×22 · horizontal row, gap 12px · 2 children
+            - **Gazebo_EldersCourt icon** · `INSTANCE` · 20×20 · instance of Gazebo_EldersCourt icon
+            - **Placeholder** · `TEXT` · 58×22 · “Gazebo”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261468** · `FRAME` · 135×22 · horizontal row, gap 12px · 2 children
+            - **Fire Sprinkler_Alarm** · `INSTANCE` · 20×20 · instance of Fire Sprinkler_Alarm
+            - **Placeholder** · `TEXT` · 103×22 · “Fire sprinklers”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261469** · `FRAME` · 120×22 · horizontal row, gap 12px · 2 children
+            - **Table Tennis** · `INSTANCE` · 20×20 · instance of Table Tennis
+            - **Placeholder** · `TEXT` · 88×22 · “Table tennis”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261470** · `FRAME` · 133×22 · horizontal row, gap 12px · 2 children
+            - **Doctor** · `INSTANCE` · 20×20 · instance of Doctor
+            - **Placeholder** · `TEXT` · 101×22 · “Medical store”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261471** · `FRAME` · 185×22 · horizontal row, gap 12px · 2 children
+            - **Water Softner Plant** · `INSTANCE` · 20×20 · instance of Water Softner Plant
+            - **Placeholder** · `TEXT` · 153×22 · “Water softener plant”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261470** · `FRAME` · 133×22 · horizontal row, gap 12px · 2 children
+            - **Doctor** · `INSTANCE` · 20×20 · instance of Doctor
+            - **Placeholder** · `TEXT` · 101×22 · “Medical store”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2087324462** · `FRAME` · 90×22 · horizontal row, gap 12px · 2 children
+            - **Gazebo_EldersCourt icon** · `INSTANCE` · 20×20 · instance of Gazebo_EldersCourt icon
+            - **Placeholder** · `TEXT` · 58×22 · “Gazebo”
+        - **Header / Menu** · `FRAME` · 322×54 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261468** · `FRAME` · 135×22 · horizontal row, gap 12px · 2 children
+            - **Fire Sprinkler_Alarm** · `INSTANCE` · 20×20 · instance of Fire Sprinkler_Alarm
+            - **Placeholder** · `TEXT` · 103×22 · “Fire sprinklers”
+        - **Header / Menu** · `FRAME` · 322×56 · horizontal row, gap 8px, padding 16/0/16/0px · 1 children
+          - **Frame 2147261551** · `FRAME` · 103×24 · horizontal row, gap 12px · 2 children
+            - **Copy** · `INSTANCE` · 20×20 · instance of Copy
+            - **Copy link** · `TEXT` · 71×24 · “Copy link”
+    - **Rectangle 6113** · `RECTANGLE` · 2×185
+  - **Price insights** · `COMPONENT` · 600×720 · vertical stack · 2 children
+    - **EMI** · `FRAME` · 600×640 · vertical stack · 3 children
+      - **Frame 2087324429** · `FRAME` · 600×70 · vertical stack, padding 24px · 1 children
+        - **Frame 2087324431** · `FRAME` · 552×22 · horizontal row, gap 18.209110260009766px · 2 children
+          - **Price insights** · `TEXT` · 102×22 · “Price insights”
+          - **X** · `INSTANCE` · 20×20 · instance of X
+      - **Line 2** · `LINE` · 600×0
+      - **Frame 2087324430** · `FRAME` · 600×936 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+        - **Tabs** · `INSTANCE` · 600×40 · vertical stack, gap 24px · instance of Tabs
+        - **Frame 2087324446** · `FRAME` · 600×824 · vertical stack, gap 24px, padding 0/24/0/24px · 2 children
+          - **Frame 2147261430** · `FRAME` · 552×272 · vertical stack, gap 16px, padding 16px · 7 children
+            - **Frame 2147261562** · `FRAME` · 520×36 · horizontal row, gap 16px, padding 8/0/8/0px · 2 children
+              - **Frame 2147261461** · `FRAME` · 86×20 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 86×20 · horizontal row, gap 12px
+                  - _…and 1 more_
+              - **5,250/ sq.ft. (In ‘22)** · `TEXT` · 129×20 · “5,250/ sq.ft. (In ‘22)”
+            - **Frame 2087324479** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324503** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+                - **Frame 2087324504** · `FRAME` · 0×520 · horizontal row, gap 10px, padding 0/0/2/0px
+                  - _…and 1 more_
+            - **Frame 2147261472** · `FRAME` · 520×36 · horizontal row, gap 16px, padding 8/0/8/0px · 2 children
+              - **Frame 2147261461** · `FRAME` · 89×20 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 89×20 · horizontal row, gap 12px
+                  - _…and 1 more_
+              - **15,300/ sq.ft. (In ‘25)** · `TEXT` · 136×20 · “15,300/ sq.ft. (In ‘25)”
+            - **Frame 2147261564** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324503** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+                - **Frame 2087324504** · `FRAME` · 0×520 · horizontal row, gap 10px, padding 0/0/2/0px
+                  - _…and 1 more_
+            - **Frame 2147261563** · `FRAME` · 520×36 · horizontal row, gap 16px, padding 8/0/8/0px · 2 children
+              - **Frame 2147261461** · `FRAME` · 104×20 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 104×20 · horizontal row, gap 12px
+                  - _…and 1 more_
+              - **Frame 2147261569** · `FRAME` · 56×20 · horizontal row, gap 2px · 2 children
+                - **ArrowUp** · `INSTANCE` · 16×16 · instance of ArrowUp
+                - **18.3%** · `TEXT` · 38×20 · “18.3%”
+            - **Frame 2147261565** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324503** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+                - **Frame 2087324504** · `FRAME` · 0×520 · horizontal row, gap 10px, padding 0/0/2/0px
+                  - _…and 1 more_
+            - **Frame 2147261566** · `FRAME` · 520×36 · horizontal row, gap 16px, padding 8/0/8/0px · 2 children
+              - **Frame 2147261461** · `FRAME` · 66×20 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 66×20 · horizontal row, gap 12px
+                  - _…and 1 more_
+              - **Frame 2147261569** · `FRAME` · 59×20 · horizontal row, gap 2px · 2 children
+                - **ArrowUp** · `INSTANCE` · 16×16 · instance of ArrowUp
+                - **28.3%** · `TEXT` · 41×20 · “28.3%”
+          - **Frame 2147261586** · `FRAME` · 552×528 · vertical stack, gap 16px · 3 children
+            - **Price trend in Andheri West** · `TEXT` · 552×20 · “Price trend in Andheri West”
+            - **Chips** · `INSTANCE` · 227×44 · horizontal row, gap 16px · instance of Chips
+            - **Frame 2147261580** · `FRAME` · 552×432 · vertical stack, gap 16px · 2 children
+              - **Frame 2147261451** · `FRAME` · 552×400 · vertical stack, gap 16px, padding 56/0/24/0px · 3 children
+                - **Frame 2147261473** · `FRAME` · 552×288 · vertical stack, gap 10px, padding 0/24/0/24px
+                  - _…and 11 more_
+                - **Frame 2147261463** · `FRAME` · 552×16 · horizontal row, gap 16px, padding 0/16/0/16px
+                  - _…and 4 more_
+                - **Frame 2147261583** · `FRAME` · 202×48 · vertical stack, gap 4px, padding 8px
+                  - _…and 2 more_
+              - **Frame 2147261579** · `FRAME` · 172×16 · horizontal row, gap 16px · 2 children
+                - **Frame 2147261461** · `FRAME` · 76×16 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **Frame 2147261462** · `FRAME` · 80×16 · horizontal row, gap 12px
+                  - _…and 2 more_
+    - **Frame 2087324431** · `FRAME` · 600×80 · vertical stack, padding 16/24/16/24px · 1 children
+      - **Frame 2147261568** · `FRAME` · 113×48 · vertical stack, gap 10px · 1 children
+        - **Button** · `INSTANCE` · 113×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+  - **Tabs** · `COMPONENT` · 792×40 · vertical stack, gap 24px · 1 children
+    - **Frame 2087324389** · `FRAME` · 792×40 · vertical stack · 2 children
+      - **Frame 6** · `FRAME` · 792×40 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+        - **Frame 5** · `FRAME` · 504×40 · horizontal row, gap 8px · 4 children
+          - **Homepage** · `INSTANCE` · 120×40 · vertical stack, gap 8px, padding 8/0/0/0px · instance of Homepage · ×4
+      - **Frame 2087324390** · `FRAME` · 792×0 · vertical stack · 1 children
+        - **Line 1** · `LINE` · 792×0
+  - **Chips** · `COMPONENT` · 208×44 · horizontal row, gap 16px, padding 0/24/0/24px · 2 children
+    - **Header / Menu** · `FRAME` · 72×44 · horizontal row, gap 8px, padding 12/16/12/16px · 1 children
+      - **2 BHK** · `TEXT` · 40×20 · “2 BHK”
+    - **Header / Menu** · `FRAME` · 72×44 · horizontal row, gap 8px, padding 12/16/12/16px · 1 children
+      - **3 BHK** · `TEXT` · 40×20 · “3 BHK”
+  - **Brochure full screen** · `COMPONENT` · 1280×800 · vertical stack, gap 24px · 6 children
+    - **X** · `INSTANCE` · 20×20 · instance of X
+    - **Frame 2147261609** · `FRAME` · 1280×49 · horizontal row, gap 664px, padding 0/240/0/240px · 2 children
+      - **Frame 2147261607** · `FRAME` · 206×49 · vertical stack, gap 5px · 2 children
+        - **Emaar MGF The Palm Drive** · `TEXT` · 206×22 · “Emaar MGF The Palm Drive”
+        - **₹1.4 Cr - ₹2.5 Cr** · `TEXT` · 121×22 · “₹1.4 Cr - ₹2.5 Cr ”
+      - **Share and save** · `FRAME` · 245×42 · horizontal row, gap 16px · 3 children
+        - **Frame 2087324449** · `FRAME` · 42×42 · horizontal row, gap 10px, padding 12px · 1 children
+          - **Frame 2087324448** · `FRAME` · 18×18 · horizontal row, gap 4px · 1 children
+            - **Export** · `INSTANCE` · 18×18 · instance of Export
+        - **Component 17** · `INSTANCE` · 42×42 · horizontal row, gap 10px, padding 12px · instance of Component 17
+        - **Button** · `INSTANCE` · 129×40 · horizontal row, gap 8px, padding 12/16/12/16px · instance of Button
+    - **Frame 2147261611** · `FRAME` · 2449×580 · horizontal row, gap 21.38894271850586px · 3 children
+      - **Frame 2147261608** · `FRAME` · 802×580 · vertical stack, gap 8.91205883026123px · 1 children
+        - **image 107** · `RECTANGLE` · 802×580
+      - **Frame 2147261610** · `FRAME` · 802×580 · vertical stack, gap 8.91205883026123px · 1 children
+        - **image 107** · `RECTANGLE` · 802×580
+      - **Frame 2147261611** · `FRAME` · 802×580 · vertical stack, gap 8.91205883026123px · 1 children
+        - **image 107** · `RECTANGLE` · 802×580
+    - **Frame 2147261612** · `FRAME` · 1280×22 · horizontal row, padding 0/240/0/240px · 1 children
+      - **Frame 2147261613** · `FRAME` · 800×22 · horizontal row, gap 24px · 2 children
+        - **Progress Bar with Slider** · `FRAME` · 746×4 · 2 children
+          - **Background** · `RECTANGLE` · 746×4
+          - **Adjustment Layer** · `FRAME` · 136×4 · horizontal row, gap 122px · 2 children
+            - **Rectangle 4** · `RECTANGLE` · 0×8
+            - **Ellipse 2** · `ELLIPSE` · 14×14
+        - **1/52** · `TEXT` · 30×22 · “1/52”
+    - **Frame 2087324450** · `FRAME` · 42×42 · horizontal row, gap 10px, padding 12px · 1 children
+      - **Frame 2087324448** · `FRAME` · 18×18 · horizontal row, gap 4px · 1 children
+        - **CaretRight** · `INSTANCE` · 18×18 · instance of CaretRight
+    - **Frame 2087324451** · `FRAME` · 42×42 · horizontal row, gap 10px, padding 12px · 1 children
+      - **Frame 2087324448** · `FRAME` · 18×18 · horizontal row, gap 4px · 1 children
+        - **CaretRight** · `INSTANCE` · 18×18 · instance of CaretRight
+  - **Map view** · `COMPONENT` · 1280×800 · vertical stack, gap 24px, padding 24px · 2 children
+    - **Frame 2147261587** · `FRAME` · 1232×22 · horizontal row, gap 24px · 2 children
+      - **Explore the area** · `TEXT` · 124×22 · “Explore the area”
+      - **X** · `INSTANCE` · 20×20 · instance of X
+    - **Frame 2147261578** · `FRAME` · 1232×706 · horizontal row, gap 24px · 2 children
+      - **Cards** · `FRAME` · 360×706 · vertical stack, gap 16px, padding 24px · 1 children
+        - **Frame 2147261470** · `FRAME` · 312×660 · vertical stack · 1 children
+          - **Frame 2087323803** · `FRAME` · 312×660 · vertical stack, gap 16px · 7 children
+            - **Frame 2087323809** · `FRAME` · 312×56 · vertical stack, gap 24px · 1 children
+              - **Header / Menu** · `FRAME` · 312×56 · horizontal row, gap 8px, padding 16/0/16/0px · 2 children
+                - **Frame 2087324462** · `FRAME` · 105×24 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **CaretUp** · `INSTANCE` · 18×18 · instance of CaretUp
+            - **Frame 2147261575** · `FRAME` · 312×228 · vertical stack, gap 12px · 5 children
+              - **Frame 2147261571** · `FRAME` · 312×60 · vertical stack, gap 12px, padding 8/16/8/16px · 2 children
+                - **Billabong High International School** · `TEXT` · 233×16 · “Billabong High International School”
+                - **1.3 km** · `TEXT` · 41×16 · “1.3 km”
+              - **Line 4** · `LINE` · 312×0
+              - **Frame 2147261574** · `FRAME` · 312×60 · vertical stack, gap 12px, padding 8/16/8/16px · 2 children
+                - **Millat High School** · `TEXT` · 119×16 · “Millat High School”
+                - **1.3 km** · `TEXT` · 41×16 · “1.3 km”
+              - **Line 5** · `LINE` · 312×0
+              - **Frame 2147261575** · `FRAME` · 312×60 · vertical stack, gap 12px, padding 8/16/8/16px · 2 children
+                - **Millat High School** · `TEXT` · 119×16 · “Millat High School”
+                - **1.3 km** · `TEXT` · 41×16 · “1.3 km”
+            - **Frame 2087323810** · `FRAME` · 312×56 · vertical stack, gap 24px · 1 children
+              - **Header / Menu** · `FRAME` · 312×56 · horizontal row, gap 8px, padding 16/0/16/0px · 2 children
+                - **Frame 2087324462** · `FRAME` · 111×24 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **CaretUp** · `INSTANCE` · 18×18 · instance of CaretUp
+            - **Frame 2087323811** · `FRAME` · 312×56 · vertical stack, gap 24px · 1 children
+              - **Header / Menu** · `FRAME` · 312×56 · horizontal row, gap 8px, padding 16/0/16/0px · 2 children
+                - **Frame 2087324462** · `FRAME` · 105×24 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **CaretUp** · `INSTANCE` · 18×18 · instance of CaretUp
+            - **Frame 2087323812** · `FRAME` · 312×56 · vertical stack, gap 24px · 1 children
+              - **Header / Menu** · `FRAME` · 312×56 · horizontal row, gap 8px, padding 16/0/16/0px · 2 children
+                - **Frame 2087324462** · `FRAME` · 170×24 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **CaretUp** · `INSTANCE` · 18×18 · instance of CaretUp
+            - **Frame 2147261576** · `FRAME` · 312×56 · vertical stack, gap 24px · 1 children
+              - **Header / Menu** · `FRAME` · 312×56 · horizontal row, gap 8px, padding 16/0/16/0px · 2 children
+                - **Frame 2087324462** · `FRAME` · 101×24 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **CaretUp** · `INSTANCE` · 18×18 · instance of CaretUp
+            - **Frame 2147261577** · `FRAME` · 312×56 · vertical stack, gap 24px · 1 children
+              - **Header / Menu** · `FRAME` · 312×56 · horizontal row, gap 8px, padding 16/0/16/0px · 2 children
+                - **Frame 2087324462** · `FRAME` · 71×24 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **CaretUp** · `INSTANCE` · 18×18 · instance of CaretUp
+      - **Mumbai, Maharashtra, India - maps.to.design** · `FRAME` · 848×706 · horizontal row · 2 children
+        - **🌎 Map Maker: Mumbai, Maharashtra, India (Standard)** · `RECTANGLE` · 848×848
+        - **Group** · `GROUP` · 35×47 · 3 children
+          - **Group** · `GROUP` · 35×44 · 1 children
+            - **Vector** · `VECTOR` · 35×44
+          - **Group** · `GROUP` · 35×44 · 1 children
+            - **Vector** · `VECTOR` · 35×44
+          - **Group** · `GROUP` · 14×14 · 2 children
+            - **Vector** · `VECTOR` · 14×14
+            - **Vector** · `VECTOR` · 14×14
+  - **Size drop down** · `COMPONENT` · 160×256 · vertical stack, gap 4px, padding 12px · 12 children
+    - **Frame 2147261600** · `FRAME` · 136×32 · vertical stack, padding 8/4/8/4px · 1 children
+      - **Frame 33** · `FRAME` · 128×16 · horizontal row, gap 12px · 1 children
+        - **sq.ft.** · `TEXT` · 30×16 · “sq.ft.”
+    - **Line 3** · `LINE` · 136×0
+    - **Frame 43** · `FRAME` · 136×32 · horizontal row, gap 12px, padding 8/4/8/4px · 1 children
+      - **sq.yards** · `TEXT` · 49×16 · “sq.yards”
+    - **Line 4** · `LINE` · 136×0
+    - **Frame 44** · `FRAME` · 136×32 · horizontal row, gap 12px, padding 8/4/8/4px · 1 children
+      - **grounds** · `TEXT` · 50×16 · “grounds”
+    - **Line 5** · `LINE` · 136×0
+    - **Frame 45** · `FRAME` · 136×32 · horizontal row, gap 12px, padding 8/4/8/4px · 1 children
+      - **aankadam** · `TEXT` · 62×16 · “aankadam”
+    - **Line 6** · `LINE` · 136×0
+    - **Frame 46** · `FRAME` · 136×32 · horizontal row, gap 12px, padding 8/4/8/4px · 1 children
+      - **rood** · `TEXT` · 29×16 · “rood”
+    - **Line 7** · `LINE` · 136×0
+    - **Frame 47** · `FRAME` · 136×32 · horizontal row, gap 12px, padding 8/4/8/4px · 1 children
+      - **chataks** · `TEXT` · 46×16 · “chataks”
+    - **Rectangle 6113** · `RECTANGLE` · 2×55
+  - **EMI** · `COMPONENT` · 600×720 · vertical stack · 2 children
+    - **EMI** · `FRAME` · 600×640 · vertical stack · 3 children
+      - **Frame 2087324429** · `FRAME` · 600×70 · vertical stack, padding 24px · 1 children
+        - **Frame 2087324431** · `FRAME` · 552×22 · horizontal row, gap 18.209110260009766px · 2 children
+          - **Payment plan** · `TEXT` · 104×22 · “Payment plan”
+          - **X** · `INSTANCE` · 20×20 · instance of X
+      - **Line 2** · `LINE` · 600×0
+      - **Frame 2087324430** · `FRAME` · 600×764 · vertical stack, gap 24px, padding 24/0/24/0px · 3 children
+        - **Tabs** · `INSTANCE` · 600×40 · vertical stack, gap 24px · instance of Tabs
+        - **Chips** · `INSTANCE` · 261×44 · horizontal row, gap 16px, padding 0/24/0/24px · instance of Chips
+        - **Frame 2087324446** · `FRAME` · 600×584 · vertical stack, gap 16px, padding 0/24/0/24px · 3 children
+          - **Frame 2147261430** · `FRAME` · 552×132 · vertical stack, gap 16px, padding 16px · 3 children
+            - **Frame 2147261561** · `FRAME` · 520×48 · horizontal row, gap 24px · 5 children
+              - **Frame 2087324458** · `FRAME` · 141×48 · vertical stack, gap 8px · 2 children
+                - **Placeholder** · `TEXT` · 90×20 · “Loan amount”
+                - **₹80 L** · `TEXT` · 41×20 · “₹80  L”
+              - **Line 4** · `LINE` · 48×0
+              - **Frame 2087324459** · `FRAME` · 141×48 · vertical stack, gap 8px · 2 children
+                - **Placeholder** · `TEXT` · 54×20 · “Interest”
+                - **7.5%** · `TEXT` · 30×20 · “7.5%”
+              - **Line 5** · `LINE` · 48×0
+              - **Frame 2087324460** · `FRAME` · 141×48 · vertical stack, gap 8px · 2 children
+                - **Placeholder** · `TEXT` · 60×20 · “Duration”
+                - **30 yrs** · `TEXT` · 42×20 · “30 yrs”
+            - **Frame 2087324479** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324503** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+                - **Frame 2087324504** · `FRAME` · 0×520 · horizontal row, gap 10px, padding 0/0/2/0px
+                  - _…and 1 more_
+            - **Frame 2147261472** · `FRAME` · 520×20 · horizontal row, gap 16px · 2 children
+              - **Frame 2147261461** · `FRAME` · 96×20 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 96×20 · horizontal row, gap 12px
+                  - _…and 1 more_
+              - **₹1 Cr** · `TEXT` · 34×20 · “₹1 Cr”
+          - **Frame 2147261431** · `FRAME` · 552×80 · vertical stack, gap 24px, padding 16px · 1 children
+            - **Frame 2147261561** · `FRAME` · 520×48 · horizontal row, gap 79px · 2 children
+              - **Frame 2087324458** · `FRAME` · 195×48 · vertical stack, gap 12px · 2 children
+                - **Booking amount** · `TEXT` · 113×20 · “Booking amount”
+                - **Placeholder** · `TEXT` · 195×16 · “To be paid by buyer, not bank  ”
+              - **₹10 L** · `TEXT` · 35×20 · “₹10 L”
+          - **Frame 2147261432** · `FRAME` · 552×340 · vertical stack, gap 16px, padding 16px · 3 children
+            - **Frame 2147261561** · `FRAME` · 520×20 · horizontal row, gap 79px · 2 children
+              - **Frame 2087324458** · `FRAME` · 109×20 · vertical stack, gap 12px · 1 children
+                - **Payment stages** · `TEXT` · 109×20 · “Payment stages”
+              - **Placeholder** · `TEXT` · 26×20 · “EMI”
+            - **Frame 2087324479** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324503** · `FRAME` · 520×0 · vertical stack, gap 12px · 1 children
+                - **Frame 2087324504** · `FRAME` · 0×520 · horizontal row, gap 10px, padding 0/0/2/0px
+                  - _…and 1 more_
+            - **Frame 2147261566** · `FRAME` · 520×256 · vertical stack, gap 24px · 4 children
+              - **Frame 2147261562** · `FRAME` · 520×48 · horizontal row, gap 79px · 2 children
+                - **Frame 2087324458** · `FRAME` · 165×48 · vertical stack, gap 12px
+                  - _…and 2 more_
+                - **₹ 17,480/mo** · `TEXT` · 80×20 · “₹ 17,480/mo”
+              - **Frame 2147261563** · `FRAME` · 520×48 · horizontal row, gap 79px · 2 children
+                - **Frame 2087324458** · `FRAME` · 165×48 · vertical stack, gap 12px
+                  - _…and 2 more_
+                - **₹34,961/mo** · `TEXT` · 77×20 · “₹34,961/mo”
+              - **Frame 2147261564** · `FRAME` · 520×44 · horizontal row, gap 79px · 2 children
+                - **Frame 2087324458** · `FRAME` · 165×44 · vertical stack, gap 12px
+                  - _…and 2 more_
+                - **₹52,441/mo** · `TEXT` · 78×16 · “₹52,441/mo”
+              - **Frame 2147261565** · `FRAME` · 520×44 · horizontal row, gap 79px · 2 children
+                - **Frame 2087324458** · `FRAME` · 165×44 · vertical stack, gap 12px
+                  - _…and 2 more_
+                - **₹ 17,480/mo** · `TEXT` · 80×16 · “₹ 17,480/mo”
+    - **Frame 2087324432** · `FRAME` · 600×80 · vertical stack, padding 16/24/16/24px · 1 children
+      - **Frame 2147261568** · `FRAME` · 137×48 · vertical stack, gap 10px · 1 children
+        - **Button** · `INSTANCE` · 137×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+  - **Compare properties** · `COMPONENT` · 1280×800 · vertical stack · 3 children
+    - **Frame 2087324429** · `FRAME` · 1280×70 · vertical stack, padding 24px · 1 children
+      - **Frame 2087324431** · `FRAME` · 1232×22 · horizontal row, gap 18.209110260009766px · 2 children
+        - **Frame 2147261604** · `FRAME` · 561×22 · horizontal row, gap 12px · 1 children
+          - **Frame 2147261605** · `FRAME` · 187×22 · horizontal row, gap 12px · 2 children
+            - **ArrowLeft** · `INSTANCE` · 20×20 · instance of ArrowLeft
+            - **Share this property** · `TEXT` · 155×22 · “Compare properties”
+        - **X** · `INSTANCE` · 20×20 · instance of X
+    - **Line 2** · `LINE` · 1280×0
+    - **Frame 2087324430** · `FRAME` · 1280×730 · vertical stack, gap 16px, padding 16/24/24/24px · 3 children
+      - **Compare search** · `INSTANCE` · 1232×48 · horizontal row, padding 12/16/12/16px · instance of Compare search
+      - **Frame 2147261478** · `FRAME` · 1232×42 · horizontal row, gap 16px · 3 children
+        - **Header / Menu** · `FRAME` · 238×42 · horizontal row, gap 8px, padding 12/16/12/16px · 2 children
+          - **Emaar MGF The Palm Drive** · `TEXT` · 180×16 · “Emaar MGF The Palm Drive”
+          - **XCircle** · `INSTANCE` · 18×18 · instance of XCircle
+        - **Header / Menu** · `FRAME` · 213×42 · horizontal row, gap 8px, padding 12/16/12/16px · 2 children
+          - **Luxurion 75 Residences** · `TEXT` · 155×16 · “Luxurion 75 Residences”
+          - **XCircle** · `INSTANCE` · 18×18 · instance of XCircle
+        - **Header / Menu** · `FRAME` · 193×42 · horizontal row, gap 8px, padding 12/16/12/16px · 2 children
+          - **Lodha World Towers** · `TEXT` · 135×16 · “Lodha World Towers”
+          - **PlusCircle** · `INSTANCE` · 18×18 · instance of PlusCircle
+      - **Frame 2147261522** · `FRAME` · 1232×568 · vertical stack, gap 16px · 1 children
+        - **Frame 2147261527** · `FRAME` · 1232×568 · vertical stack · 6 children
+          - **Row** · `FRAME` · 1232×144 · horizontal row · 5 children
+            - **Column** · `FRAME` · 120×144 · vertical stack, padding 16/16/16/20px · 1 children
+              - **Project** · `TEXT` · 49×16 · “Project”
+            - **Column** · `FRAME` · 278×144 · vertical stack, gap 16px, padding 16px · 2 children · ×4
+              - **Frame 2147261526** · `FRAME` · 246×80 · vertical stack, gap 10px · 1 children
+                - **Rectangle 70** · `RECTANGLE` · 246×80
+              - **Emaar MGF The Palm Drive** · `TEXT` · 246×16 · “Emaar MGF The Palm Drive”
+          - **Row** · `FRAME` · 1232×85 · horizontal row · 5 children
+            - **Column** · `FRAME` · 120×78 · vertical stack, padding 0/12/12/20px · 1 children
+              - **Address** · `TEXT` · 56×16 · “Address”
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children · ×2
+              - **KR Pet, Sector 39, Pune** · `TEXT` · 254×57 · “KR Pet, Sector 39, 
+Pune”
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children · ×2
+              - **KR Pet, Sector 39, Pune** · `TEXT` · 254×32 · “KR Pet, Sector 39, 
+Pune”
+          - **Row** · `FRAME` · 1232×85 · horizontal row · 5 children
+            - **Column** · `FRAME` · 120×78 · vertical stack, padding 16/12/12/20px · 1 children
+              - **Possession** · `TEXT` · 76×16 · “Possession”
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children · ×4
+              - **By May, 2028** · `TEXT` · 254×57 · “By May, 2028”
+          - **Row** · `FRAME` · 1232×85 · horizontal row · 5 children
+            - **Column** · `FRAME` · 120×78 · vertical stack, padding 16/12/12/20px · 1 children
+              - **Frame 2147261461** · `FRAME` · 29×16 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 29×16 · horizontal row, gap 12px
+                  - _…and 1 more_
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children · ×4
+              - **3 BHK** · `TEXT` · 254×57 · “3 BHK”
+          - **Row** · `FRAME` · 1232×85 · horizontal row · 5 children
+            - **Column** · `FRAME` · 120×78 · vertical stack, padding 16/12/12/20px · 1 children
+              - **Frame 2147261462** · `FRAME` · 77×16 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 77×16 · horizontal row, gap 12px
+                  - _…and 1 more_
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children · ×4
+              - **1900 sq.ft.** · `TEXT` · 254×57 · “1900 sq.ft.”
+          - **Row** · `FRAME` · 1232×85 · horizontal row · 5 children
+            - **Column** · `FRAME` · 120×78 · vertical stack, padding 16/12/12/20px · 1 children
+              - **Frame 2147261462** · `FRAME` · 35×16 · horizontal row, gap 12px · 1 children
+                - **Frame 2147261447** · `FRAME` · 35×16 · horizontal row, gap 12px
+                  - _…and 1 more_
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children
+              - **₹2.85 Cr** · `TEXT` · 254×57 · “₹2.85 Cr ”
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children
+              - **₹2.85 Cr** · `TEXT` · 254×50 · “₹2.85 Cr ”
+            - **Column** · `FRAME` · 278×85 · vertical stack, padding 16/12/12/12px · 1 children · ×2
+              - **₹2.85 Cr** · `TEXT` · 254×57 · “₹2.85 Cr ”
+  - **Skeleton** · `COMPONENT` · 1280×1112 · vertical stack, gap 40px · 3 children
+    - **Frame 2087324462** · `FRAME` · 1280×1112 · vertical stack, gap 24px · 2 children
+      - **Headers** · `INSTANCE` · 1280×64 · horizontal row, gap 48px, padding 8/24/8/24px · instance of Headers
+      - **Frame 2087324464** · `FRAME` · 1200×1024 · horizontal row, gap 24px · 1 children
+        - **Frame 2087324465** · `FRAME` · 1200×1024 · vertical stack, gap 24px · 2 children
+          - **Frame 2147261425 - Skeleton Loader** · `FRAME` · 1200×572 · 11 children
+            - **Rectangle** · `RECTANGLE` · 357×36
+            - **Rectangle** · `RECTANGLE` · 145×24
+            - **Rectangle** · `RECTANGLE` · 123×24
+            - **Rectangle** · `RECTANGLE` · 720×210
+            - **Rectangle** · `RECTANGLE` · 356×210 · ×2
+            - **Rectangle** · `RECTANGLE` · 65×28
+            - **Rectangle** · `RECTANGLE` · 271×48
+            - **Rectangle** · `RECTANGLE` · 408×48
+            - **Rectangle** · `RECTANGLE` · 350×48
+            - **Rectangle** · `RECTANGLE` · 408×48
+          - **Frame 2147261424** · `FRAME` · 1200×428 · horizontal row, gap 24px · 2 children
+            - **Frame 2147261425** · `FRAME` · 792×428 · vertical stack, gap 24px · 21 children
+              - **About - Skeleton Loader** · `FRAME` · 792×428 · 4 children
+                - **Rectangle** · `RECTANGLE` · 169×28
+                - **Rectangle** · `RECTANGLE` · 358×108
+                - **Rectangle** · `RECTANGLE` · 744×72
+                - **Rectangle** · `RECTANGLE` · 74×24
+              - **Project plan** · `FRAME` · 792×578 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261434** · `FRAME` · 744×478 · vertical stack, gap 32px
+                  - _…and 3 more_
+              - **Frame 2087324467** · `FRAME` · 792×194 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261417** · `FRAME` · 165×28 · horizontal row, gap 10px, padding 0/24/0/24px
+                  - _…and 1 more_
+                - **Frame 2147261416** · `FRAME` · 792×94 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 1 more_
+              - **Frame 2087324469** · `FRAME` · 792×348 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261466** · `FRAME` · 744×248 · horizontal row, gap 32px
+                  - _…and 2 more_
+              - **Frame 2087324474** · `FRAME` · 792×836 · vertical stack, gap 24px, padding 24px · 4 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Compare Emaar MGF The Palm Drive with** · `TEXT` · 744×24 · “Compare Emaar MGF The Palm Drive with”
+                - **Frame 2147261478** · `FRAME` · 970×42 · horizontal row, gap 16px
+                  - _…and 5 more_
+                - **Frame 2087324461** · `FRAME` · 744×622 · vertical stack, gap 16px, padding 16px
+                  - _…and 1 more_
+              - **Frame 2087324470** · `FRAME` · 792×450 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261468** · `FRAME` · 744×28 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261570** · `FRAME` · 744×350 · vertical stack, gap 12px
+                  - _…and 2 more_
+              - **Frame 2087324475** · `FRAME` · 792×658 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261466** · `FRAME` · 744×558 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324477** · `FRAME` · 792×658 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261468** · `FRAME` · 744×558 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324488** · `FRAME` · 792×658 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261469** · `FRAME` · 744×28 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261468** · `FRAME` · 744×558 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324478** · `FRAME` · 792×490 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Component 16** · `FRAME` · 744×390 · vertical stack, gap 32px, padding 24/10/24/10px
+                  - _…and 6 more_
+              - **Frame 2087324483** · `FRAME` · 792×316 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261468** · `FRAME` · 744×28 · horizontal row, gap 60px
+                  - _…and 2 more_
+                - **Frame 2147261503** · `FRAME` · 744×216 · horizontal row, gap 24px
+                  - _…and 2 more_
+              - **Frame 2087324484** · `FRAME` · 792×814 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261487** · `FRAME` · 744×714 · vertical stack, gap 24px, padding 24/16/16/16px
+                  - _…and 2 more_
+              - **Frame 2087324490** · `FRAME` · 792×692 · vertical stack, gap 24px, padding 24/0/24/0px · 4 children
+                - **Frame 2147261468** · `FRAME` · 792×28 · horizontal row, gap 60px, padding 0/24/0/24px
+                  - _…and 2 more_
+                - **Frame 2087324427** · `FRAME` · 792×36 · vertical stack, gap 24px
+                  - _…and 1 more_
+                - **Frame 2147261537** · `FRAME` · 208×40 · horizontal row, gap 16px, padding 0/24/0/24px
+                  - _…and 2 more_
+                - **Frame 2147261416** · `FRAME` · 792×468 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 3 more_
+              - **Frame 2087324487** · `FRAME` · 792×936 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261528** · `FRAME` · 792×34 · horizontal row, gap 24px, padding 0/24/0/24px
+                  - _…and 2 more_
+                - **Frame 2147261487** · `FRAME` · 792×830 · vertical stack, gap 24px
+                  - _…and 2 more_
+              - **Frame 2087324489** · `FRAME` · 792×276 · vertical stack, gap 24px, padding 24/0/24/0px · 2 children
+                - **Frame 2147261417** · `FRAME` · 236×28 · horizontal row, gap 10px, padding 0/24/0/24px
+                  - _…and 1 more_
+                - **Frame 2147261416** · `FRAME` · 792×176 · vertical stack, gap 8px, padding 0/24/0/24px
+                  - _…and 1 more_
+              - **Frame 2087324485** · `FRAME` · 792×1217 · vertical stack, gap 24px, padding 24px · 4 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261477** · `FRAME` · 744×40 · horizontal row, gap 16px
+                  - _…and 6 more_
+                - **Frame 2147261504** · `FRAME` · 744×320 · vertical stack, gap 24px
+                  - _…and 1 more_
+                - **Frame 2147261487** · `FRAME` · 744×709 · vertical stack, gap 24px, padding 24/16/24/16px
+                  - _…and 3 more_
+              - **Frame 2087324480** · `FRAME` · 792×176 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261509** · `FRAME` · 709×76 · horizontal row, gap 24px
+                  - _…and 3 more_
+              - **Frame 2087324486** · `FRAME` · 792×526 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261528** · `FRAME` · 744×34 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2147261484** · `FRAME` · 744×420 · vertical stack
+                  - _…and 3 more_
+              - **Frame 2087324482** · `FRAME` · 792×351 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261484** · `FRAME` · 744×251 · vertical stack
+                  - _…and 3 more_
+              - **Frame 2087324481** · `FRAME` · 792×499 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261481** · `FRAME` · 984×399 · horizontal row, gap 24px
+                  - _…and 4 more_
+              - **Frame 2087324479** · `FRAME` · 792×196 · vertical stack, gap 24px, padding 24px · 2 children
+                - **Frame 2147261467** · `FRAME` · 744×28 · horizontal row
+                  - _…and 1 more_
+                - **Frame 2147261480** · `FRAME` · 744×96 · horizontal row, gap 16px
+                  - _…and 3 more_
+            - **Frame 2087324455 - Skeleton Loader** · `FRAME` · 384×396 · 4 children
+              - **Rectangle** · `RECTANGLE` · 52×52
+              - **Rectangle** · `RECTANGLE` · 272×52
+              - **Rectangle** · `RECTANGLE` · 336×48
+              - **Rectangle** · `RECTANGLE` · 176×48
+    - **Frame 2147261539** · `FRAME` · 1512×16 · vertical stack, gap 10px, padding 0/40/0/40px · 1 children
+      - **Breadcrumb ** · `FRAME` · 379×16 · horizontal row · 1 children
+        - **Breadcrumb main** · `FRAME` · 379×16 · horizontal row, gap 8px · 9 children
+          - **_Breadcrumb items core** · `INSTANCE` · 24×24 · horizontal row · instance of _Breadcrumb items core
+          - **chevron-right** · `INSTANCE` · 16×16 · instance of chevron-right
+          - **_Breadcrumb items core** · `INSTANCE` · 41×16 · horizontal row · instance of _Breadcrumb items core
+          - **Frame 2087324448** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+            - **CaretRight** · `INSTANCE` · 16×16 · instance of CaretRight
+          - **_Breadcrumb items core** · `INSTANCE` · 55×16 · horizontal row · instance of _Breadcrumb items core
+          - **Frame 2087324449** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+            - **CaretRight** · `INSTANCE` · 16×16 · instance of CaretRight
+          - **_Breadcrumb items core** · `INSTANCE` · 87×16 · horizontal row · instance of _Breadcrumb items core
+          - **Frame 2087324450** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+            - **CaretRight** · `INSTANCE` · 16×16 · instance of CaretRight
+          - **_Breadcrumb items core** · `INSTANCE` · 100×16 · horizontal row · instance of _Breadcrumb items core
+    - **Frame 2** · `FRAME` · 1512×1583 · vertical stack, gap 1px · 1 children
+      - **Footer** · `FRAME` · 1512×1583 · vertical stack · 1 children
+        - **Frame 2147261521** · `FRAME` · 1512×1583 · vertical stack, gap 1px · 3 children
+          - **Background** · `FRAME` · 1512×569 · vertical stack, gap 29.799999237060547px, padding 39.75/20/40/70px · 5 children
+            - **Container** · `FRAME` · 1422×97 · horizontal row, gap 63.689998626708984px · 2 children
+              - **Trending Searches** · `TEXT` · 65×36 · “Trending
+Searches”
+              - **Container** · `FRAME` · 1063×97 · 19 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×19
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×98 · horizontal row, gap 58.970001220703125px · 2 children
+              - **Popular Localities** · `TEXT` · 71×36 · “Popular
+Localities”
+              - **Container** · `FRAME` · 1292×98 · 20 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×20
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×59 · horizontal row, gap 19.770000457763672px · 2 children
+              - **New Projects in Sector 121** · `TEXT` · 112×36 · “New Projects in
+Sector 121”
+              - **Container** · `FRAME` · 1292×59 · 10 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×10
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×59 · horizontal row, gap 14.109999656677246px · 2 children
+              - **Resale Projects in Sector 121** · `TEXT` · 113×36 · “Resale Projects
+in Sector 121”
+              - **Container** · `FRAME` · 1292×59 · 10 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×10
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 1422×59 · horizontal row, gap 2.4200000762939453px · 2 children
+              - **Popular Searches** · `TEXT` · 127×18 · “Popular Searches”
+              - **Container** · `FRAME` · 1292×59 · 12 children
+                - **Link** · `FRAME` · 280×16 · horizontal row · ×12
+                  - _…and 1 more_
+          - **Background** · `FRAME` · 1512×124 · horizontal row, gap -1.4210854715202004e-14px, padding 36/0/36/0px · 2 children
+            - **Margin** · `FRAME` · 122×43 · vertical stack, padding 0/8/0/0px · 1 children
+              - **Part of** · `TEXT` · 114×43 · “Part of”
+            - **Container** · `FRAME` · 200×52 · vertical stack · 1 children
+              - **REA Group** · `FRAME` · 200×52
+          - **Frame 2147261520** · `FRAME` · 1512×888 · vertical stack · 1 children
+            - **Frame 2147261519** · `FRAME` · 1512×888 · vertical stack · 2 children
+              - **Background** · `FRAME` · 1512×501 · vertical stack, padding 30/0/30/0px · 1 children
+                - **Frame 2147261518** · `FRAME` · 1512×441 · horizontal row, gap 72px, padding 0/70/0/70px
+                  - _…and 4 more_
+              - **HorizontalBorder** · `FRAME` · 1512×387 · 3 children
+                - **Margin** · `FRAME` · 850×286 · vertical stack, padding 0/0/0/50px
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 267×286 · vertical stack, gap 22px
+                  - _…and 3 more_
+                - **Container** · `FRAME` · 375×200
+                  - _…and 4 more_
+  - **RERA** · `COMPONENT_SET` · 405×733 · 2 children
+    - **Property 1=Expanded** · `COMPONENT` · 360×536 · vertical stack · 2 children
+      - **Frame 2087324894** · `FRAME` · 360×48 · horizontal row, gap 10px, padding 16/16/12/16px · 2 children
+        - **Housing.com is a listings and information platform** · `TEXT` · 298×20 · “Before you proceed”
+        - **Component 15** · `INSTANCE` · 20×20 · instance of Component 15
+      - **Frame 2087324893** · `FRAME` · 360×488 · vertical stack, gap 12px, padding 0/16/24/16px · 2 children
+        - **Housing.com is a listings and information platform** · `TEXT` · 328×404 · “Housing.com provides information only. Verify details independently.
+Housing.com”
+        - **button** · `INSTANCE` · 328×48 · horizontal row · instance of button
+  - **Property recommendation on PDP gallery - option 1** · `COMPONENT_SET` · 368×121 · 1 children
+    - **Property 1=Default** · `COMPONENT` · 328×81 · vertical stack · 1 children
+      - **Frame 2087324967** · `INSTANCE` · 328×81 · vertical stack, gap 12px · instance of Frame 2087324967
+  - **book site visit** · `COMPONENT_SET` · 401×888 · 2 children
+    - **Property 1=single seller** · `COMPONENT` · 361×422 · 5 children
+      - **Frame 2087324970** · `FRAME` · 360×422 · horizontal row · 1 children
+        - **Hero image** · `RECTANGLE` · 360×422
+      - **Frame 2087324968** · `FRAME` · 360×422 · vertical stack, gap 10px, padding 10/16/24/16px
+      - **Frame 2087324986** · `FRAME` · 144×32 · horizontal row, gap 4px, padding 8/16/8/8px · 2 children
+        - **View photo gallery** · `TEXT` · 111×16 · “View photo gallery”
+        - **Shape** · `VECTOR` · 5×8
+      - **Top panel** · `FRAME` · 360×68 · horizontal row, gap 11px · 1 children
+        - **Top panel** · `INSTANCE` · 328×32 · horizontal row, gap 11px · instance of Top panel
+      - **Frame 2087324937** · `FRAME` · 328×178 · vertical stack, gap 16px, padding 16/0/0/0px · 3 children
+        - **Frame 2087324971** · `FRAME` · 328×40 · horizontal row, gap 16px · 1 children
+          - **title** · `TEXT` · 218×40 · “You’ve seen the details.
+Now experience it in person.”
+        - **Frame 2087324979** · `FRAME` · 328×24 · horizontal row, gap 4px · 2 children
+          - **Frame 2087324982** · `FRAME` · 66×24 · horizontal row, gap -3px · 3 children
+            - **Frame 2087324981** · `FRAME` · 24×24 · horizontal row · 1 children
+              - **JM** · `TEXT` · 13×12 · “JM”
+            - **Frame 2087324984** · `FRAME` · 24×24 · horizontal row · 1 children
+              - **KL** · `TEXT` · 11×12 · “KL”
+            - **Frame 2087324983** · `FRAME` · 24×24 · horizontal row · 1 children
+              - **GM** · `TEXT` · 14×12 · “GM”
+          - **title** · `TEXT` · 189×16 · “+6 others viewed this last month”
+        - **Seller detail** · `FRAME` · 328×66 · vertical stack, gap 8px, padding 16px · 1 children
+          - **Frame 2087324987** · `FRAME` · 296×34 · horizontal row · 2 children
+            - **Frame 2087324553** · `FRAME` · 154×34 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324982** · `FRAME` · 32×32 · horizontal row
+              - **Frame 2087324985** · `FRAME` · 114×34 · vertical stack, gap 2px · 2 children
+                - **Frame 2087324706** · `FRAME` · 114×16 · horizontal row, gap 4px
+                  - _…and 1 more_
+                - **Seller** · `TEXT` · 33×16 · “Seller”
+            - **Frame 2087324727** · `FRAME` · 146×32 · horizontal row, gap 4px, padding 0/16/0/16px · 2 children
+              - **Call** · `INSTANCE` · 16×16 · instance of Call
+              - **Book site visit** · `TEXT` · 94×16 · “Book site visit”
+  - **Bottom bar** · `COMPONENT_SET` · 400×240 · 2 children
+    - **category=NP** · `COMPONENT` · 360×66 · horizontal row, gap 8px, padding 16/16/14/16px · 3 children
+      - **Frame 1000004649** · `FRAME` · 73×37 · horizontal row, gap 4px, padding 10/9/11/12px · 2 children
+        - **Mask group** · `GROUP` · 15×15 · 2 children
+          - **Rectangle 1086** · `RECTANGLE` · 15×15
+          - **WhatsApp_Logo_1** · `RECTANGLE` · 15×15
+        - **Chat** · `TEXT` · 33×16 · “Chat”
+      - **Frame 1000004648** · `FRAME` · 102×37 · horizontal row, gap 10px, padding 10/8/11/8px · 1 children
+        - **View Phone** · `TEXT` · 79×16 · “View Phone”
+      - **Frame 1297** · `FRAME` · 137×37 · horizontal row, gap 10px, padding 10/24/12/24px · 1 children
+        - **Text** · `TEXT` · 99×15 · “Contact Seller”
+  - **Info strip** · `COMPONENT_SET` · 368×80 · 1 children
+    - **Type=Rent - VIP** · `COMPONENT` · 328×36 · horizontal row, gap 8px, padding 8/16/8/16px · 2 children
+      - **Frame 2087330159** · `FRAME` · 34×20 · horizontal row, gap -2.000000238418579px · 2 children
+        - **Vector** · `VECTOR` · 16×20
+        - **Ellipse 586** · `ELLIPSE` · 20×20
+      - **21 people have shortlisted this property** · `TEXT` · 229×16 · “21 people have shortlisted this property”
+  - **Component 17** · `COMPONENT_SET` · 137×82 · 2 children
+    - **Property 1=Default** · `COMPONENT` · 42×42 · horizontal row, gap 10px, padding 12px · 1 children
+      - **Frame 2087324448** · `FRAME` · 18×18 · horizontal row, gap 4px · 1 children
+        - **Heart** · `INSTANCE` · 18×18 · instance of Heart
+  - **Compare search** · `COMPONENT_SET` · 1192×705 · 2 children
+    - **Property 1=Compare search (Closed)** · `COMPONENT` · 971×48 · horizontal row, padding 12/16/12/16px · 1 children
+      - **Frame 2087324384** · `FRAME` · 939×20 · horizontal row, gap 8px · 2 children
+        - **MagnifyingGlass** · `INSTANCE` · 20×20 · instance of MagnifyingGlass
+        - **Component 12** · `FRAME` · 911×20 · horizontal row, gap 3.034851551055908px · 1 children
+          - **Search to add properties** · `TEXT` · 166×16 · “Search to add properties”
+  - **Cards** · `COMPONENT_SET` · 705×628 · 2 children
+    - **Property 1=Default** · `COMPONENT` · 280×588 · vertical stack, gap 16px, padding 0/0/16/0px · 2 children
+      - **Frame 2147261384** · `FRAME` · 280×160 · vertical stack, gap 10px · 2 children
+        - **Rectangle 6151** · `RECTANGLE` · 280×160
+        - **Frame 2087324447** · `FRAME` · 40×40 · horizontal row, gap 10px, padding 12px · 1 children
+          - **Heart** · `INSTANCE` · 16×16 · instance of Heart
+      - **Frame 2147261470** · `FRAME` · 280×396 · vertical stack, gap 24px · 2 children
+        - **Frame 2087323803** · `FRAME` · 280×324 · vertical stack, gap 16px, padding 0/16/0/16px · 2 children
+          - **Frame 2147261410** · `FRAME` · 221×24 · horizontal row, gap 8px · 2 children
+            - **badge/base** · `FRAME` · 49×24 · vertical stack, gap 10px, padding 4/8/4/8px · 1 children
+              - **RERA** · `TEXT` · 33×16 · “RERA”
+            - **badge/base** · `FRAME` · 164×24 · vertical stack, gap 10px, padding 4/8/4/8px · 1 children
+              - **Possession by Dec, 2026** · `TEXT` · 148×16 · “Possession by Dec, 2026”
+          - **Frame 2087323809** · `FRAME` · 248×284 · vertical stack, gap 24px · 2 children
+            - **Frame 2147261469** · `FRAME` · 248×46 · vertical stack, gap 8px · 2 children
+              - **Frame 2147261408** · `FRAME` · 248×22 · vertical stack, gap 4px · 1 children
+                - **Shapoorji Joyville** · `TEXT` · 138×22 · “Shapoorji Joyville”
+              - **Frame 2087323813** · `FRAME` · 248×16 · horizontal row, gap 4px · 1 children
+                - **Mundhwa Road, East Pune** · `TEXT` · 157×16 · “Mundhwa Road, East Pune”
+            - **Frame 2147261468** · `FRAME` · 248×214 · vertical stack, gap 10px · 1 children
+              - **Frame 2147261413** · `FRAME` · 248×214 · vertical stack, gap 16px · 5 children
+                - **Frame 2147261439** · `FRAME` · 95×50 · vertical stack, gap 8px
+                  - _…and 2 more_
+                - **Line 3** · `LINE` · 248×0
+                - **Frame 2147261440** · `FRAME` · 127×50 · vertical stack, gap 8px
+                  - _…and 2 more_
+                - **Line 4** · `LINE` · 248×0
+                - **Frame 2147261442** · `FRAME` · 116×50 · vertical stack, gap 8px
+                  - _…and 2 more_
+        - **Frame 2087324819** · `FRAME` · 280×48 · horizontal row, gap 8px, padding 0/16/0/16px · 1 children
+          - **Button** · `INSTANCE` · 248×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+  - **First fold** · `COMPONENT_SET` · 1240×2439 · 4 children
+    - **Property 1=Full view** · `COMPONENT` · 1200×566 · horizontal row, gap 40px, padding 24px · 1 children
+      - **Frame 2087324463** · `FRAME` · 1152×518 · vertical stack, gap 28px · 2 children
+        - **Frame 2147261540** · `FRAME` · 1152×66 · horizontal row, gap 24px · 2 children
+          - **Frame 2147261429** · `FRAME` · 1028×66 · vertical stack, gap 8px · 2 children
+            - **Frame 2087324455** · `FRAME` · 1028×36 · vertical stack, gap 16px · 1 children
+              - **Frame 2087324471** · `FRAME` · 1028×36 · horizontal row, gap 16px · 1 children
+                - **Emaar MGF The Palm Drive** · `TEXT` · 1028×36 · “Emaar MGF The Palm Drive”
+            - **Frame 2147261430** · `FRAME` · 479×22 · horizontal row, gap 8px · 5 children
+              - **Frame 2087324408** · `FRAME` · 145×22 · horizontal row, gap 12px · 1 children
+                - **Sector 66, Gurgaon** · `TEXT` · 145×22 · “Sector 66, Gurgaon”
+              - **Line 4** · `LINE` · 22×0
+              - **By EMAAR INDIA** · `TEXT` · 123×22 · “By EMAAR INDIA”
+              - **Line 5** · `LINE` · 22×0
+              - **Frame 2087324409** · `FRAME` · 179×22 · horizontal row, gap 12px · 1 children
+                - **Updated on: Jun 2, 2026** · `TEXT` · 179×22 · “Updated on: Jun 2, 2026”
+          - **Share and save** · `INSTANCE` · 100×42 · horizontal row, gap 16px · instance of Share and save
+        - **Frame 2147261529** · `FRAME` · 1152×424 · horizontal row, gap 24px · 2 children
+          - **Frame 1** · `FRAME` · 666×424 · vertical stack, gap 8px · 2 children
+            - **Frame 2147261596** · `FRAME` · 666×208 · horizontal row, gap 8px · 2 children
+              - **Rectangle 1** · `RECTANGLE` · 329×208
+              - **Rectangle 2** · `RECTANGLE` · 329×208
+            - **Frame 2087324476** · `FRAME` · 666×208 · horizontal row, gap 8px · 1 children
+              - **Frame 5** · `FRAME` · 666×208 · horizontal row, gap 8px · 3 children
+                - **Rectangle 2** · `RECTANGLE` · 329×208
+                - **Rectangle 3** · `RECTANGLE` · 329×208
+                - **Frame 2087324449** · `FRAME` · 93×42 · horizontal row, gap 10px, padding 12px
+                  - _…and 1 more_
+          - **Frame 2147261423** · `FRAME` · 462×424 · horizontal row · 1 children
+            - **Frame 2087324455** · `FRAME` · 462×424 · vertical stack, gap 24px · 5 children
+              - **Frame 2147261542** · `FRAME` · 462×28 · horizontal row · 1 children
+                - **Frame 2147261410** · `FRAME` · 383×28 · horizontal row, gap 12px
+                  - _…and 4 more_
+              - **Frame 2147261434** · `FRAME` · 462×188 · vertical stack, gap 24px · 2 children
+                - **Frame 2147261432** · `FRAME` · 462×82 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2147261433** · `FRAME` · 462×82 · horizontal row, gap 24px
+                  - _…and 2 more_
+              - **Line 1** · `LINE` · 462×0
+              - **Frame 2087324459** · `FRAME` · 252×64 · vertical stack, gap 8px · 2 children
+                - **Placeholder** · `TEXT` · 35×20 · “Price”
+                - **Frame 2147261413** · `FRAME` · 252×36 · horizontal row, gap 8px
+                  - _…and 2 more_
+              - **Button** · `INSTANCE` · 462×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+  - **Share** · `COMPONENT_SET` · 640×1284 · 2 children
+    - **Property 1=Default** · `COMPONENT` · 600×570 · vertical stack · 3 children
+      - **Frame 2087324429** · `FRAME` · 600×70 · vertical stack, padding 24px · 1 children
+        - **Frame 2087324431** · `FRAME` · 552×22 · horizontal row, gap 18.209110260009766px · 2 children
+          - **Ask a question** · `TEXT` · 111×22 · “Ask a question”
+          - **X** · `INSTANCE` · 20×20 · instance of X
+      - **Line 2** · `LINE` · 600×0
+      - **Frame 2087324430** · `FRAME` · 600×500 · vertical stack, gap 24px, padding 24px · 5 children
+        - **Frame 2147261626** · `FRAME` · 552×20 · horizontal row · 1 children
+          - **What is it about?** · `TEXT` · 114×20 · “What is it about?”
+        - **Frame 2147261625** · `FRAME` · 552×88 · horizontal row, gap 16px · 7 children
+          - **Other cities** · `INSTANCE` · 66×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+          - **Other cities** · `INSTANCE` · 90×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+          - **Other cities** · `INSTANCE` · 136×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+          - **Other cities** · `INSTANCE` · 99×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+          - **Other cities** · `INSTANCE` · 111×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+          - **Other cities** · `INSTANCE` · 106×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+          - **Other cities** · `INSTANCE` · 125×36 · horizontal row, gap 7.587128639221191px, padding 8/16/8/16px · instance of Other cities
+        - **Frame 2087324431** · `FRAME` · 552×20 · horizontal row · 1 children
+          - **What’s your question?** · `TEXT` · 151×20 · “What’s your question?”
+        - **Compare search** · `FRAME` · 552×180 · horizontal row, padding 12/16/12/16px · 1 children
+          - **Frame 2087324384** · `FRAME` · 520×20 · horizontal row, gap 8px · 1 children
+            - **Component 12** · `FRAME` · 520×20 · horizontal row, gap 3.034851551055908px · 1 children
+              - **Type your question here...** · `TEXT` · 172×20 · “Type your question here...”
+        - **Frame 2147261603** · `FRAME` · 130×48 · horizontal row, gap 24px · 1 children
+          - **Button** · `INSTANCE` · 130×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+  - **Rating and review** · `COMPONENT_SET` · 832×1363 · 2 children
+    - **Property 1=default** · `COMPONENT` · 792×640 · vertical stack, gap 24px, padding 24px · 2 children
+      - **Frame 2147261467** · `FRAME` · 744×26 · horizontal row · 1 children
+        - **Frame 2147261417** · `FRAME` · 170×26 · horizontal row, gap 10px · 1 children
+          - **Ratings and reviews** · `TEXT` · 170×26 · “Ratings and reviews”
+      - **Frame 2147261487** · `FRAME` · 744×542 · vertical stack, gap 24px, padding 24/16/16/16px · 2 children
+        - **Frame 2147261512** · `FRAME` · 712×220 · vertical stack, gap 24px · 2 children
+          - **Frame 2147261488** · `FRAME` · 712×72 · vertical stack, gap 12px · 2 children
+            - **Frame 2147261486** · `FRAME` · 712×40 · horizontal row, gap 4px · 2 children
+              - **Star** · `INSTANCE` · 32×32 · instance of Star
+              - **4.3** · `TEXT` · 46×40 · “4.3”
+            - **Frame 2087323813** · `FRAME` · 712×20 · horizontal row, gap 4px · 1 children
+              - **Based on 653 ratings** · `TEXT` · 138×20 · “Based on 653 ratings”
+          - **Frame 2087324454** · `FRAME` · 712×124 · horizontal row, padding 24/40/24/40px · 1 children
+            - **Frame 2087324456** · `FRAME` · 632×76 · horizontal row, gap 16px · 7 children
+              - **Frame 2087324462** · `FRAME` · 134×76 · vertical stack, gap 8px · 3 children
+                - **Path** · `INSTANCE` · 18×18 · instance of Path
+                - **Placeholder** · `TEXT` · 87×20 · “Connectivity”
+                - **4.8** · `TEXT` · 23×22 · “4.8”
+              - **Line 2** · `LINE` · 76×0
+              - **Frame 2087324460** · `FRAME` · 134×76 · vertical stack, gap 8px · 3 children
+                - **MapPinArea** · `INSTANCE` · 18×18 · instance of MapPinArea
+                - **Placeholder** · `TEXT` · 109×20 · “Neighbourhood”
+                - **4.7** · `TEXT` · 22×22 · “4.7”
+              - **Line 4** · `LINE` · 76×0
+              - **Frame 2087324459** · `FRAME` · 134×76 · vertical stack, gap 8px · 3 children
+                - **Shield** · `INSTANCE` · 18×18 · instance of Shield
+                - **Placeholder** · `TEXT` · 44×20 · “Safety”
+                - **4.7** · `TEXT` · 22×22 · “4.7”
+              - **Line 5** · `LINE` · 76×0
+              - **Frame 2087324461** · `FRAME` · 134×76 · vertical stack, gap 8px · 3 children
+                - **Smiley** · `INSTANCE` · 18×18 · instance of Smiley
+                - **Placeholder** · `TEXT` · 61×20 · “Livability”
+                - **4.0** · `TEXT` · 24×22 · “4.0”
+        - **Frame 2147261511** · `FRAME` · 712×258 · vertical stack, gap 16px · 2 children
+          - **Frame 2147261490** · `FRAME` · 712×22 · horizontal row, gap 12px · 2 children
+            - **Frame 2147261486** · `FRAME` · 591×22 · horizontal row, gap 4px · 1 children
+              - **127 reviews** · `TEXT` · 85×22 · “127 reviews”
+            - **Button** · `INSTANCE` · 109×16 · horizontal row, gap 4px · instance of Button
+          - **Frame 2147261499** · `FRAME` · 824×220 · horizontal row, gap 24px · 3 children
+            - **Frame 2147261489** · `FRAME` · 400×220 · vertical stack, gap 24px, padding 16px · 2 children
+              - **Frame 2147261491** · `FRAME` · 368×44 · horizontal row, gap 56px · 2 children
+                - **Frame 2087324817** · `FRAME` · 185×44 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **badge/base** · `FRAME` · 56×24 · horizontal row, gap 4px, padding 4/8/4/8px
+                  - _…and 2 more_
+              - **Frame 2147261496** · `FRAME` · 368×120 · vertical stack, gap 10px, padding 16/0/16/0px · 1 children
+                - **Frame 2147261494** · `FRAME` · 368×88 · vertical stack, gap 8px
+                  - _…and 2 more_
+            - **Frame 2147261494** · `FRAME` · 400×220 · vertical stack, gap 24px, padding 16px · 2 children
+              - **Frame 2147261491** · `FRAME` · 368×44 · horizontal row, gap 56px · 2 children
+                - **Frame 2087324817** · `FRAME` · 185×44 · horizontal row, gap 12px
+                  - _…and 2 more_
+                - **badge/base** · `FRAME` · 56×24 · horizontal row, gap 4px, padding 4/8/4/8px
+                  - _…and 2 more_
+              - **Frame 2147261496** · `FRAME` · 368×120 · vertical stack, gap 10px, padding 16/0/16/0px · 1 children
+                - **Frame 2147261494** · `FRAME` · 368×88 · vertical stack, gap 8px
+                  - _…and 2 more_
+            - **Frame 2147261493** · `FRAME` · 42×42 · horizontal row, gap 10px, padding 12px · 1 children
+              - **Frame 2087324448** · `FRAME` · 18×18 · horizontal row, gap 4px · 1 children
+                - **CaretRight** · `INSTANCE` · 18×18 · instance of CaretRight
+  - **Floor plan cards** · `COMPONENT_SET` · 727×602 · 2 children
+    - **Property 1=Default** · `COMPONENT` · 320×562 · vertical stack · 5 children
+      - **Frame 2147261418** · `FRAME` · 320×252 · vertical stack, gap 10px, padding 16px · 1 children
+        - **image 1** · `RECTANGLE` · 220×220
+      - **Frame 2147261419** · `FRAME` · 320×310 · vertical stack, gap 16px, padding 16px · 6 children
+        - **Frame 2147261439** · `FRAME` · 95×50 · vertical stack, gap 8px · 2 children
+          - **Configuration** · `TEXT` · 95×20 · “Configuration”
+          - **2 BHK** · `TEXT` · 45×22 · “2 BHK”
+        - **Line 2** · `LINE` · 288×0
+        - **Frame 2147261440** · `FRAME` · 131×50 · vertical stack, gap 8px · 2 children
+          - **Super built-up area** · `TEXT` · 131×20 · “Super built-up area”
+          - **1500-1700 sq.ft.** · `TEXT` · 120×22 · “1500-1700 sq.ft.”
+        - **Line 4** · `LINE` · 288×0
+        - **Frame 2147261441** · `FRAME` · 130×50 · vertical stack, gap 8px · 2 children
+          - **Price** · `TEXT` · 35×20 · “Price”
+          - **₹2.25 Cr - 2.55 Cr** · `TEXT` · 130×22 · “₹2.25 Cr - 2.55 Cr”
+        - **Frame 2087324819** · `FRAME` · 288×48 · horizontal row, gap 8px · 1 children
+          - **Button** · `INSTANCE` · 288×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+      - **Frame 2087324449** · `FRAME` · 32×64 · vertical stack, gap 8px, padding 8px · 3 children
+        - **Frame 2087324448** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+          - **Plus** · `INSTANCE` · 16×16 · instance of Plus
+        - **Line 7** · `LINE` · 16×0
+        - **Frame 2087324449** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+          - **Minus** · `INSTANCE` · 16×16 · instance of Minus
+      - **Frame 2147261422** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+        - **Frame 2087324448** · `FRAME` · 16×16 · horizontal row, gap 4px · 1 children
+          - **ArrowsClockwise** · `INSTANCE` · 16×16 · instance of ArrowsClockwise
+      - **Frame 2147261421** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8/6/8/6px · 1 children
+        - **2D** · `TEXT` · 20×16 · “2D”
+- **PDP / d-web** · `COMPONENT_SET` · 1492×2041 · 1 children
+  - **Category=Rent** · `COMPONENT` · 1440×1998 · vertical stack · 1 children
+    - **Container** · `FRAME` · 1440×1998 · vertical stack · 3 children
+      - **PDP / d-web / Top bar** · `FRAME` · 1440×44 · horizontal row · 4 children
+        - **Link** · `FRAME` · 173×44 · vertical stack, padding 13/16/13/16px · 1 children
+          - **Housing.com** · `FRAME` · 141×18
+        - **Container** · `FRAME` · 192×44 · vertical stack · 2 children
+          - **Background** · `RECTANGLE` · 1512×805
+          - **Background+VerticalBorder** · `FRAME` · 192×44 · horizontal row, gap -9px, padding 0/14/0/14px · 2 children
+            - **Buy in Noida** · `TEXT` · 71×44 · “Buy in Noida”
+            - **Container** · `FRAME` · 10×44 · horizontal row, padding 16.5/0/17/0px · 1 children
+              - **Icon** · `FRAME` · 11×11 · 1 children
+                - **Vector** · `VECTOR` · 6×11
+        - **VerticalBorder** · `FRAME` · 601×44 · vertical stack, padding 5/16/5/16px · 1 children
+          - **Label** · `FRAME` · 568×34 · horizontal row, padding 0/10/0/10px · 3 children
+            - **Container** · `FRAME` · 18×22 · vertical stack, padding 0/0/3.5/0px · 1 children
+              - **Container** · `FRAME` · 18×19 · horizontal row · 1 children
+                - **Icon** · `FRAME` · 19×19
+                  - _…and 1 more_
+            - **Margin** · `FRAME` · 99×26 · vertical stack, padding 0/2/0/2px · 1 children
+              - **Background** · `FRAME` · 95×26 · 2 children
+                - **Container** · `FRAME` · 57×25 · horizontal row
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 9×9
+                  - _…and 1 more_
+            - **Margin** · `FRAME` · 60×27 · vertical stack, padding 0/2/0/2px · 1 children
+              - **Background+Border** · `FRAME` · 56×27 · vertical stack, padding 0/10/0/10px · 1 children
+                - **Container** · `FRAME` · 34×25 · horizontal row
+                  - _…and 1 more_
+        - **Container** · `FRAME` · 474×44 · horizontal row · 4 children
+          - **Link** · `FRAME` · 129×44 · vertical stack · 1 children
+            - **VerticalBorder** · `FRAME` · 129×44 · horizontal row, gap 5px, padding 4.5/15/0/15px · 2 children
+              - **Container** · `FRAME` · 11×16 · horizontal row · 1 children
+                - **Icon** · `FRAME` · 11×16
+                  - _…and 1 more_
+              - **Download App** · `TEXT` · 82×44 · “Download App”
+          - **Link:margin** · `FRAME` · 152×44 · vertical stack, padding 7/10/7/10px · 1 children
+            - **Link** · `FRAME` · 132×30 · horizontal row, gap 6px, padding 6px · 2 children
+              - **List Property** · `TEXT` · 73×18 · “List Property”
+              - **Background** · `FRAME` · 33×18 · horizontal row, padding 0/6/0/6px · 1 children
+                - **Free** · `TEXT` · 21×18 · “Free”
+          - **Link** · `FRAME` · 113×44 · vertical stack · 1 children
+            - **VerticalBorder** · `FRAME` · 113×44 · horizontal row, gap 5px, padding 4.5/15/0/15px · 2 children
+              - **Container** · `FRAME` · 16×16 · horizontal row · 1 children
+                - **Icon** · `FRAME` · 16×16
+                  - _…and 1 more_
+              - **Saved** · `TEXT` · 35×44 · “Saved”
+          - **Margin** · `FRAME` · 80×32 · vertical stack, padding 0/12/0/0px · 1 children
+            - **Background+VerticalBorder** · `FRAME` · 68×32 · horizontal row · 2 children
+              - **Margin** · `FRAME` · 23×13 · vertical stack, padding 0/10/0/0px · 1 children
+                - **Container** · `FRAME` · 13×13 · vertical stack
+                  - _…and 1 more_
+              - **tenant-avatar.cedc2f44.png** · `FRAME` · 24×24
+      - **PDP / d-web / Hero section** · `FRAME` · 1440×660 · vertical stack, gap 8px · 2 children
+        - **Container** · `FRAME` · 1064×593 · vertical stack, gap 5px · 3 children
+          - **Container** · `FRAME` · 1064×38 · horizontal row, gap 633.0399780273438px · 2 children
+            - **Section** · `FRAME` · 267×14 · horizontal row · 1 children
+              - **List** · `FRAME` · 267×14 · horizontal row · 4 children
+                - **Item** · `FRAME` · 48×14 · horizontal row, gap 3px, padding 0/3/0/0px
+                  - _…and 2 more_
+                - **Item** · `FRAME` · 47×14 · horizontal row, gap 3px, padding 0/3/0/0px
+                  - _…and 2 more_
+                - **Item** · `FRAME` · 73×14 · horizontal row, gap 3px, padding 0/3.009999990463257/0/0px
+                  - _…and 2 more_
+                - **Item → ABA Cleo County** · `TEXT` · 99×14 · “ABA Cleo County”
+            - **Container** · `FRAME` · 169×38 · 2 children
+              - **Last updated: Apr 6, 2026** · `TEXT` · 150×12 · “Last updated: Apr 6, 2026”
+              - **Container** · `FRAME` · 15×15 · horizontal row · 1 children
+                - **Icon** · `FRAME` · 15×15
+                  - _…and 1 more_
+          - **Container** · `FRAME` · 1064×110 · horizontal row, gap 78.55000305175781px, padding 3/0/0/0px · 2 children
+            - **Container** · `FRAME` · 710×107 · vertical stack, gap 8px · 4 children
+              - **Container** · `FRAME` · 710×29 · horizontal row · 1 children
+                - **Container** · `FRAME` · 290×29 · horizontal row, gap 16px, padding 0/40/0/0px
+                  - _…and 2 more_
+              - **Container** · `FRAME` · 710×17 · horizontal row, gap 12px · 3 children
+                - **Semi Furnished** · `TEXT` · 102×17 · “Semi Furnished”
+                - **Vector 934** · `VECTOR` · 0×17
+                - **Frame 2087324989** · `FRAME` · 161×17 · horizontal row, gap 4px
+                  - _…and 2 more_
+              - **Container** · `FRAME` · 710×17 · vertical stack · 1 children
+                - **GH-5, Sector 121, Noida** · `TEXT` · 710×17 · “GH-5, Sector 121, Noida”
+              - **Tags** · `INSTANCE` · 68×20 · horizontal row · instance of Tags
+            - **Container** · `FRAME` · 134×105 · vertical stack, gap 8px · 3 children
+              - **Container** · `FRAME` · 103×24 · horizontal row, gap 4px · 2 children
+                - **Container** · `FRAME` · 12×21 · horizontal row
+                  - _…and 1 more_
+                - **3,00,000** · `TEXT` · 87×24 · “3,00,000”
+              - **Container** · `FRAME` · 124×17 · horizontal row · 1 children
+                - **Added 25 days ago** · `TEXT` · 124×17 · “Added 25 days ago”
+              - **button** · `INSTANCE` · 134×48 · horizontal row · instance of button
+          - **Container** · `FRAME` · 1064×435 · vertical stack, padding 11/0/0/0px · 3 children
+            - **Container** · `FRAME` · 740×425 · vertical stack · 4 children
+              - **Gallery Cover Pic of ABA Cleo County** · `FRAME` · 740×425
+              - **Gallery Cover Pic of ABA Cleo County** · `FRAME` · 740×425
+              - **Overlay** · `FRAME` · 75×19 · vertical stack, padding 0/4/0/4px · 1 children
+                - **Cover Image** · `TEXT` · 67×19 · “Cover Image”
+              - **Container** · `FRAME` · 188×36 · vertical stack · 1 children
+                - **Container** · `FRAME` · 180×36 · horizontal row, gap 8px
+                  - _…and 2 more_
+            - **Container** · `FRAME` · 317×209 · vertical stack · 2 children
+              - **ABA Cleo County Project Tour 1** · `FRAME` · 317×209
+              - **Container** · `FRAME` · 317×209 · horizontal row · 1 children
+                - **Background** · `FRAME` · 70×70 · vertical stack, padding 22.799999237060547/9.699999809265137/21.610000610351562/14.300000190734863px
+                  - _…and 1 more_
+            - **Container** · `FRAME` · 317×209 · vertical stack · 2 children
+              - **ABA Cleo County Elevation 1** · `FRAME` · 317×209
+              - **Overlay** · `FRAME` · 317×209 · vertical stack · 2 children
+                - **Container** · `FRAME` · 16×29 · vertical stack
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 96×29 · vertical stack
+                  - _…and 1 more_
+        - **Background+HorizontalBorder+Shadow** · `FRAME` · 1440×59 · vertical stack, padding 0/224/0/224px · 1 children
+          - **Container** · `FRAME` · 992×58 · horizontal row, gap 24px · 6 children
+            - **HorizontalBorder** · `FRAME` · 82×58 · horizontal row, padding 15/4/15/4px · 2 children
+              - **Overview** · `TEXT` · 74×26 · “Overview”
+              - **Vector 935** · `VECTOR` · 82×0
+            - **HorizontalBorder** · `FRAME` · 103×58 · horizontal row, padding 15/4/15/4px · 1 children
+              - **Furnishings** · `TEXT` · 95×26 · “Furnishings”
+            - **HorizontalBorder** · `FRAME` · 89×58 · horizontal row, padding 15/4/15/4px · 1 children
+              - **Amenities** · `TEXT` · 81×26 · “Amenities”
+            - **HorizontalBorder** · `FRAME` · 154×58 · horizontal row, padding 15/4/15/4px · 1 children
+              - **Ratings & Reviews** · `TEXT` · 146×26 · “Ratings & Reviews”
+            - **HorizontalBorder** · `FRAME` · 107×58 · horizontal row, padding 15/4/15/4px · 1 children
+              - **Price Trends** · `TEXT` · 99×26 · “Price Trends”
+            - **HorizontalBorder** · `FRAME` · 196×58 · horizontal row, padding 15/4/15/4px · 1 children
+              - **Explore Neighbourhood** · `TEXT` · 188×26 · “Explore Neighbourhood”
+      - **Container** · `FRAME` · 1064×1294 · horizontal row, gap 15px, padding 32/0/32/0px · 2 children
+        - **Container** · `FRAME` · 689×1230 · vertical stack, gap 16px · 2 children
+          - **Section** · `FRAME` · 689×309 · vertical stack, padding 16/0/0/0px · 1 children
+            - **Section** · `FRAME` · 689×293 · vertical stack, gap 24px, padding 24/0/20/0px · 2 children
+              - **Frame 2087324993** · `FRAME` · 689×209 · vertical stack, gap 16px · 2 children
+                - **Margin** · `FRAME` · 689×40 · vertical stack
+                  - _…and 1 more_
+                - **Container** · `FRAME` · 689×153 · vertical stack, padding 0/16/0/16px
+                  - _…and 1 more_
+              - **.demand_text_cta** · `INSTANCE` · 129×16 · horizontal row, gap 4px · instance of .demand_text_cta
+          - **Section** · `FRAME` · 689×905 · vertical stack, padding 16/0/0/0px · 1 children
+            - **Section** · `FRAME` · 689×889 · vertical stack · 2 children
+              - **Container** · `FRAME` · 689×60 · horizontal row, gap 236.1199951171875px, padding 0/20/0/0px · 1 children
+                - **Heading 2** · `FRAME` · 269×60 · vertical stack, padding 16px
+                  - _…and 1 more_
+              - **Table → Body** · `FRAME` · 689×829 · vertical stack, gap 32px, padding 16/16/32/16px · 10 children
+                - **Frame 2087324994** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087324995** · `FRAME` · 657×60 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087324996** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087324997** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087325001** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087324998** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087324999** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087325000** · `FRAME` · 657×36 · horizontal row, gap 24px
+                  - _…and 2 more_
+                - **Frame 2087325002** · `FRAME` · 657×141 · vertical stack, gap 12px
+                  - _…and 2 more_
+                - **Container** · `FRAME` · 657×40 · horizontal row, gap 8px
+                  - _…and 2 more_
+        - **PDP / d-web / Contact form** · `FRAME` · 360×720 · vertical stack, gap 16px · 3 children
+          - **Project name** · `FRAME` · 361×72 · vertical stack, gap 16px, padding 16px · 1 children
+            - **Seller detail** · `FRAME` · 329×40 · horizontal row, gap 12px · 2 children
+              - **Frame 2087330164** · `FRAME` · 40×40 · horizontal row, gap 10px · 1 children
+                - **WarningOctagon** · `INSTANCE` · 20×20 · instance of WarningOctagon
+              - **Frame 2087330163** · `FRAME` · 184×36 · vertical stack, gap 4px · 2 children
+                - **Think this property is yours?** · `TEXT` · 184×16 · “Think this property is yours?”
+                - **button** · `INSTANCE` · 116×16 · horizontal row · instance of button
+          - **Frame 2087324991** · `FRAME` · 360×663 · vertical stack · 2 children
+            - **Section** · `FRAME` · 360×581 · vertical stack, gap 16px, padding 16px · 2 children
+              - **Background+Border** · `FRAME` · 328×40 · 2 children
+                - **Container** · `FRAME` · 11×15 · horizontal row
+                  - _…and 1 more_
+                - **Nice choice. Let’s connect with the Seller** · `TEXT` · 239×15 · “Nice choice. Let’s connect with the Seller”
+              - **Container** · `FRAME` · 328×493 · vertical stack, gap 16px · 3 children
+                - **Frame 2087324992** · `FRAME` · 328×365 · vertical stack, gap 12px
+                  - _…and 2 more_
+                - **Background+Border** · `FRAME` · 328×48 · horizontal row, gap 8px, padding 12px
+                  - _…and 2 more_
+                - **Button** · `FRAME` · 328×48 · vertical stack, padding 0/14/0/14px
+                  - _…and 1 more_
+            - **Background** · `FRAME` · 360×82 · vertical stack · 2 children
+              - **stillPending.63bc8f51.svg clip** · `FRAME` · 360×82 · vertical stack · 1 children
+                - **stillPending.63bc8f51.svg** · `FRAME` · 360×82
+                  - _…and 1 more_
+              - **Container** · `FRAME` · 360×62 · horizontal row, gap 5.684341886080802e-14px · 2 children
+                - **Margin** · `FRAME` · 264×62 · vertical stack, padding 0/0/0/16px
+                  - _…and 1 more_
+                - **Margin** · `FRAME` · 96×62 · vertical stack, padding 20/0/0/0px
+                  - _…and 1 more_
+          - **Background+VerticalBorder** · `FRAME` · 360×42 · horizontal row, gap 4px, padding 0/0/1.5/0px · 2 children
+            - **ShareNetwork** · `INSTANCE` · 20×20 · instance of ShareNetwork
+            - **Share** · `TEXT` · 34×40 · “Share”
+- **Confirmation modal** · `COMPONENT_SET` · 440×554 · 2 children
+  - **Property 1=Web** · `COMPONENT` · 400×228 · vertical stack, gap 32px · 2 children
+    - **States** · `FRAME` · 400×228 · vertical stack, gap 24px, padding 24px · 5 children
+      - **Container** · `FRAME` · 48×48 · horizontal row · 1 children
+        - **Info** · `INSTANCE` · 24×24 · instance of Info
+      - **Frame 2087324277** · `FRAME` · 352×44 · vertical stack, gap 8px · 2 children
+        - **Other Charges** · `TEXT` · 352×20 · “Think this property is yours?”
+        - **Frame 2087324844** · `FRAME` · 352×16 · horizontal row, gap 4px · 1 children
+          - **Frame 2087324407** · `FRAME` · 352×16 · horizontal row, gap 4px · 1 children
+            - **Text ->** · `TEXT` · 352×16 · “Request a callback and we'll get in touch to verify”
+      - **Frame 2087324903** · `FRAME` · 352×112 · vertical stack, gap 16px · 2 children
+        - **Input fields** · `INSTANCE` · 352×48 · horizontal row, padding 0/16/0/16px · instance of Input fields · ×2
+      - **Frame 2087324910** · `FRAME` · 352×40 · horizontal row, gap 16px · 2 children
+        - **button** · `INSTANCE` · 168×40 · horizontal row · instance of button · ×2
+      - **Skip** · `TEXT` · 25×16 · “Skip”
+    - **Close** · `INSTANCE` · 20×20 · instance of Close

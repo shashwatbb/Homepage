@@ -1,0 +1,1185 @@
+# Structure: CRF
+
+- **CRF** · `SECTION` · 2947×3644 · 10 children
+  - **Post CRF / Buy** · `COMPONENT` · 360×1739 · vertical stack, gap 16px · 2 children
+    - **Frame 2087324389** · `FRAME` · 360×56 · vertical stack, gap 10px, padding 16/0/16/0px · 1 children
+      - **Frame 2087324139** · `FRAME` · 360×24 · horizontal row, gap 12px, padding 0/16/0/16px · 2 children
+        - **Title** · `TEXT` · 104×20 · “Sellers details”
+        - **Close** · `INSTANCE` · 24×24 · instance of Close
+    - **Frame 2087324786** · `FRAME` · 360×1667 · vertical stack, gap 16px, padding 0/16/74/16px · 8 children
+      - **Sellers notified variants** · `INSTANCE` · 328×241 · vertical stack, gap 16px · instance of Sellers notified variants
+      - **Group 2378** · `GROUP` · 328×142 · 4 children
+        - **Mask** · `VECTOR` · 328×142
+        - **Mask** · `VECTOR` · 328×142
+        - **Mask group** · `GROUP` · 194×142 · 2 children
+          - **Rectangle 4085** · `RECTANGLE` · 194×142
+          - **Group 2377** · `GROUP` · 303×409 · 1 children
+            - **Group 2376** · `GROUP` · 303×409 · 12 children
+              - **Group 1669** · `GROUP` · 303×342 · 3 children
+                - **Ellipse 20** · `ELLIPSE` · 244×252
+                - **Group 2235** · `GROUP` · 84×95
+                  - _…and 2 more_
+                - **Particles ** · `GROUP` · 75×93
+                  - _…and 12 more_
+              - **Rectangle 1182** · `VECTOR` · 153×191
+              - **Mask group** · `GROUP` · 17×19 · 1 children
+                - **Group 2248** · `GROUP` · 15×16
+                  - _…and 1 more_
+              - **Mask group** · `GROUP` · 6×7 · 1 children
+                - **Group 2248** · `GROUP` · 5×6
+                  - _…and 1 more_
+              - **Particles ** · `GROUP` · 75×93 · 12 children
+                - **Vector 232** · `VECTOR` · 5×6
+                - **Ellipse 48** · `ELLIPSE` · 1×1
+                - **Ellipse 49** · `ELLIPSE` · 1×1
+                - **Ellipse 50** · `ELLIPSE` · 1×1
+                - **Ellipse 53** · `ELLIPSE` · 1×1
+                - **Ellipse 51** · `ELLIPSE` · 1×1
+                - **Ellipse 52** · `ELLIPSE` · 1×1
+                - **Ellipse 64** · `ELLIPSE` · 1×1
+                - **Ellipse 59** · `ELLIPSE` · 1×1
+                - **Ellipse 60** · `ELLIPSE` · 1×1
+                - **Ellipse 61** · `ELLIPSE` · 1×1
+                - **Group 2265** · `GROUP` · 28×86
+                  - _…and 7 more_
+              - **Mask group** · `GROUP` · 9×10 · 1 children
+                - **Group 2248** · `GROUP` · 8×8
+                  - _…and 1 more_
+              - **Group 2090** · `GROUP` · 15×16 · 13 children
+                - **Vector 315** · `VECTOR` · 7×8
+                - **Vector** · `VECTOR` · 5×6
+                - **Vector 316** · `VECTOR` · 2×3
+                - **Vector** · `VECTOR` · 1×1 · ×2
+                - **Group** · `GROUP` · 2×2
+                  - _…and 2 more_
+                - **Vector 317** · `VECTOR` · 1×1
+                - **Vector 318** · `VECTOR` · 1×1
+                - **Vector 319** · `VECTOR` · 11×7
+                - **Vector 320** · `VECTOR` · 4×4
+                - **Vector 321** · `VECTOR` · 11×7
+                - **Vector 322** · `VECTOR` · 1×2
+                - **Vector** · `VECTOR` · 15×16
+              - **Group 2083** · `GROUP` · 22×23 · 12 children
+                - **Vector** · `VECTOR` · 7×8
+                - **Vector** · `VECTOR` · 10×9
+                - **Vector** · `VECTOR` · 1×1 · ×2
+                - **Vector** · `VECTOR` · 16×10
+                - **Group** · `GROUP` · 2×2
+                  - _…and 2 more_
+                - **Vector** · `VECTOR` · 4×6
+                - **Vector** · `VECTOR` · 3×3
+                - **Vector 309** · `VECTOR` · 1×1
+                - **Vector 310** · `VECTOR` · 1×1
+                - **Vector** · `VECTOR` · 22×23
+                - **Vector** · `VECTOR` · 16×7
+              - **Rectangle 1172** · `RECTANGLE` · 28×31
+              - **Group 2058** · `GROUP` · 28×35 · 1 children
+                - **Group 2083** · `GROUP` · 28×35
+                  - _…and 1 more_
+              - **Rectangle 1173** · `RECTANGLE` · 18×20
+              - **Group 2050** · `GROUP` · 18×23 · 1 children
+                - **Group 2080** · `GROUP` · 18×23
+                  - _…and 15 more_
+        - **Group 2376** · `GROUP` · 328×142 · 1 children
+          - **Frame 2087324850** · `FRAME` · 328×142 · vertical stack, gap 10px, padding 14/16/14/16px · 2 children
+            - **Group 2375** · `GROUP` · 360×142 · 2 children
+              - **Mask** · `VECTOR` · 360×142
+              - **Gradient** · `GROUP` · 524×408 · 3 children
+                - **Gradient** · `VECTOR` · 210×157
+                - **Group 15** · `GROUP` · 253×187
+                  - _…and 4 more_
+                - **Group 14** · `GROUP` · 180×133
+                  - _…and 4 more_
+            - **Frame 2087324849** · `FRAME` · 204×114 · vertical stack, gap 11px · 2 children
+              - **Frame 2087324848** · `FRAME` · 204×67 · vertical stack, gap 6px · 2 children
+                - **Frame 2087324847** · `FRAME` · 89×28 · horizontal row, gap 1px
+                  - _…and 2 more_
+                - **Get access to more o** · `TEXT` · 204×33 · “Get access to Zero Brokerage properties with Premium”
+              - **Group 2227** · `GROUP` · 116×36 · 2 children
+                - **Mask** · `VECTOR` · 116×36
+                - **Contact Owner Now** · `TEXT` · 80×16 · “Upgrade Now”
+      - **Frame 2087324797** · `FRAME` · 328×1074 · vertical stack, gap 16px, padding 16px · 6 children
+        - **Recommended properties** · `TEXT` · 200×20 · “Recommended properties”
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 164×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324841** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children · ×2
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 164×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324842** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+        - **card** · `FRAME` · 296×186 · vertical stack, gap 16px, padding 16px · 3 children · ×2
+          - **Card/list** · `FRAME` · 264×74 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×74 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×74
+              - **Frame 43** · `FRAME` · 164×74 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×54 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324842** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+      - **Frame 2087324799** · `FRAME` · 328×424 · vertical stack, gap 16px, padding 16px · 3 children
+        - **Frame 2087324840** · `FRAME` · 296×20 · horizontal row, gap 16px · 1 children
+          - **Visit nearby homes together** · `TEXT` · 219×20 · “Visit nearby homes together”
+        - **Frame 2087324807** · `FRAME` · 364×292 · horizontal row, gap 16px, padding 0/40/0/0px · 2 children
+          - **Frame 2087324299** · `FRAME` · 224×292 · vertical stack, gap 12px, padding 12px · 2 children
+            - **Frame 2087324899** · `FRAME` · 200×36 · horizontal row, gap 57px · 2 children
+              - **Frame 2087324902** · `FRAME` · 72×36 · horizontal row, gap 8px · 1 children
+                - **Frame 2087324898** · `FRAME` · 72×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+              - **Frame 2087324901** · `FRAME` · 24×36 · horizontal row, gap 10px, padding 0/0/0/8px · 1 children
+                - **checkbox** · `INSTANCE` · 16×16 · horizontal row, gap 8px · instance of checkbox
+            - **Content** · `GROUP` · 200×220 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×220 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×220 · vertical stack, gap 16px
+                  - _…and 1 more_
+          - **Frame 2087324300** · `FRAME` · 224×292 · vertical stack, gap 12px, padding 12px · 2 children
+            - **Frame 2087324902** · `FRAME` · 72×36 · horizontal row, gap 8px · 1 children
+              - **Frame 2087324898** · `FRAME` · 72×36 · vertical stack, gap 4px · 2 children
+                - **Text** · `TEXT` · 72×16 · “Arjun Patel”
+                - **Frame 2087324818** · `FRAME` · 43×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Content** · `GROUP` · 200×220 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×220 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×220 · vertical stack, gap 16px
+                  - _…and 1 more_
+        - **Frame 2087324818** · `FRAME` · 296×48 · horizontal row, gap 8px · 1 children
+          - **button** · `INSTANCE` · 296×48 · horizontal row · instance of button
+      - **Frame 2087324691** · `FRAME` · 328×376 · vertical stack, gap 16px, padding 16px · 2 children
+        - **Frame 2087324840** · `FRAME` · 296×20 · horizontal row, gap 16px · 2 children
+          - **Buyers are also exploring** · `TEXT` · 194×20 · “Buyers are also exploring”
+          - **View all** · `TEXT` · 51×16 · “View all”
+        - **Frame 2087324807** · `FRAME` · 364×308 · horizontal row, gap 16px, padding 0/40/0/0px · 3 children
+          - **Frame 2087324297** · `FRAME` · 224×308 · vertical stack, gap 16px, padding 12px · 1 children
+            - **Content** · `GROUP` · 200×284 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×284 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×284 · vertical stack, gap 16px
+                  - _…and 2 more_
+          - **Frame 2087324298** · `FRAME` · 224×308 · vertical stack, gap 16px, padding 12px · 1 children
+            - **Content** · `GROUP` · 200×284 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×284 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×284 · vertical stack, gap 16px
+                  - _…and 2 more_
+          - **Frame 2087324230** · `FRAME` · 224×304 · vertical stack, gap 16px, padding 12px · 1 children
+            - **Content** · `GROUP` · 200×280 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×280 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×280 · vertical stack, gap 16px
+                  - _…and 2 more_
+      - **card-product** · `FRAME` · 328×64 · horizontal row, gap 8px, padding 16px · 2 children
+        - **image 41** · `RECTANGLE` · 20×20
+        - **Other Charges** · `TEXT` · 268×32 · “Never pay before a visit or signed agreement”
+      - **Frame 2087324796** · `FRAME` · 328×670 · vertical stack, gap 16px, padding 16px · 4 children
+        - **Frame 2087324890** · `FRAME` · 296×20 · horizontal row, gap 16px · 2 children
+          - **Smart deals for you** · `TEXT` · 150×20 · “Smart deals for you”
+          - **View all** · `TEXT` · 51×16 · “View all”
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px · 1 children
+            - **Desc** · `FRAME` · 264×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 172×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 172×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 172×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324841** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children · ×2
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 164×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324842** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+      - **Frame 2087324794** · `FRAME` · 328×178 · vertical stack, gap 16px · 1 children
+        - **Frame 6** · `FRAME` · 328×178 · vertical stack · 2 children
+          - **Frame 2087324241** · `FRAME` · 328×49 · vertical stack, gap 12px, padding 16/16/0/16px · 2 children
+            - **Frame 2087324236** · `FRAME` · 296×20 · horizontal row, gap 100px · 1 children
+              - **Text** · `FRAME` · 296×20 · horizontal row, gap 8px · 1 children
+                - **What to expect?** · `TEXT` · 125×20 · “What to expect?”
+            - **Line 10** · `VECTOR` · 296×1
+          - **Frame 2087324577** · `FRAME` · 328×129 · vertical stack, gap 16px, padding 16px · 3 children
+            - **Frame 2087324247** · `FRAME` · 348×32 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324821** · `FRAME` · 20×20 · horizontal row, gap 10px · 1 children
+                - **Tick** · `INSTANCE` · 20×20 · horizontal row, gap 12.5px, padding 12/12.5/12/12.5px · instance of Tick
+              - **A seller/agent may contact you via call or WhatsApp.** · `TEXT` · 320×32 · “A seller/agent may contact you via call or WhatsApp.”
+            - **Rectangle 6147** · `RECTANGLE` · 348×1
+            - **Frame 2087324248** · `FRAME` · 348×32 · horizontal row, gap 8px · 2 children
+              - **Tick** · `INSTANCE` · 20×20 · horizontal row, gap 12.5px, padding 12/12.5/12/12.5px · instance of Tick
+              - **You can also reach out to the seller using the details we’ll show.** · `TEXT` · 320×32 · “You can also reach out to the seller 
+using the details we’ll show.”
+  - **Post CRF / Rent** · `COMPONENT` · 360×1903 · vertical stack, gap 16px · 2 children
+    - **Frame 2087324389** · `FRAME` · 360×56 · vertical stack, gap 10px, padding 16/0/16/0px · 1 children
+      - **Frame 2087324139** · `FRAME` · 360×24 · horizontal row, gap 12px, padding 0/16/0/16px · 2 children
+        - **Title** · `TEXT` · 164×20 · “Owner & agent details”
+        - **Close** · `INSTANCE` · 24×24 · instance of Close
+    - **Frame 2087324786** · `FRAME` · 360×1831 · vertical stack, gap 16px, padding 0/16/74/16px · 8 children
+      - **Sellers notified variants** · `INSTANCE` · 328×209 · vertical stack, gap 16px, padding 0/0/16/0px · instance of Sellers notified variants
+      - **Group 2378** · `GROUP` · 328×142 · 4 children
+        - **Mask** · `VECTOR` · 328×142
+        - **Mask** · `VECTOR` · 328×142
+        - **Mask group** · `GROUP` · 194×142 · 2 children
+          - **Rectangle 4085** · `RECTANGLE` · 194×142
+          - **Group 2377** · `GROUP` · 303×409 · 1 children
+            - **Group 2376** · `GROUP` · 303×409 · 12 children
+              - **Group 1669** · `GROUP` · 303×342 · 3 children
+                - **Ellipse 20** · `ELLIPSE` · 244×252
+                - **Group 2235** · `GROUP` · 84×95
+                  - _…and 2 more_
+                - **Particles ** · `GROUP` · 75×93
+                  - _…and 12 more_
+              - **Rectangle 1182** · `VECTOR` · 153×191
+              - **Mask group** · `GROUP` · 17×19 · 1 children
+                - **Group 2248** · `GROUP` · 15×16
+                  - _…and 1 more_
+              - **Mask group** · `GROUP` · 6×7 · 1 children
+                - **Group 2248** · `GROUP` · 5×6
+                  - _…and 1 more_
+              - **Particles ** · `GROUP` · 75×93 · 12 children
+                - **Vector 232** · `VECTOR` · 5×6
+                - **Ellipse 48** · `ELLIPSE` · 1×1
+                - **Ellipse 49** · `ELLIPSE` · 1×1
+                - **Ellipse 50** · `ELLIPSE` · 1×1
+                - **Ellipse 53** · `ELLIPSE` · 1×1
+                - **Ellipse 51** · `ELLIPSE` · 1×1
+                - **Ellipse 52** · `ELLIPSE` · 1×1
+                - **Ellipse 64** · `ELLIPSE` · 1×1
+                - **Ellipse 59** · `ELLIPSE` · 1×1
+                - **Ellipse 60** · `ELLIPSE` · 1×1
+                - **Ellipse 61** · `ELLIPSE` · 1×1
+                - **Group 2265** · `GROUP` · 28×86
+                  - _…and 7 more_
+              - **Mask group** · `GROUP` · 9×10 · 1 children
+                - **Group 2248** · `GROUP` · 8×8
+                  - _…and 1 more_
+              - **Group 2090** · `GROUP` · 15×16 · 13 children
+                - **Vector 315** · `VECTOR` · 7×8
+                - **Vector** · `VECTOR` · 5×6
+                - **Vector 316** · `VECTOR` · 2×3
+                - **Vector** · `VECTOR` · 1×1 · ×2
+                - **Group** · `GROUP` · 2×2
+                  - _…and 2 more_
+                - **Vector 317** · `VECTOR` · 1×1
+                - **Vector 318** · `VECTOR` · 1×1
+                - **Vector 319** · `VECTOR` · 11×7
+                - **Vector 320** · `VECTOR` · 4×4
+                - **Vector 321** · `VECTOR` · 11×7
+                - **Vector 322** · `VECTOR` · 1×2
+                - **Vector** · `VECTOR` · 15×16
+              - **Group 2083** · `GROUP` · 22×23 · 12 children
+                - **Vector** · `VECTOR` · 7×8
+                - **Vector** · `VECTOR` · 10×9
+                - **Vector** · `VECTOR` · 1×1 · ×2
+                - **Vector** · `VECTOR` · 16×10
+                - **Group** · `GROUP` · 2×2
+                  - _…and 2 more_
+                - **Vector** · `VECTOR` · 4×6
+                - **Vector** · `VECTOR` · 3×3
+                - **Vector 309** · `VECTOR` · 1×1
+                - **Vector 310** · `VECTOR` · 1×1
+                - **Vector** · `VECTOR` · 22×23
+                - **Vector** · `VECTOR` · 16×7
+              - **Rectangle 1172** · `RECTANGLE` · 28×31
+              - **Group 2058** · `GROUP` · 28×35 · 1 children
+                - **Group 2083** · `GROUP` · 28×35
+                  - _…and 1 more_
+              - **Rectangle 1173** · `RECTANGLE` · 18×20
+              - **Group 2050** · `GROUP` · 18×23 · 1 children
+                - **Group 2080** · `GROUP` · 18×23
+                  - _…and 15 more_
+        - **Group 2376** · `GROUP` · 328×142 · 1 children
+          - **Frame 2087324850** · `FRAME` · 328×142 · vertical stack, gap 10px, padding 14/16/14/16px · 2 children
+            - **Group 2375** · `GROUP` · 360×142 · 2 children
+              - **Mask** · `VECTOR` · 360×142
+              - **Gradient** · `GROUP` · 524×408 · 3 children
+                - **Gradient** · `VECTOR` · 210×157
+                - **Group 15** · `GROUP` · 253×187
+                  - _…and 4 more_
+                - **Group 14** · `GROUP` · 180×133
+                  - _…and 4 more_
+            - **Frame 2087324849** · `FRAME` · 204×114 · vertical stack, gap 11px · 2 children
+              - **Frame 2087324848** · `FRAME` · 204×67 · vertical stack, gap 6px · 2 children
+                - **Frame 2087324847** · `FRAME` · 89×28 · horizontal row, gap 1px
+                  - _…and 2 more_
+                - **Get access to more o** · `TEXT` · 204×33 · “Get access to Zero Brokerage properties with Premium”
+              - **Group 2227** · `GROUP` · 116×36 · 2 children
+                - **Mask** · `VECTOR` · 116×36
+                - **Contact Owner Now** · `TEXT` · 80×16 · “Upgrade Now”
+      - **Frame 2087324797** · `FRAME` · 328×1074 · vertical stack, gap 16px, padding 16px · 6 children
+        - **Recommended properties** · `TEXT` · 200×20 · “Recommended properties”
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 164×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324841** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children · ×2
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 164×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324842** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+        - **card** · `FRAME` · 296×186 · vertical stack, gap 16px, padding 16px · 3 children · ×2
+          - **Card/list** · `FRAME` · 264×74 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×74 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×74
+              - **Frame 43** · `FRAME` · 164×74 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×54 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324842** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+      - **Frame 2087324798** · `FRAME` · 328×428 · vertical stack, gap 16px, padding 16px · 2 children
+        - **Frame 2087324840** · `FRAME` · 296×20 · horizontal row, gap 16px · 2 children
+          - **Tenants are also exploring** · `TEXT` · 202×20 · “Tenants are also exploring”
+          - **View all** · `TEXT` · 51×16 · “View all”
+        - **Frame 2087324807** · `FRAME` · 364×360 · horizontal row, gap 16px, padding 0/40/0/0px · 3 children
+          - **Frame 2087324297** · `FRAME` · 224×360 · vertical stack, gap 16px, padding 12px · 2 children
+            - **Frame 2087324899** · `FRAME` · 200×36 · horizontal row · 1 children
+              - **Frame 2087324902** · `FRAME` · 72×36 · horizontal row, gap 8px · 1 children
+                - **Frame 2087324898** · `FRAME` · 72×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+            - **Content** · `GROUP` · 200×284 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×284 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×284 · vertical stack, gap 16px
+                  - _…and 2 more_
+          - **Frame 2087324298** · `FRAME` · 224×360 · vertical stack, gap 16px, padding 12px · 2 children
+            - **Frame 2087324899** · `FRAME` · 200×36 · horizontal row · 1 children
+              - **Frame 2087324902** · `FRAME` · 72×36 · horizontal row, gap 8px · 1 children
+                - **Frame 2087324898** · `FRAME` · 72×36 · vertical stack, gap 4px
+                  - _…and 2 more_
+            - **Content** · `GROUP` · 200×284 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×284 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×284 · vertical stack, gap 16px
+                  - _…and 2 more_
+          - **Frame 2087324230** · `FRAME` · 224×304 · vertical stack, gap 16px, padding 12px · 1 children
+            - **Content** · `GROUP` · 200×280 · 1 children
+              - **Frame 2087324273** · `FRAME` · 200×280 · vertical stack, gap 24px · 1 children
+                - **Frame 22** · `FRAME` · 200×280 · vertical stack, gap 16px
+                  - _…and 2 more_
+      - **White Base Banner** · `GROUP` · 328×128 · 2 children
+        - **Mask group** · `GROUP` · 201×126 · 1 children
+          - **Rectangle 4085** · `VECTOR` · 201×126
+        - **Frame 6** · `FRAME` · 328×128 · vertical stack, gap 10px, padding 16px · 1 children
+          - **Frame 4** · `FRAME` · 231×96 · vertical stack, gap 8px · 2 children
+            - **Frame 5** · `FRAME` · 231×96 · vertical stack, gap 8px · 3 children
+              - **Project Ratings & Re** · `TEXT` · 231×16 · “Zero brokerage properties”
+              - **Get access only with Housing Premium plan** · `TEXT` · 182×32 · “Get access only with Housing Premium plan”
+              - **button** · `INSTANCE` · 182×32 · horizontal row · instance of button
+            - **Group 2376** · `GROUP` · 261×279 · 11 children
+              - **Group 1669** · `GROUP` · 261×255 · 3 children
+                - **Ellipse 20** · `ELLIPSE` · 208×199
+                - **Group 2235** · `GROUP` · 73×74
+                  - _…and 2 more_
+                - **Particles ** · `GROUP` · 64×73
+                  - _…and 12 more_
+              - **Mask group** · `GROUP` · 15×15 · 1 children
+                - **Group 2248** · `GROUP` · 13×13
+                  - _…and 1 more_
+              - **Mask group** · `GROUP` · 5×5 · 1 children
+                - **Group 2248** · `GROUP` · 5×5
+                  - _…and 1 more_
+              - **Particles ** · `GROUP` · 64×73 · 12 children
+                - **Vector 232** · `VECTOR` · 4×4
+                - **Ellipse 48** · `ELLIPSE` · 1×1
+                - **Ellipse 49** · `ELLIPSE` · 1×1
+                - **Ellipse 50** · `ELLIPSE` · 1×1
+                - **Ellipse 53** · `ELLIPSE` · 1×1
+                - **Ellipse 51** · `ELLIPSE` · 1×1
+                - **Ellipse 52** · `ELLIPSE` · 1×1
+                - **Ellipse 64** · `ELLIPSE` · 1×1
+                - **Ellipse 59** · `ELLIPSE` · 1×1
+                - **Ellipse 60** · `ELLIPSE` · 1×1
+                - **Ellipse 61** · `ELLIPSE` · 1×1
+                - **Group 2265** · `GROUP` · 24×68
+                  - _…and 7 more_
+              - **Mask group** · `GROUP` · 8×8 · 1 children
+                - **Group 2248** · `GROUP` · 7×7
+                  - _…and 1 more_
+              - **Group 2090** · `GROUP` · 13×13 · 13 children
+                - **Vector 315** · `VECTOR` · 6×6
+                - **Vector** · `VECTOR` · 4×5
+                - **Vector 316** · `VECTOR` · 2×2
+                - **Vector** · `VECTOR` · 0×1 · ×2
+                - **Group** · `GROUP` · 1×1
+                  - _…and 2 more_
+                - **Vector 317** · `VECTOR` · 0×1
+                - **Vector 318** · `VECTOR` · 0×1
+                - **Vector 319** · `VECTOR` · 9×6
+                - **Vector 320** · `VECTOR` · 3×3
+                - **Vector 321** · `VECTOR` · 9×6
+                - **Vector 322** · `VECTOR` · 1×2
+                - **Vector** · `VECTOR` · 13×13
+              - **Group 2083** · `GROUP` · 18×18 · 12 children
+                - **Vector** · `VECTOR` · 6×7
+                - **Vector** · `VECTOR` · 8×7
+                - **Vector** · `VECTOR` · 1×1 · ×2
+                - **Vector** · `VECTOR` · 13×8
+                - **Group** · `GROUP` · 2×2
+                  - _…and 2 more_
+                - **Vector** · `VECTOR` · 4×5
+                - **Vector** · `VECTOR` · 2×2
+                - **Vector 309** · `VECTOR` · 1×1
+                - **Vector 310** · `VECTOR` · 1×1
+                - **Vector** · `VECTOR` · 18×18
+                - **Vector** · `VECTOR` · 13×6
+              - **Rectangle 1172** · `RECTANGLE` · 24×24
+              - **Group 2058** · `GROUP` · 24×28 · 1 children
+                - **Group 2083** · `GROUP` · 24×28
+                  - _…and 1 more_
+              - **Rectangle 1173** · `RECTANGLE` · 16×16
+              - **Group 2050** · `GROUP` · 16×18 · 1 children
+                - **Group 2080** · `GROUP` · 16×18
+                  - _…and 15 more_
+      - **card-product** · `FRAME` · 328×64 · horizontal row, gap 8px, padding 16px · 2 children
+        - **image 41** · `RECTANGLE` · 20×20
+        - **Other Charges** · `TEXT` · 268×32 · “Never pay before a visit or signed agreement”
+      - **Frame 2087324799** · `FRAME` · 328×670 · vertical stack, gap 16px, padding 16px · 4 children
+        - **Frame 2087324890** · `FRAME` · 296×20 · horizontal row, gap 16px · 2 children
+          - **Recommended properties** · `TEXT` · 200×20 · “Recommended properties”
+          - **View all** · `TEXT` · 51×16 · “View all”
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px · 1 children
+            - **Desc** · `FRAME` · 264×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 172×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 172×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 172×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324841** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+        - **card** · `FRAME` · 296×190 · vertical stack, gap 16px, padding 16px · 3 children · ×2
+          - **Card/list** · `FRAME` · 264×78 · vertical stack, gap 8px, padding 0/8/0/0px · 1 children
+            - **Desc** · `FRAME` · 256×78 · horizontal row, gap 12px · 2 children
+              - **Rectangle 11** · `RECTANGLE` · 80×78
+              - **Frame 43** · `FRAME` · 164×78 · vertical stack, gap 4px · 2 children
+                - **Name** · `FRAME` · 164×58 · vertical stack, gap 4px
+                  - _…and 2 more_
+                - **Price** · `FRAME` · 164×16 · horizontal row, gap 33px
+                  - _…and 1 more_
+          - **Line 2** · `LINE` · 264×0
+          - **Frame 2087324842** · `FRAME` · 264×48 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324843** · `FRAME` · 146×36 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324842** · `FRAME` · 36×36 · horizontal row, gap 7.500000476837158px, padding 5.250000476837158px · 2 children
+                - **Ellipse 608** · `ELLIPSE` · 36×36
+                - **image 42** · `RECTANGLE` · 32×32
+              - **Frame 2087324385** · `FRAME` · 102×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 102×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 44×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+            - **Frame 2087324818** · `FRAME` · 118×48 · horizontal row, gap 8px · 2 children
+              - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/16/0/16px · 3 children
+                - **whatsapp** · `INSTANCE` · 20×20 · instance of whatsapp
+                - **Label** · `TEXT` · 37×16 · “Label”
+                - **ChevronRight** · `INSTANCE` · 16×16 · instance of ChevronRight
+              - **button** · `FRAME` · 48×48 · horizontal row · 1 children
+                - **.demand_secondary** · `FRAME` · 48×48 · horizontal row, gap 4px, padding 0/12/0/12px
+                  - _…and 3 more_
+      - **Frame 2087324794** · `FRAME` · 328×178 · vertical stack, gap 16px · 1 children
+        - **Frame 6** · `FRAME` · 328×178 · vertical stack · 2 children
+          - **Frame 2087324241** · `FRAME` · 328×49 · vertical stack, gap 12px, padding 16/16/0/16px · 2 children
+            - **Frame 2087324236** · `FRAME` · 296×20 · horizontal row, gap 100px · 1 children
+              - **Text** · `FRAME` · 296×20 · horizontal row, gap 8px · 1 children
+                - **What to expect?** · `TEXT` · 125×20 · “What to expect?”
+            - **Line 10** · `VECTOR` · 296×1
+          - **Frame 2087324577** · `FRAME` · 328×129 · vertical stack, gap 16px, padding 16px · 3 children
+            - **Frame 2087324249** · `FRAME` · 348×32 · horizontal row, gap 8px · 2 children
+              - **Frame 2087324821** · `FRAME` · 20×20 · horizontal row, gap 10px · 1 children
+                - **Tick** · `INSTANCE` · 20×20 · horizontal row, gap 12.5px, padding 12/12.5/12/12.5px · instance of Tick
+              - **Owner/agent may contact you via call or WhatsApp.** · `TEXT` · 320×32 · “Owner/agent may contact you via call or WhatsApp.”
+            - **Rectangle 6147** · `RECTANGLE` · 348×1
+            - **Frame 2087324248** · `FRAME` · 348×32 · horizontal row, gap 8px · 2 children
+              - **Tick** · `INSTANCE` · 20×20 · horizontal row, gap 12.5px, padding 12/12.5/12/12.5px · instance of Tick
+              - **You can also reach out to the seller using the details we’ll show.** · `TEXT` · 320×32 · “You can also reach out to the seller 
+using the details we’ll show.”
+  - **CRF / Property details** · `COMPONENT_SET` · 420×257 · 2 children
+    - **Property 1=Default** · `COMPONENT` · 380×85 · vertical stack, gap 16px, padding 16px · 1 children
+      - **Frame 2087324380** · `FRAME` · 348×53 · horizontal row, gap 12px · 2 children
+        - **image/rounded** · `FRAME` · 53×53 · 1 children
+          - **Rounded Rectangle** · `RECTANGLE` · 53×53
+        - **Frame 2087324277** · `FRAME` · 283×53 · vertical stack, gap 8px · 3 children
+          - **Frame 2087324801** · `FRAME` · 283×20 · vertical stack, gap 4px · 1 children
+            - **Evolvus Phase 1, Sikanderpur** · `TEXT` · 283×20 · “Evolvus Phase 1, Sikanderpur”
+          - **Container** · `FRAME` · 283×1
+          - **Frame 2087324802** · `FRAME` · 283×16 · horizontal row, gap 8px · 3 children
+            - **Frame 2087324407** · `FRAME` · 113×16 · horizontal row, gap 4px · 1 children
+              - **Text ->** · `TEXT` · 113×16 · “₹2.5 Cr. - 4.53 Cr.”
+            - **Ellipse 604** · `ELLIPSE` · 5×5
+            - **Text ->** · `TEXT` · 149×16 · “Apartment, villa, villa, villa”
+  - **OTP** · `COMPONENT_SET` · 400×3427 · 4 children
+    - **Property 1=Alternative** · `COMPONENT` · 360×800 · vertical stack, gap 16px · 2 children
+      - **Frame 2087324389** · `FRAME` · 360×56 · horizontal row, gap 10px, padding 16/0/16/0px · 1 children
+        - **Frame 2087324139** · `FRAME` · 360×24 · horizontal row, gap 12px, padding 0/16/0/16px · 2 children
+          - **ChevronLeft** · `INSTANCE` · 24×24 · instance of ChevronLeft
+          - **Title** · `TEXT` · 131×20 · “Verify your phone”
+      - **Frame 2087324786** · `FRAME` · 360×489 · vertical stack, gap 16px, padding 0/16/0/16px · 1 children
+        - **Mobile** · `INSTANCE` · 360×489 · vertical stack, gap 24px, padding 16px · instance of Mobile
+  - **Sellers notified variants** · `COMPONENT_SET` · 420×2104 · 7 children
+    - **Property 1=Multiple sellers** · `COMPONENT` · 380×241 · vertical stack, gap 16px · 3 children
+      - **Frame 2087324812** · `FRAME` · 380×52 · horizontal row, gap 8px, padding 16px · 2 children
+        - **Frame** · `FRAME` · 20×20 · 1 children
+          - **Group 1000004682** · `GROUP` · 18×18 · 1 children
+            - **Vector** · `VECTOR` · 18×18
+        - **Frame 2087324812** · `FRAME` · 320×16 · vertical stack, gap 8px · 1 children
+          - **Sellers notified, they may reach out soon** · `TEXT` · 274×16 · “Sellers notified, they may reach out soon”
+      - **Frame 2087324300** · `FRAME` · 380×125 · vertical stack, gap 16px, padding 0/16/0/16px · 2 children
+        - **Frame 2087324820** · `FRAME` · 348×40 · vertical stack, gap 8px · 2 children
+          - **Evolvus Phase 1, Sikanderpur, MG Road, Haryana** · `TEXT` · 348×16 · “Evolvus Phase 1, Sikanderpur, MG Road, Haryana”
+          - **Frame 2087324820** · `FRAME` · 348×16 · horizontal row, gap 8px · 3 children
+            - **3BHK Apartment** · `TEXT` · 110×16 · “3BHK Apartment”
+            - **Ellipse 605** · `ELLIPSE` · 5×5
+            - **Frame 2087324409** · `FRAME` · 50×16 · horizontal row, gap 4px · 1 children
+              - **Text ->** · `TEXT` · 50×16 · “₹2.5 Cr.”
+        - **Frame 2087324273** · `FRAME` · 348×69 · vertical stack, gap 24px · 1 children
+          - **Frame 2087324153** · `FRAME` · 348×69 · vertical stack, gap 14px · 1 children
+            - **Frame 2087324127** · `FRAME` · 348×69 · vertical stack, gap 20px · 2 children
+              - **Frame 2087324798** · `FRAME` · 348×1 · vertical stack, gap 8px · 1 children
+                - **Container** · `FRAME` · 1×348
+              - **Frame 2087324128** · `FRAME` · 348×48 · vertical stack, gap 20px · 1 children
+                - **Frame 2087324836** · `FRAME` · 348×48 · horizontal row, gap 20px
+                  - _…and 2 more_
+      - **Frame 2087324806** · `FRAME` · 380×32 · horizontal row, gap 4px, padding 8/0/8/0px · 2 children
+        - **.demand_text_cta** · `INSTANCE` · 115×16 · horizontal row, gap 4px · instance of .demand_text_cta
+        - **ChevronDown** · `INSTANCE` · 16×16 · instance of ChevronDown
+  - **API delay** · `COMPONENT_SET` · 400×764 · 2 children
+    - **Property 1=API delay: Multiple sellers** · `COMPONENT` · 360×312 · vertical stack, gap 24px, padding 16px · 1 children
+      - **Frame 2087324793** · `FRAME` · 328×280 · vertical stack, gap 24px · 2 children
+        - **Frame 2087324795** · `FRAME` · 328×170 · vertical stack, gap 12px · 2 children
+          - **Frame 2087324791** · `FRAME` · 328×138 · vertical stack, gap -34px · 2 children
+            - **Rectangle 6144** · `RECTANGLE` · 328×113
+            - **Container** · `FRAME` · 60×59 · horizontal row · 1 children
+              - **Image (Housing)** · `FRAME` · 48×48
+          - **Other Charges** · `TEXT` · 328×20 · “Getting you in touch with sellers…”
+        - **Frame 2087324835** · `FRAME` · 328×86 · vertical stack, gap -71px · 3 children
+          - **Container** · `FRAME` · 328×70 · horizontal row, padding 12px · 1 children
+            - **Frame 2087324817** · `FRAME` · 167×44 · horizontal row, gap 16px · 2 children
+              - **Rectangle 69** · `RECTANGLE` · 44×44
+              - **Frame 2087324385** · `FRAME` · 107×36 · vertical stack, gap 4px · 2 children
+                - **Frame 2087324819** · `FRAME` · 82×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 107×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+          - **Container** · `FRAME` · 312×78 · horizontal row, padding 16px · 1 children
+            - **Frame 2087324817** · `FRAME` · 165×44 · horizontal row, gap 16px · 2 children
+              - **Rectangle 69** · `RECTANGLE` · 44×44
+              - **Frame 2087324385** · `FRAME` · 105×44 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324819** · `FRAME` · 90×20 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 105×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+          - **Container** · `FRAME` · 276×78 · horizontal row, padding 16px · 1 children
+            - **Frame 2087324817** · `FRAME` · 165×44 · horizontal row, gap 16px · 2 children
+              - **Rectangle 69** · `RECTANGLE` · 44×44
+              - **Frame 2087324385** · `FRAME` · 105×44 · vertical stack, gap 8px · 2 children
+                - **Frame 2087324819** · `FRAME` · 90×20 · horizontal row, gap 8px
+                  - _…and 1 more_
+                - **Frame 2087324818** · `FRAME` · 105×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+  - **Details** · `COMPONENT_SET` · 417×1829 · 3 children
+    - **Property 1=PDP, Property 2=On PDP** · `COMPONENT` · 360×959 · vertical stack, gap 16px · 2 children
+      - **Frame 2087324787** · `FRAME` · 360×56 · vertical stack, gap 10px, padding 16/0/16/0px · 1 children
+        - **Frame 2087324139** · `FRAME` · 360×24 · horizontal row, gap 12px, padding 0/16/0/16px · 2 children
+          - **Title** · `TEXT` · 87×20 · “Your details”
+          - **Close** · `INSTANCE` · 24×24 · instance of Close
+      - **Frame 2087324786** · `FRAME` · 360×870 · vertical stack, gap 16px, padding 0/16/0/16px · 2 children
+        - **CRF / Property details** · `INSTANCE` · 328×85 · vertical stack, gap 16px, padding 16px · instance of CRF / Property details
+        - **Frame 2087324688** · `FRAME` · 328×769 · vertical stack, gap 16px, padding 16px · 2 children
+          - **Frame 2087324898** · `FRAME` · 296×487 · vertical stack, gap 16px · 7 children
+            - **Frame 2087324277** · `FRAME` · 296×50 · vertical stack, gap 4px · 2 children
+              - **Frame 2087324845** · `FRAME` · 142×24 · horizontal row, gap 4px · 1 children
+                - **Frame 2087324798** · `FRAME` · 142×24 · horizontal row, gap 8px
+                  - _…and 1 more_
+              - **Frame 2087324382** · `FRAME` · 296×22 · horizontal row, gap 4px · 2 children
+                - **Frame 2087324808** · `FRAME` · 37×22 · horizontal row, gap -14px
+                  - _…and 3 more_
+                - **Frame 2087324809** · `FRAME` · 241×16 · horizontal row, gap 4px
+                  - _…and 1 more_
+            - **Content text** · `FRAME` · 296×128 · vertical stack, gap 16px · 2 children
+              - **Default** · `INSTANCE` · 296×56 · horizontal row · instance of Default · ×2
+            - **checkbox** · `FRAME` · 296×50 · horizontal row, gap 8px · 2 children
+              - **check** · `FRAME` · 16×16 · 2 children
+                - **vector** · `VECTOR` · 16×16
+                - **vector** · `VECTOR` · 8×6
+              - **Frame 1000003081** · `FRAME` · 272×50 · vertical stack, gap 2px · 3 children
+                - **I agree to be contacted by Housing & other agents via** · `TEXT` · 272×32 · “I agree to be contacted by Housing & other agents via  ”
+                - **Frame 2087324833** · `FRAME` · 272×16 · horizontal row, gap 2px
+                  - _…and 3 more_
+                - **Description** · `TEXT` · 67×16 · “Description”
+            - **button** · `INSTANCE` · 296×48 · horizontal row · instance of button
+            - **button** · `FRAME` · 296×16 · horizontal row · 1 children
+              - **.demand_text_cta** · `FRAME` · 198×16 · horizontal row, gap 4px · 3 children
+                - **Call** · `INSTANCE` · 12×12 · instance of Call
+                - **Edit phone +91 9711663070** · `TEXT` · 178×16 · “Edit phone +91 9711663070”
+                - **Pen** · `INSTANCE` · 16×16 · instance of Pen
+            - **Container** · `FRAME` · 296×21 · horizontal row, gap 8px · 3 children
+              - **Container** · `FRAME` · 132×1
+              - **OR** · `TEXT` · 17×16 · “OR”
+              - **Container** · `FRAME` · 132×1
+            - **Frame 2087324897** · `FRAME` · 296×78 · vertical stack, gap 12px · 2 children
+              - **Paragraph** · `FRAME` · 296×16 · 1 children
+                - **Use Google to fill details instead** · `TEXT` · 207×16 · “Use Google to fill details instead”
+              - **Google details** · `INSTANCE` · 296×50 · horizontal row, gap 12px, padding 16/16/16/12px · instance of Google details
+          - **Frame 2087324899** · `FRAME` · 296×33 · vertical stack, gap 16px · 2 children
+            - **Container** · `FRAME` · 296×1 · horizontal row, gap 8px · 1 children
+              - **Container** · `FRAME` · 296×1
+            - **Frame 1000003081** · `FRAME` · 296×16 · vertical stack, gap 2px · 2 children
+              - **Frame 2087324892** · `FRAME` · 287×16 · horizontal row, gap 2px · 2 children
+                - **Frame 2087324833** · `FRAME` · 159×16 · horizontal row, gap 1px
+                  - _…and 1 more_
+                - **Frame 2087324891** · `FRAME` · 126×16 · horizontal row, gap 2px
+                  - _…and 1 more_
+              - **Description** · `TEXT` · 67×16 · “Description”
+  - **CRF / Mobile / Login** · `COMPONENT` · 360×456 · vertical stack, gap 24px, padding 0/16/24/16px · 2 children
+    - **Frame 2087324795** · `FRAME` · 328×187 · vertical stack, gap 12px · 2 children
+      - **Frame 2087324792** · `FRAME` · 328×155 · vertical stack, gap -34px, padding 16/0/0/0px · 3 children
+        - **Rectangle 6144** · `RECTANGLE` · 328×113
+        - **Container** · `FRAME` · 60×60 · horizontal row · 1 children
+          - **Logo** · `FRAME` · 48×48 · vertical stack, gap 10px, padding 10px · 1 children
+            - **Vector** · `VECTOR` · 32×20
+        - **Component 15** · `INSTANCE` · 20×20 · instance of Component 15
+      - **Other Charges** · `TEXT` · 328×20 · “Connect with sellers instantly!”
+    - **Frame 2087324893** · `FRAME` · 328×221 · vertical stack, gap 24px · 2 children
+      - **Input fields** · `INSTANCE` · 328×48 · horizontal row, padding 0/16/0/16px · instance of Input fields
+      - **Frame 2087324792** · `FRAME` · 328×149 · vertical stack, gap 16px · 3 children
+        - **button** · `INSTANCE` · 328×48 · horizontal row · instance of button
+        - **Container** · `FRAME` · 328×21 · horizontal row, gap 8px · 3 children
+          - **Container** · `FRAME` · 148×1
+          - **OR** · `TEXT` · 17×16 · “OR”
+          - **Container** · `FRAME` · 148×1
+        - **Group 1000004323** · `GROUP` · 328×48 · 1 children
+          - **Group 1000004320** · `GROUP` · 328×48 · 1 children
+            - **Frame 2087324573** · `FRAME` · 328×48 · horizontal row, gap 8px, padding 7/8/7/8px · 2 children
+              - **Digital_Glyph_Green 1** · `FRAME` · 20×20 · 1 children
+                - **Vector** · `VECTOR` · 20×20
+              - **WhatsApp me the details** · `TEXT` · 167×16 · “WhatsApp me the details”
+  - **Multi-connect** · `COMPONENT` · 328×424 · vertical stack, gap 16px, padding 16px · 3 children
+    - **Frame 2087324840** · `FRAME` · 296×20 · horizontal row, gap 16px · 1 children
+      - **Visit nearby homes together** · `TEXT` · 219×20 · “Visit nearby homes together”
+    - **Frame 2087324807** · `FRAME` · 364×292 · horizontal row, gap 16px, padding 0/40/0/0px · 3 children
+      - **Multi connect / cards** · `INSTANCE` · 224×292 · vertical stack, gap 12px, padding 12px · instance of Multi connect / cards
+      - **Multi connect / cards** · `INSTANCE` · 224×292 · vertical stack, gap 12px, padding 12px · instance of Multi connect / cards
+      - **Component 17** · `INSTANCE` · 224×292 · vertical stack, gap 12px, padding 12px · instance of Component 17
+    - **Frame 2087324818** · `FRAME` · 296×48 · horizontal row, gap 8px · 1 children
+      - **button** · `INSTANCE` · 296×48 · horizontal row · instance of button
+  - **Multi connect / cards** · `COMPONENT_SET` · 1029×396 · 4 children
+    - **Property 1=Unselected** · `COMPONENT` · 224×292 · vertical stack, gap 12px, padding 12px · 2 children
+      - **Frame 2087324900** · `FRAME` · 200×36 · horizontal row, gap 57px · 2 children
+        - **Frame 2087324897** · `FRAME` · 72×36 · horizontal row, gap 8px · 1 children
+          - **Frame 2087324898** · `FRAME` · 72×36 · vertical stack, gap 4px · 1 children
+            - **Frame 2087324902** · `FRAME` · 72×36 · horizontal row, gap 8px · 1 children
+              - **Frame 2087324898** · `FRAME` · 72×36 · vertical stack, gap 4px · 2 children
+                - **Text** · `TEXT` · 72×16 · “Arjun Patel”
+                - **Frame 2087324818** · `FRAME` · 40×16 · horizontal row, gap 8px
+                  - _…and 1 more_
+        - **Frame 2087324901** · `FRAME` · 24×36 · horizontal row, gap 10px, padding 0/0/0/8px · 1 children
+          - **checkbox** · `INSTANCE` · 16×16 · horizontal row, gap 8px · instance of checkbox
+      - **Content** · `GROUP` · 200×220 · 1 children
+        - **Frame 2087324273** · `FRAME` · 200×220 · vertical stack, gap 24px · 1 children
+          - **Frame 22** · `FRAME` · 200×220 · vertical stack, gap 16px · 1 children
+            - **Content text** · `FRAME` · 200×220 · vertical stack, gap 12px · 1 children
+              - **Frame 2087324380** · `FRAME` · 200×220 · vertical stack, gap 16px · 3 children
+                - **Rectangle 6146** · `RECTANGLE` · 98×27
+                - **image/rounded** · `FRAME` · 200×92
+                  - _…and 1 more_
+                - **Frame 2087324278** · `FRAME` · 200×112 · vertical stack, gap 16px
+                  - _…and 2 more_
+- **Post CRF / Dweb / Rent (Owner)** · `COMPONENT` · 482×611 · horizontal row, gap 12px · 2 children
+  - **Frame 2147261509** · `FRAME` · 450×611 · vertical stack · 2 children
+    - **Frame 2147261508** · `FRAME` · 450×567 · vertical stack, gap 16px, padding 16px · 3 children
+      - **Frame 2147261507** · `FRAME` · 418×166 · vertical stack, gap 16px · 3 children
+        - **seller** · `GROUP` · 281×54 · 1 children
+          - **Frame 2147261506** · `FRAME` · 281×54 · horizontal row, gap 12px · 2 children
+            - **Group 4** · `GROUP` · 48×48 · 3 children
+              - **Rectangle** · `RECTANGLE` · 48×48 · ×2
+              - **Rectangle 69** · `RECTANGLE` · 49×49
+            - **Frame 2147261505** · `FRAME` · 218×54 · vertical stack, gap 4px · 2 children
+              - **Frame 2147261504** · `FRAME` · 218×33 · vertical stack, gap 2px · 2 children
+                - **Guru Ji Builders And** · `TEXT` · 218×17 · “Owner name”
+                - **Developer** · `TEXT` · 218×14 · “Developer”
+              - **+91-XXXXXXXXXX** · `TEXT` · 218×17 · “+91-6111111111”
+        - **sent msg** · `GROUP` · 416×38 · 3 children
+          - **Your details have be** · `TEXT` · 392×38 · “Seller details are now available in the contacted properties section of the prof”
+          - **tick** · `GROUP` · 16×16 · 2 children
+            - **Fill 22** · `VECTOR` · 16×16
+            - **Stroke 24** · `VECTOR` · 8×6
+          - **tick** · `GROUP` · 16×16 · 2 children
+            - **Fill 22** · `VECTOR` · 16×16
+            - **Stroke 24** · `VECTOR` · 8×6
+        - **prop tip** · `GROUP` · 418×42 · 2 children
+          - **Rectangle Copy** · `RECTANGLE` · 418×42
+          - **Frame 2147261513** · `FRAME` · 398×32 · horizontal row, gap 8px · 2 children
+            - **Frame 2147261523** · `FRAME` · 32×32 · horizontal row, gap 10px · 1 children
+              - **Warning** · `INSTANCE` · 18×18 · instance of Warning
+            - **Dear buyers, never g** · `TEXT` · 358×26 · “Do not give any advance money without visiting the property or closing the agree”
+      - **Frame 2147261512** · `FRAME` · 418×224 · vertical stack, gap 16px, padding 16px · 3 children
+        - **Frame 2147261510** · `FRAME` · 386×52 · vertical stack, gap 4px · 2 children
+          - **Thank You Nimit,** · `TEXT` · 386×20 · “Thank You Nimit,”
+          - **You'll be the first one to know, whenever a fresh property is listed as per your preference.** · `TEXT` · 386×28 · “You'll be the first one to know, whenever a fresh property is listed as per your”
+        - **Frame 2147261511** · `FRAME` · 386×60 · horizontal row, gap 32px · 2 children
+          - **Group** · `GROUP` · 72×60 · 30 children
+            - **Vector** · `VECTOR` · 13×13
+            - **Vector** · `VECTOR` · 0×15
+            - **Group** · `GROUP` · 11×11 · 8 children
+              - **Vector** · `VECTOR` · 2×2 · ×7
+              - **Vector** · `VECTOR` · 11×11
+            - **Group** · `GROUP` · 55×60 · 1 children
+              - **Vector** · `VECTOR` · 55×60
+            - **Vector** · `VECTOR` · 48×38
+            - **Vector** · `VECTOR` · 3×12
+            - **Vector** · `VECTOR` · 4×38
+            - **Vector** · `VECTOR` · 44×3
+            - **Vector** · `VECTOR` · 35×7
+            - **Vector** · `VECTOR` · 13×3
+            - **Vector** · `VECTOR` · 2×7
+            - **Vector** · `VECTOR` · 3×7
+            - **Vector** · `VECTOR` · 9×9
+            - **Vector** · `VECTOR` · 44×11
+            - **Vector** · `VECTOR` · 10×14
+            - **Vector** · `VECTOR` · 10×11
+            - **Vector** · `VECTOR` · 2×9
+            - **Vector** · `VECTOR` · 13×3
+            - **Group** · `GROUP` · 13×7 · 1 children
+              - **Vector** · `VECTOR` · 13×7
+            - **Vector** · `VECTOR` · 13×0
+            - **Vector** · `VECTOR` · 0×5 · ×4
+            - **Vector** · `VECTOR` · 11×13
+            - **Vector** · `VECTOR` · 5×3 · ×2
+            - **Vector** · `VECTOR` · 0×13 · ×2
+            - **Group** · `GROUP` · 8×3 · 2 children
+              - **Vector** · `VECTOR` · 5×3
+              - **Vector** · `VECTOR` · 4×2
+          - **Please confirm if you are looking for a 3BHK on RENT in Sec 23, Gurgaon within ₹15000 - ₹25000.** · `TEXT` · 290×60 · “Please confirm if you are looking for a 3BHK on RENT in Sec 23, Gurgaon within ₹”
+        - **Frame Copy 3** · `FRAME` · 386×48 · vertical stack, gap 10px · 1 children
+          - **Group Copy 6** · `GROUP` · 386×48 · 1 children
+            - **Rectangle** · `GROUP` · 386×48 · 2 children
+              - **Group 1722** · `GROUP` · 185×48 · 2 children
+                - **Mask** · `RECTANGLE` · 185×48
+                - **Exit** · `TEXT` · 24×16 · “Yes”
+              - **Group 1723** · `GROUP` · 185×48 · 2 children
+                - **Mask Copy** · `RECTANGLE` · 185×48
+                - **No, Don’t Exit** · `TEXT` · 84×16 · “No, Edit This”
+      - **White Base Banner** · `GROUP` · 418×113 · 5 children
+        - **Rectangle Copy 9** · `RECTANGLE` · 418×113
+        - **Mask group** · `GROUP` · 175×111 · 2 children
+          - **Rectangle 4085** · `VECTOR` · 175×111
+          - **Group 2377** · `GROUP` · 273×279 · 1 children
+            - **Group 2376** · `GROUP` · 273×279 · 11 children
+              - **Group 1669** · `GROUP` · 273×255 · 3 children
+                - **Ellipse 20** · `ELLIPSE` · 217×200
+                - **Group 2235** · `GROUP` · 76×74
+                  - _…and 2 more_
+                - **Particles ** · `GROUP` · 67×74
+                  - _…and 12 more_
+              - **Mask group** · `GROUP` · 15×15 · 1 children
+                - **Group 2248** · `GROUP` · 14×13
+                  - _…and 1 more_
+              - **Mask group** · `GROUP` · 6×5 · 1 children
+                - **Group 2248** · `GROUP` · 5×5
+                  - _…and 1 more_
+              - **Particles ** · `GROUP` · 67×74 · 12 children
+                - **Vector 232** · `VECTOR` · 5×4
+                - **Ellipse 48** · `ELLIPSE` · 1×1
+                - **Ellipse 49** · `ELLIPSE` · 1×1
+                - **Ellipse 50** · `ELLIPSE` · 1×1
+                - **Ellipse 53** · `ELLIPSE` · 1×1
+                - **Ellipse 51** · `ELLIPSE` · 1×1
+                - **Ellipse 52** · `ELLIPSE` · 1×1
+                - **Ellipse 64** · `ELLIPSE` · 1×1
+                - **Ellipse 59** · `ELLIPSE` · 1×1
+                - **Ellipse 60** · `ELLIPSE` · 1×1
+                - **Ellipse 61** · `ELLIPSE` · 1×1
+                - **Group 2265** · `GROUP` · 25×68
+                  - _…and 7 more_
+              - **Mask group** · `GROUP` · 8×8 · 1 children
+                - **Group 2248** · `GROUP` · 7×7
+                  - _…and 1 more_
+              - **Group 2090** · `GROUP` · 13×13 · 13 children
+                - **Vector 315** · `VECTOR` · 6×6
+                - **Vector** · `VECTOR` · 4×5
+                - **Vector 316** · `VECTOR` · 2×2
+                - **Vector** · `VECTOR` · 0×1 · ×2
+                - **Group** · `GROUP` · 1×1
+                  - _…and 2 more_
+                - **Vector 317** · `VECTOR` · 1×1
+                - **Vector 318** · `VECTOR` · 1×1
+                - **Vector 319** · `VECTOR` · 10×6
+                - **Vector 320** · `VECTOR` · 3×3
+                - **Vector 321** · `VECTOR` · 10×6
+                - **Vector 322** · `VECTOR` · 1×2
+                - **Vector** · `VECTOR` · 13×13
+              - **Group 2083** · `GROUP` · 19×18 · 12 children
+                - **Vector** · `VECTOR` · 6×7
+                - **Vector** · `VECTOR` · 8×7
+                - **Vector** · `VECTOR` · 1×1 · ×2
+                - **Vector** · `VECTOR` · 14×8
+                - **Group** · `GROUP` · 2×2
+                  - _…and 2 more_
+                - **Vector** · `VECTOR` · 4×5
+                - **Vector** · `VECTOR` · 3×2
+                - **Vector 309** · `VECTOR` · 1×1
+                - **Vector 310** · `VECTOR` · 1×1
+                - **Vector** · `VECTOR` · 19×18
+                - **Vector** · `VECTOR` · 14×6
+              - **Rectangle 1172** · `RECTANGLE` · 25×24
+              - **Group 2058** · `GROUP` · 25×28 · 1 children
+                - **Group 2083** · `GROUP` · 25×28
+                  - _…and 1 more_
+              - **Rectangle 1173** · `RECTANGLE` · 17×16
+              - **Group 2050** · `GROUP` · 17×18 · 1 children
+                - **Group 2080** · `GROUP` · 17×18
+                  - _…and 15 more_
+        - **Project Ratings & Re** · `TEXT` · 242×18 · “Zero brokerage properties”
+        - **Get access only with Housing Premium plan** · `TEXT` · 267×16 · “Get access only with Housing Premium plan”
+        - **CTA** · `GROUP` · 169×32 · 2 children
+          - **Rectangle** · `RECTANGLE` · 169×32
+          - **2, 3, 3+ BHK** · `TEXT` · 152×14 · “Get premium access now”
+    - **Frame 2087324880** · `FRAME` · 450×44 · horizontal row, gap 8px, padding 12px · 2 children
+      - **Frame 2087324881** · `FRAME` · 16×18 · horizontal row, gap 10px, padding 2/0/0/0px · 1 children
+        - **Info** · `INSTANCE` · 16×16 · instance of Info
+      - **Frame 2087324879** · `FRAME` · 271×20 · vertical stack, gap 4px · 1 children
+        - **Other Charges** · `TEXT` · 271×20 · “You’ve consumed 1 out of 2 free contacts”
+  - **X** · `INSTANCE` · 20×20 · instance of X
+- **Post CRF / Mweb / Rent (Owner)** · `COMPONENT` · 360×832 · 6 children
+  - **Rectangle 1119** · `RECTANGLE` · 360×640
+  - **Mask group** · `GROUP` · 360×640 · 2 children
+    - **Rectangle 6** · `VECTOR` · 360×640
+    - **Bitmap** · `RECTANGLE` · 489×286
+  - **Rectangle 5** · `VECTOR` · 360×159
+  - **Frame 2147261525** · `FRAME` · 328×36 · horizontal row, gap 39px · 2 children
+    - **Frame 2147261524** · `FRAME` · 222×36 · vertical stack · 2 children
+      - **3 BHK Apartment in Gurgaon** · `TEXT` · 222×20 · “3 BHK Apartment in Gurgaon”
+      - **1620 sq.ft built up area** · `TEXT` · 222×16 · “1620 sq.ft built up area”
+    - **Share Button** · `GROUP` · 67×24 · 2 children
+      - **Rectangle 1148** · `RECTANGLE` · 67×24
+      - **Group 1885** · `GROUP` · 51×20 · 2 children
+        - **Share** · `GROUP` · 16×16 · 2 children
+          - **Mask** · `RECTANGLE` · 16×16
+          - **Group 32** · `GROUP` · 11×11 · 5 children
+            - **Line 4** · `VECTOR` · 7×3
+            - **Line 4** · `VECTOR` · 7×4
+            - **Oval** · `ELLIPSE` · 3×3
+            - **Oval Copy** · `ELLIPSE` · 3×3
+            - **Oval Copy 2** · `ELLIPSE` · 3×3
+        - **Share** · `TEXT` · 31×20 · “Share”
+  - **Frame 2147261520** · `FRAME` · 360×709 · vertical stack · 3 children
+    - **Frame 2147261517** · `FRAME` · 360×193 · vertical stack, gap 17px, padding 16px · 2 children
+      - **Group 1868** · `GROUP` · 328×48 · 1 children
+        - **Frame 2147261516** · `FRAME` · 328×48 · horizontal row, gap 143px · 2 children
+          - **Frame 2147261515** · `FRAME` · 165×48 · horizontal row, gap 16px · 2 children
+            - **Frame 2147261514** · `FRAME` · 57×48 · 2 children
+              - **Grea Things** · `GROUP` · 16×17 · 1 children
+                - **Group 28** · `GROUP` · 16×17
+                  - _…and 3 more_
+              - **Group 1867** · `GROUP` · 44×47 · 2 children
+                - **Ellipse 164** · `ELLIPSE` · 44×44
+                - **Group 1862** · `GROUP` · 12×16
+                  - _…and 1 more_
+            - **Group 1866** · `GROUP` · 92×48 · 3 children
+              - **Vineet Singh** · `TEXT` · 72×16 · “Vineet Singh”
+              - **+919718623734** · `TEXT` · 89×16 · “+919718623734”
+              - **Group 1865** · `GROUP` · 92×12 · 2 children
+                - **Rectangle 1139** · `RECTANGLE` · 92×12
+                - **HOUSING EXPERT** · `TEXT` · 84×12 · “HOUSING EXPERT”
+          - **image 60** · `RECTANGLE` · 20×20
+      - **Frame 1854** · `FRAME` · 328×96 · vertical stack, gap 16px · 2 children
+        - **Group 1846** · `GROUP` · 328×32 · 1 children
+          - **Post Contact Message** · `GROUP` · 328×32 · 2 children
+            - **Seller details now available in the contacted properties section of the profile page** · `TEXT` · 304×32 · “Seller details now available in the contacted properties section of the profile ”
+            - **Verified/ Default Icon** · `GROUP` · 16×16 · 2 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Group 36** · `GROUP` · 16×16 · 1 children
+                - **Group 1585** · `GROUP` · 16×16
+                  - _…and 2 more_
+        - **Pro Tip** · `GROUP` · 328×48 · 2 children
+          - **Rectangle 1132** · `RECTANGLE` · 328×48
+          - **Group 1850** · `GROUP` · 320×32 · 2 children
+            - **PRO TIP: Please ensure visiting a property or closing the agreement before giving any advance money** · `TEXT` · 280×24 · “PRO TIP: Please ensure visiting a property or closing the agreement before givin”
+            - **Grea Things** · `GROUP` · 32×32 · 1 children
+              - **Group 28** · `GROUP` · 32×32 · 4 children
+                - **Group 1759** · `GROUP` · 10×13
+                  - _…and 2 more_
+                - **Group 1757** · `GROUP` · 5×5
+                  - _…and 2 more_
+                - **Group 1758** · `GROUP` · 5×7
+                  - _…and 2 more_
+                - **Great** · `GROUP` · 24×24
+                  - _…and 2 more_
+    - **Frame 2087324879** · `FRAME` · 360×36 · horizontal row, gap 8px, padding 8/16/8/16px · 2 children
+      - **Frame 2087324881** · `FRAME` · 16×18 · horizontal row, gap 10px, padding 2/0/0/0px · 1 children
+        - **Info** · `INSTANCE` · 16×16 · instance of Info
+      - **Other Charges** · `TEXT` · 271×20 · “You’ve consumed 1 out of 2 free contacts”
+    - **Multiple Leads** · `FRAME` · 360×480 · vertical stack, gap 16px, padding 24/0/24/0px · 2 children
+      - **Frame 2147261519** · `FRAME` · 360×344 · vertical stack, gap 16px, padding 0/16/0/16px · 2 children
+        - **Frame 2** · `FRAME` · 328×56 · horizontal row, gap 8px · 2 children
+          - **Frame 2147261526** · `FRAME` · 189×56 · vertical stack, gap 8px · 2 children
+            - **Title** · `TEXT` · 189×16 · “Visiting this property?”
+            - **Subtitle** · `TEXT` · 181×32 · “Also visit 3 more properties around this one”
+          - **default_pills** · `INSTANCE` · 131×32 · horizontal row, gap 4px, padding 0/8/0/8px · instance of default_pills
+        - **Group 1853** · `GROUP` · 454×272 · 3 children
+          - **Group 1837** · `GROUP` · 146×272 · 1 children
+            - **Group 1832** · `GROUP` · 146×272 · 1 children
+              - **Group 1829** · `GROUP` · 146×272 · 9 children
+                - **Rectangle 1122** · `RECTANGLE` · 146×272
+                - **Group 1879** · `GROUP` · 130×24
+                  - _…and 2 more_
+                - **Group 1848** · `GROUP` · 106×24
+                  - _…and 2 more_
+                - **Verified/ Default Icon** · `GROUP` · 16×16
+                  - _…and 2 more_
+                - **₹8,000 /month** · `TEXT` · 130×16 · “₹60.2 K”
+                - **₹8,000 /month** · `TEXT` · 130×16 · “4 BHK Apartment”
+                - **₹8,000 /month** · `TEXT` · 130×12 · “Semi-furnished”
+                - **Frame 4** · `FRAME` · 85×12 · horizontal row, gap 4px
+                  - _…and 2 more_
+                - **Mask group** · `GROUP` · 130×100
+                  - _…and 2 more_
+          - **Group 1851** · `GROUP` · 146×272 · 10 children
+            - **Rectangle 1122** · `RECTANGLE` · 146×272
+            - **Verified/ Default Icon** · `GROUP` · 16×16 · 2 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Group 1585** · `GROUP` · 16×16 · 2 children
+                - **Mask** · `RECTANGLE` · 16×16
+                - **Stroke 3** · `VECTOR` · 6×5
+            - **Group 1879** · `GROUP` · 130×24 · 2 children
+              - **Rectangle 1147** · `RECTANGLE` · 130×24
+              - **Group 1877** · `GROUP` · 43×16 · 1 children
+                - **Group 1878** · `GROUP` · 43×16
+                  - _…and 1 more_
+            - **Group 1848** · `GROUP` · 110×24 · 2 children
+              - **₹8,000 /month** · `TEXT` · 78×24 · “Majestque
+Landmarks”
+              - **Ellipse 126** · `ELLIPSE` · 24×24
+            - **Verified/ Default Icon** · `GROUP` · 16×16 · 1 children
+              - **Mask** · `RECTANGLE` · 16×16
+            - **₹8,000 /month** · `TEXT` · 130×16 · “₹23.4 K”
+            - **₹8,000 /month** · `TEXT` · 130×16 · “3 BHK Builder Floor”
+            - **₹8,000 /month** · `TEXT` · 130×12 · “Semi-furnished”
+            - **Frame 4** · `FRAME` · 85×12 · horizontal row, gap 4px · 2 children
+              - **1800 sq.ft. ₹3.43 K** · `TEXT` · 53×12 · “1800 sq.ft”
+              - **Oval** · `ELLIPSE` · 3×3
+            - **Mask group** · `GROUP` · 130×100 · 2 children
+              - **Rectangle 1123** · `RECTANGLE` · 130×100
+              - **image 57** · `RECTANGLE` · 166×100
+          - **Group 1852** · `GROUP` · 146×272 · 10 children
+            - **Rectangle 1122** · `RECTANGLE` · 146×272
+            - **Rectangle 1126** · `RECTANGLE` · 146×272
+            - **Verified/ Default Icon** · `GROUP` · 16×16 · 2 children
+              - **Mask** · `RECTANGLE` · 16×16
+              - **Group 1585** · `GROUP` · 16×16 · 2 children
+                - **Mask** · `RECTANGLE` · 16×16
+                - **Stroke 3** · `VECTOR` · 6×5
+            - **Group 1879** · `GROUP` · 130×24 · 2 children
+              - **Rectangle 1147** · `RECTANGLE` · 130×24
+              - **Group 1877** · `GROUP` · 43×16 · 1 children
+                - **Group 1878** · `GROUP` · 43×16
+                  - _…and 1 more_
+            - **Group 1848** · `GROUP` · 110×24 · 2 children
+              - **₹8,000 /month** · `TEXT` · 78×24 · “Vilas Javdekar Eco Shelters Pvt Ltd”
+              - **Unisex Buyer/Tenant Avatar** · `GROUP` · 24×24 · 3 children
+                - **Mask** · `RECTANGLE` · 24×24
+                - **Mask** · `RECTANGLE` · 24×24
+                - **Unisex Buyer/Tenant Avatar** · `GROUP` · 24×24
+                  - _…and 3 more_
+            - **₹8,000 /month** · `TEXT` · 130×16 · “₹19.9K”
+            - **₹8,000 /month** · `TEXT` · 130×16 · “2 BHK Flat”
+            - **₹8,000 /month** · `TEXT` · 130×12 · “Wakad, Pimpri Chinch ...a”
+            - **₹8,000 /month** · `TEXT` · 130×16 · “2 BHK Apartment”
+            - **Mask group** · `GROUP` · 130×100 · 2 children
+              - **Rectangle 1123** · `RECTANGLE` · 130×100
+              - **image 57** · `RECTANGLE` · 166×100
+      - **Frame 2147261527** · `FRAME` · 360×72 · vertical stack, gap 10px, padding 0/16/0/16px · 1 children
+        - **Frame 2147261522** · `FRAME` · 328×72 · 2 children
+          - **Frame 2147261521** · `FRAME` · 328×34 · horizontal row, gap 10px, padding 0/10/8/10px · 1 children
+            - **Text** · `TEXT` · 189×16 · “Connecting with 2 property sellers”
+          - **button** · `INSTANCE` · 328×48 · horizontal row · instance of button
+  - **Frame 1772** · `FRAME` · 30×30 · 2 children
+    - **Rectangle 1051** · `RECTANGLE` · 30×30
+    - **Down Cheveron** · `GROUP` · 23×23 · 2 children
+      - **Rectangle 1050** · `RECTANGLE` · 23×23
+      - **Group 1564** · `GROUP` · 15×15 · 2 children
+        - **Rectangle 1051** · `RECTANGLE` · 15×15
+        - **Shape** · `VECTOR` · 9×15

@@ -1,0 +1,39 @@
+{
+  "source": "Demand Component Kit — PDP first fold",
+  "figmaUrl": "https://www.figma.com/design/xYC0W1LzOyf0ll2LF5iCZq/Demand%E2%80%A8Component-Kit?node-id=3677-12987",
+  "frameId": "3677:12987",
+  "foldInnerId": "I3677:10325;3399:12396",
+  "talkToFigmaChannel": "w8ufphpq",
+  "measurements": {
+    "shellWidth": 1200,
+    "shellHeight": 552,
+    "shellCornerRadius": 24,
+    "innerWidth": 1152,
+    "headerHeight": 68,
+    "galleryPlusPanelHeight": 408,
+    "galleryWidth": 666,
+    "panelWidth": 462,
+    "galleryGap": 24,
+    "gridCellHeight": 200,
+    "gridGutter": 8
+  },
+  "colors": {
+    "surface": "#ffffff",
+    "title": "#0f0e0d",
+    "meta": "#0f0e0d",
+    "specLabel": "#666666",
+    "specValue": "#0f0e0d",
+    "badgeSurface": "#f6f4ed",
+    "badgeText": "#444444",
+    "toolSurface": "#faf9f5",
+    "cta": "#4a16d9",
+    "emiPillSurface": "#f3f7ec",
+    "emiPillText": "#245f36"
+  },
+  "typography": {
+    "title": { "fontSize": 28, "fontWeight": 600, "lineHeightPx": 36, "family": "Google Sans Flex" },
+    "meta": { "fontSize": 16, "fontWeight": 400, "family": "Google Sans Flex" },
+    "specLabel": { "fontSize": 14, "fontWeight": 500, "lineHeightPx": 16 },
+    "specValue": { "fontSize": 16, "fontWeight": 500, "lineHeightPx": 24 }
+  }
+}

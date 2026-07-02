@@ -1,0 +1,137 @@
+# Structure: Cover
+
+- **Cover library** · `FRAME` · 1160×696 · 4 children
+  - **Frame 1321314220** · `FRAME` · 793×327 · 2 children
+    - **Demand Component Kit** · `TEXT` · 629×226 · “Demand Component Kit”
+    - **1.0** · `TEXT` · 49×49 · “1.0”
+  - **Frame 1321314222** · `FRAME` · 793×327 · 6 children
+    - **allign** · `GROUP` · 244×46 · 4 children
+      - **Group 1321313796** · `GROUP` · 49×46 · 2 children
+        - **Rectangle 319** · `RECTANGLE` · 49×46
+        - **Group 1321313303** · `GROUP` · 23×20 · 4 children
+          - **Fill 1** · `VECTOR` · 23×3
+          - **Fill 2** · `VECTOR` · 17×3
+          - **Fill 3** · `VECTOR` · 20×3
+          - **Fill 4** · `VECTOR` · 14×3
+      - **Group 1321313304** · `GROUP` · 23×20 · 4 children
+        - **Fill 1** · `VECTOR` · 23×3
+        - **Fill 2** · `VECTOR` · 17×3
+        - **Fill 3** · `VECTOR` · 20×3
+        - **Fill 4** · `VECTOR` · 14×3
+      - **Group 1321313305** · `GROUP` · 23×20 · 4 children
+        - **Fill 1** · `VECTOR` · 23×3
+        - **Fill 2** · `VECTOR` · 23×3
+        - **Fill 3** · `VECTOR` · 23×3
+        - **Fill 4** · `VECTOR` · 14×3
+      - **Group 1321313306** · `GROUP` · 23×20 · 4 children
+        - **Fill 1** · `VECTOR` · 23×3
+        - **Fill 2** · `VECTOR` · 23×3
+        - **Fill 3** · `VECTOR` · 23×3
+        - **Fill 4** · `VECTOR` · 14×3
+    - **Group 1321316519** · `GROUP` · 202×269 · 2 children
+      - **Group 1321316514** · `GROUP` · 191×269 · 2 children
+        - **Group 1321316507** · `GROUP` · 191×269 · 4 children
+          - **Fill 2** · `VECTOR` · 191×31
+          - **Fill 3** · `VECTOR` · 65×64
+          - **Fill 4** · `VECTOR` · 168×180
+          - **Mask group** · `GROUP` · 168×177 · 2 children
+            - **Fill 6** · `VECTOR` · 168×177
+            - **Fill 5** · `VECTOR` · 64×62
+        - **Group 1321316490** · `GROUP` · 146×177 · 2 children
+          - **Group 1321316488** · `GROUP` · 146×177 · 2 children
+            - **Line 133** · `LINE` · 177×0
+            - **Line 134** · `LINE` · 146×0
+          - **Group 1321316489** · `GROUP` · 29×29 · 2 children
+            - **Line 133** · `LINE` · 29×0
+            - **Line 134** · `LINE` · 29×0
+      - **Group 1321316518** · `GROUP` · 58×66 · 1 children
+        - **Group 1321316504** · `GROUP` · 58×66 · 3 children
+          - **Rectangle 1468** · `RECTANGLE` · 8×17
+          - **Rectangle 1467** · `RECTANGLE` · 17×71
+          - **Union** · `BOOLEAN_OPERATION` · 37×39 · 1 children
+            - **Group 1321313874** · `GROUP` · 27×39 · 2 children
+              - **Rectangle 1469** · `VECTOR` · 18×35
+              - **Rectangle 1470** · `RECTANGLE` · 27×6
+    - **Group 1321316602** · `GROUP` · 354×183 · 2 children
+      - **Group 1321316505** · `GROUP` · 354×183 · 1 children
+        - **Group 1321316513** · `GROUP` · 354×183 · 2 children
+          - **Group 1321316512** · `GROUP` · 179×173 · 2 children
+            - **Vector 33** · `VECTOR` · 40×97
+            - **A (Stroke)** · `VECTOR` · 172×173
+          - **Group 1321316511** · `GROUP` · 147×183 · 2 children
+            - **б (Stroke)** · `VECTOR` · 124×183
+            - **Vector 32** · `VECTOR` · 6×50
+      - **Group 1321316601** · `GROUP` · 97×76 · 2 children
+        - **Group 1321316515** · `GROUP` · 34×56 · 2 children
+          - **Subtract** · `BOOLEAN_OPERATION` · 34×56 · 2 children
+            - **Union** · `BOOLEAN_OPERATION` · 34×56 · 2 children
+              - **Union** · `BOOLEAN_OPERATION` · 34×49 · 2 children
+                - **Ellipse 858** · `ELLIPSE` · 34×34
+                - **Polygon 1** · `POLYGON` · 34×30
+              - **Rectangle 1495** · `VECTOR` · 15×12
+            - **Ellipse 857** · `ELLIPSE` · 12×12
+          - **Line 135** · `LINE` · 26×0
+        - **Group 1321316517** · `GROUP` · 64×11 · 1 children
+          - **Group 1321316516** · `GROUP` · 64×11 · 3 children
+            - **Line 136** · `VECTOR` · 48×0
+            - **Rectangle 4** · `RECTANGLE` · 11×11
+            - **Line 137** · `VECTOR` · 52×0
+    - **Group 1321316603** · `GROUP` · 106×99 · 4 children
+      - **Rectangle 320** · `RECTANGLE` · 46×42
+      - **Rectangle 321** · `RECTANGLE` · 46×42
+      - **Rectangle 320** · `RECTANGLE` · 46×43
+      - **Rectangle 321** · `RECTANGLE` · 46×43
+    - **Vector 36** · `VECTOR` · 41×56
+    - **Frame 1321314226** · `FRAME` · 64×45 · 1 children
+      - **...** · `VECTOR` · 21×4
+  - **Frame 1321314219** · `FRAME` · 325×327 · 1 children
+    - **@** · `GROUP` · 267×266 · 2 children
+      - **Union** · `BOOLEAN_OPERATION` · 253×253 · 2 children
+        - **@** · `VECTOR` · 248×248
+        - **@ (Stroke)** · `VECTOR` · 253×253
+      - **Group 1321316494** · `GROUP` · 267×266 · 8 children
+        - **Group 1321316490** · `GROUP` · 190×186 · 2 children
+          - **Group 1321316488** · `GROUP` · 190×186 · 2 children
+            - **Line 133** · `LINE` · 186×0
+            - **Line 134** · `LINE` · 190×0
+          - **Group 1321316489** · `GROUP` · 34×34 · 2 children
+            - **Line 133** · `LINE` · 34×0
+            - **Line 134** · `LINE` · 34×0
+        - **Ellipse 848** · `ELLIPSE` · 12×12
+        - **Ellipse 849** · `ELLIPSE` · 12×12
+        - **Ellipse 850** · `ELLIPSE` · 12×12
+        - **Ellipse 851** · `ELLIPSE` · 12×12
+        - **Group 1321316491** · `GROUP` · 12×43 · 2 children
+          - **Ellipse 852** · `ELLIPSE` · 12×12
+          - **Ellipse 853** · `ELLIPSE` · 12×12
+        - **Group 1321316492** · `GROUP` · 12×44 · 2 children
+          - **Ellipse 852** · `ELLIPSE` · 12×12
+          - **Ellipse 853** · `ELLIPSE` · 12×12
+        - **Group 1321316493** · `GROUP` · 12×44 · 2 children
+          - **Ellipse 852** · `ELLIPSE` · 12×12
+          - **Ellipse 853** · `ELLIPSE` · 12×12
+  - **Frame 1321314221** · `FRAME` · 325×327 · 1 children
+    - **P** · `GROUP` · 195×243 · 13 children
+      - **Group 1321316502** · `GROUP` · 181×230 · 4 children
+        - **p** · `VECTOR` · 35×230
+        - **p** · `VECTOR` · 39×230
+        - **p** · `VECTOR` · 39×105
+        - **Group 1321316490** · `GROUP` · 168×179 · 2 children
+          - **Group 1321316488** · `GROUP` · 168×179 · 2 children
+            - **Line 133** · `LINE` · 179×0
+            - **Line 134** · `LINE` · 168×0
+          - **Group 1321316489** · `GROUP` · 37×37 · 2 children
+            - **Line 133** · `LINE` · 37×0
+            - **Line 134** · `LINE` · 37×0
+      - **Ellipse 855** · `ELLIPSE` · 12×12
+      - **Ellipse 859** · `ELLIPSE` · 12×12
+      - **Ellipse 856** · `ELLIPSE` · 12×12
+      - **Ellipse 860** · `ELLIPSE` · 12×12
+      - **Ellipse 849** · `ELLIPSE` · 12×12
+      - **Ellipse 853** · `ELLIPSE` · 12×12
+      - **Ellipse 850** · `ELLIPSE` · 12×12
+      - **Ellipse 854** · `ELLIPSE` · 12×12
+      - **Ellipse 851** · `ELLIPSE` · 12×12
+      - **Ellipse 857** · `ELLIPSE` · 12×12
+      - **Ellipse 852** · `ELLIPSE` · 12×12
+      - **Ellipse 858** · `ELLIPSE` · 12×12

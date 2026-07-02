@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "defaultMode": "auto",
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(npm *)",
+      "Bash(node *)",
+      "Bash(npx *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git pull *)",
+      "Bash(git push)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "WebFetch"
+    ],
+    "ask": [
+      "Bash(git push --force*)",
+      "Bash(git reset --hard *)",
+      "Bash(git branch -D *)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(kill -9 *)"
+    ]
+  }
+}

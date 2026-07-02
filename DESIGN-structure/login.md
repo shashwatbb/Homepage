@@ -1,0 +1,97 @@
+# Structure: Login
+
+- **Main components** · `SECTION` · 2105×4331 · 6 children
+  - **Input fields** · `COMPONENT_SET` · 388×731 · 8 children
+    - **Property 1=Phone: Default, Property 2=Input field** · `COMPONENT` · 348×48 · horizontal row, padding 0/16/0/16px · 1 children
+      - **Container** · `FRAME` · 157×46 · horizontal row, gap 12px, padding 0/12/0/0px · 3 children
+        - **+91** · `TEXT` · 23×16 · “+91”
+        - **Container** · `FRAME` · 1×20
+        - **Frame 2087324794** · `FRAME` · 97×16 · horizontal row, gap 10px · 1 children
+          - **Phone number** · `TEXT` · 97×16 · “Phone number”
+  - **Mobile** · `COMPONENT_SET` · 414×3856 · 7 children
+    - **Property 1=Mobile: Login** · `COMPONENT` · 360×520 · vertical stack, gap 24px, padding 0/16/24/16px · 2 children
+      - **Frame 2087324795** · `FRAME` · 328×211 · vertical stack, gap 12px · 2 children
+        - **Frame 2087324792** · `FRAME` · 328×155 · vertical stack, gap -34px, padding 16/0/0/0px · 3 children
+          - **Rectangle 6144** · `RECTANGLE` · 328×113
+          - **Container** · `FRAME` · 60×60 · horizontal row · 1 children
+            - **Image (Housing)** · `FRAME` · 48×48
+          - **Component 15** · `INSTANCE` · 25×16 · instance of Component 15
+        - **Frame 2087324865** · `FRAME` · 328×44 · vertical stack, gap 8px · 2 children
+          - **Other Charges** · `TEXT` · 328×20 · “Log in or sign up to Housing”
+          - **Frame 2087324868** · `FRAME` · 123×16 · horizontal row, gap 8px · 5 children
+            - **Buy** · `TEXT` · 26×16 · “Buy”
+            - **Ellipse 605** · `ELLIPSE` · 5×5
+            - **Rent** · `TEXT` · 31×16 · “Rent”
+            - **Ellipse 606** · `ELLIPSE` · 5×5
+            - **Sell** · `TEXT` · 24×16 · “Sell”
+      - **Frame 2087324893** · `FRAME` · 328×261 · vertical stack, gap 24px · 3 children
+        - **Input fields** · `INSTANCE` · 328×48 · horizontal row, padding 0/16/0/16px · instance of Input fields
+        - **Frame 2087324382** · `FRAME` · 328×16 · horizontal row, gap 8px · 2 children
+          - **checkbox** · `INSTANCE` · 16×16 · horizontal row, gap 8px · instance of checkbox
+          - **Frame 2087324912** · `FRAME` · 187×16 · horizontal row, gap 2px · 3 children
+            - **Frame 2087324844** · `FRAME` · 100×16 · horizontal row, gap 4px · 1 children
+              - **Frame 2087324407** · `FRAME` · 100×16 · horizontal row, gap 4px · 1 children
+                - **Text ->** · `TEXT` · 100×16 · “Get updates on”
+            - **Frame 2087324407** · `FRAME` · 67×16 · horizontal row, gap 4px · 1 children
+              - **Text ->** · `TEXT` · 67×16 · “WhatsApp”
+            - **Frame 2087324833** · `FRAME` · 16×16 · horizontal row, gap 1.1428570747375488px · 1 children
+              - **WhatsApp_Logo_1** · `RECTANGLE` · 16×16
+        - **Frame 2087324792** · `FRAME` · 328×149 · vertical stack, gap 16px · 3 children
+          - **.demand_primary** · `INSTANCE` · 328×48 · horizontal row, gap 4px, padding 0/16/0/16px · instance of .demand_primary
+          - **Container** · `FRAME` · 328×21 · horizontal row, gap 8px · 3 children
+            - **Container** · `FRAME` · 148×1
+            - **OR** · `TEXT` · 17×16 · “OR”
+            - **Container** · `FRAME` · 148×1
+          - **Group 1000004323** · `GROUP` · 328×48 · 1 children
+            - **Group 1000004320** · `GROUP` · 328×48 · 1 children
+              - **Frame 2087324573** · `FRAME` · 328×48 · horizontal row, gap 8px, padding 7/8/7/8px · 2 children
+                - **Digital_Glyph_Green 1** · `FRAME` · 20×20
+                  - _…and 1 more_
+                - **Continue with WhatsApp** · `TEXT` · 167×16 · “Continue with WhatsApp”
+  - **Login** · `COMPONENT_SET` · 135×188 · 3 children
+    - **Property 1=Variant3** · `COMPONENT` · 95×36 · horizontal row, gap 8px, padding 0/12/0/12px · 3 children
+      - **Login** · `TEXT` · 38×16 · “Login”
+      - **Container** · `FRAME` · 1×20
+      - **Frame** · `FRAME` · 16×16 · 3 children
+        - **Vector** · `VECTOR` · 12×0 · ×3
+  - **Component 15** · `COMPONENT_SET` · 65×118 · 2 children
+    - **Property 1=Skip** · `COMPONENT` · 25×16 · 1 children
+      - **Skip** · `TEXT` · 25×16 · “Skip”
+  - **Web** · `COMPONENT_SET` · 440×2091 · 4 children
+    - **Property 1=Web: Login** · `COMPONENT` · 400×398 · vertical stack, gap 32px · 2 children
+      - **States** · `FRAME` · 400×398 · vertical stack, gap 24px, padding 24px · 2 children
+        - **Frame 2087324795** · `FRAME` · 352×206 · vertical stack, gap 12px · 2 children
+          - **Frame 2087324792** · `FRAME` · 352×146 · vertical stack, gap -34px · 3 children
+            - **Rectangle 6145** · `RECTANGLE` · 352×120
+            - **Container** · `FRAME` · 60×60 · horizontal row · 1 children
+              - **Image (Housing)** · `FRAME` · 48×48
+            - **Skip** · `TEXT` · 25×16 · “Skip”
+          - **Frame 2087324865** · `FRAME` · 352×48 · vertical stack, gap 8px · 2 children
+            - **Other Charges** · `TEXT` · 352×20 · “Log in or sign up to Housing”
+            - **Frame 2087324868** · `FRAME` · 135×20 · horizontal row, gap 8px · 5 children
+              - **Buy** · `TEXT` · 30×20 · “Buy”
+              - **Ellipse 605** · `ELLIPSE` · 5×5
+              - **Rent** · `TEXT` · 36×20 · “Rent”
+              - **Ellipse 606** · `ELLIPSE` · 5×5
+              - **Sell** · `TEXT` · 27×20 · “Sell”
+        - **Frame 2087324893** · `FRAME` · 352×120 · vertical stack, gap 24px · 2 children
+          - **Input fields** · `INSTANCE` · 352×48 · horizontal row, padding 0/16/0/16px · instance of Input fields
+          - **Frame 2087324792** · `FRAME` · 352×48 · vertical stack, gap 16px · 3 children
+            - **button** · `INSTANCE` · 352×48 · horizontal row · instance of button
+            - **Container** · `FRAME` · 296×21 · horizontal row, gap 8px · 3 children
+              - **Container** · `FRAME` · 132×1
+              - **OR** · `TEXT` · 17×16 · “OR”
+              - **Container** · `FRAME` · 132×1
+            - **Group 1000004323** · `GROUP` · 296×48 · 1 children
+              - **Group 1000004320** · `GROUP` · 296×48 · 1 children
+                - **Frame 2087324573** · `FRAME` · 296×48 · horizontal row, gap 8px, padding 7/8/7/8px
+                  - _…and 2 more_
+      - **Close** · `INSTANCE` · 20×20 · instance of Close
+  - **Google details** · `COMPONENT` · 338×50 · horizontal row, gap 12px, padding 16/16/16/12px · 1 children
+    - **Frame 2087324909** · `FRAME` · 308×16 · horizontal row, gap 8px · 2 children
+      - **Icon** · `FRAME` · 16×16 · 4 children
+        - **Vector** · `VECTOR` · 8×8
+        - **Vector** · `VECTOR` · 12×6
+        - **Vector** · `VECTOR` · 4×7
+        - **Vector** · `VECTOR` · 13×6
+      - **Continue with Google** · `TEXT` · 284×16 · “Continue with Google”

@@ -1,0 +1,98 @@
+# Structure: Chat
+
+- **Chat** · `SECTION` · 1428×1040 · 3 children
+  - **Chat** · `COMPONENT_SET` · 842×840 · 2 children
+    - **Property 1=First time** · `COMPONENT` · 360×800 · vertical stack, gap 12px · 4 children
+      - **Frame 8** · `FRAME` · 360×128 · vertical stack, gap 8px, padding 16/16/8/16px · 2 children
+        - **Frame 3** · `FRAME` · 316×24 · horizontal row, gap 141px · 2 children
+          - **Frame 2** · `FRAME` · 151×24 · horizontal row, gap 16px · 2 children
+            - **Back Navigation** · `GROUP` · 24×24 · 3 children
+              - **Mask** · `RECTANGLE` · 24×24
+              - **Mask** · `RECTANGLE` · 24×24
+              - **Group 4** · `GROUP` · 17×17 · 1 children
+                - **Union** · `BOOLEAN_OPERATION` · 17×17
+                  - _…and 3 more_
+            - **Frame 1** · `FRAME` · 111×24 · horizontal row, gap 8px · 2 children
+              - **Mask group** · `GROUP` · 24×24 · 2 children
+                - **Ellipse 108** · `ELLIPSE` · 24×24
+                - **image 3** · `RECTANGLE` · 56×37
+              - **Group 1902** · `GROUP` · 79×16 · 1 children
+                - **Group 1901** · `GROUP` · 79×16
+                  - _…and 1 more_
+          - **More** · `GROUP` · 24×24 · 2 children
+            - **Rectangle 1145** · `RECTANGLE` · 24×24
+            - **Group 1901** · `GROUP` · 3×15 · 3 children
+              - **Ellipse 20** · `ELLIPSE` · 3×3
+              - **Ellipse 21** · `ELLIPSE` · 3×3
+              - **Ellipse 22** · `ELLIPSE` · 3×3
+        - **Group 1000003108** · `GROUP` · 328×72 · 2 children
+          - **Rectangle 47** · `RECTANGLE` · 328×72
+          - **Frame 7** · `FRAME` · 297×56 · horizontal row, gap 12px · 2 children
+            - **Mask Group** · `GROUP` · 56×56 · 3 children
+              - **Rectangle 25** · `RECTANGLE` · 56×56
+              - **images 1** · `RECTANGLE` · 91×65
+              - **fs-large 2** · `RECTANGLE` · 116×65
+            - **Frame 6** · `FRAME` · 229×56 · vertical stack, gap 8px · 2 children
+              - **Frame 4** · `FRAME` · 136×32 · vertical stack · 2 children
+                - **₹5.5 Cr** · `TEXT` · 136×16 · “₹5.5 Cr”
+                - **2 BHK Apartment** · `TEXT` · 136×16 · “2 BHK Apartment”
+              - **Frame 5** · `FRAME` · 229×16 · horizontal row, gap 4px · 2 children
+                - **Mask group** · `GROUP` · 16×16
+                  - _…and 2 more_
+                - **Location** · `TEXT` · 213×16 · “F Block, Sector 48, Noida Ext., Noida ”
+      - **Frame 10** · `FRAME` · 360×548 · vertical stack, gap 16px · 3 children
+        - **Today** · `TEXT` · 360×12 · “Today”
+        - **Frame 2234** · `FRAME` · 360×76 · vertical stack, gap 10px, padding 0/16/0/16px · 1 children
+          - **Frame 20** · `FRAME` · 198×76 · vertical stack, gap 10px, padding 8/8/4/8px · 1 children
+            - **Frame 19** · `FRAME` · 182×64 · vertical stack, gap 4px · 2 children
+              - **Hello, I am interested in the flat** · `TEXT` · 182×48 · “Initiating a chat request will share your name and contact number with the selle”
+              - **3 BHK Apartment** · `TEXT` · 182×12 · “9:32 AM”
+        - **Group 1000003114** · `GROUP` · 360×28 · 2 children
+          - **The seller is offline & usually responds within 24hrs.** · `TEXT` · 360×12 · “The seller is offline & usually responds within 24hrs.”
+          - **You can wait for a response or call them directly.** · `TEXT` · 360×12 · “You can wait for a response or call them directly.”
+      - **Frame 15** · `FRAME` · 447×32 · horizontal row, gap 4px, padding 0/0/0/16px · 4 children
+        - **Group 1981** · `GROUP` · 32×32 · 1 children
+          - **Group 2092** · `GROUP` · 32×32 · 1 children
+            - **Frame 11** · `FRAME` · 32×32 · horizontal row, gap 10px, padding 8px · 1 children
+              - **Mask group** · `GROUP` · 16×16 · 2 children
+                - **Rectangle 1190** · `RECTANGLE` · 16×16
+                - **Group 2258** · `GROUP` · 15×15
+                  - _…and 1 more_
+        - **Group 1909** · `GROUP` · 143×32 · 1 children
+          - **Group 60** · `GROUP` · 143×32 · 1 children
+            - **Frame 12** · `FRAME` · 143×32 · horizontal row, gap 10px, padding 8/16/8/16px · 1 children
+              - **Share more images** · `TEXT` · 111×16 · “Share more images”
+        - **Group 1910** · `GROUP` · 127×32 · 1 children
+          - **Group 60** · `GROUP` · 127×32 · 1 children
+            - **Frame 13** · `FRAME` · 127×32 · horizontal row, gap 10px, padding 8/16/8/16px · 1 children
+              - **Hi, Please reply..** · `TEXT` · 94×16 · “Hi, Please reply..”
+        - **Group 1911** · `GROUP` · 117×32 · 1 children
+          - **Group 60** · `GROUP` · 117×32 · 1 children
+            - **Frame 14** · `FRAME` · 117×32 · horizontal row, gap 10px, padding 8/16/8/16px · 1 children
+              - **Not interested** · `TEXT` · 83×16 · “Not interested”
+      - **Frame 17** · `FRAME` · 360×56 · vertical stack, gap 10px, padding 12/16/12/16px · 1 children
+        - **Frame 16** · `FRAME` · 328×32 · horizontal row, gap 12px · 2 children
+          - **Hello, I am interested in the flat|** · `TEXT` · 240×20 · “Hello, I am interested in the flat|”
+          - **Frame 18** · `FRAME` · 76×32 · horizontal row, gap 12px · 2 children
+            - **Mask group** · `GROUP` · 32×32 · 2 children
+              - **Rectangle 1195** · `RECTANGLE` · 32×32
+              - **Vector 366** · `VECTOR` · 24×24
+            - **Group 2261** · `GROUP` · 32×32 · 2 children
+              - **Ellipse 552** · `ELLIPSE` · 32×32
+              - **Mask group** · `GROUP` · 24×24 · 2 children
+                - **Rectangle 1194** · `RECTANGLE` · 24×24
+                - **Subtract** · `BOOLEAN_OPERATION` · 21×24
+                  - _…and 2 more_
+  - **Chat / Default** · `COMPONENT` · 360×44 · vertical stack, gap 10px, padding 0/16/0/16px · 2 children
+    - **Frame 20** · `FRAME` · 198×44 · vertical stack, gap 10px, padding 8/8/4/8px · 1 children
+      - **Frame 19** · `FRAME` · 182×32 · vertical stack, gap 4px · 2 children
+        - **Hello, I am interested in the flat** · `TEXT` · 182×16 · “Hello, I am interested in the flat”
+        - **3 BHK Apartment** · `TEXT` · 182×12 · “9:32 AM”
+    - **Frame 2240** · `FRAME` · 296×80 · vertical stack, gap 16px · 2 children
+      - **Frame 2241** · `FRAME` · 296×32 · horizontal row, gap 16px · 2 children
+        - **Pills** · `INSTANCE` · 140×32 · vertical stack, gap 4px, padding 8px · instance of Pills · ×2
+      - **Frame 2242** · `FRAME` · 296×32 · horizontal row, gap 16px · 2 children
+        - **Pills** · `INSTANCE` · 140×32 · vertical stack, gap 4px, padding 8px · instance of Pills · ×2
+  - **Pills** · `COMPONENT_SET` · 180×123 · 2 children
+    - **Property 1=Default** · `COMPONENT` · 140×32 · vertical stack, gap 4px, padding 8px · 1 children
+      - **₹20,800/month** · `TEXT` · 92×16 · “₹20,800/month”

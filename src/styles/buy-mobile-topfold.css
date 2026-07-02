@@ -1,0 +1,189 @@
+/**
+ * Mobile Buy PDP — hero top fold (buy.html) only.
+ * Gallery is a fixed 400px column; drawer overlaps image only; tags sit above the drawer band.
+ */
+
+.buy-m-topfold {
+  display: none;
+}
+
+@media (max-width: 47.99rem) {
+  .buy-m-topfold {
+    display: block;
+    width: 100%;
+  }
+
+  .buy-route {
+    margin: 0;
+    background: var(--ds-color-warm-neutral-0);
+  }
+}
+
+.buy-m-topfold__hero {
+  width: 100%;
+  --buy-m-gallery-height: 400px;
+  height: var(--buy-m-gallery-height);
+  min-height: var(--buy-m-gallery-height);
+  max-height: var(--buy-m-gallery-height);
+  overflow: hidden;
+  background: var(--ds-color-warm-neutral-200);
+  /* Drawer: shorter = sits “lower” (less into photo); tags get a fixed gap above it */
+  --buy-m-drawer-height: 5.375rem;
+  --buy-m-tags-clearance: 1.375rem;
+}
+
+.buy-m-topfold__gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+}
+
+.buy-m-topfold__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  z-index: 0;
+}
+
+/* Rounded white drawer: overlaps bottom of gallery image only */
+.buy-m-drawer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: var(--buy-m-drawer-height, 5.375rem);
+  border-radius: 1.75rem 1.75rem 0 0;
+  background: var(--ds-color-warm-neutral-0);
+  box-shadow: 0 -10px 36px rgba(15, 14, 13, 0.1);
+  pointer-events: none;
+}
+
+/* Vignette on photo only, not on drawer */
+.buy-m-topfold__scrim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--buy-m-drawer-height, 5.375rem);
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.38) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.buy-m-topfold__bar {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.buy-m-topfold__bar > * {
+  pointer-events: auto;
+}
+
+.buy-m-topfold__tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Circular chrome (match reference) */
+.buy-m-topfold__ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--ds-color-warm-neutral-0);
+  color: var(--ds-color-grey-neutral-900);
+  box-shadow: 0 2px 10px rgba(15, 14, 13, 0.12);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.buy-m-topfold__ico:hover {
+  filter: brightness(0.98);
+}
+
+.buy-m-topfold__ico:focus-visible {
+  outline: 2px solid var(--ds-color-grey-neutral-900);
+  outline-offset: 2px;
+}
+
+.buy-m-topfold__ico.is-saved {
+  color: var(--ds-color-red-700);
+}
+
+/* Tags: sit clearly above drawer + lip + extra breathing room */
+.buy-m-topfold__tags {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: calc(var(--buy-m-drawer-height, 5.375rem) + var(--buy-m-tags-clearance, 1.375rem));
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+.buy-m-topfold__tags > * {
+  pointer-events: auto;
+}
+
+.buy-m-topfold__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(35, 35, 35, 0.58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ds-color-warm-neutral-0);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+
+.buy-m-topfold__pill--count {
+  font-variant-numeric: tabular-nums;
+}
+
+.buy-m-topfold__trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  max-width: 72%;
+}
+
+.buy-m-topfold__pill-icon {
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buy-m-topfold__pill {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

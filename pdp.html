@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en" class="no-fouc">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Property — Housing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Pre-paint hide: prevents the location modal / drawer / scrim from
+         flashing before base.css (loaded via JS module) takes over. */
+      #site-header-location-panel,
+      #site-header-location-backdrop,
+      #site-header-drawer,
+      .site-header__mega--buyers {
+        position: fixed;
+        left: -9999px;
+        top: -9999px;
+        width: 0;
+        height: 0;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      html.no-fouc *,
+      html.no-fouc *::before,
+      html.no-fouc *::after {
+        transition: none !important;
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+      }
+    </style>
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <script type="module" src="/src/pdp-main.js"></script>
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <div id="site-header-location-backdrop" class="site-header__location-backdrop" aria-hidden="true"></div>
+              <div
+                id="site-header-location-panel"
+                class="site-header__location-panel"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Choose location"
+                aria-hidden="true"
+                inert
+              >
+                <div class="site-header__location-panel-inner">
+                  <!-- Modal header -->
+                  <div class="site-header__location-modal-head">
+                    <p class="site-header__location-modal-title">Choose a city</p>
+                    <button type="button" class="site-header__location-modal-close" id="site-header-location-close" aria-label="Close">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                        <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="site-header__location-modal-body">
+
+                  <!-- Search bar + detect location — top row -->
+                  <div class="site-header__location-section site-header__location-section--search">
+                    <div class="site-header__location-search-row">
+                      <div class="site-header__location-search-field-wrap">
+                        <span class="site-header__location-search-icon" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M229.66,218.34l-50.07-50.06a88.21,88.21,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/>
+                          </svg>
+                        </span>
+                        <input
+                          type="search"
+                          id="site-header-location-search"
+                          class="site-header__location-search-input"
+                          placeholder="Search for a city…"
+                          autocomplete="off"
+                          spellcheck="false"
+                        />
+                        <ul
+                          id="site-header-location-results"
+                          class="site-header__location-results"
+                          role="listbox"
+                          aria-label="Search results"
+                          hidden
+                        ></ul>
+                      </div>
+                      <button type="button" class="site-header__location-gps" id="site-header-location-gps" aria-label="Detect my location">
+                        <span class="site-header__location-gps-icon" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M240,120H215.63A88.13,88.13,0,0,0,136,40.37V16a8,8,0,0,0-16,0V40.37A88.13,88.13,0,0,0,40.37,120H16a8,8,0,0,0,0,16H40.37A88.13,88.13,0,0,0,120,215.63V240a8,8,0,0,0,16,0V215.63A88.13,88.13,0,0,0,215.63,136H240a8,8,0,0,0,0-16ZM128,200a72,72,0,1,1,72-72A72.08,72.08,0,0,1,128,200Zm0-112a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Z"/>
+                          </svg>
+                        </span>
+                        <span class="site-header__location-gps-label">Detect location</span>
+                      </button>
+                    </div>
+                    <p id="site-header-location-gps-status" class="site-header__location-gps-status" role="status" aria-live="polite"></p>
+                  </div>
+
+                  <!-- Top cities chips -->
+                  <div class="site-header__location-section site-header__location-section--popular">
+                    <p class="site-header__location-section-label">Top cities</p>
+                    <ul class="site-header__location-chips" role="list">
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Mumbai">Mumbai</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Delhi">Delhi</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Bengaluru">Bengaluru</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Hyderabad">Hyderabad</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Pune">Pune</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Chennai">Chennai</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Kolkata">Kolkata</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Ahmedabad">Ahmedabad</button></li>
+                    </ul>
+                  </div>
+
+                  <!-- More cities — grid of boxes -->
+                  <div class="site-header__location-section site-header__location-section--all">
+                    <p class="site-header__location-section-label">More cities</p>
+                    <ul class="site-header__location-all-cities" id="site-header-location-all-cities" role="list"></ul>
+                  </div>
+
+                  </div><!-- /.site-header__location-modal-body -->
+                </div>
+              </div>
+      <header class="site-header site-header--compact">
+        <div class="layout-container site-header__bar">
+          <div class="site-header__lead">
+            <a class="site-header__brand" href="/" aria-label="Housing — Home">
+              <img
+                class="site-header__logo"
+                src="/logo.svg"
+                width="48"
+                height="48"
+                alt=""
+                decoding="async"
+              />
+            </a>
+            <span class="site-header__lead-sep" aria-hidden="true"></span>
+            <div class="site-header__location-wrap">
+              <button
+                type="button"
+                class="site-header__location"
+                id="site-header-location-trigger"
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="site-header-location-panel"
+                aria-label="Location: Mumbai. Change city"
+              >
+                <span class="site-header__location-stack">
+                  <span class="site-header__location-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"
+                      />
+                    </svg>
+                  </span>
+                  <span class="site-header__location-kicker">Searching in</span>
+                  <span class="site-header__location-city-row">
+                    <span class="site-header__location-city" id="site-header-location-city-label">Mumbai</span>
+                    <span class="site-header__location-chevron" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                        <path
+                          d="M1 1.5L5 4.5L9 1.5"
+                          stroke="currentColor"
+                          stroke-width="1.25"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </button>
+
+            </div>
+          </div>
+          <nav class="site-header__nav" aria-label="Browse">
+            <ul class="site-header__nav-list">
+              <li class="site-header__nav-item--mega">
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  id="site-header-mega-buyers-trigger"
+                  data-header-nav="buyers"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-controls="site-header-mega-buyers"
+                >
+                  <span class="site-header__nav-label">Buyers</span>
+                </button>
+                <div
+                  class="site-header__mega--buyers"
+                  id="site-header-mega-buyers"
+                  role="menu"
+                  aria-labelledby="site-header-mega-buyers-trigger"
+                >
+                  <div class="site-header__mega-inner">
+                    <div class="site-header__mega-grid">
+                      <div class="site-header__mega-col site-header__mega-col--lead">
+                        <h3 class="site-header__mega-heading">Property type</h3>
+                        <ul class="site-header__mega-list">
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M4 21V8l8-5 8 5v13M9 21v-4h6v4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Flats</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M4 10 12 3l8 7v10a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1V10Z" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Houses</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="m12.83 2.18 8 3.6a1 1 0 0 1 0 1.82l-8 3.6a2 2 0 0 1-1.66 0l-8-3.6a1 1 0 0 1 0-1.82l8-3.6a2 2 0 0 1 1.66 0Z" stroke-linecap="round" stroke-linejoin="round" />
+                                  <path d="M2 12.5 12 17l10-4.5M2 17l10 4.5 10-4.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Builder floors</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M9 20l-5.5-2.7A1 1 0 0 1 3 16.4V5.6a1 1 0 0 1 1.4-.9L9 6l6-2 5.5 2.7A1 1 0 0 1 21 7.6v10.8a1 1 0 0 1-1.4.9L15 18l-6 2Z" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Plots</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M3 21h18M5 21V10l7-7 7 7v11M9 21v-5h6v5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Villas</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9Z" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Commercial properties</span>
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="site-header__mega-col">
+                        <h3 class="site-header__mega-heading">Popular areas</h3>
+                        <ul class="site-header__mega-list">
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Palam Vihar</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 93</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 57</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 11</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 8</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Civil Lines</button></li>
+                        </ul>
+                      </div>
+                      <div class="site-header__mega-col">
+                        <h3 class="site-header__mega-heading">Search by BHK</h3>
+                        <ul class="site-header__mega-list">
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">1 RK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">1 BHK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">2 BHK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">3 BHK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">1 BHK Houses</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">2 BHK Houses</button></li>
+                        </ul>
+                      </div>
+                      <div class="site-header__mega-col">
+                        <h3 class="site-header__mega-heading">Popular searches</h3>
+                        <ul class="site-header__mega-list">
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Flats without brokerage</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Under construction flats</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Affordable projects for sale</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Ready to move-in projects</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">New residential projects</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Resale properties</button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  data-header-nav="tenants"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  <span class="site-header__nav-label">Tenants</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  data-header-nav="sellers"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  <span class="site-header__nav-label">Sellers</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  data-header-nav="services"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  <span class="site-header__nav-label">Services</span>
+                </button>
+              </li>
+              <li class="site-header__nav-item-get-app">
+                <a class="site-header__nav-trigger site-header__nav-get-app" href="#" aria-label="Get the Housing app">
+                  <span class="site-header__nav-label">Get app</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="site-header__sticky-search">
+            <div class="search-capsule search-capsule--sticky-header" role="search">
+              <div class="search-capsule__outer">
+                <div class="search-capsule__inner">
+                  <div class="search-capsule__input-wrap">
+                    <div class="search-capsule__rotating-stack" aria-hidden="true">
+                      <span class="search-capsule__rotating-text search-capsule__rotating-text--a"></span>
+                      <span class="search-capsule__rotating-text search-capsule__rotating-text--b"></span>
+                    </div>
+                    <input
+                      type="search"
+                      id="search-input-sticky"
+                      class="search-capsule__input search-capsule__input--trigger"
+                      placeholder=""
+                      autocomplete="off"
+                      readonly
+                      aria-label="Search properties"
+                      aria-haspopup="dialog"
+                      aria-expanded="false"
+                      aria-controls="search-overlay"
+                      inputmode="none"
+                    />
+                  </div>
+                  <button type="button" class="search-capsule__submit" aria-label="Submit search">
+                    <span class="search-capsule__icon" aria-hidden="true">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                        ></path>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="site-header__actions">
+            <a
+              class="site-header__nav-trigger site-header__nav-get-app site-header__nav-get-app--toolbar-only site-header__toolbar-cta"
+              href="#"
+              aria-label="Get the Housing app"
+            >
+              <span class="site-header__nav-label">Get app</span>
+            </a>
+            <button type="button" class="site-header__post-property-btn site-header__toolbar-cta">
+              <span class="site-header__post-property-label">Post property</span>
+              <span class="site-header__post-property-free" title="Free to post" aria-hidden="true">FREE</span>
+            </button>
+            <button
+              type="button"
+              class="site-header__post-property-btn site-header__post-property-btn--mobile-header"
+              aria-label="Post property, free to list"
+            >
+              <span class="site-header__post-property-label">Post property</span>
+              <span class="site-header__post-property-free" title="Free to post" aria-hidden="true">FREE</span>
+            </button>
+            <button type="button" class="site-header__login-btn site-header__toolbar-cta">Login</button>
+            <button
+              type="button"
+              class="site-header__menu-btn"
+              id="site-header-menu-btn"
+              aria-label="Open menu"
+              aria-expanded="false"
+              aria-controls="site-header-drawer-panel"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="14"
+                viewBox="0 0 20 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                  d="M1 1h18M1 7h18M1 13h18"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div
+        id="site-header-drawer"
+        class="site-header__drawer"
+        aria-hidden="true"
+        inert
+      >
+        <div
+          class="site-header__drawer-scrim"
+          data-site-header-drawer-close
+          tabindex="-1"
+          aria-hidden="true"
+        ></div>
+        <div
+          id="site-header-drawer-panel"
+          class="site-header__drawer-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Main menu"
+          tabindex="-1"
+        >
+          <div class="site-header__drawer-head">
+            <a class="site-header__drawer-brand" href="/" aria-label="Housing — Home">
+              <img
+                class="site-header__drawer-logo"
+                src="/logo.svg"
+                width="40"
+                height="40"
+                alt=""
+                decoding="async"
+              />
+            </a>
+            <span class="site-header__drawer-title">Menu</span>
+            <button type="button" class="site-header__drawer-close" data-site-header-drawer-close aria-label="Close menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                <path
+                  d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div class="site-header__drawer-login">
+            <div class="drawer-login-card">
+              <span class="drawer-login-card__grid" aria-hidden="true"></span>
+              <span class="drawer-login-card__glow" aria-hidden="true"></span>
+              <div class="drawer-login-card__identity">
+                <span class="drawer-login-card__avatar" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256" aria-hidden="true">
+                    <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/>
+                  </svg>
+                </span>
+                <p class="drawer-login-card__heading">Login to get started</p>
+              </div>
+              <button type="button" class="site-header__login-btn drawer-login-card__cta">Login</button>
+            </div>
+          </div>
+          <div class="site-header__drawer-body">
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Buyers</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub">
+                <p class="site-header__drawer-sub-label">Property type</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">Flats</button></li>
+                  <li><button type="button" class="site-header__mega-link">Houses</button></li>
+                  <li><button type="button" class="site-header__mega-link">Builder floors</button></li>
+                  <li><button type="button" class="site-header__mega-link">Plots</button></li>
+                  <li><button type="button" class="site-header__mega-link">Villas</button></li>
+                  <li><button type="button" class="site-header__mega-link">Commercial properties</button></li>
+                </ul>
+                <p class="site-header__drawer-sub-label">Popular areas</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">Palam Vihar</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 93</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 57</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 11</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 8</button></li>
+                  <li><button type="button" class="site-header__mega-link">Civil Lines</button></li>
+                </ul>
+                <p class="site-header__drawer-sub-label">Search by BHK</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">1 RK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">1 BHK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">2 BHK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">3 BHK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">1 BHK Houses</button></li>
+                  <li><button type="button" class="site-header__mega-link">2 BHK Houses</button></li>
+                </ul>
+                <p class="site-header__drawer-sub-label">Popular searches</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">Flats without brokerage</button></li>
+                  <li><button type="button" class="site-header__mega-link">Under construction flats</button></li>
+                  <li><button type="button" class="site-header__mega-link">Affordable projects for sale</button></li>
+                  <li><button type="button" class="site-header__mega-link">Ready to move-in projects</button></li>
+                  <li><button type="button" class="site-header__mega-link">New residential projects</button></li>
+                  <li><button type="button" class="site-header__mega-link">Resale properties</button></li>
+                </ul>
+              </div>
+            </details>
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Tenants</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub site-header__drawer-sub--simple">
+                <ul class="site-header__drawer-sub-list site-header__drawer-sub-list--flat">
+                  <li><button type="button" class="site-header__mega-link">Rental flats</button></li>
+                  <li><button type="button" class="site-header__mega-link">PG / Co-living</button></li>
+                  <li><button type="button" class="site-header__mega-link">Lease agreements</button></li>
+                  <li><button type="button" class="site-header__mega-link">Pay rent online</button></li>
+                </ul>
+              </div>
+            </details>
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Sellers</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub site-header__drawer-sub--simple">
+                <ul class="site-header__drawer-sub-list site-header__drawer-sub-list--flat">
+                  <li><button type="button" class="site-header__mega-link">Owner listings</button></li>
+                  <li><button type="button" class="site-header__mega-link">List without brokerage</button></li>
+                  <li><button type="button" class="site-header__mega-link">Housing Expert</button></li>
+                  <li><button type="button" class="site-header__mega-link">Property valuation</button></li>
+                </ul>
+              </div>
+            </details>
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Services</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub site-header__drawer-sub--simple">
+                <ul class="site-header__drawer-sub-list site-header__drawer-sub-list--flat">
+                  <li><button type="button" class="site-header__mega-link">Home loans</button></li>
+                  <li><button type="button" class="site-header__mega-link">Packers &amp; movers</button></li>
+                  <li><button type="button" class="site-header__mega-link">Rental agreements</button></li>
+                  <li><button type="button" class="site-header__mega-link">Legal services</button></li>
+                </ul>
+              </div>
+            </details>
+            <a class="site-header__drawer-row site-header__drawer-row--link" href="#" aria-label="Get the Housing app">Get app</a>
+          </div>
+          <div class="site-header__drawer-extras">
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66,106.34l-96-96a8,8,0,0,0-11.32,0l-96,96a8,8,0,0,0,0,11.32l96,96a8,8,0,0,0,11.32,0l96-96A8,8,0,0,0,221.66,106.34Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Zero brokerage properties</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V64H224ZM48,136a8,8,0,0,1,8-8H80a8,8,0,0,1,0,16H56A8,8,0,0,1,48,136Zm96,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H152A8,8,0,0,1,144,136Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">My transactions</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l58.83-5.43,23-55.47a15.92,15.92,0,0,1,29.12,0l23,55.47,58.83,5.43a16,16,0,0,1,9.11,28.06Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">My reviews</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Unsubscribe alerts</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Report a fraud</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,8,8,0,0,1-8-8V128a8,8,0,0,1,16,0ZM116,84a12,12,0,1,1,12,12A12,12,0,0,1,116,84Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Visit help center</span>
+            </button>
+            <div class="site-header__drawer-extras-social">
+              <span class="site-header__drawer-extras-social-label">Follow on</span>
+              <div class="site-header__drawer-extras-social-links">
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="Facebook">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="Twitter / X">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="YouTube">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M164.44,121.34l-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17ZM234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,39.88,131,40,128,40s-57.56-.12-91.84,13.12a24,24,0,0,0-14.49,16.4C19.08,79.5,16,97.74,16,128s3.08,48.5,5.67,58.48a24,24,0,0,0,14.49,16.41C69,215.56,120.4,216,127.34,216h1.32c6.94,0,58.37-.44,91.18-13.11a24,24,0,0,0,14.49-16.41c2.59-10,5.67-28.22,5.67-58.48S236.92,79.5,234.33,69.52Zm-15.49,113a8,8,0,0,1-4.77,5.49c-31.65,12.22-85.48,12-86,12H128c-.54,0-54.33.2-86-12a8,8,0,0,1-4.77-5.49C34.8,173.39,32,156.57,32,128s2.8-45.39,5.16-54.47A8,8,0,0,1,41.93,68c30.52-11.79,81.66-12,85.85-12h.27c.54,0,54.38-.18,86,12a8,8,0,0,1,4.77,5.49C221.2,82.61,224,99.43,224,128S221.2,173.39,218.84,182.47Z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="site-header__drawer-footer">
+            <button type="button" class="site-header__post-property-btn site-header__drawer-post">
+              <span class="site-header__post-property-label">Post property</span>
+              <span class="site-header__post-property-free" title="Free to post" aria-hidden="true">FREE</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <main class="pdp-page" id="pdp-page" aria-label="Property details">
+        <div class="pdp-page__inner layout-container">
+          <!-- PDP top fold — aligned to Demand Component Kit frame 3677:12987 (see design-system/figma-pdp-topfold-reference.json) -->
+          <section class="pdp-topfold" aria-label="Property overview">
+            <header class="pdp-topfold__header">
+              <div class="pdp-topfold__titles">
+                <h1 class="pdp-topfold__title">Emaar MGF The Palm Drive</h1>
+                <p class="pdp-topfold__meta">
+                  <span class="pdp-topfold__location">Sector 66, Gurgaon</span>
+                  <span class="pdp-topfold__meta-sep" aria-hidden="true">|</span>
+                  <span class="pdp-topfold__byline">By EMAAR INDIA</span>
+                  <span class="pdp-topfold__meta-sep" aria-hidden="true">|</span>
+                  <span class="pdp-topfold__updated">Updated on: Jun 2, 2026</span>
+                </p>
+              </div>
+              <div class="pdp-topfold__tools" role="group" aria-label="Share and save listing">
+                <button type="button" class="pdp-topfold__tool-btn" id="pdp-share-btn" aria-label="Share this listing">
+                  <svg
+                    class="pdp-topfold__tool-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="pdp-topfold__tool-btn pdp-topfold__tool-btn--save"
+                  id="pdp-save-btn"
+                  aria-pressed="false"
+                  aria-label="Save this listing"
+                >
+                  <svg
+                    class="pdp-topfold__tool-heart"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </header>
+            <div class="pdp-topfold__body">
+              <div class="pdp-topfold__gallery pdp-topfold-gallery" role="group" aria-label="Property photos (decorative)">
+                <div class="pdp-topfold-gallery__grid">
+                  <div class="pdp-topfold-gallery__cell">
+                    <img
+                      class="pdp-topfold-gallery__img"
+                      src="/pdp-gallery/1.png"
+                      width="1944"
+                      height="1300"
+                      alt=""
+                      decoding="async"
+                      loading="eager"
+                      fetchpriority="high"
+                    />
+                  </div>
+                  <div class="pdp-topfold-gallery__cell">
+                    <img
+                      class="pdp-topfold-gallery__img"
+                      src="/pdp-gallery/2.png"
+                      width="1038"
+                      height="1300"
+                      alt=""
+                      decoding="async"
+                      loading="eager"
+                    />
+                  </div>
+                  <div class="pdp-topfold-gallery__cell">
+                    <img
+                      class="pdp-topfold-gallery__img"
+                      src="/pdp-gallery/3.png"
+                      width="1038"
+                      height="1300"
+                      alt=""
+                      decoding="async"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="pdp-topfold-gallery__cell pdp-topfold-gallery__cell--view-all">
+                    <img
+                      class="pdp-topfold-gallery__img"
+                      src="/pdp-gallery/5.png"
+                      width="1948"
+                      height="1292"
+                      alt=""
+                      decoding="async"
+                      loading="lazy"
+                    />
+                    <button type="button" class="pdp-topfold-gallery__view-all" id="pdp-view-all-photos-btn">
+                      <svg
+                        class="pdp-topfold-gallery__view-all-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M88,56H40a8,8,0,0,0-8,8V112a8,8,0,0,0,8,8H88a8,8,0,0,0,8-8V64A8,8,0,0,0,88,56Zm32,152h48a8,8,0,0,0,8-8V152a8,8,0,0,0-8-8H120a8,8,0,0,0-8,8v48A8,8,0,0,0,120,208ZM216,56H168a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V64A8,8,0,0,0,216,56Zm0,104H168a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V168A8,8,0,0,0,216,160ZM88,208H40a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8H88a8,8,0,0,0,8-8V216A8,8,0,0,0,88,208Z"
+                        />
+                      </svg>
+                      <span>View all</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <aside class="pdp-topfold__panel" aria-label="Listing summary">
+                <div class="pdp-topfold__badges">
+                  <span class="pdp-topfold__badge pdp-topfold__badge--rera">RERA</span>
+                  <button type="button" class="pdp-topfold__badge pdp-topfold__badge--rating" id="pdp-rating-badge-fold" aria-label="View 27 reviews, average rating 4.2 out of 5">
+                    <svg class="pdp-topfold__rating-star-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M234,111.65l-45.42,39.35,13.58,58.29a8,8,0,0,1-11.93,8.69L128,191.36,61.78,218a8,8,0,0,1-11.93-8.69l13.58-58.29L18,111.65a8,8,0,0,1,4.48-14.12l59.19-5.05L115.93,39a8,8,0,0,1,14.14,0l34.26,53.48,59.19,5.05a8,8,0,0,1,4.48,14.12Z" />
+                    </svg>
+                    <span class="pdp-topfold__rating-val">4.2</span>
+                    <span class="pdp-topfold__rating-count">(27)</span>
+                  </button>
+                </div>
+                <div class="pdp-topfold-specs">
+                  <div class="pdp-topfold-specs__tile">
+                    <p class="pdp-topfold-specs__label">Configuration</p>
+                    <p class="pdp-topfold-specs__value">1, 2 BHK apartments</p>
+                  </div>
+                  <div class="pdp-topfold-specs__tile">
+                    <p class="pdp-topfold-specs__label">Status</p>
+                    <p class="pdp-topfold-specs__value">Ready to move</p>
+                  </div>
+                  <div class="pdp-topfold-specs__tile">
+                    <p class="pdp-topfold-specs__label">Sizes</p>
+                    <p class="pdp-topfold-specs__value pdp-topfold-specs__value--sizes">
+                      <span id="pdp-area-range">1,125 – 5,250</span>
+                      <button type="button" class="pdp-topfold-specs__unit" id="pdp-unit-toggle" aria-label="Change area unit">sq.ft</button>
+                    </p>
+                  </div>
+                  <div class="pdp-topfold-specs__tile">
+                    <p class="pdp-topfold-specs__label">Average price</p>
+                    <p class="pdp-topfold-specs__value">₹47.45 K/sq.ft</p>
+                  </div>
+                </div>
+                <div class="pdp-topfold__panel-rule" aria-hidden="true"></div>
+                <div class="pdp-topfold__price-block">
+                  <p class="pdp-topfold__price-label">Price</p>
+                  <div class="pdp-topfold__price-row">
+                    <span class="pdp-topfold__price-main">₹1.4 Cr - ₹2.5 Cr</span>
+                    <span class="pdp-topfold__emi-pill">EMI at ₹1.12 L</span>
+                  </div>
+                </div>
+                <button type="button" class="pdp-topfold__contact" id="pdp-contact-btn" aria-label="Contact seller about this listing">
+                  <svg class="pdp-topfold__contact-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                    <path
+                      d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,1-10.73-10.73,16,16,0,0,0,1.35-15.18l.07-.14L97.54,33.64a8,8,0,0,0-10.94-2.59A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,48.91-54.6A8,8,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,42.86L125.93,89.52l-1,1.83a32,32,0,0,0,42.45,42.45l1.83-1L213.14,173.12A40.18,40.18,0,0,1,176,208Z"
+                    />
+                  </svg>
+                  <span>Contact seller</span>
+                </button>
+              </aside>
+            </div>
+          </section>
+
+          <div class="pdp-body-layout">
+            <div class="pdp-body-main">
+              <!-- About Property section -->
+              <div class="pdp-about" id="pdp-about-section">
+                <div class="pdp-about__header">
+                  <h2 class="pdp-about__title">About Raheja Vivarea</h2>
+                  <a href="#pdp-reviews-section" class="pdp-about__rating-badge" id="pdp-rating-badge" aria-label="View 181 reviews, average rating 4.91 out of 5">
+                    <div class="pdp-about__rating-col">
+                      <span class="pdp-about__rating-value">4.91</span>
+                      <span class="pdp-about__rating-stars">★★★★★</span>
+                    </div>
+                    <div class="pdp-about__rating-divider"></div>
+                    <div class="pdp-about__rating-col">
+                      <span class="pdp-about__reviews-value">181</span>
+                      <span class="pdp-about__reviews-label">Reviews</span>
+                    </div>
+                  </a>
+                </div>
+                
+                <div class="pdp-about__content">
+                  <p class="pdp-about__text">
+                    Raheja Vivarea is a landmark residential development in Lower Parel, Mumbai, offering an exceptional blend of luxury, comfort, and sophistication. Spanning across a lush land parcel, these premium residences feature expansive layouts, high ceilings, and panoramic views of the city skyline and Arabian Sea.
+                    <span class="pdp-about__more-text" id="pdp-about-more" hidden>
+                      Designed to cater to the highest standards of modern living, the project features a fully equipped gymnasium, spa, multi-purpose sports courts, private theater, and a grand banquet hall. Residents benefit from high-speed elevators, advanced fire-fighting systems, and 24/7 concierge services. Its strategic location offers seamless connectivity to major commercial hubs, renowned educational institutions, and premium retail destinations, making it the most coveted address in South Mumbai.
+                    </span>
+                  </p>
+                  
+                  <button type="button" class="pdp-about__toggle-btn" id="pdp-about-toggle" aria-expanded="false" aria-controls="pdp-about-more">
+                    <span class="pdp-about__toggle-text">Show more</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.34a8,8,0,0,1,11.32,11.32Z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Floor plans section -->
+              <div class="pdp-floorplans" id="pdp-floorplans-section" aria-labelledby="pdp-floorplans-heading">
+                <div class="pdp-floorplans__header">
+                  <h2 id="pdp-floorplans-heading" class="pdp-floorplans__title">Floor plan & pricing</h2>
+                </div>
+                <hr class="pdp-floorplans__divider" />
+                
+                <div class="pdp-floorplans__tabs" role="tablist" aria-label="Floor plan configurations">
+                  <button type="button" class="pdp-floorplans__tab pdp-floorplans__tab--active" role="tab" aria-selected="true" aria-controls="tab-all" id="tab-all" data-tab="all">
+                    <span class="pdp-floorplans__tab-name">All</span>
+                  </button>
+                  <button type="button" class="pdp-floorplans__tab" role="tab" aria-selected="false" id="tab-3bhk" data-tab="3bhk">
+                    <span class="pdp-floorplans__tab-name">3 BHK</span>
+                    <span class="pdp-floorplans__tab-count">1</span>
+                  </button>
+                  <button type="button" class="pdp-floorplans__tab" role="tab" aria-selected="false" id="tab-4bhk" data-tab="4bhk">
+                    <span class="pdp-floorplans__tab-name">4 BHK</span>
+                    <span class="pdp-floorplans__tab-count">1</span>
+                  </button>
+                </div>
+                
+                <div class="pdp-floorplans__cards-container">
+                  <!-- Card 1: 3 BHK -->
+                  <div class="pdp-floorplan-card" data-config="3bhk">
+                    <div class="pdp-floorplan-card__image-container">
+                      <img class="pdp-floorplan-card__image" src="/floor-plan-3bhk.png" alt="3 BHK Floor Plan" loading="lazy" />
+                      <span class="pdp-floorplan-card__badge" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 256 256">
+                          <path d="M224,115.55V192a16,16,0,0,1-16,16H144V128h64v-12.45a8,8,0,0,0-8-8H144V48a16,16,0,0,1,16-16h48a16,16,0,0,1,16,16v67.55ZM112,32H64A16,16,0,0,0,48,48V208H112V32ZM224,208h16a8,8,0,0,0,0-16H224a8,8,0,0,0,0,16ZM32,208H16a8,8,0,0,0,0;16H32a8,8,0,0,0,0-16Z"></path>
+                        </svg>
+                        3D
+                      </span>
+                    </div>
+                    <div class="pdp-floorplan-card__info">
+                      <p class="pdp-floorplan-card__timeline">Possession by Dec 2028</p>
+                      <h3 class="pdp-floorplan-card__title">3 BHK Apartment</h3>
+                      <p class="pdp-floorplan-card__area-label">Super built-up area</p>
+                      <p class="pdp-floorplan-card__area-value">1,800 sq.ft</p>
+                      <p class="pdp-floorplan-card__price">₹1.4 Cr</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Card 2: 4 BHK -->
+                  <div class="pdp-floorplan-card" data-config="4bhk">
+                    <div class="pdp-floorplan-card__image-container">
+                      <img class="pdp-floorplan-card__image" src="/floor-plan-4bhk.png" alt="4 BHK Floor Plan" loading="lazy" />
+                      <span class="pdp-floorplan-card__badge" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 256 256">
+                          <path d="M224,115.55V192a16,16,0,0,1-16,16H144V128h64v-12.45a8,8,0,0,0-8-8H144V48a16,16,0,0,1,16-16h48a16,16,0,0,1,16,16v67.55ZM112,32H64A16,16,0,0,0,48,48V208H112V32ZM224,208h16a8,8,0,0,0,0-16H224a8,8,0,0,0,0,16ZM32,208H16a8,8,0,0,0,0,16H32a8,8,0,0,0,0-16Z"></path>
+                        </svg>
+                        3D
+                      </span>
+                    </div>
+                    <div class="pdp-floorplan-card__info">
+                      <p class="pdp-floorplan-card__timeline">Possession by Dec 2028</p>
+                      <h3 class="pdp-floorplan-card__title">4 BHK Apartment</h3>
+                      <p class="pdp-floorplan-card__area-label">Super built-up area</p>
+                      <p class="pdp-floorplan-card__area-value">2,400 sq.ft</p>
+                      <p class="pdp-floorplan-card__price">₹2.1 Cr</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment plan section -->
+              <div class="pdp-paymentplan" id="pdp-paymentplan-section">
+                <h2 class="pdp-paymentplan__title">Payment plan</h2>
+                <button type="button" class="pdp-paymentplan__card" id="pdp-paymentplan-card" aria-label="Open payment plan details and EMI calculator">
+                  <div class="pdp-paymentplan__card-icon-wrap" aria-hidden="true">
+                    <!-- Gold shield with star SVG -->
+                    <svg class="pdp-paymentplan__card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M24 4L6 10V22C6 34.2 13.8 41.8 24 44C34.2 41.8 42 34.2 42 22V10L24 4Z" fill="#FFF9E6" stroke="#D97706" stroke-width="3" stroke-linejoin="round"/>
+                      <path d="M24 14L27.09 20.26L34 21.27L29 26.14L30.18 33L24 29.75L17.82 33L19 26.14L14 21.27L20.91 20.26L24 14Z" fill="#D97706" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="pdp-paymentplan__card-info">
+                    <h3 class="pdp-paymentplan__card-title">Customizable EMI Plan</h3>
+                    <p class="pdp-paymentplan__card-desc">
+                      EMI starts for 3BHK at just <span class="pdp-paymentplan__pill">₹1.5L* /month</span> with duration options up to 30 years.
+                    </p>
+                  </div>
+                  <div class="pdp-paymentplan__card-arrow" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+                      <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                    </svg>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Investment insights section -->
+              <div class="pdp-insights" id="pdp-insights-section">
+                <h2 class="pdp-insights__title">Investment insights</h2>
+                <div class="pdp-insights__card">
+                  <!-- Historical growth stats header block -->
+                  <div class="pdp-insights__trend">
+                    <span class="pdp-insights__trend-badge" aria-hidden="true">▲ 15.3%</span>
+                    <p class="pdp-insights__trend-text">
+                      Price appreciation seen in Lower Parel over the last 3 years
+                    </p>
+                  </div>
+                  
+                  <!-- Compare Current vs Projected Projections -->
+                  <div class="pdp-insights__compare">
+                    <!-- Current value block -->
+                    <div class="pdp-insights__metric">
+                      <span class="pdp-insights__metric-label" id="pdp-insights-current-label">Current value (3 BHK)</span>
+                      <span class="pdp-insights__metric-val" id="pdp-insights-current-val">₹1.40 Cr</span>
+                    </div>
+                    
+                    <!-- Line separator -->
+                    <div class="pdp-insights__compare-sep" aria-hidden="true"></div>
+                    
+                    <!-- Projected value block -->
+                    <div class="pdp-insights__metric">
+                      <span class="pdp-insights__metric-label">Projected value (1 Yr)</span>
+                      <div class="pdp-insights__metric-value-row">
+                        <span class="pdp-insights__metric-val" id="pdp-insights-projected-val">₹1.65 Cr</span>
+                        <span class="pdp-insights__roi-tag" aria-label="Estimated ROI">+18.3% Est. ROI</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Callout banner strip at bottom -->
+                  <div class="pdp-insights__banner">
+                    <svg class="pdp-insights__banner-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/>
+                    </svg>
+                    <p class="pdp-insights__banner-text">
+                      Estimated net gain of <strong id="pdp-insights-gain-val">₹25 Lakhs</strong> within the first year of ownership.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Compare properties -->
+              <section class="pdp-compare" id="pdp-compare-section" aria-labelledby="pdp-compare-heading">
+                <h2 class="pdp-compare__title" id="pdp-compare-heading">
+                  Compare <span class="pdp-compare__title-name">Raheja Vivarea</span> with
+                </h2>
+                <div class="pdp-compare__surface">
+                  <div class="pdp-compare__pills-host" id="pdp-compare-pills-host" role="toolbar" aria-label="Projects to compare"></div>
+                  <div class="pdp-compare__matrix-outer" id="pdp-compare-matrix-outer">
+                    <div class="pdp-compare__matrix-host" id="pdp-compare-matrix-host"></div>
+                    <div class="pdp-compare__loading" id="pdp-compare-loading" hidden>
+                      <div class="pdp-compare__skel" aria-hidden="true">
+                        <div class="pdp-compare__skel-imgs">
+                          <div class="pdp-compare__skel-img"></div>
+                          <div class="pdp-compare__skel-img"></div>
+                          <div class="pdp-compare__skel-img"></div>
+                        </div>
+                        <div class="pdp-compare__skel-lines">
+                          <div class="pdp-compare__skel-line"></div>
+                          <div class="pdp-compare__skel-line"></div>
+                          <div class="pdp-compare__skel-line"></div>
+                          <div class="pdp-compare__skel-line"></div>
+                          <div class="pdp-compare__skel-line"></div>
+                        </div>
+                      </div>
+                      <p class="pdp-compare__loading-text">Updating comparison…</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Frequently asked questions -->
+              <section class="pdp-faq" id="pdp-faq-section" aria-labelledby="pdp-faq-heading">
+                <h2 class="pdp-faq__title" id="pdp-faq-heading">Frequently asked questions</h2>
+                <div class="pdp-faq__list">
+                  <div class="pdp-faq__item">
+                    <button
+                      type="button"
+                      class="pdp-faq__trigger"
+                      id="pdp-faq-trigger-1"
+                      aria-expanded="false"
+                      aria-controls="pdp-faq-panel-1"
+                    >
+                      <span class="pdp-faq__question">What is the pin code of Raheja Vivarea?</span>
+                      <span class="pdp-faq__chevron-wrap" aria-hidden="true">
+                        <svg class="pdp-faq__chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div class="pdp-faq__panel" id="pdp-faq-panel-1" role="region" aria-labelledby="pdp-faq-trigger-1">
+                      <div class="pdp-faq__panel-inner">
+                        <p class="pdp-faq__answer">
+                          Raheja Vivarea is in Lower Parel, Mumbai — pin codes in this micro-market typically fall in the <strong>400013</strong> range. Please confirm with the developer for the exact tower-wise pin.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pdp-faq__item is-open">
+                    <button
+                      type="button"
+                      class="pdp-faq__trigger"
+                      id="pdp-faq-trigger-2"
+                      aria-expanded="true"
+                      aria-controls="pdp-faq-panel-2"
+                    >
+                      <span class="pdp-faq__question">Which hospitals are located near Raheja Vivarea?</span>
+                      <span class="pdp-faq__chevron-wrap" aria-hidden="true">
+                        <svg class="pdp-faq__chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div class="pdp-faq__panel" id="pdp-faq-panel-2" role="region" aria-labelledby="pdp-faq-trigger-2">
+                      <div class="pdp-faq__panel-inner">
+                        <p class="pdp-faq__answer">
+                          Hospitals such as Dr L H Hiranandani Hospital, Global Hospital, and Wockhardt Hospital are located close to Raheja Vivarea, giving residents easy access to quality healthcare.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pdp-faq__item">
+                    <button
+                      type="button"
+                      class="pdp-faq__trigger"
+                      id="pdp-faq-trigger-3"
+                      aria-expanded="false"
+                      aria-controls="pdp-faq-panel-3"
+                    >
+                      <span class="pdp-faq__question">What is the possession status of the project?</span>
+                      <span class="pdp-faq__chevron-wrap" aria-hidden="true">
+                        <svg class="pdp-faq__chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div class="pdp-faq__panel" id="pdp-faq-panel-3" role="region" aria-labelledby="pdp-faq-trigger-3">
+                      <div class="pdp-faq__panel-inner">
+                        <p class="pdp-faq__answer">
+                          Select towers at Raheja Vivarea are ready to move in; a few phases may still be under fit-out or handover. Check with sales for tower-specific possession timelines.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pdp-faq__item">
+                    <button
+                      type="button"
+                      class="pdp-faq__trigger"
+                      id="pdp-faq-trigger-4"
+                      aria-expanded="false"
+                      aria-controls="pdp-faq-panel-4"
+                    >
+                      <span class="pdp-faq__question">Is this listing verified on Housing.com?</span>
+                      <span class="pdp-faq__chevron-wrap" aria-hidden="true">
+                        <svg class="pdp-faq__chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div class="pdp-faq__panel" id="pdp-faq-panel-4" role="region" aria-labelledby="pdp-faq-trigger-4">
+                      <div class="pdp-faq__panel-inner">
+                        <p class="pdp-faq__answer">
+                          This is a sample verified listing card on the PDP. In production, verification badges and RERA details would be sourced from trusted data partners.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Ratings & reviews -->
+              <section class="pdp-reviews" id="pdp-reviews-section" aria-labelledby="pdp-reviews-heading">
+                <h2 class="pdp-reviews__heading" id="pdp-reviews-heading">Ratings and reviews</h2>
+
+                <div class="pdp-reviews__summary">
+                  <div class="pdp-reviews__overall">
+                    <div class="pdp-reviews__overall-row">
+                      <span class="pdp-reviews__overall-score">4.3</span>
+                      <span class="pdp-reviews__overall-star" aria-hidden="true">★</span>
+                    </div>
+                    <p class="pdp-reviews__overall-caption">Based on 653 ratings</p>
+                  </div>
+                  <div class="pdp-reviews__dimensions" role="list">
+                    <div class="pdp-reviews__dim" role="listitem">
+                      <span class="pdp-reviews__dim-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-88,128H88a8,8,0,0,1-8-8V120a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v48A8,8,0,0,1,136,176Zm64,0H152a8,8,0,0,1-8-8V88a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v80A8,8,0,0,1,200,176ZM88,80H40a8,8,0,0,0-8,8v88a8,8,0,0,0,8,8H88a8,8,0,0,0,8-8V88A8,8,0,0,0,88,80Z"/></svg>
+                      </span>
+                      <span class="pdp-reviews__dim-label">Connectivity</span>
+                      <span class="pdp-reviews__dim-score">4.8</span>
+                    </div>
+                    <span class="pdp-reviews__dim-rule" aria-hidden="true"></span>
+                    <div class="pdp-reviews__dim" role="listitem">
+                      <span class="pdp-reviews__dim-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,220.17,216,163.3,216,88A88.1,88.1,0,0,0,128,24Zm0,206c-16.53-13-72-60.16-72-118a72,72,0,0,1,144,0C200,169.84,144.53,217,128,230Z"/></svg>
+                      </span>
+                      <span class="pdp-reviews__dim-label">Neighbourhood</span>
+                      <span class="pdp-reviews__dim-score">4.7</span>
+                    </div>
+                    <span class="pdp-reviews__dim-rule" aria-hidden="true"></span>
+                    <div class="pdp-reviews__dim" role="listitem">
+                      <span class="pdp-reviews__dim-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.8,47,26.05a8,8,0,0,0,4.2,0c1-.26,23.91-7.19,47-26.05C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.77-13.63,71.32-40.5,92.3C144.56,223.85,129,228.05,128,228a8,8,0,0,1-1.08-.47C113.37,219.76,48,180.27,48,112V56H208ZM152,144a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,144Zm0-40a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,104Z"/></svg>
+                      </span>
+                      <span class="pdp-reviews__dim-label">Safety</span>
+                      <span class="pdp-reviews__dim-score">4.7</span>
+                    </div>
+                    <span class="pdp-reviews__dim-rule" aria-hidden="true"></span>
+                    <div class="pdp-reviews__dim" role="listitem">
+                      <span class="pdp-reviews__dim-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM84,108a12,12,0,1,1,12,12A12,12,0,0,1,84,108Zm88,0a12,12,0,1,1-12,12A12,12,0,0,1,172,108Zm-15.82,54.74a8,8,0,1,1-12.36,10.52c-8.41-10.15-20.75-16.26-33.82-16.26s-25.41,6.11-33.82,16.26a8,8,0,0,1-12.36-10.52c11.84-14.29,29.12-22.74,46.18-22.74S164.18,148.45,176.18,162.74Z"/></svg>
+                      </span>
+                      <span class="pdp-reviews__dim-label">Livability</span>
+                      <span class="pdp-reviews__dim-score">4.0</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pdp-reviews__subbar">
+                  <span class="pdp-reviews__count">127 reviews</span>
+                  <a href="#" class="pdp-reviews__view-all">View all reviews</a>
+                </div>
+
+                <div class="pdp-reviews__carousel">
+                  <button type="button" class="pdp-reviews__scroll-btn pdp-reviews__scroll-btn--prev is-hidden" id="pdp-reviews-scroll-prev" aria-label="Show previous reviews">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M165.66,202.34a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128l74.35,74.34A8,8,0,0,1,165.66,202.34Z"/>
+                    </svg>
+                  </button>
+                  <div class="pdp-reviews__track" id="pdp-reviews-track" tabindex="0" role="list" aria-label="Resident reviews">
+                    <article class="pdp-reviews-card" role="listitem">
+                      <div class="pdp-reviews-card__head">
+                        <div class="pdp-reviews-card__avatar" aria-hidden="true">MS</div>
+                        <div class="pdp-reviews-card__meta">
+                          <p class="pdp-reviews-card__name">Maheep Singh</p>
+                          <p class="pdp-reviews-card__sub">Owner · 1 year ago</p>
+                        </div>
+                        <div class="pdp-reviews-card__rating-badge" aria-label="Rating 4.2 out of 5">
+                          <span class="pdp-reviews-card__rating-star" aria-hidden="true">★</span>
+                          <span class="pdp-reviews-card__rating-val">4.2</span>
+                        </div>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--good">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--up" aria-hidden="true">👍</span>
+                          The good
+                        </div>
+                        <p class="pdp-reviews-card__text">Excellent sea-facing units and well-maintained common areas. Concierge is responsive and the clubhouse facilities are genuinely usable, not just for brochures.</p>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--bad">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--down" aria-hidden="true">👎</span>
+                          The bad
+                        </div>
+                        <p class="pdp-reviews-card__text">Peak-hour traffic around Lower Parel can add time to commutes. Visitor parking fills up quickly on weekends.</p>
+                      </div>
+                    </article>
+                    <article class="pdp-reviews-card" role="listitem">
+                      <div class="pdp-reviews-card__head">
+                        <div class="pdp-reviews-card__avatar pdp-reviews-card__avatar--2" aria-hidden="true">AK</div>
+                        <div class="pdp-reviews-card__meta">
+                          <p class="pdp-reviews-card__name">Ananya Krishnan</p>
+                          <p class="pdp-reviews-card__sub">Tenant · 8 months ago</p>
+                        </div>
+                        <div class="pdp-reviews-card__rating-badge" aria-label="Rating 4.5 out of 5">
+                          <span class="pdp-reviews-card__rating-star" aria-hidden="true">★</span>
+                          <span class="pdp-reviews-card__rating-val">4.5</span>
+                        </div>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--good">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--up" aria-hidden="true">👍</span>
+                          The good
+                        </div>
+                        <p class="pdp-reviews-card__text">Love the floor-to-ceiling windows and the evening light. Power backup has been reliable through monsoon season.</p>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--bad">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--down" aria-hidden="true">👎</span>
+                          The bad
+                        </div>
+                        <p class="pdp-reviews-card__text">Lift wait times can spike during rush hour in the taller towers. Parcel room gets crowded before festivals.</p>
+                      </div>
+                    </article>
+                    <article class="pdp-reviews-card" role="listitem">
+                      <div class="pdp-reviews-card__head">
+                        <div class="pdp-reviews-card__avatar pdp-reviews-card__avatar--3" aria-hidden="true">RJ</div>
+                        <div class="pdp-reviews-card__meta">
+                          <p class="pdp-reviews-card__name">Rohan Joshi</p>
+                          <p class="pdp-reviews-card__sub">Owner · 2 years ago</p>
+                        </div>
+                        <div class="pdp-reviews-card__rating-badge" aria-label="Rating 4.0 out of 5">
+                          <span class="pdp-reviews-card__rating-star" aria-hidden="true">★</span>
+                          <span class="pdp-reviews-card__rating-val">4.0</span>
+                        </div>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--good">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--up" aria-hidden="true">👍</span>
+                          The good
+                        </div>
+                        <p class="pdp-reviews-card__text">Strong sense of community among residents. Security checks are thorough without feeling hostile.</p>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--bad">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--down" aria-hidden="true">👎</span>
+                          The bad
+                        </div>
+                        <p class="pdp-reviews-card__text">Service lifts are sometimes booked for moves, which slows shifting furniture into higher floors.</p>
+                      </div>
+                    </article>
+                    <article class="pdp-reviews-card" role="listitem">
+                      <div class="pdp-reviews-card__head">
+                        <div class="pdp-reviews-card__avatar pdp-reviews-card__avatar--4" aria-hidden="true">SP</div>
+                        <div class="pdp-reviews-card__meta">
+                          <p class="pdp-reviews-card__name">Sneha Patil</p>
+                          <p class="pdp-reviews-card__sub">Prospective buyer · 3 weeks ago</p>
+                        </div>
+                        <div class="pdp-reviews-card__rating-badge" aria-label="Rating 4.3 out of 5">
+                          <span class="pdp-reviews-card__rating-star" aria-hidden="true">★</span>
+                          <span class="pdp-reviews-card__rating-val">4.3</span>
+                        </div>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--good">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--up" aria-hidden="true">👍</span>
+                          The good
+                        </div>
+                        <p class="pdp-reviews-card__text">Sales team was transparent on floor premiums and view corridors. Sample flat matched marketing materials closely.</p>
+                      </div>
+                      <div class="pdp-reviews-card__block pdp-reviews-card__block--bad">
+                        <div class="pdp-reviews-card__block-title">
+                          <span class="pdp-reviews-card__thumb pdp-reviews-card__thumb--down" aria-hidden="true">👎</span>
+                          The bad
+                        </div>
+                        <p class="pdp-reviews-card__text">Still evaluating — documentation pack is dense; would appreciate a simpler one-pager on maintenance charges.</p>
+                      </div>
+                    </article>
+                  </div>
+                  <button type="button" class="pdp-reviews__scroll-btn pdp-reviews__scroll-btn--next" id="pdp-reviews-scroll-next" aria-label="Show more reviews">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/>
+                    </svg>
+                  </button>
+                </div>
+              </section>
+            </div>
+            
+            <!-- Sidebar containing the lead form -->
+            <div class="pdp-sidebar">
+              <div class="pdp-sidebar__sticky">
+                <div class="pdp-lead-card">
+                  <div class="pdp-lead-card__header">
+                    <div class="pdp-lead-card__header-info">
+                      <h3 class="pdp-lead-card__heading">Raheja Vivarea</h3>
+                      <p class="pdp-lead-card__specs">3 BHK · 3 Baths · 1,800 sq.ft</p>
+                      <p class="pdp-lead-card__location">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                          <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-104a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25,25.1,28.84,41,40.1,41.57,40.49a8,8,0,0,0,8.86,0c.59-.39,16.47-11.65,41.57-40.49,27.5-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,24Zm0,206.2c-15.65-15.35-72-73.66-72-118.2a72,72,0,0,1,144,0C200,156.54,143.65,214.85,128,230.2Z"></path>
+                        </svg>
+                        Lower Parel, Mumbai
+                      </p>
+                    </div>
+                    <button type="button" class="pdp-lead-card__save" id="sidebar-save-btn" aria-pressed="false" aria-label="Save this listing">
+                      <div class="pdp-lead-card__save-icon-wrap">
+                        <svg class="pdp-lead-card__save-heart" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                  
+                  <div class="pdp-lead-card__tags">
+                    <span class="pdp-lead-card__tag pdp-lead-card__tag--assured">
+                      <span class="tag-icon">★</span> Verified Listing
+                    </span>
+                    <span class="pdp-lead-card__tag">
+                      Freehold
+                    </span>
+                  </div>
+
+                  <hr class="pdp-lead-card__divider" />
+
+                  <div class="pdp-lead-card__price-section">
+                    <div class="pdp-lead-card__price-wrap">
+                      <p class="pdp-lead-card__price-label">Property price</p>
+                      <p class="pdp-lead-card__price-value">₹1.4 Cr</p>
+                    </div>
+                    <div class="pdp-lead-card__emi-wrap">
+                      <p class="pdp-lead-card__emi-value">₹69.5 K/mo</p>
+                      <p class="pdp-lead-card__emi-label">Starting EMI</p>
+                    </div>
+                  </div>
+
+                  <hr class="pdp-lead-card__divider" />
+
+                  <div class="pdp-lead-card__form-wrapper">
+                    <h4 class="pdp-lead-card__form-title">Interested in this property?</h4>
+                    <p class="pdp-lead-card__form-subtitle">Leave your details and our team will get in touch shortly.</p>
+                    
+                    <form class="pdp-lead-form" id="pdp-lead-form" novalidate>
+                      <div class="pdp-lead-form__group">
+                        <input type="text" id="lead-name" class="pdp-lead-form__input" placeholder=" " required />
+                        <label for="lead-name" class="pdp-lead-form__label">Full Name</label>
+                        <span class="pdp-lead-form__error" id="lead-name-error">Please enter your name</span>
+                      </div>
+                    
+                    <div class="pdp-lead-form__group">
+                      <input type="tel" id="lead-phone" class="pdp-lead-form__input" placeholder=" " required pattern="[0-9]{10}" />
+                      <label for="lead-phone" class="pdp-lead-form__label">Phone Number</label>
+                      <span class="pdp-lead-form__error" id="lead-phone-error">Please enter a valid 10-digit phone number</span>
+                    </div>
+                    
+                    <div class="pdp-lead-form__group">
+                      <input type="email" id="lead-email" class="pdp-lead-form__input" placeholder=" " required />
+                      <label for="lead-email" class="pdp-lead-form__label">Email Address</label>
+                      <span class="pdp-lead-form__error" id="lead-email-error">Please enter a valid email address</span>
+                    </div>
+                    
+                    <button type="submit" class="pdp-lead-form__submit" id="lead-submit-btn">
+                      <span class="pdp-lead-form__submit-text">Get contact details</span>
+                      <span class="pdp-lead-form__submit-spinner" aria-hidden="true" hidden>
+                        <svg class="spinner" viewBox="0 0 50 50">
+                          <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                        </svg>
+                      </span>
+                    </button>
+                  </form>
+                  
+                  <div class="pdp-lead-card__success" id="lead-success-msg" aria-hidden="true" hidden>
+                    <div class="pdp-lead-card__success-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.34a8,8,0,0,1,11.32,11.32Z"></path>
+                      </svg>
+                    </div>
+                    <h4 class="pdp-lead-card__success-title">Thank You!</h4>
+                    <p class="pdp-lead-card__success-text">Your inquiry has been submitted. Our property specialist will contact you shortly.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <input type="search" id="search-input-primary" autocomplete="off" tabindex="-1" aria-hidden="true" class="pdp-primary-input-placeholder" />
+      <div
+        class="search-overlay"
+        id="search-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search"
+        aria-hidden="true"
+        hidden
+        inert
+      >
+        <div class="search-overlay__scrim" data-close-search tabindex="-1" aria-hidden="true"></div>
+        <div class="search-overlay__content">
+          <button
+            type="button"
+            class="search-overlay__close"
+            data-close-search
+            aria-label="Close search"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+              <path
+                d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+              ></path>
+            </svg>
+          </button>
+          <div class="search-overlay__scroll" tabindex="-1">
+            <div class="main-search__panel main-search__panel--overlay">
+              <div class="main-search__panel-inset">
+                <div class="main-search__hero-block main-search__hero-block--morph-target">
+                <div class="service-tabs">
+                  <div class="service-tabs__track">
+                    <div class="service-tabs__tablist" role="tablist" aria-label="Listing type">
+                      <span class="service-tabs__glide" aria-hidden="true"></span>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="true"
+                        class="service-tabs__tab service-tabs__tab--active"
+                        data-service="buy"
+                      >
+                        Buy
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="projects"
+                      >
+                        Projects
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="rent"
+                      >
+                        Rent
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="commercial"
+                      >
+                        Commercial
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="pg"
+                      >
+                        PG
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="plots"
+                      >
+                        Plots
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="search-capsule" role="search">
+                  <div class="search-capsule__outer">
+                    <div class="search-capsule__inner">
+                      <input
+                        type="search"
+                        id="search-input-overlay"
+                        class="search-capsule__input"
+                        placeholder="Search"
+                        autocomplete="off"
+                        aria-label="Search"
+                      />
+                      <button
+                        type="button"
+                        class="search-capsule__submit"
+                        aria-label="Submit search"
+                      >
+                        <span class="search-capsule__icon" aria-hidden="true">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            fill="currentColor"
+                            viewBox="0 0 256 256"
+                          >
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            ></path>
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="search-overlay__below-fold">
+                <hr class="search-overlay__separator" aria-hidden="true" />
+
+                <div class="search-overlay__discover" data-overlay-service="buy">
+                  <section class="overlay-section" aria-labelledby="overlay-heading-recent">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M216,128a88,88,0,1,1-88-88A88,88,0,0,1,216,128Z"
+                            opacity="0.2"
+                          ></path>
+                          <path
+                            d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-recent" class="overlay-section__title">Recent searches</h2>
+                    </div>
+                    <div class="overlay-row overlay-row--recent" role="list">
+                      <div class="overlay-card overlay-card--recent" role="listitem">
+                        <div class="overlay-card__thumb" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            />
+                          </svg>
+                        </div>
+                        <div class="overlay-card__body">
+                          <p class="overlay-card__title">Buy 2BHK under 3 Cr</p>
+                          <p class="overlay-card__meta">
+                            <span class="overlay-card__highlight">5 new this week</span>
+                            <span class="overlay-card__sep" aria-hidden="true">·</span>
+                            <span class="overlay-card__muted">Malviya Nagar</span>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="overlay-card overlay-card--recent" role="listitem">
+                        <div class="overlay-card__thumb" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            />
+                          </svg>
+                        </div>
+                        <div class="overlay-card__body">
+                          <p class="overlay-card__title">Buy in Bandra West</p>
+                          <p class="overlay-card__meta">
+                            <span class="overlay-card__highlight">3 new this week</span>
+                            <span class="overlay-card__sep" aria-hidden="true">·</span>
+                            <span class="overlay-card__muted">Bandra West</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="overlay-section" aria-labelledby="overlay-heading-localities">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path d="M232,56v64L168,56Z" opacity="0.2"></path>
+                          <path
+                            d="M232,48H168a8,8,0,0,0-5.66,13.66L188.69,88,136,140.69l-34.34-34.35a8,8,0,0,0-11.32,0l-72,72a8,8,0,0,0,11.32,11.32L96,123.31l34.34,34.35a8,8,0,0,0,11.32,0L200,99.31l26.34,26.35A8,8,0,0,0,240,120V56A8,8,0,0,0,232,48Zm-8,52.69L187.31,64H224Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-localities" class="overlay-section__title">Popular localities</h2>
+                    </div>
+                    <div class="overlay-row overlay-row--localities" role="list">
+                      <div class="overlay-card overlay-card--locality" role="listitem">
+                        <p class="overlay-card__title overlay-card__title--solo">Kharadishdal</p>
+                        <p class="overlay-card__sub">₹30.2K/sq.ft.</p>
+                      </div>
+                      <div class="overlay-card overlay-card--locality" role="listitem">
+                        <p class="overlay-card__title overlay-card__title--solo">Malviya Nagar</p>
+                        <p class="overlay-card__sub">₹28.4K/sq.ft.</p>
+                      </div>
+                      <div class="overlay-card overlay-card--locality" role="listitem">
+                        <p class="overlay-card__title overlay-card__title--solo">Panchshil Park</p>
+                        <p class="overlay-card__sub">₹32.1K/sq.ft.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="overlay-section" aria-labelledby="overlay-heading-landmarks">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M229.06,108.79l-48.7,42,14.88,62.79a8.4,8.4,0,0,1-12.52,9.17L128,189.09,73.28,222.74a8.4,8.4,0,0,1-12.52-9.17l14.88-62.79-48.7-42A8.46,8.46,0,0,1,31.73,94L95.64,88.8l24.62-59.6a8.36,8.36,0,0,1,15.48,0l24.62,59.6L224.27,94A8.46,8.46,0,0,1,229.06,108.79Z"
+                            opacity="0.2"
+                          ></path>
+                          <path
+                            d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-landmarks" class="overlay-section__title">Popular landmarks</h2>
+                    </div>
+                    <div class="overlay-chips" role="list">
+                      <div class="overlay-chip" role="listitem">
+                        <span class="overlay-chip__icon-slot" aria-hidden="true"></span>
+                        <span>Hard Rock Cafe</span>
+                      </div>
+                      <div class="overlay-chip" role="listitem">
+                        <span class="overlay-chip__icon-slot" aria-hidden="true"></span>
+                        <span>Amity Law School</span>
+                      </div>
+                      <div class="overlay-chip" role="listitem">
+                        <span class="overlay-chip__icon-slot" aria-hidden="true"></span>
+                        <span>Millenium Metro Station</span>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="overlay-section" aria-labelledby="overlay-heading-projects">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M136,32V216H40V85.35a8,8,0,0,1,3.56-6.66l80-53.33A8,8,0,0,1,136,32Z"
+                            opacity="0.2"
+                          ></path>
+                          <path
+                            d="M240,208H224V96a16,16,0,0,0-16-16H144V32a16,16,0,0,0-24.88-13.32L39.12,72A16,16,0,0,0,32,85.34V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM208,96V208H144V96ZM48,85.34,128,32V208H48ZM112,112v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm-32,0v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm0,56v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Zm32,0v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-projects" class="overlay-section__title">Trending projects</h2>
+                    </div>
+                    <div class="overlay-row overlay-row--projects" role="list">
+                      <div class="overlay-card overlay-card--project" role="listitem">
+                        <p class="overlay-card__title">Anantraj Mansion Li…</p>
+                        <hr class="overlay-card__rule" aria-hidden="true" />
+                        <p class="overlay-card__meta overlay-card__meta--project">
+                          <span class="overlay-card__muted">Panchshil Park</span>
+                          <span class="overlay-card__sep" aria-hidden="true">·</span>
+                          <span class="overlay-card__muted">₹30.2K/sq.ft.</span>
+                        </p>
+                      </div>
+                      <div class="overlay-card overlay-card--project" role="listitem">
+                        <p class="overlay-card__title">Skyline Residency</p>
+                        <hr class="overlay-card__rule" aria-hidden="true" />
+                        <p class="overlay-card__meta overlay-card__meta--project">
+                          <span class="overlay-card__muted">Kharadi</span>
+                          <span class="overlay-card__sep" aria-hidden="true">·</span>
+                          <span class="overlay-card__muted">₹27.8K/sq.ft.</span>
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <button type="button" class="overlay-nearby">
+                    <span class="overlay-nearby__icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                        <path
+                          d="M234.35,129,152,152,129,234.35a8,8,0,0,1-15.21.27l-65.28-176A8,8,0,0,1,58.63,48.46l176,65.28A8,8,0,0,1,234.35,129Z"
+                          opacity="0.2"
+                        />
+                        <path
+                          d="M237.33,106.21,61.41,41l-.16-.05A16,16,0,0,0,40.9,61.25a1,1,0,0,0,.05.16l65.26,175.92A15.77,15.77,0,0,0,121.28,248h.3a15.77,15.77,0,0,0,15-11.29l.06-.2,21.84-78,78-21.84.2-.06a16,16,0,0,0,.62-30.38ZM149.84,144.3a8,8,0,0,0-5.54,5.54L121.3,232l-.06-.17L56,56l175.82,65.22.16.06Z"
+                        />
+                      </svg>
+                    </span>
+                    <span class="overlay-nearby__label">Explore nearby properties</span>
+                    <svg class="overlay-nearby__chev" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                      <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" />
+                    </svg>
+                  </button>
+                </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share property sheet -->
+    <div
+      class="pdp-share-sheet"
+      id="pdp-share-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pdp-share-sheet-title"
+      hidden
+    >
+      <button type="button" class="pdp-share-sheet__scrim" id="pdp-share-sheet-scrim" aria-label="Close share"></button>
+      <div class="pdp-share-sheet__panel">
+        <div class="pdp-share-sheet__head">
+          <h2 class="pdp-share-sheet__title" id="pdp-share-sheet-title">Share this property</h2>
+          <button type="button" class="pdp-share-sheet__close" id="pdp-share-sheet-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+              <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" />
+            </svg>
+          </button>
+        </div>
+        <div class="pdp-share-sheet__preview">
+          <img
+            class="pdp-share-sheet__thumb"
+            id="pdp-share-sheet-thumb"
+            src="/pdp-gallery/1.png"
+            width="72"
+            height="72"
+            alt=""
+            decoding="async"
+          />
+          <div class="pdp-share-sheet__preview-text">
+            <p class="pdp-share-sheet__prop-title" id="pdp-share-sheet-prop-title">Emaar MGF The Palm Drive</p>
+            <p class="pdp-share-sheet__prop-meta" id="pdp-share-sheet-prop-meta">
+              <span id="pdp-share-sheet-prop-loc">Sector 66, Gurgaon</span>
+              <span class="pdp-share-sheet__prop-sep" aria-hidden="true"> · </span>
+              <a href="#" class="pdp-share-sheet__prop-dev" id="pdp-share-sheet-prop-dev">By EMAAR INDIA</a>
+            </p>
+          </div>
+        </div>
+        <div class="pdp-share-sheet__grid" role="group" aria-label="Share via">
+          <button type="button" class="pdp-share-sheet__opt" data-share-action="copy">
+            <span class="pdp-share-sheet__opt-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M216,40H88A16,16,0,0,0,72,56V80H40A16,16,0,0,0,24,96V200a16,16,0,0,0,16,16H168a16,16,0,0,0,16-16V176h32a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H168V96a16,16,0,0,0-16-16H88V56H216ZM168,200H40V96H168Z" />
+              </svg>
+            </span>
+            <span class="pdp-share-sheet__opt-label">Copy link</span>
+          </button>
+          <button type="button" class="pdp-share-sheet__opt" data-share-action="email">
+            <span class="pdp-share-sheet__opt-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z" />
+              </svg>
+            </span>
+            <span class="pdp-share-sheet__opt-label">Email</span>
+          </button>
+          <button type="button" class="pdp-share-sheet__opt" data-share-action="whatsapp">
+            <span class="pdp-share-sheet__opt-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M187.58,144.84l-32.87,12.52a8,8,0,0,1-9.93-4L138,117.64a8,8,0,0,1,1.86-8.62l18.22-15.08a96,96,0,0,0-36.38-36.38L105.64,79.78a8,8,0,0,1-8.62,1.86l-35.68-6.78a8,8,0,0,1-6.18-8.27A48.05,48.05,0,0,1,79.08,28a8,8,0,0,1,7.52,2.26l42,42a8,8,0,0,1,0,11.32L115.6,97.19a104.05,104.05,0,0,0,43.21,43.21l13.61-13.61a8,8,0,0,1,11.32,0l42,42A48.05,48.05,0,0,1,195.85,151a8,8,0,0,1-8.27-6.18Z" />
+              </svg>
+            </span>
+            <span class="pdp-share-sheet__opt-label">WhatsApp</span>
+          </button>
+          <button type="button" class="pdp-share-sheet__opt" data-share-action="messenger">
+            <span class="pdp-share-sheet__opt-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm48.93,88.39-32,32a8,8,0,0,1-11.31,0L112,123.31,91.31,144a8,8,0,0,1-11.31-11.31l32-32a8,8,0,0,1,11.31,0L144,132.69l20.69-20.69a8,8,0,0,1,11.31,11.31Z" />
+              </svg>
+            </span>
+            <span class="pdp-share-sheet__opt-label">Messenger</span>
+          </button>
+          <button type="button" class="pdp-share-sheet__opt" data-share-action="twitter">
+            <span class="pdp-share-sheet__opt-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,0,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z" />
+              </svg>
+            </span>
+            <span class="pdp-share-sheet__opt-label">Twitter</span>
+          </button>
+          <button type="button" class="pdp-share-sheet__opt" data-share-action="facebook">
+            <span class="pdp-share-sheet__opt-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M232,128a104.16,104.16,0,0,1-92.22,103.26,8,8,0,0,1-9.78-7.8V152h24a8,8,0,0,0,8-8.53,8.17,8.17,0,0,0-8.25-7.47H130v-28a24,24,0,0,1,24-24h16a8,8,0,0,0,8-8.53,8.17,8.17,0,0,0-8.27-7.47H154a40,40,0,0,0-40,40v28H96a8,8,0,0,0-8,8.53,8.17,8.17,0,0,0,8.27,7.47H114v71.47a8,8,0,0,1-9.78,7.8A104.16,104.16,0,1,1,232,128Z" />
+              </svg>
+            </span>
+            <span class="pdp-share-sheet__opt-label">Facebook</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive EMI Calculator Modal -->
+    <div class="pdp-modal-overlay" id="pdp-emi-modal" role="dialog" aria-modal="true" aria-labelledby="pdp-emi-modal-title" hidden>
+      <div class="pdp-modal-card">
+        <div class="pdp-modal-header">
+          <h2 class="pdp-modal-title" id="pdp-emi-modal-title">Smart EMI Payment Breakup</h2>
+          <button type="button" class="pdp-modal-close" id="pdp-emi-modal-close" aria-label="Close modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+              <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="pdp-modal-body">
+          <div class="emi-calc">
+            <!-- Property selector tabs inside calculator -->
+            <div class="emi-calc__group">
+              <div class="emi-calc__label-row">
+                <span class="emi-calc__label">Select Configuration</span>
+              </div>
+              <div class="pdp-floorplans__tabs" role="tablist" style="margin-block-end: var(--space-4);" aria-label="EMI configurations">
+                <button type="button" class="pdp-floorplans__tab pdp-floorplans__tab--active" id="emi-tab-3bhk" role="tab" aria-selected="true" data-price="14000000" data-label="3 BHK Apartment (₹1.4 Cr)">3 BHK</button>
+                <button type="button" class="pdp-floorplans__tab" id="emi-tab-4bhk" role="tab" aria-selected="false" data-price="21000000" data-label="4 BHK Apartment (₹2.1 Cr)">4 BHK</button>
+              </div>
+            </div>
+
+            <!-- Down payment slider -->
+            <div class="emi-calc__group">
+              <div class="emi-calc__label-row">
+                <label for="emi-slider-downpayment" class="emi-calc__label">Down Payment</label>
+                <span class="emi-calc__value" id="emi-val-downpayment">₹28.0 Lakh (20%)</span>
+              </div>
+              <input type="range" id="emi-slider-downpayment" class="emi-calc__slider" min="10" max="50" step="5" value="20" aria-valuemin="10" aria-valuemax="50" aria-valuenow="20" />
+            </div>
+
+            <!-- Loan tenure slider -->
+            <div class="emi-calc__group">
+              <div class="emi-calc__label-row">
+                <label for="emi-slider-tenure" class="emi-calc__label">Loan Tenure</label>
+                <span class="emi-calc__value" id="emi-val-tenure">30 Years</span>
+              </div>
+              <input type="range" id="emi-slider-tenure" class="emi-calc__slider" min="5" max="30" step="5" value="30" aria-valuemin="5" aria-valuemax="30" aria-valuenow="30" />
+            </div>
+
+            <!-- Interest rate slider -->
+            <div class="emi-calc__group">
+              <div class="emi-calc__label-row">
+                <label for="emi-slider-interest" class="emi-calc__label">Interest Rate</label>
+                <span class="emi-calc__value" id="emi-val-interest">7.5%</span>
+              </div>
+              <input type="range" id="emi-slider-interest" class="emi-calc__slider" min="6" max="12" step="0.1" value="7.5" aria-valuemin="6" aria-valuemax="12" aria-valuenow="7.5" />
+            </div>
+
+            <!-- Dynamic Result block -->
+            <div class="emi-calc__result-box">
+              <p class="emi-calc__result-label">Calculated Monthly EMI</p>
+              <p class="emi-calc__result-value" id="emi-calc-monthly">₹78.3 K/mo</p>
+              <p class="emi-calc__result-breakdown" id="emi-calc-summary">
+                Principal Loan Amount: <strong>₹1.12 Cr</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shortlist confirmation toast -->
+    <div
+      class="pdp-shortlist-toast"
+      id="pdp-shortlist-toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-hidden="true"
+      hidden
+    >
+      <div class="pdp-shortlist-toast__inner">
+        <span class="pdp-shortlist-toast__heart" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" aria-hidden="true">
+            <path
+              fill="#e11d48"
+              d="M240,102a62.12,62.12,0,0,0-65.58-62c-28.31,0-46.42,24-46.42,24s-18.11-24-46.42-24A62.12,62.12,0,0,0,16,102c0,77.2,55.23,111.7,112,156C184.77,213.7,240,179.2,240,102Z"
+            />
+          </svg>
+        </span>
+        <span class="pdp-shortlist-toast__text">You've shortlisted this property</span>
+        <span class="pdp-shortlist-toast__rule" aria-hidden="true"></span>
+        <button type="button" class="pdp-shortlist-toast__dismiss" id="pdp-shortlist-toast-dismiss" aria-label="Dismiss notification">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+            <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

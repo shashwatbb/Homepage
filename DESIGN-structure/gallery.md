@@ -1,0 +1,571 @@
+# Structure: Gallery
+
+- **Gallery / Android** · `SECTION` · 2112×2872 · 8 children
+  - **PDP** · `FRAME` · 373×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 64×22 · vertical stack, gap 4px · 1 children
+      - **Gallery** · `TEXT` · 64×22 · “Gallery”
+  - **PDP** · `FRAME` · 373×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 38×22 · vertical stack, gap 4px · 1 children
+      - **Grid** · `TEXT` · 38×22 · “Grid”
+  - **PDP** · `FRAME` · 373×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 33×22 · vertical stack, gap 4px · 1 children
+      - **List** · `TEXT` · 33×22 · “List”
+  - **PDP** · `FRAME` · 373×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 193×22 · vertical stack, gap 4px · 1 children
+      - **Property suggestions** · `TEXT` · 193×22 · “Property suggestions”
+  - **Gallery / Contact seller** · `COMPONENT` · 362×800 · vertical stack · 3 children
+    - **Frame 2087324911** · `FRAME` · 362×48 · horizontal row, gap 16px, padding 12/16/12/16px · 3 children
+      - **ArrowLeft** · `INSTANCE` · 24×24 · instance of ArrowLeft
+      - **Frame 2036** · `FRAME` · 290×16 · horizontal row, gap 16px · 5 children
+        - **Highlight** · `TEXT` · 73×16 · “Living Room”
+        - **Amenities** · `TEXT` · 52×16 · “Bedroom”
+        - **Amenities** · `TEXT` · 43×16 · “Kitchen”
+        - **Amenities** · `TEXT` · 62×16 · “Bathrooms”
+        - **Tour** · `TEXT` · 85×16 · “Contact Seller”
+      - **Rectangle** · `RECTANGLE` · 85×3
+    - **1** · `FRAME` · 360×73 · horizontal row, gap 12px, padding 0/16/0/16px · 3 children
+      - **Button** · `FRAME` · 75×40 · horizontal row, gap 4px, padding 12/13/12/13px · 2 children
+        - **whatsapp** · `INSTANCE` · 16×16 · instance of whatsapp
+        - **Paragraph** · `FRAME` · 29×16 · 1 children
+          - **Chat** · `TEXT` · 29×16 · “Chat”
+      - **button** · `INSTANCE` · 115×40 · horizontal row · instance of button
+      - **.demand_primary** · `INSTANCE` · 115×40 · horizontal row, gap 4px, padding 8/12/8/12px · instance of .demand_primary
+    - **Frame 2087324919** · `FRAME` · 362×635 · vertical stack, gap 16px · 2 children
+      - **Frame 2087324918** · `FRAME` · 362×104 · vertical stack, gap 10px, padding 0/16/0/16px · 1 children
+        - **Rectangle 6159** · `RECTANGLE` · 330×104
+      - **Frame 2087324917** · `FRAME` · 362×515 · horizontal row, gap 10px, padding 0/16/0/16px · 1 children
+        - **Details** · `INSTANCE` · 330×515 · vertical stack, gap 32px · instance of Details
+  - **Gallery - property suggetion** · `FRAME` · 360×781 · 1 children
+    - **Frame 2087324954** · `FRAME` · 360×877 · vertical stack · 3 children
+      - **Frame 2034** · `FRAME` · 360×440 · vertical stack, gap 16px · 2 children
+        - **Frame 2036** · `FRAME` · 316×352 · vertical stack, gap 16px · 2 children
+          - **title** · `TEXT` · 316×20 · “Balcony”
+          - **Frame 2029** · `FRAME` · 316×316 · horizontal row, gap 8px · 7 children
+            - **Rectangle 6084** · `RECTANGLE` · 100×100
+            - **Rectangle 6085** · `RECTANGLE` · 100×100
+            - **Rectangle 6086** · `RECTANGLE` · 100×100
+            - **Rectangle 6087** · `RECTANGLE` · 100×100
+            - **Rectangle 6088** · `RECTANGLE` · 100×100
+            - **Rectangle 6089** · `RECTANGLE` · 100×100
+            - **Rectangle 6090** · `RECTANGLE` · 100×100
+        - **Frame 2039** · `FRAME` · 360×72 · vertical stack, gap 10px, padding 16px · 1 children
+          - **Frame 2034** · `FRAME` · 328×40 · horizontal row, gap 8px · 3 children
+            - **button** · `FRAME` · 75×40 · horizontal row, gap 8px · 1 children
+              - **.demand_secondary** · `FRAME` · 75×40 · horizontal row, gap 4px, padding 8/12/8/12px · 2 children
+                - **Whatsapp** · `FRAME` · 14×14
+                  - _…and 1 more_
+                - **Label** · `TEXT` · 33×16 · “Chat”
+            - **button** · `FRAME` · 103×40 · horizontal row, gap 8px · 1 children
+              - **.demand_secondary** · `FRAME` · 103×40 · horizontal row, gap 4px, padding 8/12/8/12px · 3 children
+                - **Call** · `INSTANCE` · 14×14 · instance of Call
+                - **Label** · `TEXT` · 79×16 · “View Phone”
+                - **ChevronRight** · `INSTANCE` · 14×14 · instance of ChevronRight
+            - **button** · `INSTANCE` · 134×40 · horizontal row, gap 8px · instance of button
+      - **Frame 2039** · `FRAME` · 360×437 · vertical stack, gap 16px, padding 16/24/24/24px · 5 children
+        - **Frame 2087324940** · `FRAME` · 312×40 · vertical stack, gap 8px · 2 children
+          - **Frame 2087324951** · `FRAME` · 312×12 · horizontal row, gap 4px · 2 children
+            - **thumbsUp** · `INSTANCE` · 16×16 · instance of thumbsUp
+            - **title** · `TEXT` · 154×12 · “You have viewed all 15 photos”
+          - **title** · `TEXT` · 312×20 · “Properties matches your preference”
+        - **Frame 2087324817** · `FRAME` · 249×365 · horizontal row, gap 16px · 1 children
+          - **Frame 2087324813** · `FRAME` · 249×365 · vertical stack, gap 12px, padding 12px · 3 children
+            - **Frame 2087324852** · `FRAME` · 225×169 · vertical stack, gap 128px · 1 children
+              - **Frame 14** · `FRAME` · 225×32 · horizontal row, gap 66px, padding 8px · 2 children
+                - **Tags** · `INSTANCE` · 52×16 · horizontal row · instance of Tags
+                - **Frame 11** · `FRAME` · 16×16 · vertical stack, gap 10px, padding 1/0/1/0px
+                  - _…and 1 more_
+            - **Frame 2087324812** · `FRAME` · 225×108 · vertical stack, gap 12px · 3 children
+              - **Pay 10% now and rest** · `TEXT` · 128×12 · “Possession by Dec, 2026”
+              - **Frame 2087324809** · `FRAME` · 225×36 · vertical stack, gap 4px · 2 children
+                - **2,3,4 BHK Sector 91,** · `TEXT` · 225×16 · “DLF The Belaire”
+                - **mktd by Godrej Realt** · `TEXT` · 225×16 · “Sadhu Vaswani Road, East Kharadi, Pune”
+              - **Frame 2087324811** · `FRAME` · 225×36 · vertical stack, gap 4px · 2 children
+                - **mktd by Godrej Realt** · `TEXT` · 225×16 · “₹1.56 Cr - ₹2.52 Cr”
+                - **Frame 2087324810** · `FRAME` · 225×16 · horizontal row
+                  - _…and 3 more_
+            - **Frame 2087324603** · `FRAME` · 225×40 · horizontal row, gap 8px · 2 children
+              - **Group 1000004324** · `FRAME` · 40×40 · horizontal row · 1 children
+                - **Group 1000004320** · `GROUP` · 40×40
+                  - _…and 1 more_
+              - **button** · `INSTANCE` · 177×40 · horizontal row · instance of button
+        - **Property recommendation on gallery** · `INSTANCE` · 312×103 · instance of Property recommendation on gallery · ×3
+      - **Frame 2087324953** · `FRAME` · 360×128 · vertical stack · 2 children
+        - **Status bar** · `INSTANCE` · 360×40 · horizontal row · instance of Status bar
+        - **Frame 2035** · `FRAME` · 360×88 · vertical stack · 2 children
+          - **Frame 2** · `FRAME` · 360×56 · horizontal row, gap 16px, padding 16/24/16/16px · 2 children
+            - **Frame 1000004438** · `FRAME` · 146×24 · horizontal row, gap 8px · 2 children
+              - **ArrowLeft** · `INSTANCE` · 24×24 · instance of ArrowLeft
+              - **Smart Deals** · `TEXT` · 114×20 · “Images Gallery”
+            - **Frame 1000004305** · `FRAME` · 136×24 · horizontal row, gap 16px · 3 children
+              - **Mask group** · `GROUP` · 24×24 · 2 children
+                - **Rectangle 6079** · `RECTANGLE` · 24×24
+                - **share icon** · `GROUP` · 16×16
+                  - _…and 5 more_
+              - **Mask group** · `GROUP` · 24×24 · 2 children
+                - **Rectangle 6078** · `RECTANGLE` · 24×24
+                - **Group 1000004283** · `GROUP` · 16×14
+                  - _…and 1 more_
+              - **ViewToggle** · `FRAME` · 56×24 · 4 children
+                - **Rectangle 6091** · `RECTANGLE` · 56×24
+                - **Rectangle 6092** · `RECTANGLE` · 28×24
+                - **Mask group** · `GROUP` · 12×12
+                  - _…and 2 more_
+                - **Group 1000004538** · `GROUP` · 12×12
+                  - _…and 1 more_
+          - **Frame 2087324952** · `FRAME` · 356×32 · vertical stack, gap 5px · 2 children
+            - **Frame 2027** · `FRAME` · 356×24 · vertical stack, gap 8px, padding 8/13/0/0px · 1 children
+              - **Group 2** · `GROUP` · 343×16 · 1 children
+                - **Frame 2036** · `FRAME` · 343×16 · horizontal row, gap 16px
+                  - _…and 5 more_
+            - **Rectangle** · `RECTANGLE` · 73×3
+  - **list view** · `COMPONENT` · 390×2543 · vertical stack · 13 children
+    - **Top Bar** · `FRAME` · 390×61 · horizontal row, gap 143.8984375px, padding 0/24/0/20px · 2 children
+      - **Left** · `FRAME` · 128×24 · horizontal row, gap 12px · 2 children
+        - **Back** · `FRAME` · 24×24 · horizontal row · 1 children
+          - **BackIcon** · `FRAME` · 24×24 · horizontal row · 1 children
+            - **Icon** · `FRAME` · 16×14 · 1 children
+              - **Group 1000004307** · `GROUP` · 14×12 · 3 children
+                - **Vector 794** · `VECTOR` · 6×6
+                - **Vector 795** · `VECTOR` · 6×6
+                - **Vector 795_2** · `VECTOR` · 14×0
+        - **Title** · `FRAME` · 92×24 · horizontal row, gap 10px · 1 children
+          - **Image Gallery** · `TEXT` · 92×16 · “Image Gallery”
+      - **Right** · `FRAME` · 148×24 · horizontal row, gap 24px · 3 children
+        - **Mask group** · `GROUP` · 24×24 · 2 children
+          - **Rectangle 6079** · `RECTANGLE` · 24×24
+          - **share icon** · `GROUP` · 16×16 · 5 children
+            - **Line 4** · `VECTOR` · 7×4
+            - **Line 5** · `VECTOR` · 7×4
+            - **Oval** · `ELLIPSE` · 5×5
+            - **Oval Copy** · `ELLIPSE` · 5×5
+            - **Oval Copy 2** · `ELLIPSE` · 5×5
+        - **Mask group** · `GROUP` · 24×24 · 2 children
+          - **Rectangle 6078** · `RECTANGLE` · 24×24
+          - **Group 1000004283** · `GROUP` · 16×14 · 1 children
+            - **Vector** · `VECTOR` · 16×14
+        - **Frame 2087324897** · `FRAME` · 52×24 · horizontal row, gap 4px · 2 children
+          - **ImageSquare** · `FRAME` · 24×24 · 1 children
+            - **Vector** · `VECTOR` · 12×12
+          - **SquaresFour** · `FRAME` · 24×24 · 1 children
+            - **Vector** · `VECTOR` · 12×12
+    - **Collections Nav** · `FRAME` · 390×160 · horizontal row, gap 16px, padding 24px · 7 children
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Frame 2087324903** · `FRAME` · 88×88 · 2 children
+          - **Room Image** · `RECTANGLE` · 80×80
+          - **Rectangle 6103** · `RECTANGLE` · 89×89
+        - **Room Name** · `TEXT` · 88×16 · “Project Stories”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Frame 2087324902** · `FRAME` · 88×88 · horizontal row, gap 10px, padding 28px · 1 children
+          - **Group 1000004544** · `GROUP` · 32×32 · 2 children
+            - **Oval** · `ELLIPSE` · 32×32
+            - **Path** · `VECTOR` · 12×15
+        - **Room Name** · `TEXT` · 88×16 · “Videos”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Living Room”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Rectangle 6080** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Bedroom”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Kitchen”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Bathroom”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Project Images”
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children · ×2
+      - **Divider** · `VECTOR` · 342×0
+    - **Frame 2087324922** · `FRAME` · 390×517 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Project Story”
+      - **Image** · `FRAME` · 342×433 · vertical stack, gap 10px · 1 children
+        - **Container** · `GROUP` · 342×48 · 1 children
+          - **Container** · `GROUP` · 342×48 · 1 children
+            - **Container** · `FRAME` · 342×48 · vertical stack, gap 10px, padding 8px · 1 children
+              - **Container** · `FRAME` · 72×32 · horizontal row, gap 8px · 2 children
+                - **Share Button** · `GROUP` · 32×32 · ×2
+                  - _…and 1 more_
+    - **Frame 2087324923** · `FRAME` · 390×309 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Videos”
+      - **Frame 2029** · `FRAME` · 342×225 · vertical stack, gap 18px · 3 children
+        - **Group 1000004309** · `GROUP` · 342×48 · 1 children
+          - **Frame 1000002619** · `FRAME` · 342×48 · vertical stack, gap 10px, padding 8px · 1 children
+            - **Group 1000002618** · `GROUP` · 299×32 · 1 children
+              - **Frame 2087324905** · `FRAME` · 299×32 · horizontal row, gap 4px · 2 children
+                - **Group 1000002623** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **Frame 2087324904** · `FRAME` · 263×32 · vertical stack, gap 4px
+                  - _…and 2 more_
+        - **image 2** · `RECTANGLE` · 92×92
+        - **Frame 2087324906** · `FRAME` · 342×32 · horizontal row, gap 139px, padding 4/8/4/8px · 2 children
+          - **Share Button** · `GROUP` · 24×24 · 1 children
+            - **Share Button** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 1148** · `RECTANGLE` · 24×24
+              - **Group 1000004286** · `GROUP` · 18×18 · 1 children
+                - **Group 1000004305** · `GROUP` · 18×18
+                  - _…and 1 more_
+          - **Group 1000004306** · `GROUP` · 137×16 · 2 children
+            - **image 108** · `RECTANGLE` · 72×16
+            - **Watch on** · `TEXT` · 61×16 · “Watch on”
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Room Container** · `FRAME` · 390×884 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Living Room”
+      - **Frame 2087324925** · `FRAME` · 342×800 · vertical stack, gap 16px · 3 children
+        - **Frame 2087324923** · `FRAME` · 342×256 · vertical stack, gap 10px · 1 children
+          - **Frame 2087324922** · `FRAME` · 342×32 · horizontal row, gap 43px, padding 8px · 2 children
+            - **Tags** · `INSTANCE` · 80×16 · horizontal row · instance of Tags
+            - **Tags** · `INSTANCE` · 64×16 · horizontal row · instance of Tags
+        - **Frame 2087324924** · `FRAME` · 342×256 · vertical stack, gap 10px · 1 children
+          - **Frame 2087324923** · `FRAME` · 342×32 · horizontal row, gap 43px, padding 8px · 2 children
+            - **Tags** · `INSTANCE` · 80×16 · horizontal row · instance of Tags
+            - **Tags** · `INSTANCE` · 64×16 · horizontal row · instance of Tags
+        - **Frame 2087324926** · `FRAME` · 342×256 · vertical stack, gap 10px · 1 children
+          - **Frame 2087324924** · `FRAME` · 342×32 · horizontal row, gap 43px, padding 8px · 2 children
+            - **Tags** · `INSTANCE` · 80×16 · horizontal row · instance of Tags
+            - **Tags** · `INSTANCE` · 64×16 · horizontal row · instance of Tags
+    - **Room Container** · `FRAME` · 390×612 · vertical stack, gap 16px, padding 24px · 3 children
+      - **title** · `TEXT` · 342×20 · “Bedrooms”
+      - **Frame 2087324925** · `FRAME` · 342×256 · vertical stack, gap 16px · 1 children
+        - **Frame 2087324927** · `FRAME` · 342×256 · vertical stack, gap 10px · 1 children
+          - **Frame 2087324925** · `FRAME` · 342×32 · horizontal row, gap 43px, padding 8px · 2 children
+            - **Tags** · `INSTANCE` · 80×16 · horizontal row · instance of Tags
+            - **Tags** · `INSTANCE` · 64×16 · horizontal row · instance of Tags
+      - **Frame 2087324928** · `FRAME` · 342×256 · vertical stack, gap 10px · 1 children
+        - **Frame 2087324925** · `FRAME` · 342×32 · horizontal row, gap 43px, padding 8px · 2 children
+          - **Tags** · `INSTANCE` · 80×16 · horizontal row · instance of Tags
+          - **Tags** · `INSTANCE` · 64×16 · horizontal row · instance of Tags
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children · ×4
+      - **Divider** · `VECTOR` · 342×0
+  - **Android / Gallery / Grid view** · `COMPONENT` · 390×2434 · vertical stack · 17 children
+    - **Top Bar** · `FRAME` · 390×61 · horizontal row, gap 143.8984375px, padding 0/24/0/20px · 2 children
+      - **Left** · `FRAME` · 128×24 · horizontal row, gap 12px · 2 children
+        - **Back** · `FRAME` · 24×24 · horizontal row · 1 children
+          - **BackIcon** · `FRAME` · 24×24 · horizontal row · 1 children
+            - **Icon** · `FRAME` · 16×14 · 1 children
+              - **Group 1000004307** · `GROUP` · 14×12 · 3 children
+                - **Vector 794** · `VECTOR` · 6×6
+                - **Vector 795** · `VECTOR` · 6×6
+                - **Vector 795_2** · `VECTOR` · 14×0
+        - **Title** · `FRAME` · 92×24 · horizontal row, gap 10px · 1 children
+          - **Image Gallery** · `TEXT` · 92×16 · “Image Gallery”
+      - **Right** · `FRAME` · 148×24 · horizontal row, gap 24px · 3 children
+        - **Mask group** · `GROUP` · 24×24 · 2 children
+          - **Rectangle 6079** · `RECTANGLE` · 24×24
+          - **share icon** · `GROUP` · 16×16 · 5 children
+            - **Line 4** · `VECTOR` · 7×4
+            - **Line 5** · `VECTOR` · 7×4
+            - **Oval** · `ELLIPSE` · 5×5
+            - **Oval Copy** · `ELLIPSE` · 5×5
+            - **Oval Copy 2** · `ELLIPSE` · 5×5
+        - **Mask group** · `GROUP` · 24×24 · 2 children
+          - **Rectangle 6078** · `RECTANGLE` · 24×24
+          - **Group 1000004283** · `GROUP` · 16×14 · 1 children
+            - **Vector** · `VECTOR` · 16×14
+        - **Frame 2087324897** · `FRAME` · 52×24 · horizontal row, gap 4px · 2 children
+          - **ImageSquare** · `FRAME` · 24×24 · 1 children
+            - **Vector** · `VECTOR` · 12×12
+          - **SquaresFour** · `FRAME` · 24×24 · 1 children
+            - **Vector** · `VECTOR` · 12×12
+    - **Collections Nav** · `FRAME` · 390×160 · horizontal row, gap 16px, padding 24px · 7 children
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Frame 2087324903** · `FRAME` · 88×88 · 2 children
+          - **Room Image** · `RECTANGLE` · 80×80
+          - **Rectangle 6103** · `RECTANGLE` · 89×89
+        - **Room Name** · `TEXT` · 88×16 · “Project Stories”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Frame 2087324902** · `FRAME` · 88×88 · horizontal row, gap 10px, padding 28px · 1 children
+          - **Group 1000004544** · `GROUP` · 32×32 · 2 children
+            - **Oval** · `ELLIPSE` · 32×32
+            - **Path** · `VECTOR` · 12×15
+        - **Room Name** · `TEXT` · 88×16 · “Videos”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Living Room”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Rectangle 6080** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Bedroom”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Kitchen”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Bathroom”
+      - **Room Info** · `FRAME` · 88×112 · vertical stack, gap 8px · 2 children
+        - **Room Image** · `RECTANGLE` · 88×88
+        - **Room Name** · `TEXT` · 88×16 · “Project Images”
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Frame 2087324922** · `FRAME` · 390×517 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Project Story”
+      - **Image** · `FRAME` · 342×433 · vertical stack, gap 10px · 1 children
+        - **Container** · `GROUP` · 342×48 · 1 children
+          - **Container** · `GROUP` · 342×48 · 1 children
+            - **Container** · `FRAME` · 342×48 · vertical stack, gap 10px, padding 8px · 1 children
+              - **Container** · `FRAME` · 72×32 · horizontal row, gap 8px · 2 children
+                - **Share Button** · `GROUP` · 32×32 · ×2
+                  - _…and 1 more_
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Frame 2087324923** · `FRAME` · 390×309 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Videos”
+      - **Frame 2029** · `FRAME` · 342×225 · vertical stack, gap 18px · 3 children
+        - **Group 1000004309** · `GROUP` · 342×48 · 1 children
+          - **Frame 1000002619** · `FRAME` · 342×48 · vertical stack, gap 10px, padding 8px · 1 children
+            - **Group 1000002618** · `GROUP` · 299×32 · 1 children
+              - **Frame 2087324905** · `FRAME` · 299×32 · horizontal row, gap 4px · 2 children
+                - **Group 1000002623** · `GROUP` · 32×32
+                  - _…and 1 more_
+                - **Frame 2087324904** · `FRAME` · 263×32 · vertical stack, gap 4px
+                  - _…and 2 more_
+        - **image 2** · `RECTANGLE` · 92×92
+        - **Frame 2087324906** · `FRAME` · 342×32 · horizontal row, gap 139px, padding 4/8/4/8px · 2 children
+          - **Share Button** · `GROUP` · 24×24 · 1 children
+            - **Share Button** · `GROUP` · 24×24 · 2 children
+              - **Rectangle 1148** · `RECTANGLE` · 24×24
+              - **Group 1000004286** · `GROUP` · 18×18 · 1 children
+                - **Group 1000004305** · `GROUP` · 18×18
+                  - _…and 1 more_
+          - **Group 1000004306** · `GROUP` · 137×16 · 2 children
+            - **image 108** · `RECTANGLE` · 72×16
+            - **Watch on** · `TEXT` · 61×16 · “Watch on”
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Room Container** · `FRAME` · 390×308 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Living Room”
+      - **Image Gallery** · `FRAME` · 342×224 · vertical stack, gap 8px · 4 children
+        - **Frame 2087324900** · `FRAME` · 108×108 · horizontal row, gap 10px · 1 children
+          - **Image** · `RECTANGLE` · 108×108
+        - **Rectangle 6086** · `RECTANGLE` · 108×108
+        - **Rectangle 6083** · `RECTANGLE` · 108×108
+        - **Rectangle 6087** · `RECTANGLE` · 108×108
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Room Container** · `FRAME` · 390×192 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Bedrooms”
+      - **Image Gallery** · `FRAME` · 342×108 · vertical stack, gap 8px · 3 children
+        - **Rectangle 6080** · `RECTANGLE` · 108×108
+        - **Rectangle 6088** · `RECTANGLE` · 108×108
+        - **Rectangle 6084** · `RECTANGLE` · 108×108
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Room Container** · `FRAME` · 390×192 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Kitchen”
+      - **Image Gallery** · `FRAME` · 109×108 · vertical stack, gap 8px · 1 children
+        - **Rectangle 6084** · `RECTANGLE` · 108×108
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Room Container** · `FRAME` · 390×192 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Bathrooms”
+      - **Image Gallery** · `FRAME` · 225×108 · vertical stack, gap 8px · 2 children
+        - **Rectangle 6089** · `RECTANGLE` · 108×108
+        - **Rectangle 6085** · `RECTANGLE` · 108×108
+    - **Room Container** · `FRAME` · 390×192 · vertical stack, gap 16px, padding 24px · 2 children
+      - **title** · `TEXT` · 342×20 · “Kitchen”
+      - **Image Gallery** · `FRAME` · 109×108 · vertical stack, gap 8px · 1 children
+        - **Rectangle 6084** · `RECTANGLE` · 108×108
+    - **Divider** · `FRAME` · 390×0 · vertical stack, gap 10px, padding 0/24/0/24px · 1 children
+      - **Divider** · `VECTOR` · 342×0
+    - **Room Container** · `FRAME` · 390×311 · vertical stack, gap 16px, padding 24px · 1 children
+      - **Details** · `INSTANCE` · 342×263 · vertical stack, gap 16px · instance of Details
+- **Gallery / M-web** · `SECTION` · 1055×1134 · 2 children
+  - **mWeb-Free-Gallery** · `COMPONENT_SET` · 855×840 · 2 children
+    - **Property 1=Free-mWeb-Gallery** · `COMPONENT` · 360×800 · 3 children
+      - **Frame 2087324978** · `FRAME` · 360×2114 · vertical stack, gap 12px · 2 children
+        - **Frame 2087324975** · `FRAME` · 360×1507 · vertical stack, gap -540px · 2 children
+          - **Frame 2087324976** · `FRAME` · 360×1507 · vertical stack, gap 12px · 5 children
+            - **Group 2116** · `GROUP` · 360×549 · 6 children
+              - **ghcgd 2** · `RECTANGLE` · 360×549
+              - **Polygon 5** · `VECTOR` · 42×36
+              - **hgfhg 5** · `RECTANGLE` · 360×173
+              - **Rectangle 19** · `RECTANGLE` · 360×173
+              - **Group 1898** · `GROUP` · 116×16 · 2 children
+                - **Property Details** · `TEXT` · 97×16 · “Property Details”
+                - **Group 1895** · `GROUP` · 11×11
+                  - _…and 3 more_
+              - **3D tour badge** · `GROUP` · 179×34 · 2 children
+                - **Rectangle 3** · `VECTOR` · 179×34
+                - **Group 1576** · `GROUP` · 137×16
+                  - _…and 2 more_
+            - **img 2 copy** · `GROUP` · 360×270 · 8 children
+              - **Mask** · `RECTANGLE` · 360×270 · ×2
+              - **Object** · `GROUP` · 360×270 · 3 children
+                - **Bitmap** · `RECTANGLE` · 360×270 · ×3
+              - **Share** · `FRAME` · 64×22 · 3 children
+                - **Rectangle** · `RECTANGLE` · 64×22
+                - **Share** · `TEXT` · 32×14 · “Share”
+                - **icon/navigation/more_vert_24px copy 3** · `INSTANCE` · 12×12 · instance of icon/navigation/more_vert_24px copy 3
+              - **report image** · `FRAME` · 107×22 · 4 children
+                - **Rectangle** · `RECTANGLE` · 107×22
+                - **Report Image** · `TEXT` · 75×14 · “Report Image”
+                - **arrow-down-angle** · `GROUP` · 6×4
+                  - _…and 1 more_
+                - **warning** · `GROUP` · 12×11
+                  - _…and 3 more_
+              - **img label** · `FRAME` · 83×20
+              - **zoom out** · `GROUP` · 32×32 · 2 children
+                - **Rectangle Copy** · `RECTANGLE` · 32×32
+                - **zoom out** · `GROUP` · 14×14
+                  - _…and 2 more_
+              - **zoom in** · `GROUP` · 32×32 · 2 children
+                - **Rectangle Copy** · `RECTANGLE` · 32×32
+                - **zoom in** · `GROUP` · 13×13
+                  - _…and 2 more_
+            - **img 1** · `GROUP` · 360×200 · 5 children
+              - **Bitmap** · `RECTANGLE` · 360×200
+              - **Share** · `FRAME` · 64×22 · 3 children
+                - **Rectangle** · `RECTANGLE` · 64×22
+                - **Share** · `TEXT` · 32×14 · “Share”
+                - **icon/navigation/more_vert_24px copy 3** · `INSTANCE` · 12×12 · instance of icon/navigation/more_vert_24px copy 3
+              - **report image** · `FRAME` · 107×22 · 4 children
+                - **Rectangle** · `RECTANGLE` · 107×22
+                - **Report Image** · `TEXT` · 75×14 · “Report Image”
+                - **arrow-down-angle** · `GROUP` · 6×4
+                  - _…and 1 more_
+                - **warning** · `GROUP` · 12×11
+                  - _…and 3 more_
+              - **zoom out** · `GROUP` · 32×32 · 2 children
+                - **Rectangle Copy** · `RECTANGLE` · 32×32
+                - **zoom out** · `GROUP` · 14×14
+                  - _…and 2 more_
+              - **zoom in** · `GROUP` · 32×32 · 2 children
+                - **Rectangle Copy** · `RECTANGLE` · 32×32
+                - **zoom in** · `GROUP` · 13×13
+                  - _…and 2 more_
+            - **img 2** · `GROUP` · 360×259 · 9 children
+              - **Mask** · `RECTANGLE` · 360×259 · ×2
+              - **Bitmap** · `RECTANGLE` · 360×270
+              - **Share** · `FRAME` · 64×22 · 3 children
+                - **Rectangle** · `RECTANGLE` · 64×22
+                - **Share** · `TEXT` · 32×14 · “Share”
+                - **icon/navigation/more_vert_24px copy 3** · `INSTANCE` · 12×12 · instance of icon/navigation/more_vert_24px copy 3
+              - **report image** · `FRAME` · 107×22 · 4 children
+                - **Rectangle** · `RECTANGLE` · 107×22
+                - **Report Image** · `TEXT` · 75×14 · “Report Image”
+                - **arrow-down-angle** · `GROUP` · 6×4
+                  - _…and 1 more_
+                - **warning** · `GROUP` · 12×11
+                  - _…and 3 more_
+              - **report dd** · `FRAME` · 222×177 · 12 children
+                - **Rectangle** · `RECTANGLE` · 222×177
+                - **Select what’s wrong?** · `TEXT` · 121×12 · “Select what’s wrong?”
+                - **Not a real image Copy** · `TEXT` · 91×14 · “Not a real image”
+                - **Bad quality image** · `TEXT` · 99×14 · “Bad quality image”
+                - **check** · `GROUP` · 11×9
+                  - _…and 1 more_
+                - **Rotated image** · `TEXT` · 81×14 · “Rotated image”
+                - **Adult / offensive /** · `TEXT` · 185×14 · “Adult / offensive / violent content”
+                - **Image not visible** · `TEXT` · 94×14 · “Image not visible”
+                - **Line** · `VECTOR` · 220×1
+                - **Line Copy** · `VECTOR` · 220×1
+                - **Line Copy 2** · `VECTOR` · 220×1
+                - **Line Copy 3** · `VECTOR` · 220×1
+              - **zoom out** · `GROUP` · 32×32 · 2 children
+                - **Rectangle Copy** · `RECTANGLE` · 32×32
+                - **zoom out** · `GROUP` · 14×14
+                  - _…and 2 more_
+              - **zoom in** · `GROUP` · 32×32 · 2 children
+                - **Rectangle Copy** · `RECTANGLE` · 32×32
+                - **zoom in** · `GROUP` · 13×13
+                  - _…and 2 more_
+              - **img label** · `FRAME` · 83×20 · 2 children
+                - **Rectangle** · `RECTANGLE` · 83×20
+                - **Living Room** · `TEXT` · 67×14 · “Living Room”
+            - **img 2 copy** · `GROUP` · 360×181 · 2 children
+              - **Bitmap** · `RECTANGLE` · 360×181
+              - **img label** · `FRAME` · 83×17 · 2 children
+                - **Rectangle** · `RECTANGLE` · 83×17
+                - **Living Room** · `TEXT` · 67×14 · “Living Room”
+          - **Frame 2087324959** · `FRAME` · 360×452 · vertical stack, gap 80px, padding 100/0/48/0px · 2 children
+            - **Frame 2087324967** · `FRAME` · 264×200 · vertical stack, gap 24px · 2 children
+              - **Frame 2087324969** · `FRAME` · 264×88 · vertical stack, gap 16px · 1 children
+                - **Frame 2087324970** · `FRAME` · 264×88 · vertical stack, gap 8px
+                  - _…and 2 more_
+              - **Frame 2087324971** · `FRAME` · 264×88 · vertical stack, gap 8px · 2 children
+                - **CTA** · `FRAME` · 186×48 · horizontal row, gap 10px, padding 16/60/16/60px
+                  - _…and 1 more_
+                - **Get instant updates, connect with sellers, and a personalised experience** · `TEXT` · 264×32 · “Get instant updates, connect with sellers, and a personalised experience”
+            - **Frame 2087324968** · `FRAME` · 164×24 · horizontal row, gap 12px · 2 children
+              - **GetItOnGooglePlay_Badge_Web_color_English 1** · `FRAME` · 80×24 · 5 children
+                - **Vector** · `VECTOR` · 80×24
+                - **Vector** · `VECTOR` · 80×24
+                - **Group** · `GROUP` · 23×4
+                  - _…and 7 more_
+                - **Vector** · `VECTOR` · 50×10
+                - **Group** · `GROUP` · 14×15
+                  - _…and 4 more_
+              - **Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917 1** · `FRAME` · 72×24 · 1 children
+                - **Group** · `GROUP` · 72×24
+                  - _…and 2 more_
+        - **crf** · `FRAME` · 360×595 · 8 children
+          - **Rectangle** · `RECTANGLE` · 360×595
+          - **Rectangle** · `RECTANGLE` · 328×280
+          - **social msg** · `FRAME` · 328×40 · 3 children
+            - **Rectangle** · `RECTANGLE` · 328×40
+            - **Fill 1** · `VECTOR` · 13×18
+            - **156 people are looki** · `TEXT` · 218×14 · “156 people are looking for this property”
+          - **promotr** · `FRAME` · 171×55 · 4 children
+            - **Rectangle** · `RECTANGLE` · 48×48
+            - **Stephanus Huggins** · `TEXT` · 108×17 · “Stephanus Huggins”
+            - **Builder** · `TEXT` · 40×17 · “Builder”
+            - **+91-XXXXXX6787** · `TEXT` · 98×17 · “+91-XXXXXX6787”
+          - **share contacts** · `FRAME` · 313×252 · 8 children
+            - **Please share your co** · `TEXT` · 140×14 · “Please share your contact”
+            - **Line** · `VECTOR` · 297×1 · ×3
+            - **Name** · `TEXT` · 32×14 · “Name”
+            - **Phone** · `TEXT` · 38×12 · “Phone”
+            - **Group 2** · `FRAME` · 304×68 · 9 children
+              - **You are looking for** · `TEXT` · 102×14 · “You are looking for”
+              - **Rectangle** · `RECTANGLE` · 64×41
+              - **1 BHK** · `TEXT` · 34×14 · “1 BHK”
+              - **Rectangle** · `RECTANGLE` · 64×41
+              - **2 BHK** · `TEXT` · 34×14 · “2 BHK”
+              - **Rectangle** · `RECTANGLE` · 64×41
+              - **3 BHK** · `TEXT` · 34×14 · “3 BHK”
+              - **Rectangle** · `RECTANGLE` · 64×41
+              - **4 BHK** · `TEXT` · 34×14 · “4 BHK”
+            - **Email** · `TEXT` · 30×14 · “Email”
+          - **allow other options** · `FRAME` · 211×48 · 4 children
+            - **Allow other sellers** · `TEXT` · 180×14 · “Allow other sellers to get in touch”
+            - **Shape** · `BOOLEAN_OPERATION` · 16×16 · 2 children
+              - **Path** · `VECTOR` · 16×16
+              - **Path** · `VECTOR` · 12×9
+            - **Rectangle** · `RECTANGLE` · 16×16
+            - **r** · `TEXT` · 160×14 · “I am interested in Home loans”
+          - **Contacting for 2BHK** · `TEXT` · 200×12 · “Contacting for 2BHK Apartment”
+          - **cta** · `FRAME` · 344×48 · 2 children
+            - **Rectangle** · `RECTANGLE` · 328×48
+            - **Contact Builder** · `TEXT` · 83×14 · “Contact Builder”
+      - **Group 2109** · `GROUP` · 360×58 · 2 children
+        - **Rectangle** · `VECTOR` · 360×58
+        - **Group 2195** · `GROUP` · 332×32 · 5 children
+          - **Group 261** · `GROUP` · 68×24 · 3 children
+            - **Rectangle** · `RECTANGLE` · 68×24
+            - **Featured Developers** · `TEXT` · 36×16 · “Share”
+            - **Group 32** · `GROUP` · 12×13 · 5 children
+              - **Line 4** · `VECTOR` · 8×5 · ×2
+              - **Oval** · `ELLIPSE` · 4×4
+              - **Oval Copy** · `ELLIPSE` · 4×4
+              - **Oval Copy 2** · `ELLIPSE` · 4×4
+          - **Group 262** · `GROUP` · 61×24 · 3 children
+            - **Rectangle** · `VECTOR` · 61×24
+            - **Path** · `VECTOR` · 12×11
+            - **Featured Developers** · `TEXT` · 29×16 · “Save”
+          - **back arrow** · `GROUP` · 32×32 · 2 children
+            - **Oval** · `ELLIPSE` · 32×32
+            - **ic_cancel_24px** · `GROUP` · 24×24 · 2 children
+              - **Path** · `VECTOR` · 24×24
+              - **arrow_back - material** · `VECTOR` · 14×14
+          - **2 BHK Independent A…** · `TEXT` · 131×16 · “Vasudev Kutumbaka...”
+          - **₹ 81.97 L** · `TEXT` · 168×16 · “₹ 81.97 L”
+      - **Container** · `FRAME` · 344×116 · 2 children
+        - **Background+HorizontalBorder+Shadow** · `FRAME` · 344×60 · 2 children
+          - **viewedIcon.793b9bec.gif** · `FRAME` · 20×20
+          - **30 people are currently viewing this property.** · `TEXT` · 243×12 · “30 people are currently viewing this property.”
+        - **Background+Shadow** · `FRAME` · 344×80 · vertical stack, gap 10px, padding 12px · 1 children
+          - **Button** · `FRAME` · 320×56 · 1 children
+            - **Contact Seller** · `TEXT` · 105×28 · “Contact Seller”
+  - **PDP** · `FRAME` · 855×54 · horizontal row, gap 20px, padding 16/24/16/24px · 1 children
+    - **Frame** · `FRAME` · 64×22 · vertical stack, gap 4px · 1 children
+      - **Gallery** · `TEXT` · 64×22 · “Gallery”

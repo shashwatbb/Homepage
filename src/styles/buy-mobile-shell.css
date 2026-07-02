@@ -1,0 +1,31 @@
+/* buy.html — desktop hint when hero is hidden; shared utilities */
+
+.buy-route__desktop-hint {
+  display: none;
+  box-sizing: border-box;
+  max-width: 28rem;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ds-color-grey-neutral-800);
+  text-align: center;
+}
+
+.buy-route__desktop-hint a {
+  color: var(--ds-color-grey-neutral-900);
+  font-weight: 600;
+}
+
+@media (min-width: 48rem) {
+  .buy-route__desktop-hint {
+    display: block;
+  }
+
+  .buy-route {
+    min-height: 100dvh;
+    margin: 0;
+    background: var(--color-bg-page, var(--ds-color-warm-neutral-50));
+  }
+}

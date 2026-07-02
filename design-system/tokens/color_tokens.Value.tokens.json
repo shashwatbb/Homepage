@@ -1,0 +1,93 @@
+{
+  "surface": {
+    "white":        { "$type": "color", "$value": "{warm_neutral.0}" },
+    "subtle":       { "$type": "color", "$value": "{warm_neutral.50}" },
+    "default":      { "$type": "color", "$value": "{warm_neutral.100}" },
+    "brand":        { "$type": "color", "$value": "{purple.700}" },
+    "brand_subtle": { "$type": "color", "$value": "{purple.50}" },
+    "disabled":     { "$type": "color", "$value": "{grey_neutral.100}" }
+  },
+  "border": {
+    "subtle":   { "$type": "color", "$value": "{warm_neutral.200}" },
+    "default":  { "$type": "color", "$value": "{warm_neutral.300}" },
+    "brand":    { "$type": "color", "$value": "{purple.700}" },
+    "selected": { "$type": "color", "$value": "{warm_neutral.900}" },
+    "disabled": { "$type": "color", "$value": "{grey_neutral.400}" }
+  },
+  "text": {
+    "primary":   { "$type": "color", "$value": "{grey_neutral.900}" },
+    "secondary": { "$type": "color", "$value": "{grey_neutral.800}" },
+    "muted":     { "$type": "color", "$value": "{grey_neutral.700}" },
+    "inverse":   { "$type": "color", "$value": "{warm_neutral.0}" },
+    "brand":     { "$type": "color", "$value": "{purple.700}" }
+  },
+  "semantic_surface": {
+    "info":    { "$type": "color", "$value": "{blue.50}" },
+    "success": { "$type": "color", "$value": "{green.50}" },
+    "warning": { "$type": "color", "$value": "{yellow.50}" },
+    "danger":  { "$type": "color", "$value": "{red.50}" }
+  },
+  "semantic_border": {
+    "info":    { "$type": "color", "$value": "{blue.200}" },
+    "success": { "$type": "color", "$value": "{green.200}" },
+    "warning": { "$type": "color", "$value": "{yellow.200}" },
+    "danger":  { "$type": "color", "$value": "{red.200}" }
+  },
+  "semantic_icons": {
+    "info":    { "$type": "color", "$value": "{blue.600}" },
+    "success": { "$type": "color", "$value": "{green.600}" },
+    "warning": { "$type": "color", "$value": "{yellow.600}" },
+    "danger":  { "$type": "color", "$value": "{red.600}" }
+  },
+  "semantic_text": {
+    "info":    { "$type": "color", "$value": "{blue.800}" },
+    "success": { "$type": "color", "$value": "{green.800}" },
+    "warning": { "$type": "color", "$value": "{yellow.800}" },
+    "danger":  { "$type": "color", "$value": "{red.800}" }
+  },
+  "pistachio_sand": {
+    "1": { "$type": "color", "$value": "{pistachio_sand.50}" },
+    "2": { "$type": "color", "$value": "{pistachio_sand.100}" },
+    "3": { "$type": "color", "$value": "{pistachio_sand.200}" },
+    "4": { "$type": "color", "$value": "{pistachio_sand.300}" },
+    "5": { "$type": "color", "$value": "{pistachio_sand.400}" },
+    "6": { "$type": "color", "$value": "{pistachio_sand.500}" }
+  },
+  "lavender_mist": {
+    "1": { "$type": "color", "$value": "{lavender_mist.50}" },
+    "2": { "$type": "color", "$value": "{lavender_mist.100}" },
+    "3": { "$type": "color", "$value": "{lavender_mist.200}" },
+    "4": { "$type": "color", "$value": "{lavender_mist.300}" },
+    "5": { "$type": "color", "$value": "{lavender_mist.400}" },
+    "6": { "$type": "color", "$value": "{lavender_mist.500}" }
+  },
+  "soft_butter": {
+    "1": { "$type": "color", "$value": "{soft_butter.50}" },
+    "2": { "$type": "color", "$value": "{soft_butter.100}" },
+    "3": { "$type": "color", "$value": "{soft_butter.200}" },
+    "4": { "$type": "color", "$value": "{soft_butter.300}" },
+    "5": { "$type": "color", "$value": "{soft_butter.400}" },
+    "6": { "$type": "color", "$value": "{soft_butter.500}" }
+  },
+  "grey_neutral": {
+    "1": { "$type": "color", "$value": "{grey_neutral.100}" },
+    "2": { "$type": "color", "$value": "{grey_neutral.200}" },
+    "3": { "$type": "color", "$value": "{grey_neutral.400}" },
+    "4": { "$type": "color", "$value": "{grey_neutral.500}" },
+    "5": { "$type": "color", "$value": "{grey_neutral.700}" },
+    "6": { "$type": "color", "$value": "{grey_neutral.800}" }
+  },
+  "icon": {
+    "grey_1":  { "$type": "color", "$value": "{grey_neutral.900}" },
+    "grey_2":  { "$type": "color", "$value": "{grey_neutral.0}" },
+    "grey_3":  { "$type": "color", "$value": "{grey_neutral.500}" },
+    "grey_4":  { "$type": "color", "$value": "{grey_neutral.800}" },
+    "warm_1":  { "$type": "color", "$value": "{warm_neutral.700}" },
+    "brand_1": { "$type": "color", "$value": "{purple.700}" }
+  },
+  "highlight": {
+    "$type": "color",
+    "$value": "{pink.500}",
+    "$description": "This is particularly just to be used on text, maximum two words."
+  }
+}

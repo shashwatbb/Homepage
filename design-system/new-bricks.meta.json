@@ -1,0 +1,11 @@
+{
+  "id": "new-bricks",
+  "title": "New Bricks Design System",
+  "figmaFileKey": "ZGl9LhEtqlE9JiMKBuYrdT",
+  "figmaFileUrl": "https://www.figma.com/design/ZGl9LhEtqlE9JiMKBuYrdT/New-Bricks-Design-System",
+  "figmaEntryNodeId": "123:3",
+  "figmaEntryNodeUrl": "https://www.figma.com/design/ZGl9LhEtqlE9JiMKBuYrdT/New-Bricks-Design-System?node-id=123-3",
+  "talkToFigmaChannel": "omsn9jta",
+  "tokensPath": "./new-bricks.tokens.json",
+  "cssBridgePath": "./new-bricks.generated.css"
+}

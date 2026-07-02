@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" class="no-fouc">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search results — Housing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html.no-fouc *,
+      html.no-fouc *::before,
+      html.no-fouc *::after {
+        transition: none !important;
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+      }
+    </style>
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <script type="module" src="/src/srp-main.js"></script>
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <!-- Claude AI component — sticky banner above results -->
+      <div id="claude-root"></div>
+
+      <!-- Search results container (coming soon) -->
+      <main id="srp-results" class="srp-results"></main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en" class="no-fouc">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Housing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Pre-paint hide: prevents the location modal / drawer / scrim from
+         flashing before base.css (loaded via JS module) takes over. */
+      #site-header-location-panel,
+      #site-header-location-backdrop,
+      #site-header-drawer,
+      .site-header__mega--buyers {
+        position: fixed;
+        left: -9999px;
+        top: -9999px;
+        width: 0;
+        height: 0;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      /* Kill transitions / animations / hover effects until first paint completes.
+         JS removes .no-fouc on next animation frame. */
+      html.no-fouc *,
+      html.no-fouc *::before,
+      html.no-fouc *::after {
+        transition: none !important;
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+      }
+    </style>
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <div id="site-header-location-backdrop" class="site-header__location-backdrop" aria-hidden="true"></div>
+              <div
+                id="site-header-location-panel"
+                class="site-header__location-panel"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Choose location"
+                aria-hidden="true"
+                inert
+              >
+                <div class="site-header__location-panel-inner">
+                  <!-- Modal header -->
+                  <div class="site-header__location-modal-head">
+                    <p class="site-header__location-modal-title">Choose a city</p>
+                    <button type="button" class="site-header__location-modal-close" id="site-header-location-close" aria-label="Close">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                        <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="site-header__location-modal-body">
+
+                  <!-- Search bar + detect location — top row -->
+                  <div class="site-header__location-section site-header__location-section--search">
+                    <div class="site-header__location-search-row">
+                      <div class="site-header__location-search-field-wrap">
+                        <span class="site-header__location-search-icon" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M229.66,218.34l-50.07-50.06a88.21,88.21,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/>
+                          </svg>
+                        </span>
+                        <input
+                          type="search"
+                          id="site-header-location-search"
+                          class="site-header__location-search-input"
+                          placeholder="Search for a city…"
+                          autocomplete="off"
+                          spellcheck="false"
+                        />
+                        <ul
+                          id="site-header-location-results"
+                          class="site-header__location-results"
+                          role="listbox"
+                          aria-label="Search results"
+                          hidden
+                        ></ul>
+                      </div>
+                      <button type="button" class="site-header__location-gps" id="site-header-location-gps" aria-label="Detect my location">
+                        <span class="site-header__location-gps-icon" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M240,120H215.63A88.13,88.13,0,0,0,136,40.37V16a8,8,0,0,0-16,0V40.37A88.13,88.13,0,0,0,40.37,120H16a8,8,0,0,0,0,16H40.37A88.13,88.13,0,0,0,120,215.63V240a8,8,0,0,0,16,0V215.63A88.13,88.13,0,0,0,215.63,136H240a8,8,0,0,0,0-16ZM128,200a72,72,0,1,1,72-72A72.08,72.08,0,0,1,128,200Zm0-112a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Z"/>
+                          </svg>
+                        </span>
+                        <span class="site-header__location-gps-label">Detect location</span>
+                      </button>
+                    </div>
+                    <p id="site-header-location-gps-status" class="site-header__location-gps-status" role="status" aria-live="polite"></p>
+                  </div>
+
+                  <!-- Top cities chips -->
+                  <div class="site-header__location-section site-header__location-section--popular">
+                    <p class="site-header__location-section-label">Top cities</p>
+                    <ul class="site-header__location-chips" role="list">
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Mumbai">Mumbai</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Delhi">Delhi</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Bengaluru">Bengaluru</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Hyderabad">Hyderabad</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Pune">Pune</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Chennai">Chennai</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Kolkata">Kolkata</button></li>
+                      <li><button type="button" class="site-header__location-chip" data-location-city="Ahmedabad">Ahmedabad</button></li>
+                    </ul>
+                  </div>
+
+                  <!-- More cities — grid of boxes -->
+                  <div class="site-header__location-section site-header__location-section--all">
+                    <p class="site-header__location-section-label">More cities</p>
+                    <ul class="site-header__location-all-cities" id="site-header-location-all-cities" role="list"></ul>
+                  </div>
+
+                  </div><!-- /.site-header__location-modal-body -->
+                </div>
+              </div>
+      <header class="site-header">
+        <div class="layout-container site-header__bar">
+          <div class="site-header__lead">
+            <a class="site-header__brand" href="/" aria-label="Housing — Home">
+              <img
+                class="site-header__logo"
+                src="/logo.svg"
+                width="48"
+                height="48"
+                alt=""
+                decoding="async"
+              />
+            </a>
+            <span class="site-header__lead-sep" aria-hidden="true"></span>
+            <div class="site-header__location-wrap">
+              <button
+                type="button"
+                class="site-header__location"
+                id="site-header-location-trigger"
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="site-header-location-panel"
+                aria-label="Location: Mumbai. Change city"
+              >
+                <span class="site-header__location-stack">
+                  <span class="site-header__location-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"
+                      />
+                    </svg>
+                  </span>
+                  <span class="site-header__location-kicker">Searching in</span>
+                  <span class="site-header__location-city-row">
+                    <span class="site-header__location-city" id="site-header-location-city-label">Mumbai</span>
+                    <span class="site-header__location-chevron" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                        <path
+                          d="M1 1.5L5 4.5L9 1.5"
+                          stroke="currentColor"
+                          stroke-width="1.25"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </button>
+
+            </div>
+          </div>
+          <nav class="site-header__nav" aria-label="Browse">
+            <ul class="site-header__nav-list">
+              <li class="site-header__nav-item--mega">
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  id="site-header-mega-buyers-trigger"
+                  data-header-nav="buyers"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-controls="site-header-mega-buyers"
+                >
+                  <span class="site-header__nav-label">Buyers</span>
+                </button>
+                <div
+                  class="site-header__mega--buyers"
+                  id="site-header-mega-buyers"
+                  role="menu"
+                  aria-labelledby="site-header-mega-buyers-trigger"
+                >
+                  <div class="site-header__mega-inner">
+                    <div class="site-header__mega-grid">
+                      <div class="site-header__mega-col site-header__mega-col--lead">
+                        <h3 class="site-header__mega-heading">Property type</h3>
+                        <ul class="site-header__mega-list">
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M4 21V8l8-5 8 5v13M9 21v-4h6v4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Flats</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M4 10 12 3l8 7v10a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1V10Z" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Houses</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="m12.83 2.18 8 3.6a1 1 0 0 1 0 1.82l-8 3.6a2 2 0 0 1-1.66 0l-8-3.6a1 1 0 0 1 0-1.82l8-3.6a2 2 0 0 1 1.66 0Z" stroke-linecap="round" stroke-linejoin="round" />
+                                  <path d="M2 12.5 12 17l10-4.5M2 17l10 4.5 10-4.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Builder floors</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M9 20l-5.5-2.7A1 1 0 0 1 3 16.4V5.6a1 1 0 0 1 1.4-.9L9 6l6-2 5.5 2.7A1 1 0 0 1 21 7.6v10.8a1 1 0 0 1-1.4.9L15 18l-6 2Z" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Plots</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M3 21h18M5 21V10l7-7 7 7v11M9 21v-5h6v5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Villas</span>
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="site-header__mega-link" role="menuitem">
+                              <span class="site-header__mega-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9Z" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                              </span>
+                              <span class="site-header__mega-label">Commercial properties</span>
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="site-header__mega-col">
+                        <h3 class="site-header__mega-heading">Popular areas</h3>
+                        <ul class="site-header__mega-list">
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Palam Vihar</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 93</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 57</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 11</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Sector 8</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Civil Lines</button></li>
+                        </ul>
+                      </div>
+                      <div class="site-header__mega-col">
+                        <h3 class="site-header__mega-heading">Search by BHK</h3>
+                        <ul class="site-header__mega-list">
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">1 RK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">1 BHK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">2 BHK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">3 BHK Properties</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">1 BHK Houses</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">2 BHK Houses</button></li>
+                        </ul>
+                      </div>
+                      <div class="site-header__mega-col">
+                        <h3 class="site-header__mega-heading">Popular searches</h3>
+                        <ul class="site-header__mega-list">
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Flats without brokerage</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Under construction flats</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Affordable projects for sale</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Ready to move-in projects</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">New residential projects</button></li>
+                          <li><button type="button" class="site-header__mega-link" role="menuitem">Resale properties</button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  data-header-nav="tenants"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  <span class="site-header__nav-label">Tenants</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  data-header-nav="sellers"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  <span class="site-header__nav-label">Sellers</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="site-header__nav-trigger"
+                  data-header-nav="services"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  <span class="site-header__nav-label">Services</span>
+                </button>
+              </li>
+              <li class="site-header__nav-item-get-app">
+                <a class="site-header__nav-trigger site-header__nav-get-app" href="#" aria-label="Get the Housing app">
+                  <span class="site-header__nav-label">Get app</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="site-header__sticky-search">
+            <div class="search-capsule search-capsule--sticky-header" role="search">
+              <div class="search-capsule__outer">
+                <div class="search-capsule__inner">
+                  <div class="search-capsule__input-wrap">
+                    <div class="search-capsule__rotating-stack" aria-hidden="true">
+                      <span class="search-capsule__rotating-text search-capsule__rotating-text--a"></span>
+                      <span class="search-capsule__rotating-text search-capsule__rotating-text--b"></span>
+                    </div>
+                    <input
+                      type="search"
+                      id="search-input-sticky"
+                      class="search-capsule__input search-capsule__input--trigger"
+                      placeholder=""
+                      autocomplete="off"
+                      readonly
+                      aria-label="Search properties"
+                      aria-haspopup="dialog"
+                      aria-expanded="false"
+                      aria-controls="search-overlay"
+                      inputmode="none"
+                    />
+                  </div>
+                  <button type="button" class="search-capsule__submit" aria-label="Submit search">
+                    <span class="search-capsule__icon" aria-hidden="true">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        fill="currentColor"
+                        viewBox="0 0 256 256"
+                      >
+                        <path
+                          d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                        ></path>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="site-header__actions">
+            <a
+              class="site-header__nav-trigger site-header__nav-get-app site-header__nav-get-app--toolbar-only site-header__toolbar-cta"
+              href="#"
+              aria-label="Get the Housing app"
+            >
+              <span class="site-header__nav-label">Get app</span>
+            </a>
+            <button type="button" class="site-header__post-property-btn site-header__toolbar-cta">
+              <span class="site-header__post-property-label">Post property</span>
+              <span class="site-header__post-property-free" title="Free to post" aria-hidden="true">FREE</span>
+            </button>
+            <button
+              type="button"
+              class="site-header__post-property-btn site-header__post-property-btn--mobile-header"
+              aria-label="Post property, free to list"
+            >
+              <span class="site-header__post-property-label">Post property</span>
+              <span class="site-header__post-property-free" title="Free to post" aria-hidden="true">FREE</span>
+            </button>
+            <button type="button" class="site-header__login-btn site-header__toolbar-cta">Login</button>
+            <button
+              type="button"
+              class="site-header__menu-btn"
+              id="site-header-menu-btn"
+              aria-label="Open menu"
+              aria-expanded="false"
+              aria-controls="site-header-drawer-panel"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="14"
+                viewBox="0 0 20 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                  d="M1 1h18M1 7h18M1 13h18"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div
+        id="site-header-drawer"
+        class="site-header__drawer"
+        aria-hidden="true"
+        inert
+      >
+        <div
+          class="site-header__drawer-scrim"
+          data-site-header-drawer-close
+          tabindex="-1"
+          aria-hidden="true"
+        ></div>
+        <div
+          id="site-header-drawer-panel"
+          class="site-header__drawer-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Main menu"
+          tabindex="-1"
+        >
+          <div class="site-header__drawer-head">
+            <a class="site-header__drawer-brand" href="/" aria-label="Housing — Home">
+              <img
+                class="site-header__drawer-logo"
+                src="/logo.svg"
+                width="40"
+                height="40"
+                alt=""
+                decoding="async"
+              />
+            </a>
+            <span class="site-header__drawer-title">Menu</span>
+            <button type="button" class="site-header__drawer-close" data-site-header-drawer-close aria-label="Close menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                <path
+                  d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div class="site-header__drawer-login">
+            <div class="drawer-login-card">
+              <span class="drawer-login-card__grid" aria-hidden="true"></span>
+              <span class="drawer-login-card__glow" aria-hidden="true"></span>
+              <div class="drawer-login-card__identity">
+                <span class="drawer-login-card__avatar" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256" aria-hidden="true">
+                    <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/>
+                  </svg>
+                </span>
+                <p class="drawer-login-card__heading">Login to get started</p>
+              </div>
+              <button type="button" class="site-header__login-btn drawer-login-card__cta">Login</button>
+            </div>
+          </div>
+          <div class="site-header__drawer-body">
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Buyers</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub">
+                <p class="site-header__drawer-sub-label">Property type</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">Flats</button></li>
+                  <li><button type="button" class="site-header__mega-link">Houses</button></li>
+                  <li><button type="button" class="site-header__mega-link">Builder floors</button></li>
+                  <li><button type="button" class="site-header__mega-link">Plots</button></li>
+                  <li><button type="button" class="site-header__mega-link">Villas</button></li>
+                  <li><button type="button" class="site-header__mega-link">Commercial properties</button></li>
+                </ul>
+                <p class="site-header__drawer-sub-label">Popular areas</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">Palam Vihar</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 93</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 57</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 11</button></li>
+                  <li><button type="button" class="site-header__mega-link">Sector 8</button></li>
+                  <li><button type="button" class="site-header__mega-link">Civil Lines</button></li>
+                </ul>
+                <p class="site-header__drawer-sub-label">Search by BHK</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">1 RK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">1 BHK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">2 BHK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">3 BHK Properties</button></li>
+                  <li><button type="button" class="site-header__mega-link">1 BHK Houses</button></li>
+                  <li><button type="button" class="site-header__mega-link">2 BHK Houses</button></li>
+                </ul>
+                <p class="site-header__drawer-sub-label">Popular searches</p>
+                <ul class="site-header__drawer-sub-list">
+                  <li><button type="button" class="site-header__mega-link">Flats without brokerage</button></li>
+                  <li><button type="button" class="site-header__mega-link">Under construction flats</button></li>
+                  <li><button type="button" class="site-header__mega-link">Affordable projects for sale</button></li>
+                  <li><button type="button" class="site-header__mega-link">Ready to move-in projects</button></li>
+                  <li><button type="button" class="site-header__mega-link">New residential projects</button></li>
+                  <li><button type="button" class="site-header__mega-link">Resale properties</button></li>
+                </ul>
+              </div>
+            </details>
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Tenants</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub site-header__drawer-sub--simple">
+                <ul class="site-header__drawer-sub-list site-header__drawer-sub-list--flat">
+                  <li><button type="button" class="site-header__mega-link">Rental flats</button></li>
+                  <li><button type="button" class="site-header__mega-link">PG / Co-living</button></li>
+                  <li><button type="button" class="site-header__mega-link">Lease agreements</button></li>
+                  <li><button type="button" class="site-header__mega-link">Pay rent online</button></li>
+                </ul>
+              </div>
+            </details>
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Sellers</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub site-header__drawer-sub--simple">
+                <ul class="site-header__drawer-sub-list site-header__drawer-sub-list--flat">
+                  <li><button type="button" class="site-header__mega-link">Owner listings</button></li>
+                  <li><button type="button" class="site-header__mega-link">List without brokerage</button></li>
+                  <li><button type="button" class="site-header__mega-link">Housing Expert</button></li>
+                  <li><button type="button" class="site-header__mega-link">Property valuation</button></li>
+                </ul>
+              </div>
+            </details>
+            <details class="site-header__drawer-details">
+              <summary class="site-header__drawer-summary">
+                <span class="site-header__drawer-summary-text">Services</span>
+                <span class="site-header__drawer-summary-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path
+                      d="M1 1.5L5 4.5L9 1.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="site-header__drawer-sub site-header__drawer-sub--simple">
+                <ul class="site-header__drawer-sub-list site-header__drawer-sub-list--flat">
+                  <li><button type="button" class="site-header__mega-link">Home loans</button></li>
+                  <li><button type="button" class="site-header__mega-link">Packers &amp; movers</button></li>
+                  <li><button type="button" class="site-header__mega-link">Rental agreements</button></li>
+                  <li><button type="button" class="site-header__mega-link">Legal services</button></li>
+                </ul>
+              </div>
+            </details>
+            <a class="site-header__drawer-row site-header__drawer-row--link" href="#" aria-label="Get the Housing app">Get app</a>
+          </div>
+          <div class="site-header__drawer-extras">
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66,106.34l-96-96a8,8,0,0,0-11.32,0l-96,96a8,8,0,0,0,0,11.32l96,96a8,8,0,0,0,11.32,0l96-96A8,8,0,0,0,221.66,106.34Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Zero brokerage properties</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V64H224ZM48,136a8,8,0,0,1,8-8H80a8,8,0,0,1,0,16H56A8,8,0,0,1,48,136Zm96,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H152A8,8,0,0,1,144,136Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">My transactions</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l58.83-5.43,23-55.47a15.92,15.92,0,0,1,29.12,0l23,55.47,58.83,5.43a16,16,0,0,1,9.11,28.06Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">My reviews</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Unsubscribe alerts</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Report a fraud</span>
+            </button>
+            <button type="button" class="site-header__drawer-extras-row">
+              <span class="site-header__drawer-extras-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,8,8,0,0,1-8-8V128a8,8,0,0,1,16,0ZM116,84a12,12,0,1,1,12,12A12,12,0,0,1,116,84Z"/></svg>
+              </span>
+              <span class="site-header__drawer-extras-label">Visit help center</span>
+            </button>
+            <div class="site-header__drawer-extras-social">
+              <span class="site-header__drawer-extras-social-label">Follow on</span>
+              <div class="site-header__drawer-extras-social-links">
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="Facebook">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="Twitter / X">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z"/></svg>
+                </a>
+                <a href="#" class="site-header__drawer-extras-social-btn" aria-label="YouTube">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M164.44,121.34l-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17ZM234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,39.88,131,40,128,40s-57.56-.12-91.84,13.12a24,24,0,0,0-14.49,16.4C19.08,79.5,16,97.74,16,128s3.08,48.5,5.67,58.48a24,24,0,0,0,14.49,16.41C69,215.56,120.4,216,127.34,216h1.32c6.94,0,58.37-.44,91.18-13.11a24,24,0,0,0,14.49-16.41c2.59-10,5.67-28.22,5.67-58.48S236.92,79.5,234.33,69.52Zm-15.49,113a8,8,0,0,1-4.77,5.49c-31.65,12.22-85.48,12-86,12H128c-.54,0-54.33.2-86-12a8,8,0,0,1-4.77-5.49C34.8,173.39,32,156.57,32,128s2.8-45.39,5.16-54.47A8,8,0,0,1,41.93,68c30.52-11.79,81.66-12,85.85-12h.27c.54,0,54.38-.18,86,12a8,8,0,0,1,4.77,5.49C221.2,82.61,224,99.43,224,128S221.2,173.39,218.84,182.47Z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="site-header__drawer-footer">
+            <button type="button" class="site-header__post-property-btn site-header__drawer-post">
+              <span class="site-header__post-property-label">Post property</span>
+              <span class="site-header__post-property-free" title="Free to post" aria-hidden="true">FREE</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <main class="main-search" aria-label="Property search" data-active-service="buy">
+        <div class="main-search__hero">
+          <aside class="main-search__promo" aria-label="Advertisement">
+            <button
+              type="button"
+              class="main-search__promo-frame"
+              id="main-search-hero-promo-trigger"
+              aria-label="Continue past advertisement"
+            >
+              <span class="main-search__promo-grad-stack" aria-hidden="true">
+                <span class="main-search__promo-grad" data-grad-layer="0"></span>
+                <span class="main-search__promo-grad" data-grad-layer="1"></span>
+              </span>
+              <span class="main-search__promo-deco" aria-hidden="true">
+                <span class="main-search__promo-fan main-search__promo-fan--left">
+                  <span class="main-search__promo-card-slide">
+                    <span class="main-search__promo-card">
+                      <span class="main-search__promo-card-clip">
+                        <img
+                          class="main-search__promo-card-img main-search__promo-card-img--buy"
+                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                          width="512"
+                          height="512"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                        />
+                        <img
+                          class="main-search__promo-card-img main-search__promo-card-img--rent"
+                          src="/Rent.png"
+                          width="512"
+                          height="512"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                        />
+                        <img
+                          class="main-search__promo-card-img main-search__promo-card-img--projects"
+                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                          width="512"
+                          height="512"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                        />
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span class="main-search__promo-fan main-search__promo-fan--right">
+                  <span class="main-search__promo-card-slide">
+                    <span class="main-search__promo-card">
+                      <span class="main-search__promo-card-clip">
+                        <img
+                          class="main-search__promo-card-img main-search__promo-card-img--buy"
+                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                          width="512"
+                          height="512"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                        />
+                        <img
+                          class="main-search__promo-card-img main-search__promo-card-img--rent"
+                          src="/Rent.png"
+                          width="512"
+                          height="512"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                        />
+                        <img
+                          class="main-search__promo-card-img main-search__promo-card-img--projects"
+                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                          width="512"
+                          height="512"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                        />
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+              <div class="main-search__hero-tagline" role="status" aria-live="polite">
+                <span class="main-search__hero-tagline__stack">
+                  <span class="main-search__hero-tagline__line main-search__hero-tagline__line--a is-active">
+                    <span class="main-search__hero-tagline__inner">Buy Better Homes</span>
+                  </span>
+                  <span
+                    class="main-search__hero-tagline__line main-search__hero-tagline__line--b is-passive"
+                    aria-hidden="true"
+                  >
+                    <span class="main-search__hero-tagline__inner"></span>
+                  </span>
+                </span>
+              </div>
+              <img
+                class="main-search__promo-img"
+                src="/ad.jpg"
+                width="1199"
+                height="527"
+                alt=""
+                decoding="async"
+              />
+            </button>
+          </aside>
+          <div class="layout-container main-search__center main-search__center--overlap">
+          <div class="main-search__panel">
+              <div class="main-search__panel-inset">
+                <div class="main-search__hero-block">
+              <div class="service-tabs">
+                <div class="service-tabs__track">
+                  <div class="service-tabs__tablist" role="tablist" aria-label="Listing type">
+                    <span class="service-tabs__glide" aria-hidden="true"></span>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected="true"
+                      class="service-tabs__tab service-tabs__tab--active"
+                      data-service="buy"
+                    >
+                      Buy
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      class="service-tabs__tab"
+                      data-service="projects"
+                    >
+                      Projects
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      class="service-tabs__tab"
+                      data-service="rent"
+                    >
+                      Rent
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      class="service-tabs__tab"
+                      data-service="commercial"
+                    >
+                      Commercial
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      class="service-tabs__tab"
+                      data-service="pg"
+                    >
+                      PG
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      class="service-tabs__tab"
+                      data-service="plots"
+                    >
+                      Plots
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="search-capsule" role="search">
+                <div class="search-capsule__outer">
+                  <div class="search-capsule__inner">
+                    <div class="search-capsule__input-wrap">
+                      <div class="search-capsule__rotating-stack" aria-hidden="true">
+                        <span class="search-capsule__rotating-text search-capsule__rotating-text--a"></span>
+                        <span class="search-capsule__rotating-text search-capsule__rotating-text--b"></span>
+                      </div>
+                      <input
+                        type="search"
+                        id="search-input-primary"
+                        class="search-capsule__input"
+                        placeholder=""
+                        autocomplete="off"
+                        aria-label="Search properties"
+                        aria-haspopup="dialog"
+                        aria-expanded="false"
+                        aria-controls="search-overlay"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      class="search-capsule__submit"
+                      aria-label="Submit search"
+                    >
+                      <span class="search-capsule__icon" aria-hidden="true">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="32"
+                          height="32"
+                          fill="currentColor"
+                          viewBox="0 0 256 256"
+                        >
+                          <path
+                            d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                          ></path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="search-capsule__suggestions">
+                    <ul id="search-suggestions-list"></ul>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="main-search__home-below">
+
+                <hr class="search-overlay__separator" aria-hidden="true" />
+                <section class="overlay-section" aria-label="Recent searches">
+                  <div class="overlay-row overlay-row--recent" role="list">
+                    <div class="overlay-card overlay-card--recent" role="listitem">
+                      <div class="overlay-card__thumb" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M216,128a88,88,0,1,1-88-88A88,88,0,0,1,216,128Z"
+                            opacity="0.2"
+                          />
+                          <path
+                            d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="overlay-card__body">
+                        <p class="overlay-card__title main-search__recent-line">
+                          <span class="main-search__recent-line__query">Buy 2BHK under 3 Cr</span>
+                          <span class="main-search__recent-line__v" aria-hidden="true"></span>
+                          <span class="overlay-card__muted main-search__recent-line__loc">Malviya Nagar</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="overlay-card overlay-card--recent" role="listitem">
+                      <div class="overlay-card__thumb" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M216,128a88,88,0,1,1-88-88A88,88,0,0,1,216,128Z"
+                            opacity="0.2"
+                          />
+                          <path
+                            d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="overlay-card__body">
+                        <p class="overlay-card__title main-search__recent-line">
+                          <span class="main-search__recent-line__query">Buy in Bandra West</span>
+                          <span class="main-search__recent-line__v" aria-hidden="true"></span>
+                          <span class="overlay-card__muted main-search__recent-line__loc">Bandra West</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        </div>
+      </main>
+
+      <!-- Minimal fade separator between first fold and Housing top picks -->
+      <div class="fold-separator" aria-hidden="true"></div>
+
+      <!-- Second fold: Housing top picks -->
+      <section class="spotlight-ad-section" aria-labelledby="spotlight-heading">
+        <div class="layout-container spotlight-ad-section__inner">
+          <div class="spotlight-ad-section__head">
+            <h2 id="spotlight-heading" class="spotlight-ad-section__heading">Housing's top picks</h2>
+            <p class="spotlight-ad-section__sub">Handpicked homes and projects curated for your next move</p>
+          </div>
+
+          <div
+            class="spotlight-ad spotlight-ad--split"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Housing top picks"
+          >
+            <div class="spotlight-ad__card">
+              <div class="spotlight-ad__layout">
+                <div class="spotlight-ad__intro">
+                  <div class="spotlight-ad__details spotlight-ad__details--panel spotlight-ad__details--with-sliding-copy">
+                    <div class="spotlight-ad__developer">
+                      <img
+                        class="spotlight-ad__dev-logo"
+                        src="https://housing-images.n7net.in/0b8ad14c/c309bd7778da523a093f0f7b135453ce/v2/medium.jpg"
+                        alt=""
+                        decoding="async"
+                      />
+                      <div class="spotlight-ad__dev-meta">
+                        <span class="spotlight-ad__dev-name">SS Group</span>
+                        <a
+                          class="spotlight-ad__dev-link"
+                          href="/buy-projects-by-ss-group-bid-158002-A9d3fsjgv96s2ju278a6whxd9d"
+                          target="_blank"
+                          rel="noopener"
+                          >View all projects</a
+                        >
+                      </div>
+                    </div>
+
+                    <div class="spotlight-ad__sep" aria-hidden="true"></div>
+
+                    <div class="spotlight-ad__details-slides spotlight-ad__details-slides--slide">
+                      <div
+                        class="spotlight-ad__details-slide spotlight-ad__details-slide--active"
+                        data-spotlight-idx="0"
+                        aria-hidden="false"
+                      >
+                        <div class="spotlight-ad__details-main">
+                          <div class="spotlight-ad__info">
+                            <h3 class="spotlight-ad__title">SS One</h3>
+                            <p class="spotlight-ad__location">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></svg>
+                              Sector 83, Gurgaon
+                            </p>
+                          </div>
+
+                          <div class="spotlight-ad__sep spotlight-ad__sep--compact" aria-hidden="true"></div>
+
+                          <div class="spotlight-ad__pricing">
+                            <p class="spotlight-ad__price">₹2.74 Cr – 2.98 Cr</p>
+                            <p class="spotlight-ad__type">3 BHK Apartment</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="spotlight-ad__details-slide" data-spotlight-idx="1" data-slide-pos="after" aria-hidden="true">
+                        <div class="spotlight-ad__details-main">
+                          <div class="spotlight-ad__info">
+                            <h3 class="spotlight-ad__title">SS Camasa</h3>
+                            <p class="spotlight-ad__location">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></svg>
+                              Sector 90, Gurgaon
+                            </p>
+                          </div>
+
+                          <div class="spotlight-ad__sep spotlight-ad__sep--compact" aria-hidden="true"></div>
+
+                          <div class="spotlight-ad__pricing">
+                            <p class="spotlight-ad__price">₹1.86 Cr – 2.45 Cr</p>
+                            <p class="spotlight-ad__type">3 &amp; 4 BHK Apartment</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <a class="spotlight-ad__cta spotlight-ad__cta--persistent" href="#" target="_blank" rel="noopener">Contact developer</a>
+                </div>
+
+                <div class="spotlight-ad__visual">
+                  <div class="spotlight-ad__image-wrap">
+                    <span class="spotlight-ad__scrim" aria-hidden="true"></span>
+
+                    <div class="spotlight-ad__tabs" role="tablist" aria-label="Projects">
+                      <button
+                        type="button"
+                        class="spotlight-ad__tab spotlight-ad__tab--active"
+                        role="tab"
+                        aria-selected="true"
+                        tabindex="0"
+                        data-spotlight-idx="0"
+                      >
+                        <img
+                          class="spotlight-ad__tab-img"
+                          src="https://housing-images.n7net.in/e0774925/1fe48e919c4a6b0e6ce3e72712d0834b/v0/small/ss_one-sector_83_gurgaon-gurgaon-ss_group.jpg"
+                          alt=""
+                          decoding="async"
+                        />
+                        SS One
+                      </button>
+                      <button
+                        type="button"
+                        class="spotlight-ad__tab"
+                        role="tab"
+                        aria-selected="false"
+                        tabindex="-1"
+                        data-spotlight-idx="1"
+                      >
+                        <img
+                          class="spotlight-ad__tab-img"
+                          src="https://housing-images.n7net.in/e0774925/0cc1ed89010ade0ecf95dc6eefd5d30f/v0/small/ss_camasa-sector_90_gurgaon-gurgaon-ss_group.jpg"
+                          alt=""
+                          decoding="async"
+                        />
+                        SS Camasa
+                      </button>
+                    </div>
+
+                    <img
+                      class="spotlight-ad__image spotlight-ad__image--active"
+                      src="https://housing-images.n7net.in/e0774925/1fe48e919c4a6b0e6ce3e72712d0834b/v0/fs/ss_one-sector_83_gurgaon-gurgaon-ss_group.jpg"
+                      alt="SS One"
+                      decoding="async"
+                      data-spotlight-idx="0"
+                    />
+                    <img
+                      class="spotlight-ad__image"
+                      src="https://housing-images.n7net.in/e0774925/0cc1ed89010ade0ecf95dc6eefd5d30f/v0/fs/ss_camasa-sector_90_gurgaon-gurgaon-ss_group.jpg"
+                      alt="SS Camasa"
+                      decoding="async"
+                      data-spotlight-idx="1"
+                    />
+
+                    <div class="spotlight-ad__dots spotlight-ad__dots--in-image" role="group" aria-label="Featured pick indicators">
+                      <div class="spotlight-ad__dots-track">
+                        <span class="spotlight-ad__dots-pill" aria-hidden="true"></span>
+                        <button
+                          type="button"
+                          class="spotlight-ad__dot spotlight-ad__dot--active"
+                          aria-pressed="true"
+                          tabindex="0"
+                          data-spotlight-idx="0"
+                          aria-label="SS One"
+                        >
+                          <span class="spotlight-ad__dot-marker" aria-hidden="true"></span>
+                        </button>
+                        <button
+                          type="button"
+                          class="spotlight-ad__dot"
+                          aria-pressed="false"
+                          tabindex="-1"
+                          data-spotlight-idx="1"
+                          aria-label="SS Camasa"
+                        >
+                          <span class="spotlight-ad__dot-marker" aria-hidden="true"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="landing-below" id="explore-more">
+        <section class="landing-section landing-section--band" aria-labelledby="landing-prominent-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header reveal-on-scroll">
+              <h2 id="landing-prominent-heading" class="landing-section__title">Prominent projects to explore</h2>
+              <p class="landing-section__sub">Handpicked residential projects with exceptional design and prime locations across the city.</p>
+            </header>
+            <div class="landing-scroll landing-scroll--projects reveal-on-scroll" tabindex="0" role="region" aria-label="Prominent projects">
+              <article class="landing-pro-card">
+                <a class="landing-pro-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-pro-card__media">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="YOG Anand" loading="eager" decoding="async" width="400" height="280" fetchpriority="high" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-pro-card__body">
+                    <h3 class="landing-pro-card__title">YOG Anand</h3>
+                    <p class="landing-pro-card__by">by Domilis Estate LLP</p>
+                    <div class="landing-pro-card__price-row"><span class="landing-pro-card__price">₹1.44 Cr</span><span class="landing-pro-card__price-label">Price</span></div>
+                    <p class="landing-pro-card__type">Residential Plots</p>
+                    <p class="landing-pro-card__loc">Maneri, Sindhudurg</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-pro-card">
+                <a class="landing-pro-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-pro-card__media">
+                    <img src="https://images.unsplash.com/photo-1600607687940-47a001611005?auto=format&fit=crop&w=800&q=80" alt="Ireo The Corridors" loading="eager" decoding="async" width="400" height="280" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-pro-card__body">
+                    <h3 class="landing-pro-card__title">Ireo The Corridors</h3>
+                    <p class="landing-pro-card__by">Mktd. by Empire Estate</p>
+                    <div class="landing-pro-card__price-row"><span class="landing-pro-card__price">₹2.33 Cr – 4.93 Cr</span></div>
+                    <p class="landing-pro-card__type">2–4 BHK Apartments</p>
+                    <p class="landing-pro-card__loc">Sector 67, Gurgaon</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-pro-card">
+                <a class="landing-pro-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-pro-card__media">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80" alt="Eon7 Designer Floors" loading="eager" decoding="async" width="400" height="280" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-pro-card__body">
+                    <h3 class="landing-pro-card__title">Eon7 Designer Floors</h3>
+                    <p class="landing-pro-card__by">by EON7 Developers</p>
+                    <div class="landing-pro-card__price-row"><span class="landing-pro-card__price">₹3.25 Cr – 4.0 Cr</span></div>
+                    <p class="landing-pro-card__type">3 BHK Builder Floor</p>
+                    <p class="landing-pro-card__loc">Sector 62, Gurgaon</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-pro-card">
+                <a class="landing-pro-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-pro-card__media">
+                    <img src="https://images.unsplash.com/photo-1449156001933-469b4b1cc3a1?auto=format&fit=crop&w=800&q=80" alt="Downtown 66" loading="eager" decoding="async" width="400" height="280" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-pro-card__body">
+                    <h3 class="landing-pro-card__title">Downtown 66</h3>
+                    <p class="landing-pro-card__by">by BPTP Limited</p>
+                    <div class="landing-pro-card__price-row"><span class="landing-pro-card__price">₹5.17 Cr – 5.81 Cr</span></div>
+                    <p class="landing-pro-card__type">3 BHK Apartment</p>
+                    <p class="landing-pro-card__loc">Sector 66, Gurgaon</p>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section" aria-labelledby="landing-highlight-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header reveal-on-scroll">
+              <h2 id="landing-highlight-heading" class="landing-section__title">Top highlighted projects</h2>
+              <p class="landing-section__sub">Explore our curated collection of projects that define modern living through superior architecture and amenities.</p>
+            </header>
+            <div class="landing-highlight-grid reveal-on-scroll">
+              <article class="landing-highlight-card">
+                <a class="landing-highlight-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-highlight-card__media">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?auto=format&fit=crop&w=800&q=80" alt="" loading="eager" decoding="async" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-highlight-card__body">
+                    <h3 class="landing-highlight-card__title">Ireo The Corridors</h3>
+                    <p class="landing-highlight-card__meta">Mktd. by Empire Estate</p>
+                    <p class="landing-highlight-card__detail">2–4 BHK Apartments</p>
+                    <p class="landing-highlight-card__price">₹2.33 Cr – 4.93 Cr</p>
+                    <p class="landing-highlight-card__loc">Sector 67, Gurgaon</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-highlight-card">
+                <a class="landing-highlight-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-highlight-card__media">
+                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80" alt="" loading="eager" decoding="async" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-highlight-card__body">
+                    <h3 class="landing-highlight-card__title">Eon7 Designer Floors</h3>
+                    <p class="landing-highlight-card__meta">by EON7 Developers</p>
+                    <p class="landing-highlight-card__detail">3 BHK Builder Floor</p>
+                    <p class="landing-highlight-card__price">₹3.25 Cr – 4.0 Cr</p>
+                    <p class="landing-highlight-card__loc">Sector 62, Gurgaon</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-highlight-card">
+                <a class="landing-highlight-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-highlight-card__media">
+                    <img src="https://images.unsplash.com/photo-1600570994443-d7a702484d38?auto=format&fit=crop&w=800&q=80" alt="" loading="eager" decoding="async" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="landing-highlight-card__body">
+                    <h3 class="landing-highlight-card__title">Emperium Titan</h3>
+                    <p class="landing-highlight-card__meta">by Emperium Infrastructure</p>
+                    <p class="landing-highlight-card__detail">3 BHK Apartment</p>
+                    <p class="landing-highlight-card__price">₹2.45 Cr</p>
+                    <p class="landing-highlight-card__loc">Sector 88A, Gurgaon</p>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section landing-section--band" aria-labelledby="landing-dev-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header reveal-on-scroll">
+              <h2 id="landing-dev-heading" class="landing-section__title">Featured developers</h2>
+              <p class="landing-section__sub">Collaborating with industry-leading builders who are committed to quality, transparency, and timely delivery.</p>
+            </header>
+            <div class="landing-dev-feature reveal-on-scroll">
+              <article class="landing-dev-card">
+                <a class="landing-dev-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-dev-card__top">
+                    <div class="landing-dev-card__avatar" aria-hidden="true">E7</div>
+                    <div class="landing-dev-card__intro">
+                      <h3 class="landing-dev-card__name">EON7 Developers</h3>
+                      <dl class="landing-dev-card__stats">
+                        <div><dt>Year estd.</dt><dd>2025</dd></div>
+                        <div><dt>Projects</dt><dd>1</dd></div>
+                      </dl>
+                    </div>
+                  </div>
+                  <p class="landing-dev-card__desc">An accomplished firm bringing a strategic yet personal approach to homes in Gurgaon.</p>
+                  <div class="landing-dev-card__chip">Eon7 Designer Floors</div>
+                  <div class="landing-dev-card__preview">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" alt="" loading="eager" decoding="async" referrerpolicy="no-referrer" />
+                    <div class="landing-dev-card__preview-text">
+                      <span class="landing-dev-card__preview-title">Eon7 Designer Floors</span>
+                      <span class="landing-dev-card__preview-sub">Sector 62 · ₹3.25 Cr – 4.0 Cr</span>
+                    </div>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section" aria-labelledby="landing-research-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header reveal-on-scroll">
+              <h2 id="landing-research-heading" class="landing-section__title">Research and insights</h2>
+              <p class="landing-section__sub">Data-driven analysis and market reports to help you make informed decisions about your next property investment.</p>
+            </header>
+            <div class="landing-insights reveal-on-scroll">
+              <a class="landing-insight-tile" href="https://housing.com/news/gurgaon-metro/" target="_blank" rel="noopener">
+                <span class="landing-insight-tile__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 256 256"><path d="M216,56v160a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8H208A8,8,0,0,1,216,56Z" opacity="0.2"/><path d="M208,40H48A16,16,0,0,0,32,56V216a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40Zm0,176H48V56H208V216ZM176,88a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,88Zm-80,0a32,32,0,1,1,32,32A32,32,0,0,1,96,88Zm104,88H56a8,8,0,0,0,0,16H200a8,8,0,0,0,0-16ZM128,112a24,24,0,1,0-24-24A24,24,0,0,0,128,112Zm0-32a8,8,0,1,1-8,8A8,8,0,0,1,128,80Z"/></svg>
+                </span>
+                <span class="landing-insight-tile__title">Price trends<span class="landing-insight-tile__arrow" aria-hidden="true">→</span></span>
+                <span class="landing-insight-tile__sub">Rates and momentum across top corridors</span>
+              </a>
+              <a class="landing-insight-tile" href="https://housing.com/news/" target="_blank" rel="noopener">
+                <span class="landing-insight-tile__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z" opacity="0.2"/><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm36-12a12,12,0,1,0,12,12A12,12,0,0,0,176,116ZM80,128a12,12,0,1,0,12,12A12,12,0,0,0,80,128Zm48-76A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,52Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,244Z"/></svg>
+                </span>
+                <span class="landing-insight-tile__title">City insights<span class="landing-insight-tile__arrow" aria-hidden="true">→</span></span>
+                <span class="landing-insight-tile__sub">Neighbourhood signals before you invest</span>
+              </a>
+              <a class="landing-insight-tile" href="https://housing.com/news/" target="_blank" rel="noopener">
+                <span class="landing-insight-tile__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 256 256"><path d="M48,48H208V208H48Z" opacity="0.2"/><path d="M208,40H48A16,16,0,0,0,32,56V208a8,8,0,0,0,8,8H216a8,8,0,0,0,8-8V56A16,16,0,0,0,208,40ZM72,200V72H184V200Z"/></svg>
+                </span>
+                <span class="landing-insight-tile__title">Housing research<span class="landing-insight-tile__arrow" aria-hidden="true">→</span></span>
+                <span class="landing-insight-tile__sub">Reports on the residential market</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section landing-section--band" aria-labelledby="landing-trend-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header">
+              <h2 id="landing-trend-heading" class="landing-section__title">High-demand projects to invest now</h2>
+              <p class="landing-section__sub">Leading projects in high demand</p>
+            </header>
+            <div class="landing-trend-grid">
+              <article class="landing-trend-card">
+                <a class="landing-trend-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-trend-card__media"><img src="https://housing-images.n7net.in/4f2250e8/b2833172ad2b905137f0e930fc163aee/v0/medium/downtown_66-sector_66-gurgaon-bptp_limited.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-trend-card__body">
+                    <h3 class="landing-trend-card__title">Downtown 66</h3>
+                    <p class="landing-trend-card__dev">by BPTP Limited</p>
+                    <p class="landing-trend-card__type">3 BHK Apartment</p>
+                    <p class="landing-trend-card__loc">Sector 66, Gurgaon</p>
+                    <p class="landing-trend-card__price">₹5.17 Cr – 5.81 Cr</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-trend-card">
+                <a class="landing-trend-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-trend-card__media"><img src="https://housing-images.n7net.in/4f2250e8/a9c345dd14775cef779080a9d16154fe/v0/medium/emperium_titan-sector_88a-gurgaon-emperium_infrastructure_private_limited.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-trend-card__body">
+                    <h3 class="landing-trend-card__title">Emperium Titan</h3>
+                    <p class="landing-trend-card__dev">by Emperium Infrastructure</p>
+                    <p class="landing-trend-card__type">3 BHK Apartment</p>
+                    <p class="landing-trend-card__loc">Sector 88A, Gurgaon</p>
+                    <p class="landing-trend-card__price">₹2.45 Cr</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-trend-card">
+                <a class="landing-trend-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-trend-card__media"><img src="https://housing-images.n7net.in/4f2250e8/ee8d1b5422cf3ee91203e2b3addb3965/v0/medium/avani_floors-mohammadpur_gujar_1-gurgaon-ns_arcus.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-trend-card__body">
+                    <h3 class="landing-trend-card__title">Avani Floors</h3>
+                    <p class="landing-trend-card__dev">by SHREE MANGLAM REALTY</p>
+                    <p class="landing-trend-card__type">3 BHK Builder Floor</p>
+                    <p class="landing-trend-card__loc">Mohammadpur Gujar, Gurgaon</p>
+                    <p class="landing-trend-card__price">₹1.64 Cr – 1.86 Cr</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-trend-card">
+                <a class="landing-trend-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-trend-card__media"><img src="https://housing-images.n7net.in/4f2250e8/836ba1f5cc7fe4ccedae537c036bbb3f/v0/medium/lotus_elise-sector_99_gurgaon-gurgaon-lotus_realtech_pvt_ltd.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-trend-card__body">
+                    <h3 class="landing-trend-card__title">Lotus Elise</h3>
+                    <p class="landing-trend-card__dev">by Empire Makers Consulting</p>
+                    <p class="landing-trend-card__type">2–4 BHK Apartment</p>
+                    <p class="landing-trend-card__loc">Sector 99, Gurgaon</p>
+                    <p class="landing-trend-card__price">₹1.67 Cr – 4.19 Cr</p>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section" aria-labelledby="landing-sellers-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header">
+              <h2 id="landing-sellers-heading" class="landing-section__title">Recommended sellers</h2>
+              <p class="landing-section__sub">Sellers with deep locality knowledge</p>
+            </header>
+            <div class="landing-scroll landing-scroll--sellers" tabindex="0" role="region" aria-label="Recommended sellers">
+              <article class="landing-seller-card">
+                <div class="landing-seller-card__inner">
+                  <div class="landing-seller-card__top">
+                    <div class="landing-seller-card__avatar">AG</div>
+                    <div>
+                      <h3 class="landing-seller-card__name">Ashiyan Gold Developers</h3>
+                      <div class="landing-seller-card__stats"><span>11 yrs experience</span><span>39 listings</span></div>
+                      <div class="landing-seller-card__tags"><span>IMT Sohna</span><span>Sector 59</span></div>
+                    </div>
+                  </div>
+                  <button type="button" class="landing-seller-card__cta">Show contact</button>
+                </div>
+              </article>
+              <article class="landing-seller-card">
+                <div class="landing-seller-card__inner">
+                  <div class="landing-seller-card__top">
+                    <div class="landing-seller-card__avatar landing-seller-card__avatar--img">
+                      <img src="https://housing-images.n7net.in/fb15c03b/137d9f060ee662afe0f0bef1948734e4/v0/thumb.jpg" alt="" loading="lazy" decoding="async" />
+                    </div>
+                    <div>
+                      <h3 class="landing-seller-card__name">Mangla Associates</h3>
+                      <div class="landing-seller-card__stats"><span>10 yrs experience</span><span>25 listings</span></div>
+                      <div class="landing-seller-card__tags"><span>Sector 110</span><span>Sector 108</span></div>
+                    </div>
+                  </div>
+                  <button type="button" class="landing-seller-card__cta">Show contact</button>
+                </div>
+              </article>
+              <article class="landing-seller-card">
+                <div class="landing-seller-card__inner">
+                  <div class="landing-seller-card__top">
+                    <div class="landing-seller-card__avatar">KE</div>
+                    <div>
+                      <h3 class="landing-seller-card__name">Kutub Estate</h3>
+                      <div class="landing-seller-card__stats"><span>35 yrs experience</span><span>56 listings</span></div>
+                      <div class="landing-seller-card__tags"><span>DLF Phase 2</span><span>Sector 53</span></div>
+                    </div>
+                  </div>
+                  <button type="button" class="landing-seller-card__cta">Show contact</button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section landing-section--band" aria-labelledby="landing-new-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header">
+              <h2 id="landing-new-heading" class="landing-section__title">Newly-added properties</h2>
+              <p class="landing-section__sub">Fresh listings to check out</p>
+            </header>
+            <div class="landing-scroll landing-scroll--new" tabindex="0" role="region" aria-label="New listings">
+              <article class="landing-new-card">
+                <a class="landing-new-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-new-card__media"><img src="https://housing-images.n7net.in/4f2250e8/921c4ab7e7cdc6c2cdde47402c39c014/v0/medium/rof_amaltas-sector_92-gurgaon-rof_group.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-new-card__body">
+                    <h3 class="landing-new-card__title">ROF Amaltas</h3>
+                    <p class="landing-new-card__meta">1–3 BHK Apartments · Sector 92</p>
+                    <p class="landing-new-card__price">₹37.5 L – 77.41 L</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-new-card">
+                <a class="landing-new-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-new-card__media"><img src="https://housing-images.n7net.in/4f2250e8/d326951a59fa511803fdb899625e9127/v0/medium/adani_aangan-sector_89a-gurgaon-adani_realty.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-new-card__body">
+                    <h3 class="landing-new-card__title">Adani Aangan</h3>
+                    <p class="landing-new-card__meta">1–2 BHK Apartments · Sector 89A</p>
+                    <p class="landing-new-card__price">₹37.41 L – 70.46 L</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-new-card">
+                <a class="landing-new-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-new-card__media"><img src="https://housing-images.n7net.in/4f2250e8/8b89b10b3cc39e206208260993bd9992/v0/medium/gls_avenue_51-sector_92-gurgaon-gls_infra.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-new-card__body">
+                    <h3 class="landing-new-card__title">GLS Avenue 51</h3>
+                    <p class="landing-new-card__meta">1–3 BHK Apartments · Sector 92</p>
+                    <p class="landing-new-card__price">₹34.68 L – 73.7 L</p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-new-card">
+                <a class="landing-new-card__link" href="#" target="_blank" rel="noopener">
+                  <div class="landing-new-card__media"><img src="https://housing-images.n7net.in/4f2250e8/52e11580b11493b27f8a28eb98a77080/v0/medium/ireo_the_corridors-sector_67_haryana-gurgaon-ireo_developers.jpeg" alt="" loading="lazy" decoding="async" /></div>
+                  <div class="landing-new-card__body">
+                    <h3 class="landing-new-card__title">Ireo The Corridors</h3>
+                    <p class="landing-new-card__meta">2–4 BHK · Sector 67</p>
+                    <p class="landing-new-card__price">₹2.33 Cr – 4.93 Cr</p>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section" aria-labelledby="landing-sell-heading">
+          <div class="layout-container">
+            <div class="landing-sell-banner">
+              <div class="landing-sell-banner__copy">
+                <h2 id="landing-sell-heading" class="landing-sell-banner__title">Have a property to sell?</h2>
+                <p class="landing-sell-banner__sub">List your property and connect with serious buyers faster.</p>
+              </div>
+              <a class="landing-sell-banner__cta" href="https://seller.housing.com/my-listings/new/basic" target="_blank" rel="nofollow noopener">Sell your property</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section landing-section--band" aria-labelledby="landing-news-heading">
+          <div class="layout-container landing-section__inner">
+            <header class="landing-section__header landing-section__header--row">
+              <div>
+                <h2 id="landing-news-heading" class="landing-section__title">News and articles</h2>
+                <p class="landing-section__sub">Read what is happening in real estate</p>
+              </div>
+              <a class="landing-section__see-all" href="https://housing.com/news/" target="_blank" rel="noopener">See all</a>
+            </header>
+            <div class="landing-news-grid">
+              <article class="landing-news-card">
+                <a class="landing-news-card__link" href="https://housing.com/news/gurgaon-metro/" target="_blank" rel="noopener">
+                  <div class="landing-news-card__media">
+                    <img src="https://assets-news.housing.com/news/wp-content/uploads/2023/06/07110421/shutterstock_1093285331-1200x700-compressed.jpg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="landing-news-card__body">
+                    <h3 class="landing-news-card__title">Gurgaon Metro route, map, and market impact</h3>
+                    <p class="landing-news-card__excerpt">Construction timelines and corridors to watch.</p>
+                    <p class="landing-news-card__meta"><span>Harini Balasubramanian</span><time datetime="2026-03">Mar 2026</time></p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-news-card">
+                <a class="landing-news-card__link" href="https://housing.com/news/buying-resale-flat-in-gurgaon/" target="_blank" rel="noopener">
+                  <div class="landing-news-card__media">
+                    <img src="https://assets-news.housing.com/news/wp-content/uploads/2025/10/24213605/Untitled-design-2025-10-24T213504-compressed.jpg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="landing-news-card__body">
+                    <h3 class="landing-news-card__title">Buying a resale flat in Gurgaon</h3>
+                    <p class="landing-news-card__excerpt">What to verify before you sign.</p>
+                    <p class="landing-news-card__meta"><span>Dhwani Meharchandani</span><time datetime="2025-10">Oct 2025</time></p>
+                  </div>
+                </a>
+              </article>
+              <article class="landing-news-card">
+                <a class="landing-news-card__link" href="https://housing.com/news/delhi-rewari-alwar-rrts/" target="_blank" rel="noopener">
+                  <div class="landing-news-card__media">
+                    <img src="https://assets-news.housing.com/news/wp-content/uploads/2020/11/09200039/All-you-need-to-know-about-Delhi-Rewari-Alwar-RRTS-FB-1200x700-compressed.jpg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="landing-news-card__body">
+                    <h3 class="landing-news-card__title">Delhi–Rewari–Alwar RRTS updates</h3>
+                    <p class="landing-news-card__excerpt">Route, stations, and connectivity wins.</p>
+                    <p class="landing-news-card__meta"><span>Harini Balasubramanian</span><time datetime="2025-10">Oct 2025</time></p>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="site-footer" id="site-footer">
+        <div class="site-footer__wrap">
+          <div class="site-footer__grid">
+            <div class="site-footer__brand-col">
+              <div class="site-footer__brand-hero">
+                <a class="site-footer__logo-link" href="https://housing.com/" target="_blank" rel="noopener">
+                  <img class="site-footer__logo-mark" src="/logo.svg" alt="Housing.com" width="160" height="42" decoding="async" />
+                </a>
+                <div class="site-footer__hero-lines">
+                  <p class="site-footer__hero-line">Better homes,</p>
+                  <h2 class="site-footer__hero-line site-footer__hero-line--accent">better lives</h2>
+                </div>
+              </div>
+              <div class="site-footer__corp">
+                <h3 class="site-footer__label">Corporate office</h3>
+                <p class="site-footer__corp-address">
+                  Locon Solutions Pvt. Ltd., 6th Floor, SAS Tower-C, Ch. Bakhtawar Singh Road, Medicity, Sector 38,
+                  Gurugram, Haryana 122001, India
+                </p>
+              </div>
+              <div class="site-footer__trust">
+                <span class="site-footer__trust-label">Part of</span>
+                <img
+                  class="site-footer__trust-logo"
+                  src="https://c.housingcdn.com/demand/s/client/common/assets/REAGroup.e5435593.png"
+                  alt="REA Group"
+                  width="140"
+                  height="36"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="site-footer__dock site-footer__dock--desktop">
+                <div class="site-footer__dock-group" aria-label="Social links">
+                  <div class="site-footer__social-row">
+                    <a class="site-footer__soc" href="https://www.facebook.com/housing.co.in" target="_blank" rel="nofollow noopener noreferrer" aria-label="Facebook">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V7.3c0-1 .3-2 2-2h2V1h-3c-3 0-5 2-5 5v3z"/></svg>
+                    </a>
+                    <a class="site-footer__soc" href="https://x.com/HousingInd" target="_blank" rel="nofollow noopener noreferrer" aria-label="X">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 3h3.43l-7.49 8.55L22 21h-6.44l-5.05-6.64L5.47 21H2l8.02-9.15L2 3h6.56l4.55 6.09L18.24 3zm-1.2 16.26h1.9L7.9 4.68H5.89l11.15 14.58z"/></svg>
+                    </a>
+                    <a class="site-footer__soc" href="https://instagram.com/housingindia/" target="_blank" rel="nofollow noopener noreferrer" aria-label="Instagram">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm5.5-9.5a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm8 18a3 3 0 003-3V9a3 3 0 00-3-3H9a3 3 0 00-3 3v8a3 3 0 003 3h6z"/></svg>
+                    </a>
+                    <a class="site-footer__soc" href="https://www.youtube.com/user/HousingY" target="_blank" rel="nofollow noopener noreferrer" aria-label="YouTube">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.7 2.7 0 00-1.9-1.9C18 4.8 12 4.8 12 4.8s-6 0-7.7.5A2.7 2.7 0 002.4 7.2 28.6 28.6 0 002 12a28.6 28.6 0 00.4 4.8 2.7 2.7 0 001.9 1.9c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.7 2.7 0 001.9-1.9 28.6 28.6 0 00.4-4.8 28.6 28.6 0 00-.4-4.8zM10 15.2V8.8L15.5 12 10 15.2z"/></svg>
+                    </a>
+                    <a class="site-footer__soc" href="https://www.linkedin.com/company/2741657" target="_blank" rel="nofollow noopener noreferrer" aria-label="LinkedIn">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 6.5a1.8 1.8 0 11-1.8-1.8 1.8 1.8 0 011.8 1.8zM3.5 20.5h6.8V9H3.5v11.5zM13.7 9v11.5h6.8v-6c0-2.8 1.6-4 3.7-4 2.2 0 3.2 1.6 3.2 3.9v6.1H24v-6.6c0-4.5-2.4-6.6-5.6-6.6a5.3 5.3 0 00-4.7 2.6V9h-6z"/></svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="site-footer__store-row">
+                  <a href="https://apps.apple.com/in/app/housing-com-property-search/id706683592" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
+                    <img src="https://c.housingcdn.com/demand/s/client/common/assets/app-store.10009972.png" alt="" width="120" height="40" loading="lazy" decoding="async" />
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.locon.housing&amp;hl=en_IN" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+                    <img src="https://c.housingcdn.com/demand/s/client/common/assets/google-play.2c209e8c.png" alt="" width="136" height="40" loading="lazy" decoding="async" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <nav class="site-footer__nav-grid" aria-label="Footer">
+              <div class="site-footer__nav-group">
+                <h3 class="site-footer__label">Company</h3>
+                <ul class="site-footer__nav-list">
+                  <li><a href="https://housing.com/about" target="_blank" rel="noopener">About us</a></li>
+                  <li><a href="https://careers.housing.com/" target="_blank" rel="nofollow noopener">Careers</a></li>
+                  <li><a href="https://housing.com/partners" target="_blank" rel="noopener">For partners</a></li>
+                  <li><a href="https://housing.com/terms-of-use" target="_blank" rel="noopener">Terms</a></li>
+                  <li><a href="https://housing.com/privacy-policy" target="_blank" rel="noopener">Privacy policy</a></li>
+                  <li><a href="https://housing.com/annual-return" target="_blank" rel="nofollow noopener">Annual return</a></li>
+                  <li><a href="https://housing.com/merger-hearing" target="_blank" rel="nofollow noopener">Merger hearing advertisement</a></li>
+                  <li><a href="https://housing.com/unsubscribe" target="_blank" rel="nofollow noopener">Unsubscribe</a></li>
+                </ul>
+              </div>
+              <div class="site-footer__nav-group">
+                <h3 class="site-footer__label">Discover</h3>
+                <ul class="site-footer__nav-list">
+                  <li><a href="https://housing.com/in/buy/gurgaon/" target="_blank" rel="noopener">Buy in Gurugram</a></li>
+                  <li><a href="https://housing.com/rent/flats-for-rent-in-gurgaon-haryana-P1od1w26jrfqap1jl" target="_blank" rel="noopener">Rent in Gurugram</a></li>
+                  <li><a href="https://housing.com/in/buy/gurgaon/projects/" target="_blank" rel="noopener">New projects</a></li>
+                  <li><a href="https://housing.com/in/buy/mumbai/" target="_blank" rel="noopener">Flats in Mumbai</a></li>
+                  <li><a href="https://housing.com/in/buy/bengaluru/" target="_blank" rel="noopener">Flats in Bangalore</a></li>
+                  <li><a href="https://housing.com/calculators/square-meter-to-square-feet" target="_blank" rel="noopener">Area calculators</a></li>
+                  <li><a href="https://housing.com/in/buy/all-cities" target="_blank" rel="noopener">All cities — buy</a></li>
+                  <li><a href="https://housing.com/rent/all-cities" target="_blank" rel="noopener">All cities — rent</a></li>
+                  <li><a href="https://housing.com/buy-property-in-india-for-sale-srpid-P6vubelwbhsrl3yvi" target="_blank" rel="noopener">Properties in India</a></li>
+                </ul>
+              </div>
+              <div class="site-footer__nav-group">
+                <h3 class="site-footer__label">Help &amp; support</h3>
+                <ul class="site-footer__nav-list">
+                  <li><a href="https://housing.com/contact-us" target="_blank" rel="noopener">Contact us</a></li>
+                  <li><a href="https://housing.com/news/" target="_blank" rel="noopener noreferrer">News</a></li>
+                  <li><a href="https://housing.com/home-loans" target="_blank" rel="noopener noreferrer">Home loans</a></li>
+                  <li><a href="https://housing.com/sitemap" target="_blank" rel="noopener noreferrer">Sitemap</a></li>
+                  <li><a href="https://housing.com/international" target="_blank" rel="noopener noreferrer">International</a></li>
+                </ul>
+              </div>
+            </nav>
+
+            <div class="site-footer__dock site-footer__dock--mobile">
+              <div class="site-footer__dock-group" aria-label="Social links">
+                <div class="site-footer__social-row">
+                  <a class="site-footer__soc" href="https://www.facebook.com/housing.co.in" target="_blank" rel="nofollow noopener noreferrer" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V7.3c0-1 .3-2 2-2h2V1h-3c-3 0-5 2-5 5v3z"/></svg>
+                  </a>
+                  <a class="site-footer__soc" href="https://x.com/HousingInd" target="_blank" rel="nofollow noopener noreferrer" aria-label="X">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 3h3.43l-7.49 8.55L22 21h-6.44l-5.05-6.64L5.47 21H2l8.02-9.15L2 3h6.56l4.55 6.09L18.24 3zm-1.2 16.26h1.9L7.9 4.68H5.89l11.15 14.58z"/></svg>
+                  </a>
+                  <a class="site-footer__soc" href="https://instagram.com/housingindia/" target="_blank" rel="nofollow noopener noreferrer" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm5.5-9.5a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm8 18a3 3 0 003-3V9a3 3 0 00-3-3H9a3 3 0 00-3 3v8a3 3 0 003 3h6z"/></svg>
+                  </a>
+                  <a class="site-footer__soc" href="https://www.youtube.com/user/HousingY" target="_blank" rel="nofollow noopener noreferrer" aria-label="YouTube">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.7 2.7 0 00-1.9-1.9C18 4.8 12 4.8 12 4.8s-6 0-7.7.5A2.7 2.7 0 002.4 7.2 28.6 28.6 0 002 12a28.6 28.6 0 00.4 4.8 2.7 2.7 0 001.9 1.9c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.7 2.7 0 001.9-1.9 28.6 28.6 0 00.4-4.8 28.6 28.6 0 00-.4-4.8zM10 15.2V8.8L15.5 12 10 15.2z"/></svg>
+                  </a>
+                  <a class="site-footer__soc" href="https://www.linkedin.com/company/2741657" target="_blank" rel="nofollow noopener noreferrer" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 6.5a1.8 1.8 0 11-1.8-1.8 1.8 1.8 0 011.8 1.8zM3.5 20.5h6.8V9H3.5v11.5zM13.7 9v11.5h6.8v-6c0-2.8 1.6-4 3.7-4 2.2 0 3.2 1.6 3.2 3.9v6.1H24v-6.6c0-4.5-2.4-6.6-5.6-6.6a5.3 5.3 0 00-4.7 2.6V9h-6z"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="site-footer__store-row">
+                <a href="https://apps.apple.com/in/app/housing-com-property-search/id706683592" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
+                  <img src="https://c.housingcdn.com/demand/s/client/common/assets/app-store.10009972.png" alt="" width="120" height="40" loading="lazy" decoding="async" />
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.locon.housing&amp;hl=en_IN" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+                  <img src="https://c.housingcdn.com/demand/s/client/common/assets/google-play.2c209e8c.png" alt="" width="136" height="40" loading="lazy" decoding="async" />
+                </a>
+              </div>
+            </div>
+
+            <section class="site-footer__seo" aria-labelledby="footer-seo-heading">
+              <div class="site-footer__seo-intro">
+                <h2 id="footer-seo-heading" class="site-footer__seo-heading">Explore by intent</h2>
+                <p class="site-footer__seo-lede">Popular corridors, formats, and calculators — organised the way Housing.com groups discovery links.</p>
+              </div>
+              <nav class="landing-link-chips site-footer__chips" aria-label="Browse top links">
+                <a class="landing-chip" href="https://housing.com/in/buy/gurgaon/" target="_blank" rel="noopener">Flats in Gurgaon</a>
+                <a class="landing-chip" href="https://housing.com/rent/flats-for-rent-in-gurgaon-haryana-P1od1w26jrfqap1jl" target="_blank" rel="noopener">Rent in Gurgaon</a>
+                <a class="landing-chip" href="https://housing.com/in/buy/gurgaon/projects/" target="_blank" rel="noopener">New projects</a>
+                <a class="landing-chip" href="https://housing.com/in/buy/mumbai/" target="_blank" rel="noopener">Flats in Mumbai</a>
+                <a class="landing-chip" href="https://housing.com/in/buy/bengaluru/" target="_blank" rel="noopener">Flats in Bangalore</a>
+                <a class="landing-chip" href="https://housing.com/calculators/square-meter-to-square-feet" target="_blank" rel="noopener">Area calculators</a>
+              </nav>
+
+              <div class="site-footer__tab-strip">
+                <div class="site-footer__tablist" role="tablist" aria-labelledby="footer-seo-heading">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="footer-tab-buyers"
+                    class="site-footer__tab site-footer__tab--active"
+                    aria-selected="true"
+                    aria-controls="footer-panel-buyers"
+                    tabindex="0"
+                  >
+                    For buyers
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="footer-tab-tenants"
+                    class="site-footer__tab"
+                    aria-selected="false"
+                    aria-controls="footer-panel-tenants"
+                    tabindex="-1"
+                  >
+                    For tenants
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="footer-tab-projects"
+                    class="site-footer__tab"
+                    aria-selected="false"
+                    aria-controls="footer-panel-projects"
+                    tabindex="-1"
+                  >
+                    Projects
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="footer-tab-cities"
+                    class="site-footer__tab"
+                    aria-selected="false"
+                    aria-controls="footer-panel-cities"
+                    tabindex="-1"
+                  >
+                    Popular cities
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="footer-tab-searches"
+                    class="site-footer__tab"
+                    aria-selected="false"
+                    aria-controls="footer-panel-searches"
+                    tabindex="-1"
+                  >
+                    Popular searches
+                  </button>
+                </div>
+              </div>
+
+              <div class="site-footer__panels">
+                  <div
+                    role="tabpanel"
+                    id="footer-panel-buyers"
+                    class="site-footer__panel"
+                    aria-labelledby="footer-tab-buyers"
+                  >
+                    <h2 class="site-footer__panel-title">Find flats for sale</h2>
+                    <div class="site-footer__link-grid">
+                      <a href="https://housing.com/in/buy/faridabad/" target="_blank" rel="noopener">Flats for sale in Faridabad</a>
+                      <a href="https://housing.com/in/buy/gurgaon/sohna-gid/" target="_blank" rel="noopener">Flats for sale in Sohna</a>
+                      <a href="https://housing.com/in/buy/panchkula/" target="_blank" rel="noopener">Flats for sale in Panchkula</a>
+                      <a href="https://housing.com/in/buy/panipat/" target="_blank" rel="noopener">Flats for sale in Panipat</a>
+                      <a href="https://housing.com/in/buy/sonipat/" target="_blank" rel="noopener">Flats for sale in Sonipat</a>
+                      <a href="https://housing.com/in/buy/karnal/" target="_blank" rel="noopener">Flats for sale in Karnal</a>
+                      <a href="https://housing.com/in/buy/rohtak/" target="_blank" rel="noopener">Flats for sale in Rohtak</a>
+                      <a href="https://housing.com/in/buy/ambala/" target="_blank" rel="noopener">Flats for sale in Ambala</a>
+                      <a href="https://housing.com/in/buy/palwal/" target="_blank" rel="noopener">Flats for sale in Palwal</a>
+                      <a href="https://housing.com/in/buy/jhajjar/" target="_blank" rel="noopener">Flats for sale in Jhajjar</a>
+                      <a href="https://housing.com/in/buy/rewari/" target="_blank" rel="noopener">Flats for sale in Rewari</a>
+                      <a href="https://housing.com/in/buy/hisar/" target="_blank" rel="noopener">Flats for sale in Hisar</a>
+                      <a href="https://housing.com/in/buy/dharuhera/" target="_blank" rel="noopener">Flats for sale in Dharuhera</a>
+                      <a href="https://housing.com/in/buy/kurukshetra/" target="_blank" rel="noopener">Flats for sale in Kurukshetra</a>
+                      <a href="https://housing.com/in/buy/yamuna-nagar/" target="_blank" rel="noopener">Flats for sale in Yamuna Nagar</a>
+                      <a href="https://housing.com/in/buy/all-cities" target="_blank" rel="noopener">All cities — buy</a>
+                    </div>
+                  </div>
+
+                  <div
+                    role="tabpanel"
+                    id="footer-panel-tenants"
+                    class="site-footer__panel"
+                    aria-labelledby="footer-tab-tenants"
+                    hidden
+                  >
+                    <h2 class="site-footer__panel-title">Find flats for rent</h2>
+                    <div class="site-footer__link-grid">
+                      <a href="https://housing.com/rent/flats-for-rent-in-faridabad-haryana-P3nlekdze1dlp2923" target="_blank" rel="noopener">Flats for rent in Faridabad</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-panchkula-haryana-P3nph4ji0jli391dk" target="_blank" rel="noopener">Flats for rent in Panchkula</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-south-of-gurgaon-gurgaon-P2wc9m75p3kuq6wrn" target="_blank" rel="noopener">Flats for rent in Sohna</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-panipat-haryana-P4l482nlrr9ej88m8" target="_blank" rel="noopener">Flats for rent in Panipat</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-karnal-haryana-Po0o1ak6av7gkiiy" target="_blank" rel="noopener">Flats for rent in Karnal</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-sonipat-haryana-P4t8y1tw3n4lfhs6t" target="_blank" rel="noopener">Flats for rent in Sonipat</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-rohtak-haryana-Pium091234x4g2t4" target="_blank" rel="noopener">Flats for rent in Rohtak</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-ambala-haryana-P4nice696xik9omvx" target="_blank" rel="noopener">Flats for rent in Ambala</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-hisar-haryana-P1ooq6n77aosrbnjx" target="_blank" rel="noopener">Flats for rent in Hisar</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-rewari-haryana-P5hpzp8ea5n0zxrnw" target="_blank" rel="noopener">Flats for rent in Rewari</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-palwal-haryana-P64hm9mhul1vkok3b" target="_blank" rel="noopener">Flats for rent in Palwal</a>
+                      <a href="https://housing.com/rent/all-cities" target="_blank" rel="noopener">All cities — rent</a>
+                    </div>
+                  </div>
+
+                  <div
+                    role="tabpanel"
+                    id="footer-panel-projects"
+                    class="site-footer__panel"
+                    aria-labelledby="footer-tab-projects"
+                    hidden
+                  >
+                    <h2 class="site-footer__panel-title">Find new residential projects</h2>
+                    <div class="site-footer__link-grid">
+                      <a href="https://housing.com/in/buy/faridabad/projects/" target="_blank" rel="noopener">New projects in Faridabad</a>
+                      <a href="https://housing.com/in/buy/panchkula/projects/" target="_blank" rel="noopener">New projects in Panchkula</a>
+                      <a href="https://housing.com/in/buy/gurgaon/sohna-gid/projects/" target="_blank" rel="noopener">New projects in Sohna</a>
+                      <a href="https://housing.com/in/buy/sonipat/projects/" target="_blank" rel="noopener">New projects in Sonipat</a>
+                      <a href="https://housing.com/in/buy/jhajjar/projects/" target="_blank" rel="noopener">New projects in Jhajjar</a>
+                      <a href="https://housing.com/in/buy/rohtak/projects/" target="_blank" rel="noopener">New projects in Rohtak</a>
+                      <a href="https://housing.com/in/buy/karnal/projects/" target="_blank" rel="noopener">New projects in Karnal</a>
+                      <a href="https://housing.com/in/buy/dharuhera/projects/" target="_blank" rel="noopener">New projects in Dharuhera</a>
+                      <a href="https://housing.com/in/buy/palwal/projects/" target="_blank" rel="noopener">New projects in Palwal</a>
+                      <a href="https://housing.com/in/buy/panipat/projects/" target="_blank" rel="noopener">New projects in Panipat</a>
+                      <a href="https://housing.com/in/buy/gurgaon/projects/" target="_blank" rel="noopener">New projects in Gurgaon</a>
+                      <a href="https://housing.com/in/buy/mumbai/projects/" target="_blank" rel="noopener">New projects in Mumbai</a>
+                    </div>
+                  </div>
+
+                  <div
+                    role="tabpanel"
+                    id="footer-panel-cities"
+                    class="site-footer__panel"
+                    aria-labelledby="footer-tab-cities"
+                    hidden
+                  >
+                    <h2 class="site-footer__panel-title">Popular cities — buy and rent</h2>
+                    <div class="site-footer__link-grid">
+                      <a href="https://housing.com/in/buy/mumbai/" target="_blank" rel="noopener">Flats for sale in Mumbai</a>
+                      <a href="https://housing.com/in/buy/pune/" target="_blank" rel="noopener">Flats for sale in Pune</a>
+                      <a href="https://housing.com/in/buy/bengaluru/" target="_blank" rel="noopener">Flats for sale in Bangalore</a>
+                      <a href="https://housing.com/in/buy/new-delhi/" target="_blank" rel="noopener">Flats for sale in New Delhi</a>
+                      <a href="https://housing.com/in/buy/chennai/" target="_blank" rel="noopener">Flats for sale in Chennai</a>
+                      <a href="https://housing.com/in/buy/kolkata/" target="_blank" rel="noopener">Flats for sale in Kolkata</a>
+                      <a href="https://housing.com/in/buy/gurgaon/" target="_blank" rel="noopener">Flats for sale in Gurgaon</a>
+                      <a href="https://housing.com/in/buy/hyderabad/" target="_blank" rel="noopener">Flats for sale in Hyderabad</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-mumbai-india-Pskwz0ocdh7q42r5" target="_blank" rel="noopener">Flats for rent in Mumbai</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-pune-maharashtra-P2r4v3l939lxd541t" target="_blank" rel="noopener">Flats for rent in Pune</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-bangalore-karnataka-P38f9yfbk7p3m2h1f" target="_blank" rel="noopener">Flats for rent in Bangalore</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-new-delhi-india-P6xfqdsey6cc3d95h" target="_blank" rel="noopener">Flats for rent in New Delhi</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-chennai-india-P4bimjmco2m9afw0m" target="_blank" rel="noopener">Flats for rent in Chennai</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-kolkata-west-bengal-P40qcmycif4m431jo" target="_blank" rel="noopener">Flats for rent in Kolkata</a>
+                      <a href="https://housing.com/rent/flats-for-rent-in-gurgaon-haryana-P1od1w26jrfqap1jl" target="_blank" rel="noopener">Flats for rent in Gurgaon</a>
+                    </div>
+                  </div>
+
+                  <div
+                    role="tabpanel"
+                    id="footer-panel-searches"
+                    class="site-footer__panel"
+                    aria-labelledby="footer-tab-searches"
+                    hidden
+                  >
+                    <h2 class="site-footer__panel-title">Tools and popular searches</h2>
+                    <div class="site-footer__link-grid">
+                      <a href="https://housing.com/calculators/square-meter-to-square-feet" target="_blank" rel="noopener">Convert sq. m to sq. ft</a>
+                      <a href="https://housing.com/calculators/square-feet-to-square-meter" target="_blank" rel="noopener">Convert sq. ft to sq. m</a>
+                      <a href="https://housing.com/calculators/acre-to-square-feet" target="_blank" rel="noopener">Convert acre to sq. ft</a>
+                      <a href="https://housing.com/calculators/square-feet-to-acre" target="_blank" rel="noopener">Convert sq. ft to acre</a>
+                      <a href="https://housing.com/calculators/hectare-to-acre" target="_blank" rel="noopener">Convert hectare to acre</a>
+                      <a href="https://housing.com/in/buy/all-cities" target="_blank" rel="noopener">List of all residential cities</a>
+                      <a href="https://housing.com/rent/all-cities" target="_blank" rel="noopener">All cities for rentals</a>
+                      <a href="https://housing.com/buy-property-in-india-for-sale-srpid-P6vubelwbhsrl3yvi" target="_blank" rel="noopener">Properties in India</a>
+                      <a href="https://housing.com/buy-flats-in-india-for-sale-srpid-M1P6vubelwbhsrl3yvi" target="_blank" rel="noopener">Flats in India</a>
+                    </div>
+                  </div>
+                </div>
+            </section>
+
+            <div class="site-footer__bar">
+              <div class="site-footer__bar-rule" aria-hidden="true"></div>
+              <div class="site-footer__bar-inner">
+                <p class="site-footer__copyright">
+                  © 2012–2026 Locon Solutions Pvt. Ltd. • housing.com • All rights reserved
+                </p>
+                <div class="site-footer__partner-strip">
+                  <h3 class="site-footer__partner-heading">Partner network</h3>
+                  <div class="site-footer__partner-links">
+                    <a href="https://www.realestate.com.au/" target="_blank" rel="nofollow noopener">realestate.com.au</a>
+                    <span class="site-footer__dot" aria-hidden="true"></span>
+                    <a href="https://realtor.com/" target="_blank" rel="nofollow noopener">realtor.com</a>
+                    <span class="site-footer__dot" aria-hidden="true"></span>
+                    <a href="https://www.99.co/" target="_blank" rel="nofollow noopener">99.co</a>
+                    <span class="site-footer__dot" aria-hidden="true"></span>
+                    <a href="http://www.collinsdictionary.com/" target="_blank" rel="nofollow noopener">Collins</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <div
+        class="search-overlay"
+        id="search-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search"
+        aria-hidden="true"
+        hidden
+        inert
+      >
+        <div class="search-overlay__scrim" data-close-search tabindex="-1" aria-hidden="true"></div>
+        <div class="search-overlay__content">
+          <button
+            type="button"
+            class="search-overlay__close"
+            data-close-search
+            aria-label="Close search"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+              <path
+                d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+              ></path>
+            </svg>
+          </button>
+          <div class="search-overlay__scroll" tabindex="-1">
+            <div class="main-search__panel main-search__panel--overlay">
+              <div class="main-search__panel-inset">
+                <div class="main-search__hero-block main-search__hero-block--morph-target">
+                <div class="service-tabs">
+                  <div class="service-tabs__track">
+                    <div class="service-tabs__tablist" role="tablist" aria-label="Listing type">
+                      <span class="service-tabs__glide" aria-hidden="true"></span>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="true"
+                        class="service-tabs__tab service-tabs__tab--active"
+                        data-service="buy"
+                      >
+                        Buy
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="projects"
+                      >
+                        Projects
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="rent"
+                      >
+                        Rent
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="commercial"
+                      >
+                        Commercial
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="pg"
+                      >
+                        PG
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        class="service-tabs__tab"
+                        data-service="plots"
+                      >
+                        Plots
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="search-capsule" role="search">
+                  <div class="search-capsule__outer">
+                    <div class="search-capsule__inner">
+                      <input
+                        type="search"
+                        id="search-input-overlay"
+                        class="search-capsule__input"
+                        placeholder="Search"
+                        autocomplete="off"
+                        aria-label="Search"
+                      />
+                      <button
+                        type="button"
+                        class="search-capsule__submit"
+                        aria-label="Submit search"
+                      >
+                        <span class="search-capsule__icon" aria-hidden="true">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            fill="currentColor"
+                            viewBox="0 0 256 256"
+                          >
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            ></path>
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="search-overlay__below-fold">
+                <hr class="search-overlay__separator" aria-hidden="true" />
+
+                <div class="search-overlay__discover" data-overlay-service="buy">
+                  <section class="overlay-section" aria-labelledby="overlay-heading-recent">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M216,128a88,88,0,1,1-88-88A88,88,0,0,1,216,128Z"
+                            opacity="0.2"
+                          ></path>
+                          <path
+                            d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-recent" class="overlay-section__title">Recent searches</h2>
+                    </div>
+                    <div class="overlay-row overlay-row--recent" role="list">
+                      <div class="overlay-card overlay-card--recent" role="listitem">
+                        <div class="overlay-card__thumb" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            />
+                          </svg>
+                        </div>
+                        <div class="overlay-card__body">
+                          <p class="overlay-card__title">Buy 2BHK under 3 Cr</p>
+                          <p class="overlay-card__meta">
+                            <span class="overlay-card__highlight">5 new this week</span>
+                            <span class="overlay-card__sep" aria-hidden="true">·</span>
+                            <span class="overlay-card__muted">Malviya Nagar</span>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="overlay-card overlay-card--recent" role="listitem">
+                        <div class="overlay-card__thumb" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            />
+                          </svg>
+                        </div>
+                        <div class="overlay-card__body">
+                          <p class="overlay-card__title">Buy in Bandra West</p>
+                          <p class="overlay-card__meta">
+                            <span class="overlay-card__highlight">3 new this week</span>
+                            <span class="overlay-card__sep" aria-hidden="true">·</span>
+                            <span class="overlay-card__muted">Bandra West</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="overlay-section" aria-labelledby="overlay-heading-localities">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path d="M232,56v64L168,56Z" opacity="0.2"></path>
+                          <path
+                            d="M232,48H168a8,8,0,0,0-5.66,13.66L188.69,88,136,140.69l-34.34-34.35a8,8,0,0,0-11.32,0l-72,72a8,8,0,0,0,11.32,11.32L96,123.31l34.34,34.35a8,8,0,0,0,11.32,0L200,99.31l26.34,26.35A8,8,0,0,0,240,120V56A8,8,0,0,0,232,48Zm-8,52.69L187.31,64H224Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-localities" class="overlay-section__title">Popular localities</h2>
+                    </div>
+                    <div class="overlay-row overlay-row--localities" role="list">
+                      <div class="overlay-card overlay-card--locality" role="listitem">
+                        <p class="overlay-card__title overlay-card__title--solo">Kharadishdal</p>
+                        <p class="overlay-card__sub">₹30.2K/sq.ft.</p>
+                      </div>
+                      <div class="overlay-card overlay-card--locality" role="listitem">
+                        <p class="overlay-card__title overlay-card__title--solo">Malviya Nagar</p>
+                        <p class="overlay-card__sub">₹28.4K/sq.ft.</p>
+                      </div>
+                      <div class="overlay-card overlay-card--locality" role="listitem">
+                        <p class="overlay-card__title overlay-card__title--solo">Panchshil Park</p>
+                        <p class="overlay-card__sub">₹32.1K/sq.ft.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="overlay-section" aria-labelledby="overlay-heading-landmarks">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M229.06,108.79l-48.7,42,14.88,62.79a8.4,8.4,0,0,1-12.52,9.17L128,189.09,73.28,222.74a8.4,8.4,0,0,1-12.52-9.17l14.88-62.79-48.7-42A8.46,8.46,0,0,1,31.73,94L95.64,88.8l24.62-59.6a8.36,8.36,0,0,1,15.48,0l24.62,59.6L224.27,94A8.46,8.46,0,0,1,229.06,108.79Z"
+                            opacity="0.2"
+                          ></path>
+                          <path
+                            d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-landmarks" class="overlay-section__title">Popular landmarks</h2>
+                    </div>
+                    <div class="overlay-chips" role="list">
+                      <div class="overlay-chip" role="listitem">
+                        <span class="overlay-chip__icon-slot" aria-hidden="true"></span>
+                        <span>Hard Rock Cafe</span>
+                      </div>
+                      <div class="overlay-chip" role="listitem">
+                        <span class="overlay-chip__icon-slot" aria-hidden="true"></span>
+                        <span>Amity Law School</span>
+                      </div>
+                      <div class="overlay-chip" role="listitem">
+                        <span class="overlay-chip__icon-slot" aria-hidden="true"></span>
+                        <span>Millenium Metro Station</span>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="overlay-section" aria-labelledby="overlay-heading-projects">
+                    <div class="overlay-section__head">
+                      <span class="overlay-section__icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M136,32V216H40V85.35a8,8,0,0,1,3.56-6.66l80-53.33A8,8,0,0,1,136,32Z"
+                            opacity="0.2"
+                          ></path>
+                          <path
+                            d="M240,208H224V96a16,16,0,0,0-16-16H144V32a16,16,0,0,0-24.88-13.32L39.12,72A16,16,0,0,0,32,85.34V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM208,96V208H144V96ZM48,85.34,128,32V208H48ZM112,112v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm-32,0v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm0,56v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Zm32,0v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <h2 id="overlay-heading-projects" class="overlay-section__title">Trending projects</h2>
+                    </div>
+                    <div class="overlay-row overlay-row--projects" role="list">
+                      <div class="overlay-card overlay-card--project" role="listitem">
+                        <p class="overlay-card__title">Anantraj Mansion Li…</p>
+                        <hr class="overlay-card__rule" aria-hidden="true" />
+                        <p class="overlay-card__meta overlay-card__meta--project">
+                          <span class="overlay-card__muted">Panchshil Park</span>
+                          <span class="overlay-card__sep" aria-hidden="true">·</span>
+                          <span class="overlay-card__muted">₹30.2K/sq.ft.</span>
+                        </p>
+                      </div>
+                      <div class="overlay-card overlay-card--project" role="listitem">
+                        <p class="overlay-card__title">Skyline Residency</p>
+                        <hr class="overlay-card__rule" aria-hidden="true" />
+                        <p class="overlay-card__meta overlay-card__meta--project">
+                          <span class="overlay-card__muted">Kharadi</span>
+                          <span class="overlay-card__sep" aria-hidden="true">·</span>
+                          <span class="overlay-card__muted">₹27.8K/sq.ft.</span>
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <button type="button" class="overlay-nearby">
+                    <span class="overlay-nearby__icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                        <path
+                          d="M234.35,129,152,152,129,234.35a8,8,0,0,1-15.21.27l-65.28-176A8,8,0,0,1,58.63,48.46l176,65.28A8,8,0,0,1,234.35,129Z"
+                          opacity="0.2"
+                        />
+                        <path
+                          d="M237.33,106.21,61.41,41l-.16-.05A16,16,0,0,0,40.9,61.25a1,1,0,0,0,.05.16l65.26,175.92A15.77,15.77,0,0,0,121.28,248h.3a15.77,15.77,0,0,0,15-11.29l.06-.2,21.84-78,78-21.84.2-.06a16,16,0,0,0,.62-30.38ZM149.84,144.3a8,8,0,0,0-5.54,5.54L121.3,232l-.06-.17L56,56l175.82,65.22.16.06Z"
+                        />
+                      </svg>
+                    </span>
+                    <span class="overlay-nearby__label">Explore nearby properties</span>
+                    <svg class="overlay-nearby__chev" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                      <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" />
+                    </svg>
+                  </button>
+                </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+          observer.observe(el);
+        });
+      });
+    </script>
+  </body>
+</html>

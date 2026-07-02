@@ -1,0 +1,94 @@
+# Structure: Price Trends
+
+- **3 year return** · `COMPONENT_SET` · 537×80 · 3 children
+  - **Property 1=Positive** · `COMPONENT` · 157×40 · vertical stack, gap 2px · 2 children
+    - **Frame 2147261500** · `FRAME` · 60×16 · vertical stack, gap 4px · 1 children
+      - **3Y returns** · `TEXT` · 60×16 · “3Y returns”
+    - **Frame 2147261465** · `FRAME` · 65×22 · horizontal row, gap 4px · 2 children
+      - **TrendUp** · `INSTANCE` · 18×18 · instance of TrendUp
+      - **Frame 2147261456** · `FRAME` · 43×22 · horizontal row, gap 16px · 1 children
+        - **18.3%** · `TEXT` · 43×22 · “18.3%”
+- **Cards** · `COMPONENT_SET` · 752×1534 · 4 children
+  - **Category=Buy Locality** · `COMPONENT` · 706×341 · vertical stack, gap 16px, padding 24px · 5 children
+    - **Sector 38** · `FRAME` · 200×150 · 1 children
+      - **Pill / Ready to move** · `FRAME` · 54×30 · horizontal row, gap 4px, padding 4/8/4/8px · 2 children
+        - **Star** · `INSTANCE` · 16×16 · instance of Star
+        - **Label** · `TEXT` · 18×16 · “4.6”
+    - **Frame 2147261489** · `FRAME` · 656×210 · vertical stack, gap 16px · 3 children
+      - **Frame 2147261486** · `FRAME` · 656×48 · horizontal row, gap 24px · 2 children
+        - **Frame 2147261507** · `FRAME` · 568×48 · horizontal row, gap 16px · 1 children
+          - **Frame 2147261506** · `FRAME` · 568×48 · vertical stack, gap 16px · 1 children
+            - **Frame 2147261483** · `FRAME` · 336×48 · vertical stack, gap 12px · 1 children
+              - **Frame 2147261389** · `FRAME` · 336×48 · vertical stack, gap 4px · 2 children
+                - **Frame 2147261484** · `FRAME` · 227×28 · horizontal row, gap 6px
+                  - _…and 1 more_
+                - **Sector 86, New Gurgaon, Gurgaon** · `TEXT` · 336×16 · “Sector 86, New Gurgaon, Gurgaon”
+        - **Button** · `INSTANCE` · 64×16 · horizontal row, gap 4px · instance of Button
+      - **Line 5** · `LINE` · 656×0
+      - **Frame 2147261381** · `FRAME` · 656×130 · horizontal row, gap 32px · 2 children
+        - **Frame 2147261486** · `FRAME` · 326×130 · vertical stack, gap 24px · 2 children
+          - **Frame 2147261504** · `FRAME` · 326×40 · horizontal row, gap 24px · 2 children
+            - **Frame 2147261473** · `FRAME` · 145×40 · vertical stack, gap 2px · 2 children
+              - **Frame 2147261500** · `FRAME` · 104×16 · vertical stack, gap 4px · 1 children
+                - **Avg. price in 2026** · `TEXT` · 104×16 · “Avg. price in 2026”
+              - **₹20,000 per sq.ft.** · `TEXT` · 120×22 · “₹20,000 per sq.ft.”
+            - **3 year return** · `INSTANCE` · 157×40 · vertical stack, gap 2px · instance of 3 year return
+          - **Frame 2147261487** · `FRAME` · 326×66 · vertical stack, gap 10px · 2 children
+            - **Key highlights** · `TEXT` · 82×16 · “Key highlights”
+            - **Frame 2147261480** · `FRAME` · 326×40 · vertical stack, gap 8px · 2 children
+              - **Frame 2147261515** · `FRAME` · 187×16 · horizontal row, gap 8px · 2 children
+                - **Check** · `INSTANCE` · 16×16 · instance of Check
+                - **Text** · `TEXT` · 163×16 · “Various IT offices nearby”
+              - **Frame 2147261514** · `FRAME` · 224×16 · horizontal row, gap 8px · 2 children
+                - **Check** · `INSTANCE` · 16×16 · instance of Check
+                - **Text** · `TEXT` · 200×16 · “Access to prominent malls +12”
+        - **Frame 2147261451** · `FRAME` · 298×130 · vertical stack, gap 16px, padding 16/12/12/12px · 1 children
+          - **Frame 2147261487** · `FRAME` · 274×102 · vertical stack, gap 8px · 2 children
+            - **Frame 2147261473** · `FRAME` · 274×80 · vertical stack, gap 10px · 1 children
+              - **Frame 2147261510** · `FRAME` · 274×80 · horizontal row, gap 20px · 2 children
+                - **Frame 2147261510** · `FRAME` · 21×80 · vertical stack, gap 16px
+                  - _…and 3 more_
+                - **Frame 2147261509** · `FRAME` · 233×80 · vertical stack, gap 59px, padding 8/0/8/0px
+                  - _…and 6 more_
+            - **Frame 2147261463** · `FRAME` · 274×14 · horizontal row, gap 16px, padding 0/0/0/24px · 3 children
+              - **Placeholder** · `TEXT` · 76×14 · “2023”
+              - **Placeholder** · `TEXT` · 86×14 · “2024”
+              - **Placeholder** · `TEXT` · 58×14 · “2025”
+    - **Line 5** · `LINE` · 656×0
+    - **Frame 2147261390** · `FRAME` · 868×44 · horizontal row, gap 12px, padding 12/0/0/0px · 2 children
+      - **Frame 2087324852** · `FRAME` · 545×32 · horizontal row, gap 12px · 5 children
+        - **Frame 2087324307** · `FRAME` · 155×32 · vertical stack, gap 8px, padding 8/12/8/12px · 1 children
+          - **Frame 2087324843** · `FRAME` · 131×16 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324385** · `FRAME` · 107×16 · vertical stack, gap 4px · 1 children
+              - **Frame 2087324819** · `FRAME` · 107×16 · horizontal row, gap 8px · 1 children
+                - **Text** · `TEXT` · 107×16 · “2 BHK in Sector 38”
+            - **ArrowSquareOut** · `INSTANCE` · 16×16 · instance of ArrowSquareOut
+        - **Frame 2087324308** · `FRAME` · 155×32 · vertical stack, gap 8px, padding 8/12/8/12px · 1 children
+          - **Frame 2087324843** · `FRAME` · 131×16 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324385** · `FRAME` · 107×16 · vertical stack, gap 4px · 1 children
+              - **Frame 2087324819** · `FRAME` · 107×16 · horizontal row, gap 8px · 1 children
+                - **Text** · `TEXT` · 107×16 · “2 BHK in Sector 38”
+            - **ArrowSquareOut** · `INSTANCE` · 16×16 · instance of ArrowSquareOut
+        - **Frame 2087324309** · `FRAME` · 155×32 · vertical stack, gap 8px, padding 8/12/8/12px · 1 children
+          - **Frame 2087324843** · `FRAME` · 131×16 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324385** · `FRAME` · 107×16 · vertical stack, gap 4px · 1 children
+              - **Frame 2087324819** · `FRAME` · 107×16 · horizontal row, gap 8px · 1 children
+                - **Text** · `TEXT` · 107×16 · “2 BHK in Sector 38”
+            - **ArrowSquareOut** · `INSTANCE` · 16×16 · instance of ArrowSquareOut
+        - **Frame 2087324310** · `FRAME` · 155×32 · vertical stack, gap 8px, padding 8/12/8/12px · 1 children
+          - **Frame 2087324843** · `FRAME` · 131×16 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324385** · `FRAME` · 107×16 · vertical stack, gap 4px · 1 children
+              - **Frame 2087324819** · `FRAME` · 107×16 · horizontal row, gap 8px · 1 children
+                - **Text** · `TEXT` · 107×16 · “2 BHK in Sector 38”
+            - **ArrowSquareOut** · `INSTANCE` · 16×16 · instance of ArrowSquareOut
+        - **Frame 2087324311** · `FRAME` · 155×32 · vertical stack, gap 8px, padding 8/12/8/12px · 1 children
+          - **Frame 2087324843** · `FRAME` · 131×16 · horizontal row, gap 8px · 2 children
+            - **Frame 2087324385** · `FRAME` · 107×16 · vertical stack, gap 4px · 1 children
+              - **Frame 2087324819** · `FRAME` · 107×16 · horizontal row, gap 8px · 1 children
+                - **Text** · `TEXT` · 107×16 · “2 BHK in Sector 38”
+            - **ArrowSquareOut** · `INSTANCE` · 16×16 · instance of ArrowSquareOut
+      - **Vector 4** · `VECTOR` · 0×29
+    - **Frame 2147261474** · `FRAME` · 656×48 · horizontal row, gap 16px · 2 children
+      - **Button** · `INSTANCE` · 126×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+      - **Button** · `INSTANCE` · 176×48 · horizontal row, gap 8px, padding 12/20/12/20px · instance of Button
+- **Vector 14** · `VECTOR` · 0×26

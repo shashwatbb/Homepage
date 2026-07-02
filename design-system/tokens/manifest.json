@@ -1,0 +1,45 @@
+{
+  "name": "Design Tokens",
+  "collections": {
+    "color_tokens": {
+      "modes": {
+        "Value": [
+          "color_tokens.Value.tokens.json"
+        ]
+      }
+    },
+    "color_primitives": {
+      "modes": {
+        "Value": [
+          "color_primitives.Value.tokens.json"
+        ]
+      }
+    },
+    "spacing": {
+      "modes": {
+        "Value": [
+          "spacing.Value.tokens.json"
+        ]
+      }
+    },
+    "radius": {
+      "modes": {
+        "Value": [
+          "radius.Value.tokens.json"
+        ]
+      }
+    },
+    "typography": {
+      "modes": {
+        "value": [
+          "typography.value.tokens.json"
+        ]
+      }
+    }
+  },
+  "styles": {
+    "text": [
+      "text.styles.tokens.json"
+    ]
+  }
+}

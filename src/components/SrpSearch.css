@@ -1,0 +1,249 @@
+/* SRP Search Component — Bricks Design System */
+/*
+  DESIGN RULES (Mobile & Web):
+
+  ICON SIZING: Minimum 16px × 16px
+  ACTIVE STATES: 1px border + light lavender bg, icons inherit color
+  BUTTON HEIGHT: 40px mobile, 44px web (all buttons same)
+  BORDER-RADIUS: Search 12px, buttons 12px
+  SPACING: 8px gaps mobile, 12px gaps web
+*/
+
+.srp-search-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--ds-color-warm-neutral-0);
+  box-shadow: 0 4px 12px rgba(26, 26, 26, 0.08);
+  padding: 12px 0 12px 16px;
+}
+
+.srp-search-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Search field — rounded 12px */
+.srp-search-field {
+  display: flex;
+  align-items: center;
+  background-color: var(--ds-color-warm-neutral-0);
+  border: 1px solid var(--ds-color-warm-neutral-300);
+  border-radius: 12px;
+  padding: 12px 16px;
+  gap: 12px;
+  margin-right: 16px;
+}
+
+.srp-search-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--ds-color-purple-700);
+}
+
+.srp-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--ds-font-family-primary);
+  font-size: 14px;
+  color: var(--ds-color-grey-neutral-900);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.srp-search-input::placeholder {
+  color: var(--ds-color-grey-neutral-500);
+}
+
+.srp-search-magic {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.srp-search-magic img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Filter buttons row */
+.srp-search-filters {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  align-items: center;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.srp-search-filters::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual filter buttons with shadow */
+.srp-filter-sort,
+.srp-filter-dropdown {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ds-color-warm-neutral-200);
+  background-color: var(--ds-color-warm-neutral-0);
+  font-family: var(--ds-font-family-primary);
+  font-size: 13px;
+  color: var(--ds-color-grey-neutral-900);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.04);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Filter chip gets shadow, not the buttons inside */
+.srp-filter-chip {
+  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.04);
+}
+
+.srp-filter-sort:active,
+.srp-filter-dropdown:active {
+  background-color: var(--ds-color-warm-neutral-100);
+}
+
+/* Sort — icon only */
+.srp-filter-sort {
+  padding: 0;
+  width: 40px;
+  justify-content: center;
+}
+
+.srp-filter-sort img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Filter chip — Filters + Clear in one pill */
+.srp-filter-chip {
+  flex-shrink: 0;
+  display: flex;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--ds-color-purple-700);
+  background-color: var(--ds-color-lavender-mist-50);
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.srp-filter-active {
+  border: none;
+  background: transparent;
+  color: var(--ds-color-purple-700);
+  font-weight: 500;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: var(--ds-font-family-primary);
+  font-size: 13px;
+}
+
+.srp-filter-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--ds-color-icon-brand-1, var(--ds-color-purple-700));
+}
+
+.srp-filter-active svg {
+  width: 16px;
+  height: 16px;
+  color: var(--ds-color-purple-700);
+}
+
+.srp-filter-chip-separator {
+  width: 1.5px;
+  height: 20px;
+  background-color: var(--ds-color-purple-700);
+  opacity: 0.4;
+  border-radius: 1px;
+  margin: auto 0;
+}
+
+.srp-filter-clear {
+  border: none;
+  background: transparent;
+  color: var(--ds-color-purple-700);
+  font-weight: 500;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: var(--ds-font-family-primary);
+  font-size: 13px;
+}
+
+/* Dropdowns — chevron 16px */
+.srp-filter-dropdown svg {
+  width: 16px;
+  height: 16px;
+  color: var(--ds-color-grey-neutral-900);
+}
+
+/* Desktop */
+@media (min-width: 48rem) {
+  .srp-search-container {
+    padding: 16px 24px;
+  }
+
+  .srp-search-wrapper {
+    gap: 16px;
+  }
+
+  .srp-search-field {
+    padding: 14px 20px;
+  }
+
+  .srp-search-filters {
+    gap: 12px;
+  }
+
+  .srp-filter-sort,
+  .srp-filter-dropdown {
+    height: 44px;
+    padding: 10px 16px;
+  }
+
+  .srp-filter-sort {
+    width: 44px;
+    padding: 0;
+  }
+
+  .srp-filter-chip {
+    height: 44px;
+  }
+
+  .srp-filter-active,
+  .srp-filter-clear {
+    padding: 10px 16px;
+  }
+}
