@@ -1267,6 +1267,7 @@ body {
   margin-inline: auto;
   padding: clamp(var(--space-6), 2vw, var(--space-10))
     clamp(var(--space-10), 6vw, 5.5rem);
+  background-color: var(--ds-color-warm-neutral-0) !important;
 }
 
 .site-header__mega-grid {
