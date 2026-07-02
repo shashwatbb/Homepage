@@ -981,7 +981,10 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   .site-header--compact {
-    animation: site-header-compact-slide-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+    /* No fill-mode: leaving a persistent `transform` on this element (even translateY(0))
+       would turn it into a containing block for position:fixed descendants (the mega menu),
+       breaking its viewport-relative left:0/right:0 full-width stretch after the intro plays. */
+    animation: site-header-compact-slide-in 0.52s cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
