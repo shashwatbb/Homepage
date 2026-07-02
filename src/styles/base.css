@@ -1264,15 +1264,23 @@ body {
 }
 
 .site-header__mega-inner {
+  /* Full-bleed background layer -- no max-width/margin here, or this box's own
+     white fill stops short of the true edges. Centering + padding for the
+     actual content lives on .site-header__mega-grid below instead.
+     Matches the outer panel's bottom radius exactly -- this box sits directly
+     on top of it at full width, so a sharp rectangle here would visually
+     square off the outer panel's rounded corners. */
+  width: 100%;
+  border-radius: 0 0 var(--ds-radius-2xl) var(--ds-radius-2xl);
+  background-color: var(--ds-color-warm-neutral-0) !important;
+}
+
+.site-header__mega-grid {
   width: 100%;
   max-width: min(var(--container-3xl), 82.5rem);
   margin-inline: auto;
   padding: clamp(var(--space-6), 2vw, var(--space-10))
     clamp(var(--space-10), 6vw, 5.5rem);
-  background-color: var(--ds-color-warm-neutral-0) !important;
-}
-
-.site-header__mega-grid {
   display: grid;
   grid-template-columns: minmax(11.5rem, 1.2fr) repeat(3, minmax(0, 1fr));
   gap: clamp(var(--space-6), 2.5vw, var(--space-10)) clamp(var(--space-5), 2vw, var(--space-10));
@@ -1783,25 +1791,21 @@ a.site-header__nav-trigger {
 }
 
 .site-header__drawer {
-  display: block;
+  /* display:none is the hard on/off switch -- no ambiguity from visibility/opacity
+     transition timing. Opacity below is purely a cosmetic fade once visible. */
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 175;
   pointer-events: none;
-  visibility: hidden;
   opacity: 0;
-  transition:
-    opacity 0.28s ease,
-    visibility 0s linear 0.3s;
+  transition: opacity 0.28s ease;
 }
 
   .site-header__drawer.site-header__drawer--open {
+    display: block;
     pointer-events: auto;
-    visibility: visible;
     opacity: 1;
-    transition:
-      opacity 0.28s ease,
-      visibility 0s linear 0s;
   }
 
   .site-header__drawer-scrim {
@@ -1845,15 +1849,7 @@ a.site-header__nav-trigger {
     }
 
     .site-header__drawer {
-      transition:
-        opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 0.38s;
-    }
-
-    .site-header__drawer.site-header__drawer--open {
-      transition:
-        opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 0s;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .site-header__drawer-scrim {

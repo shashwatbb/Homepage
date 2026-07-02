@@ -1,0 +1,228 @@
+/* SRP mobile results — 3 stacked option sections of placeholder cards.
+   Mobile only (this file only ever loads inside #srp-mobile-content, which
+   base.css already hides above 48rem).
+   All values reference the project's real --ds-* design tokens.
+
+   Which-option-is-in-view is shown ONLY as the sticky search bar's
+   placeholder text (swapped live via IntersectionObserver in srp-main.js) --
+   no separate indicator element on this page, per the "only one place"
+   rule: the search bar itself is the one sticky UI element, so it doubles
+   as the indicator instead of adding a second sticky bar underneath it. */
+
+/* NOTE: do NOT put overflow-x:hidden (or any non-visible overflow) on
+   .srp-page, body, or html -- .srp-search-container (position: sticky)
+   is a descendant of .srp-page, and overflow on any ancestor other than
+   the actual scrolling viewport breaks position:sticky entirely. The
+   real fix for the earlier horizontal-scroll bug is in .srp-card-images
+   img below (flex: 1 1 0 instead of width: 50%, which was the actual
+   cause of the overflow) -- no ancestor-level overflow guard is needed
+   or safe here. */
+
+.srp-option-section {
+  /* Full-bleed cards -- no left/right inset here. */
+  padding: var(--ds-space-xl) 0 0;
+}
+
+.srp-option-section:last-child {
+  padding-bottom: var(--ds-space-xl);
+}
+
+.srp-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-xs); /* 8px gap; page bg shows through here */
+}
+
+/* -- Card -- */
+.srp-card {
+  background-color: var(--ds-surface-white);
+  border-radius: var(--ds-radius-none);
+  padding: var(--ds-space-m) var(--ds-space-m) var(--ds-space-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-s);
+}
+
+/* Seller/agent header strip */
+.srp-card-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-xs);
+}
+
+.srp-card-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+}
+
+.srp-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--ds-space-2xs);
+  border-radius: var(--ds-radius-xs);
+  background-color: var(--ds-surface-brand-subtle);
+  color: var(--ds-text-brand);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-xs);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-xs);
+  letter-spacing: var(--ds-letter-spacing-md);
+  white-space: nowrap;
+}
+
+.srp-card-strip-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-xs);
+  line-height: var(--ds-line-height-xs);
+  white-space: nowrap;
+}
+
+.srp-card-strip-meta svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ds-color-warm-neutral-700);
+}
+
+/* Two images side by side */
+.srp-card-images {
+  display: flex;
+  gap: var(--ds-space-3xs);
+  position: relative;
+}
+
+.srp-card-images img {
+  /* flex: 1 (not width: 50%) -- two 50%-width items plus the flex gap
+     between them add up to MORE than 100% of the row, which was pushing
+     the whole page into horizontal overflow/scroll on mobile. */
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0;
+  height: 116px;
+  object-fit: cover;
+  border-radius: var(--ds-radius-s);
+  display: block;
+  background-color: var(--ds-surface-default);
+}
+
+.srp-card-image-count {
+  position: absolute;
+  right: var(--ds-space-2xs);
+  bottom: var(--ds-space-2xs);
+  padding: 2px var(--ds-space-2xs);
+  border-radius: var(--ds-radius-xs);
+  background-color: rgba(15, 14, 13, 0.6);
+  color: var(--ds-text-inverse);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-xs);
+  line-height: var(--ds-line-height-xs);
+}
+
+/* Status row: possession status + price/sqft */
+.srp-card-status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  line-height: var(--ds-line-height-s);
+}
+
+.srp-card-status-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-border-default);
+  flex-shrink: 0;
+}
+
+/* Price -- largest/boldest text on the card */
+.srp-card-price {
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-3xl);
+  font-weight: var(--ds-font-weight-semibold);
+  line-height: var(--ds-line-height-3xl);
+  margin: 0;
+}
+
+.srp-card-name {
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-m);
+  margin: 0;
+}
+
+.srp-card-config {
+  color: var(--ds-text-secondary);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-m);
+  margin: 0;
+}
+
+.srp-card-address {
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-s);
+  margin: 0;
+}
+
+.srp-card-divider {
+  height: 1px;
+  background-color: var(--ds-border-subtle);
+  border: none;
+  margin: 0;
+}
+
+/* CTA buttons row */
+.srp-card-cta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+}
+
+.srp-card-cta-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-3xs);
+  padding: var(--ds-space-xs) var(--ds-space-s);
+  border-radius: var(--ds-radius-s);
+  border: 1px solid var(--ds-border-default);
+  background-color: var(--ds-surface-white);
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  letter-spacing: var(--ds-letter-spacing-s);
+  line-height: var(--ds-line-height-m);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.srp-card-cta-btn--brand {
+  background-color: var(--ds-surface-brand);
+  border-color: var(--ds-surface-brand);
+  color: var(--ds-text-inverse);
+}
+
+.srp-card-cta-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}

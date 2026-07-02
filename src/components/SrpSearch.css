@@ -169,7 +169,7 @@
 .srp-filter-icon {
   width: 16px;
   height: 16px;
-  color: var(--ds-color-icon-brand-1, var(--ds-color-purple-700));
+  color: var(--ds-color-purple-700);
 }
 
 .srp-filter-active svg {

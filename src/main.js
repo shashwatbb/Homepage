@@ -1354,6 +1354,12 @@ function initMobileNavDrawer() {
 
   function openDrawer() {
     root.classList.add("site-header__drawer--open");
+    // Inline styles as a forced failsafe -- highest specificity short of
+    // !important, so this cannot be silently defeated by any other rule.
+    root.style.setProperty("display", "block", "important");
+    root.style.setProperty("opacity", "1", "important");
+    root.style.setProperty("pointer-events", "auto", "important");
+    panel.style.setProperty("transform", "translateX(0)", "important");
     root.removeAttribute("inert");
     root.setAttribute("aria-hidden", "false");
     menuBtn.setAttribute("aria-expanded", "true");
@@ -1364,6 +1370,10 @@ function initMobileNavDrawer() {
 
   function closeDrawer() {
     root.classList.remove("site-header__drawer--open");
+    root.style.removeProperty("display");
+    root.style.removeProperty("opacity");
+    root.style.removeProperty("pointer-events");
+    panel.style.removeProperty("transform");
     root.setAttribute("aria-hidden", "true");
     root.setAttribute("inert", "");
     menuBtn.setAttribute("aria-expanded", "false");
