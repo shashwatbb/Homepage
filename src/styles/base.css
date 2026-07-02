@@ -1263,6 +1263,7 @@ body {
 .site-header__mega-inner {
   width: 100%;
   max-width: min(var(--container-3xl), 82.5rem);
+  background-color: var(--ds-color-warm-neutral-0);
   margin-inline: auto;
   padding: clamp(var(--space-6), 2vw, var(--space-10))
     clamp(var(--space-10), 6vw, 5.5rem);
@@ -2019,7 +2020,7 @@ a.site-header__nav-trigger {
   .site-header__drawer-title {
     margin: 0;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: -0.03em;
     color: var(--ds-color-grey-neutral-900);
   }
@@ -2129,7 +2130,7 @@ a.site-header__nav-trigger {
     margin: var(--space-3) 0 var(--space-2);
     padding-inline: 0;
     font-size: 0.6875rem;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--color-header-text) 48%, transparent);

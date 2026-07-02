@@ -29,7 +29,16 @@
       "Bash(curl -I \"http://localhost:5173/srp.html\")",
       "Bash(curl -I http://localhost:5173/srp.html)",
       "Bash(find /Users/shashwat/Documents/Work -name \"*magnifying*\" -type f 2>/dev/null | head -3)",
-      "Bash(cp \"/Users/shashwat/Documents/Work/Cursor:Claude/figma-cli-main/Icons regular/angle.svg\" /Users/shashwat/Documents/Work/Cursor:Claude/Homepage/src/assets/icons/chevron-down.svg)"
+      "Bash(cp \"/Users/shashwat/Documents/Work/Cursor:Claude/figma-cli-main/Icons regular/angle.svg\" /Users/shashwat/Documents/Work/Cursor:Claude/Homepage/src/assets/icons/chevron-down.svg)",
+      "Bash(git push *)",
+      "Bash(read -r line)",
+      "Bash(:)",
+      "Bash(awk '/\\\\.site-header/{h=$0} /font-weight/{print NR\": \"h\" -> \"$0}' /Users/shashwat/Documents/Work/Cursor:Claude/Homepage/src/styles/base.css)",
+      "Bash(./node_modules/.bin/vite --port 5173)",
+      "Bash(curl -sI http://localhost:5173/)",
+      "Bash(./node_modules/.bin/vite --port 5174)",
+      "Bash(curl -s http://localhost:5174/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:5175/ -o /dev/null -w \"%{http_code}\\\\n\")"
     ]
   }
 }
