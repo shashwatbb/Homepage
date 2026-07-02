@@ -1,6 +1,26 @@
 /* SRP is mobile-only. Desktop shows the header + a compact notice instead of
    mobile content. Scoped via .srp-page so this never affects other pages. */
 
+.srp-page {
+  background-color: var(--ds-surface-default);
+}
+
+html:has(.srp-page),
+body:has(.srp-page) {
+  background-color: var(--ds-surface-default);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html:has(.srp-page)::-webkit-scrollbar,
+body:has(.srp-page)::-webkit-scrollbar {
+  display: none;
+}
+
+.srp-page .srp-mobile-content {
+  background-color: var(--ds-surface-default);
+}
+
 .srp-page .site-header {
   display: none;
 }
@@ -24,7 +44,7 @@
     justify-content: center;
     min-height: calc(100dvh - var(--header-height));
     padding: 24px;
-    background-color: var(--ds-color-warm-neutral-50);
+    background-color: var(--ds-surface-default);
   }
 
   .srp-mobile-content {

@@ -3,11 +3,9 @@
    base.css already hides above 48rem).
    All values reference the project's real --ds-* design tokens.
 
-   Which-option-is-in-view is shown ONLY as the sticky search bar's
-   placeholder text (swapped live via IntersectionObserver in srp-main.js) --
-   no separate indicator element on this page, per the "only one place"
-   rule: the search bar itself is the one sticky UI element, so it doubles
-   as the indicator instead of adding a second sticky bar underneath it. */
+   Which-option-is-in-view is shown as the sticky search bar input value
+   (updated live via scroll spy in srp-main.js) -- no separate indicator
+   element on this page. */
 
 /* NOTE: do NOT put overflow-x:hidden (or any non-visible overflow) on
    .srp-page, body, or html -- .srp-search-container (position: sticky)
@@ -21,6 +19,10 @@
 .srp-option-section {
   /* Full-bleed cards -- no left/right inset here. */
   padding: var(--ds-space-xl) 0 0;
+}
+
+.srp-option-section:first-child {
+  padding-top: 0;
 }
 
 .srp-option-section:last-child {

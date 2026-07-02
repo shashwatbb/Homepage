@@ -10,12 +10,14 @@ import magnifyingGlassUrl from "./assets/icons/magnifying-glass.svg";
 import sortUrl from "./assets/icons/sort-ascending.svg";
 import aiLogoUrl from "./assets/icons/ai-logo.png";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Render sticky search component
-  const searchRoot = document.getElementById("claude-root");
-  if (searchRoot) {
-    searchRoot.innerHTML = `
-      <div class="srp-search-container">
+function renderSrpSearch() {
+  const mobileContent = document.getElementById("srp-mobile-content");
+  const resultsEl = document.getElementById("srp-results");
+  if (!mobileContent || !resultsEl) return;
+
+  const container = document.createElement("div");
+  container.className = "srp-search-container";
+  container.innerHTML = `
         <div class="srp-search-wrapper">
           <!-- Search input with AI icon -->
           <div class="srp-search-field">
@@ -96,10 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
           </div>
         </div>
-      </div>
-    `;
-  }
+  `;
 
+  mobileContent.insertBefore(container, resultsEl);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderSrpSearch();
   renderSrpResults();
 });
 
@@ -201,38 +206,44 @@ function renderSrpResults() {
   initSrpOptionIndicator();
 }
 
-// Sticky search bar's placeholder doubles as the "which option is in view"
-// indicator (internal review only) -- no separate sticky label on the page.
+// Sticky search bar input shows which option cluster is in view (Option 1–3).
 function initSrpOptionIndicator() {
   const searchInput = document.querySelector(".srp-search-input");
+  const stickyHeader = document.querySelector(".srp-search-container");
   const sections = Array.from(document.querySelectorAll(".srp-option-section"));
   if (!searchInput || !sections.length) return;
 
-  const defaultPlaceholder = searchInput.placeholder;
-  const visibleRatios = {};
+  const getAnchorY = () => (stickyHeader?.getBoundingClientRect().bottom ?? 0) + 1;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        visibleRatios[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+  const updateLabel = () => {
+    const anchorY = getAnchorY();
+    let active = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= anchorY) {
+        active = section;
+      } else {
+        break;
+      }
+    }
+    const label = active.getAttribute("data-option-label");
+    if (label) searchInput.value = label;
+  };
+
+  updateLabel();
+
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateLabel();
+        ticking = false;
       });
-
-      let bestId = null;
-      let bestRatio = 0;
-      sections.forEach((section) => {
-        const ratio = visibleRatios[section.id] || 0;
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          bestId = section.id;
-        }
-      });
-
-      searchInput.placeholder = bestId
-        ? document.getElementById(bestId).getAttribute("data-option-label")
-        : defaultPlaceholder;
     },
-    { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] }
+    { passive: true }
   );
 
-  sections.forEach((section) => observer.observe(section));
+  window.addEventListener("resize", updateLabel, { passive: true });
 }
