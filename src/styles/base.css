@@ -1054,10 +1054,6 @@ body {
   margin-inline-start: 0;
 }
 
-.site-header--compact .site-header__menu-btn {
-  display: none !important;
-}
-
 .site-header--compact .site-header__nav-get-app--toolbar-only {
   display: none !important;
 }
@@ -1206,7 +1202,10 @@ body {
 
 @media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
   .site-header__nav.site-header__nav--reveal-from-top .site-header__nav-list {
-    animation: site-header-nav-reveal-from-top 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+    /* No fill-mode: a persistent `transform` here (even translateY(0)) makes this
+       ul the containing block for its position:fixed descendant (the mega menu),
+       breaking its viewport-relative left:0/right:0 full-width stretch. */
+    animation: site-header-nav-reveal-from-top 0.48s cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
