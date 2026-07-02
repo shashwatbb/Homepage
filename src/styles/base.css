@@ -1233,6 +1233,7 @@ body {
   right: 0;
   top: var(--header-height);
   z-index: 160;
+  isolation: isolate;
   box-sizing: border-box;
   width: 100%;
   max-width: none;
@@ -1241,7 +1242,7 @@ body {
   border: none;
   border-bottom: 1px solid color-mix(in srgb, var(--color-header-separator) 65%, transparent);
   border-radius: 0 0 var(--ds-radius-2xl) var(--ds-radius-2xl);
-  background-color: var(--ds-color-warm-neutral-0);
+  background-color: var(--ds-color-warm-neutral-0) !important;
   box-shadow: 0 12px 40px -8px rgba(26, 26, 26, 0.1);
   transform: translateY(-0.375rem);
   opacity: 0;
