@@ -33,12 +33,14 @@ function srpBadgePillHtml(label) {
   return `<span class="srp-badge srp-badge--pill">${label}</span>`;
 }
 
+const SRP_BACK_ICON = `<svg class="srp-search-back__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
+
 const SRP_NAV_ICON_ATTRS =
   'class="srp-bottom-nav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" aria-hidden="true"';
 
 const SRP_NAV_ICONS = {
-  home: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M104,216V152h48v64h64V120a8,8,0,0,0-2.34-5.66l-80-80a8,8,0,0,0-11.32,0l-80,80A8,8,0,0,0,40,120v96Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
   projects: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M136,216V32a8,8,0,0,0-12.44-6.65l-80,53.33A8,8,0,0,0,40,85.35V216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M136,88h72a8,8,0,0,1,8,8V216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="16" y1="216" x2="240" y2="216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="104" y1="112" x2="104" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="72" y1="112" x2="72" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="72" y1="168" x2="72" y2="184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="104" y1="168" x2="104" y2="184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+  suggestions: `<svg ${SRP_NAV_ICON_ATTRS}><line x1="88" y1="232" x2="168" y2="232" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="200" x2="128" y2="144" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="96 112 128 144 160 112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M78.7,167A79.87,79.87,0,0,1,48,104.45C47.76,61.09,82.72,25,126.07,24a80,80,0,0,1,51.34,142.9A24.3,24.3,0,0,0,168,186v6a8,8,0,0,1-8,8H96a8,8,0,0,1-8-8v-6A24.11,24.11,0,0,0,78.7,167Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
   saved: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M128,224S24,168,24,102A54,54,0,0,1,78,48c22.59,0,41.94,12.31,50,32,8.06-19.69,27.41-32,50-32a54,54,0,0,1,54,54C232,168,128,224,128,224Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
   profile: `<svg class="srp-bottom-nav__icon srp-bottom-nav__icon--filled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg>`,
 };
@@ -48,8 +50,8 @@ function renderSrpBottomNav() {
   if (!mobileContent || document.getElementById("srp-bottom-nav")) return;
 
   const items = [
-    { id: "home", label: "Home", href: "/", icon: SRP_NAV_ICONS.home, active: true },
     { id: "projects", label: "Projects", href: "#", icon: SRP_NAV_ICONS.projects },
+    { id: "suggestions", label: "Suggestions", href: "#", icon: SRP_NAV_ICONS.suggestions },
     { id: "saved", label: "Saved", href: "#", icon: SRP_NAV_ICONS.saved },
     { id: "profile", label: "Profile", href: "#", icon: SRP_NAV_ICONS.profile },
   ];
@@ -77,6 +79,45 @@ function renderSrpBottomNav() {
   mobileContent.appendChild(nav);
 }
 
+function initSrpBottomNavScroll() {
+  const nav = document.getElementById("srp-bottom-nav");
+  const mobileContent = document.getElementById("srp-mobile-content");
+  if (!nav) return;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  const scrollThreshold = 8;
+
+  const update = () => {
+    const currentY = window.scrollY;
+    const delta = currentY - lastScrollY;
+
+    if (currentY <= 0) {
+      nav.classList.remove("srp-bottom-nav--hidden");
+      mobileContent?.classList.remove("srp-mobile-content--nav-hidden");
+    } else if (delta > scrollThreshold) {
+      nav.classList.add("srp-bottom-nav--hidden");
+      mobileContent?.classList.add("srp-mobile-content--nav-hidden");
+    } else if (delta < -scrollThreshold) {
+      nav.classList.remove("srp-bottom-nav--hidden");
+      mobileContent?.classList.remove("srp-mobile-content--nav-hidden");
+    }
+
+    lastScrollY = currentY;
+    ticking = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    },
+    { passive: true }
+  );
+}
+
 function renderSrpSearch() {
   const mobileContent = document.getElementById("srp-mobile-content");
   const resultsEl = document.getElementById("srp-results");
@@ -86,17 +127,20 @@ function renderSrpSearch() {
   chrome.className = "srp-search-chrome";
   chrome.innerHTML = `
         <div class="srp-search-container">
-          <div class="srp-search-field">
-            <img src="${magnifyingGlassUrl}" alt="" class="srp-search-icon" />
-            <input
-              type="search"
-              class="srp-search-input"
-              placeholder="What are you looking for?"
-              autocomplete="off"
-            />
-            <button class="srp-search-magic" aria-label="AI Magic">
-              <img src="${aiLogoUrl}" alt="AI" />
-            </button>
+          <div class="srp-search-row">
+            <a href="/" class="srp-search-back" aria-label="Back to homepage">${SRP_BACK_ICON}</a>
+            <div class="srp-search-field">
+              <img src="${magnifyingGlassUrl}" alt="" class="srp-search-icon" />
+              <input
+                type="search"
+                class="srp-search-input"
+                placeholder="What are you looking for?"
+                autocomplete="off"
+              />
+              <button class="srp-search-magic" aria-label="AI Magic">
+                <img src="${aiLogoUrl}" alt="AI" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -221,6 +265,7 @@ async function initSrpPage() {
   const started = performance.now();
 
   renderSrpBottomNav();
+  initSrpBottomNavScroll();
   renderSrpSearch();
   renderSrpResults();
 

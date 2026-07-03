@@ -15,10 +15,23 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background-color: var(--ds-color-warm-neutral-0);
   border-top: 1px solid var(--ds-color-warm-neutral-200);
+  transform: translateY(0);
+  transition: transform 0.24s ease;
+  will-change: transform;
+}
+
+.srp-page .srp-bottom-nav--hidden {
+  transform: translateY(100%);
+  pointer-events: none;
 }
 
 .srp-page .srp-mobile-content {
   padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+  transition: padding-bottom 0.24s ease;
+}
+
+.srp-page .srp-mobile-content--nav-hidden {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .srp-bottom-nav__item {
