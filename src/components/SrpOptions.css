@@ -142,7 +142,7 @@
   white-space: nowrap;
 }
 
-/* Option 1 — every card: one image per view (4:3 ≈ 80×60), swipe for more */
+/* Option 1 — every card: one image per view (4:2.7), swipe for more */
 .srp-option-section--image-carousel .srp-card-images--carousel {
   overflow: hidden;
   border-radius: var(--ds-radius-l);
@@ -174,7 +174,7 @@
   flex: 0 0 100%;
   width: 100%;
   min-width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 2.7;
   height: auto;
   object-fit: cover;
   border-radius: 0;

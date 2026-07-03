@@ -92,7 +92,7 @@
 
 .srp-skeleton__image {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 2.7;
   border-radius: var(--ds-radius-l);
 }
 
