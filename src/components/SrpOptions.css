@@ -39,7 +39,7 @@
 .srp-card {
   background-color: var(--ds-surface-white);
   border-radius: var(--ds-radius-none);
-  padding: var(--ds-space-m) var(--ds-space-m) var(--ds-space-xs);
+  padding: var(--ds-space-m);
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-s);
@@ -99,7 +99,7 @@
   position: relative;
 }
 
-.srp-card-images img {
+.srp-card-images > img {
   /* flex: 1 (not width: 50%) -- two 50%-width items plus the flex gap
      between them add up to MORE than 100% of the row, which was pushing
      the whole page into horizontal overflow/scroll on mobile. */
@@ -108,7 +108,7 @@
   width: 0;
   height: 116px;
   object-fit: cover;
-  border-radius: var(--ds-radius-s);
+  border-radius: var(--ds-radius-l);
   display: block;
   background-color: var(--ds-surface-default);
 }
@@ -124,9 +124,249 @@
   font-family: var(--ds-font-family-primary);
   font-size: var(--ds-font-size-xs);
   line-height: var(--ds-line-height-xs);
+  pointer-events: none;
 }
 
-/* Status row: possession status + price/sqft */
+/* Option 1 — every card: one image per view (4:3 ≈ 80×60), swipe for more */
+.srp-option-section--image-carousel .srp-card-images--carousel {
+  overflow: hidden;
+  border-radius: var(--ds-radius-l);
+}
+
+.srp-option-section--image-carousel .srp-card-images-stage {
+  position: relative;
+  touch-action: pan-x pan-y;
+  border-radius: var(--ds-radius-l);
+  overflow: hidden;
+}
+
+.srp-option-section--image-carousel .srp-card-images--carousel .srp-card-images-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.srp-option-section--image-carousel .srp-card-images--carousel .srp-card-images-track::-webkit-scrollbar {
+  display: none;
+}
+
+.srp-option-section--image-carousel .srp-card-images--carousel .srp-card-images-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background-color: var(--ds-surface-default);
+}
+
+.srp-card-image-chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.srp-card-image-chrome .srp-card-shortlist-btn {
+  pointer-events: auto;
+}
+
+.srp-card-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-space-2xs);
+  border: none;
+  background: none;
+  color: var(--ds-color-warm-neutral-0);
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.srp-card-carousel-nav--prev {
+  left: var(--ds-space-2xs);
+}
+
+.srp-card-carousel-nav--next {
+  right: var(--ds-space-2xs);
+}
+
+.srp-card-carousel-nav__icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  filter: drop-shadow(0 1px 3px rgba(15, 14, 13, 0.32));
+}
+
+.srp-card-carousel-nav:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.srp-card-badges--overlay {
+  position: absolute;
+  top: var(--ds-space-xs);
+  left: var(--ds-space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+}
+
+.srp-card-badges--overlay .srp-badge--pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  border-radius: var(--ds-radius-s);
+  padding: var(--ds-space-2xs) var(--ds-space-xs);
+  background-color: color-mix(in srgb, var(--ds-color-warm-neutral-0) 92%, transparent);
+  border: 1px solid var(--ds-color-warm-neutral-200);
+  box-shadow: none;
+  color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 92%, transparent);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-s);
+}
+
+.srp-badge-verified-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.srp-badge-verified-icon path {
+  fill: var(--ds-semantic-icon-success);
+}
+
+.srp-card-shortlist-btn {
+  position: absolute;
+  top: var(--ds-space-xs);
+  right: var(--ds-space-xs);
+  padding: 0;
+  border: none;
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+}
+
+.srp-card-shortlist-btn .srp-card-shortlist-icon {
+  width: 26px;
+  height: 26px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.srp-card-shortlist-btn .srp-card-shortlist-icon__shape {
+  fill: color-mix(in srgb, var(--ds-color-grey-neutral-900) 60%, transparent);
+  stroke: var(--ds-color-warm-neutral-0);
+  stroke-width: 10;
+  stroke-linejoin: round;
+}
+
+.srp-card-image-dots {
+  position: absolute;
+  left: 50%;
+  bottom: var(--ds-space-xs);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 8px;
+  pointer-events: none;
+}
+
+.srp-card-image-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--ds-radius-full);
+  background-color: rgba(255, 255, 255, 0.45);
+  transform: scale(1);
+  opacity: 0.45;
+  transition:
+    transform 0.32s ease,
+    opacity 0.32s ease,
+    background-color 0.25s ease;
+}
+
+.srp-card-image-dot[hidden] {
+  display: none;
+}
+
+.srp-card-image-dot--active {
+  transform: scale(1);
+  opacity: 1;
+  background-color: var(--ds-color-warm-neutral-0);
+}
+
+.srp-card-image-dot--preview {
+  transform: scale(1);
+  opacity: 0.55;
+}
+
+.srp-card-image-dot--enter {
+  animation: srp-card-image-dot-enter 0.28s ease;
+}
+
+@keyframes srp-card-image-dot-enter {
+  from {
+    opacity: 0;
+    transform: translateX(6px) scale(0.45);
+  }
+
+  to {
+    opacity: 0.55;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Meta pills: BHK, status, price/sqft */
+.srp-card-image-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s);
+}
+
+.srp-card-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: var(--ds-radius-s);
+  border: 1px solid color-mix(in srgb, var(--ds-color-warm-neutral-200) 80%, transparent);
+  background-color: color-mix(in srgb, var(--ds-color-warm-neutral-200) 35%, var(--ds-color-warm-neutral-0));
+  color: var(--ds-text-secondary);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-s);
+  letter-spacing: var(--ds-letter-spacing-s);
+  white-space: nowrap;
+  text-transform: none;
+}
+
 .srp-card-status-row {
   display: flex;
   align-items: center;
@@ -227,4 +467,71 @@
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+}
+
+/* Option 1 — WhatsApp secondary + primary Contact */
+.srp-option-section--image-carousel .srp-card-cta-row--contact-only {
+  display: flex;
+  align-items: stretch;
+  gap: var(--ds-space-xs);
+}
+
+.srp-option-section--image-carousel .srp-card-cta-btn--whatsapp {
+  flex: 0 0 auto;
+  width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: var(--ds-radius-m);
+  border: 1px solid var(--ds-border-brand);
+  background-color: var(--ds-surface-white);
+}
+
+.srp-option-section--image-carousel .srp-card-cta-btn--whatsapp svg {
+  width: 20px;
+  height: 20px;
+}
+
+.srp-option-section--image-carousel .srp-card-cta-btn--contact-primary {
+  flex: 1;
+  min-height: 48px;
+  padding: var(--ds-space-s) var(--ds-space-m);
+  border-radius: var(--ds-radius-m);
+  font-size: var(--ds-font-size-lg);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-l);
+}
+
+.srp-card--option1 {
+  gap: var(--ds-space-m);
+}
+
+.srp-card--option1 .srp-card-price {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.srp-card--option1 .srp-card-project {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2xs);
+  margin-bottom: 0;
+}
+
+.srp-card--option1 .srp-card-name {
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.srp-card--option1 .srp-card-address {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-2xs);
+}
+
+.srp-card-address__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: block;
+  color: var(--ds-text-muted);
 }

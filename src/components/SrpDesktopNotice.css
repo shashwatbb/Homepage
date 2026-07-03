@@ -2,12 +2,13 @@
    mobile content. Scoped via .srp-page so this never affects other pages. */
 
 .srp-page {
-  background-color: var(--ds-surface-default);
+  background-color: var(--ds-color-warm-neutral-200);
+  font-family: "Google Sans Flex", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 html:has(.srp-page),
 body:has(.srp-page) {
-  background-color: var(--ds-surface-default);
+  background-color: var(--ds-color-warm-neutral-200);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -18,7 +19,8 @@ body:has(.srp-page)::-webkit-scrollbar {
 }
 
 .srp-page .srp-mobile-content {
-  background-color: var(--ds-surface-default);
+  background-color: var(--ds-color-warm-neutral-200);
+  position: relative;
 }
 
 .srp-page .site-header {
@@ -44,7 +46,7 @@ body:has(.srp-page)::-webkit-scrollbar {
     justify-content: center;
     min-height: calc(100dvh - var(--header-height));
     padding: 24px;
-    background-color: var(--ds-surface-default);
+    background-color: var(--ds-color-warm-neutral-200);
   }
 
   .srp-mobile-content {

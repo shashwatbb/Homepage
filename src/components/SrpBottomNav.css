@@ -1,0 +1,99 @@
+/* SRP sticky bottom navigation — mobile only (inside #srp-mobile-content) */
+
+.srp-page .srp-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 210;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: var(--ds-space-s);
+  min-height: 60px;
+  padding: 0 var(--ds-space-m);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-color: var(--ds-color-warm-neutral-0);
+  border-top: 1px solid var(--ds-color-warm-neutral-200);
+}
+
+.srp-page .srp-mobile-content {
+  padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+}
+
+.srp-bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  max-width: 5.5rem;
+  padding: 8px 8px 4px;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: var(--ds-color-grey-neutral-600);
+  font-family: var(--ds-font-family-primary);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.srp-bottom-nav__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 32px;
+  border-radius: var(--ds-radius-m);
+}
+
+.srp-bottom-nav__item--active .srp-bottom-nav__icon-wrap {
+  background-color: var(--ds-surface-brand-subtle);
+}
+
+.srp-bottom-nav__item--active {
+  color: var(--ds-text-brand);
+}
+
+.srp-bottom-nav__icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.srp-bottom-nav__icon path,
+.srp-bottom-nav__icon circle,
+.srp-bottom-nav__icon line,
+.srp-bottom-nav__icon polyline {
+  fill: none;
+  stroke: currentColor;
+}
+
+.srp-bottom-nav__item--active .srp-bottom-nav__icon path,
+.srp-bottom-nav__item--active .srp-bottom-nav__icon circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.srp-bottom-nav__item--active .srp-bottom-nav__icon line,
+.srp-bottom-nav__item--active .srp-bottom-nav__icon polyline {
+  fill: none;
+  stroke: currentColor;
+}
+
+.srp-bottom-nav__icon--filled path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.srp-bottom-nav__label {
+  font-size: var(--ds-font-size-xs);
+  line-height: var(--ds-line-height-xs);
+  font-weight: var(--ds-font-weight-medium);
+  white-space: nowrap;
+}

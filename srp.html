@@ -4,10 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search results — Housing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -119,6 +118,43 @@
 
       <!-- Mobile-only content below. Hidden above 48rem via CSS. -->
       <div id="srp-mobile-content" class="srp-mobile-content">
+        <div id="srp-skeleton" class="srp-skeleton" aria-busy="true" aria-label="Loading search results">
+          <div class="srp-skeleton__search">
+            <div class="srp-skeleton__search-field srp-skeleton__shine" aria-hidden="true"></div>
+          </div>
+          <div class="srp-skeleton__filters" aria-hidden="true">
+            <div class="srp-skeleton__chip srp-skeleton__chip--sort srp-skeleton__shine"></div>
+            <div class="srp-skeleton__chip srp-skeleton__chip--wide srp-skeleton__shine"></div>
+            <div class="srp-skeleton__chip srp-skeleton__chip--mid srp-skeleton__shine"></div>
+            <div class="srp-skeleton__chip srp-skeleton__chip--mid srp-skeleton__shine"></div>
+          </div>
+          <div class="srp-skeleton__cards" aria-hidden="true">
+            <div class="srp-skeleton__card">
+              <div class="srp-skeleton__image srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--sm srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--md srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--lg srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--xl srp-skeleton__shine"></div>
+              <div class="srp-skeleton__cta srp-skeleton__shine"></div>
+            </div>
+            <div class="srp-skeleton__card">
+              <div class="srp-skeleton__image srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--sm srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--md srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--lg srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--xl srp-skeleton__shine"></div>
+              <div class="srp-skeleton__cta srp-skeleton__shine"></div>
+            </div>
+            <div class="srp-skeleton__card">
+              <div class="srp-skeleton__image srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--sm srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--md srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--lg srp-skeleton__shine"></div>
+              <div class="srp-skeleton__line srp-skeleton__line--xl srp-skeleton__shine"></div>
+              <div class="srp-skeleton__cta srp-skeleton__shine"></div>
+            </div>
+          </div>
+        </div>
         <!-- Sticky search bar injected by srp-main.js before #srp-results -->
         <main id="srp-results" class="srp-results"></main>
       </div>
