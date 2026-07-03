@@ -127,6 +127,21 @@
   pointer-events: none;
 }
 
+.srp-card-image-chrome .srp-card-image-count {
+  right: var(--ds-space-xs);
+  bottom: var(--ds-space-xs);
+  z-index: 2;
+  padding: var(--ds-space-2xs) var(--ds-space-xs);
+  border-radius: var(--ds-radius-s);
+  background-color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 72%, transparent);
+  color: var(--ds-color-warm-neutral-0);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-s);
+  letter-spacing: var(--ds-letter-spacing-s);
+  white-space: nowrap;
+}
+
 /* Option 1 — every card: one image per view (4:3 ≈ 80×60), swipe for more */
 .srp-option-section--image-carousel .srp-card-images--carousel {
   overflow: hidden;
@@ -178,6 +193,40 @@
 
 .srp-card-image-chrome .srp-card-shortlist-btn {
   pointer-events: auto;
+}
+
+.srp-card-agent-chip {
+  position: absolute;
+  bottom: var(--ds-space-xs);
+  left: var(--ds-space-xs);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  padding: var(--ds-space-2xs) var(--ds-space-xs);
+  border-radius: var(--ds-radius-s);
+  background-color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 72%, transparent);
+  box-shadow: 0 2px 8px rgba(15, 14, 13, 0.16);
+  pointer-events: none;
+}
+
+.srp-card-agent-photo {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.srp-card-agent-badge {
+  color: var(--ds-color-warm-neutral-0);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-s);
+  letter-spacing: var(--ds-letter-spacing-s);
+  white-space: nowrap;
 }
 
 .srp-card-carousel-nav {
@@ -367,6 +416,18 @@
   text-transform: none;
 }
 
+.srp-card-meta-pill--status {
+  gap: var(--ds-space-2xs);
+}
+
+.srp-card-meta-pill__sep {
+  width: 3px;
+  height: 14px;
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-semantic-icon-success);
+  flex-shrink: 0;
+}
+
 .srp-card-status-row {
   display: flex;
   align-items: center;
@@ -503,11 +564,31 @@
 
 .srp-card--option1 {
   gap: var(--ds-space-m);
+  --srp-card-tracking: 0.015em;
+}
+
+.srp-card--option1 .srp-card-image-chrome .srp-card-image-count,
+.srp-card--option1 .srp-card-agent-badge {
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-s);
+  letter-spacing: var(--srp-card-tracking);
+}
+
+.srp-card--option1 .srp-card-price,
+.srp-card--option1 .srp-card-name,
+.srp-card--option1 .srp-card-address,
+.srp-card--option1 .srp-card-meta-pill,
+.srp-card--option1 .srp-card-cta-btn,
+.srp-card--option1 .srp-card-badges--overlay .srp-badge--pill {
+  letter-spacing: var(--srp-card-tracking);
 }
 
 .srp-card--option1 .srp-card-price {
   margin-top: 0;
   margin-bottom: 0;
+  font-size: 22px;
+  line-height: 30px;
 }
 
 .srp-card--option1 .srp-card-project {
@@ -518,7 +599,7 @@
 }
 
 .srp-card--option1 .srp-card-name {
-  font-weight: var(--ds-font-weight-semibold);
+  font-weight: var(--ds-font-weight-medium);
 }
 
 .srp-card--option1 .srp-card-address {
@@ -533,5 +614,9 @@
   flex-shrink: 0;
   margin-top: 1px;
   display: block;
-  color: var(--ds-text-muted);
+  color: inherit;
+}
+
+.srp-card-address__icon path {
+  fill: currentColor;
 }

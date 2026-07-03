@@ -20,7 +20,7 @@ const SRP_CAROUSEL_CARET_LEFT = `<svg class="srp-card-carousel-nav__icon" xmlns=
 
 const SRP_CAROUSEL_CARET_RIGHT = `<svg class="srp-card-carousel-nav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><polyline points="96 48 176 128 96 208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="28"/></svg>`;
 
-const SRP_MAP_PIN_ICON = `<svg class="srp-card-address__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z" fill="currentColor"/></svg>`;
+const SRP_MAP_PIN_ICON = `<svg class="srp-card-address__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z" fill="currentColor"/></svg>`;
 
 function srpWhatsappIconHtml(gradientId) {
   return `<svg class="srp-card-cta-whatsapp-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.1335 3.79311C14.4956 2.15412 12.3178 1.251 9.99739 1.25C5.21591 1.25 1.32474 5.13992 1.32283 9.92119C1.32227 11.4495 1.72161 12.9414 2.48064 14.2565L1.25 18.75L5.84848 17.5442C7.11545 18.2352 8.54198 18.5993 9.99366 18.5999H9.99734H9.99739C14.7781 18.5999 18.6698 14.7093 18.6719 9.92822C18.6727 7.61099 17.7711 5.43222 16.1335 3.79311ZM9.99739 17.1353H9.99457C8.70062 17.1346 7.43172 16.7872 6.32493 16.1304L6.06154 15.9743L3.3327 16.6898L4.06126 14.0301L3.88965 13.7575C3.16787 12.6098 2.78684 11.2836 2.78738 9.92174C2.78897 5.94771 6.02315 2.71465 10.0001 2.71465C11.926 2.71545 13.7361 3.46613 15.0974 4.82841C16.4586 6.19068 17.2078 8.00163 17.2072 9.9276C17.2055 13.9018 13.9712 17.1353 9.99739 17.1353Z" fill="#E0E0E0"/><path d="M1.64819 18.2514L2.82262 13.9632C2.09807 12.7081 1.71705 11.2843 1.71751 9.82604C1.71941 5.26327 5.43286 1.55115 9.99553 1.55115C12.21 1.55215 14.2884 2.41396 15.8511 3.97813C17.4142 5.54228 18.2744 7.62138 18.2735 9.83251C18.2716 14.3954 14.558 18.1078 9.99585 18.1078C9.99608 18.1078 9.99553 18.1078 9.99585 18.1078H9.99217C8.6068 18.1074 7.24555 17.7596 6.03654 17.1007L1.64819 18.2514Z" fill="url(#${gradientId})"/><path fill-rule="evenodd" clip-rule="evenodd" d="M7.85392 6.23985C7.69344 5.88304 7.52447 5.8759 7.37178 5.86966C7.2469 5.8643 7.10393 5.86463 6.96119 5.86463C6.81833 5.86463 6.58619 5.91831 6.38988 6.13271C6.19346 6.34711 5.63989 6.8654 5.63989 7.91951C5.63989 8.97374 6.40774 9.99237 6.51477 10.1354C6.62191 10.2783 7.997 12.5106 10.1748 13.3694C11.9847 14.0832 12.353 13.9412 12.7458 13.9055C13.1387 13.8698 14.0134 13.3873 14.192 12.887C14.3706 12.3867 14.3706 11.958 14.317 11.8683C14.2634 11.779 14.1206 11.7255 13.9063 11.6183C13.692 11.5112 12.6387 10.9928 12.4423 10.9214C12.2458 10.8499 12.103 10.8142 11.9601 11.0287C11.8173 11.243 11.4069 11.7255 11.2819 11.8683C11.1569 12.0115 11.0319 12.0294 10.8176 11.9222C10.6033 11.8148 9.91327 11.5888 9.09465 10.8588C8.45771 10.291 8.02769 9.58966 7.90269 9.37517C7.77769 9.16088 7.88929 9.04481 7.99678 8.938C8.09297 8.84202 8.21106 8.68789 8.3182 8.56278C8.42511 8.43767 8.46083 8.34838 8.53225 8.20553C8.60368 8.06244 8.56797 7.93734 8.5144 7.8302C8.46083 7.72306 8.04443 6.6635 7.85392 6.23985Z" fill="white"/><path d="M16.0627 3.76557C14.4437 2.14539 12.2908 1.25266 9.99708 1.25165C5.27048 1.25165 1.42398 5.09691 1.42208 9.82329C1.42153 11.3341 1.81628 12.8089 2.5666 14.1089L1.3501 18.5508L5.8958 17.3588C7.14824 18.0418 8.55837 18.4018 9.9934 18.4023H9.99704H9.99708C14.7229 18.4023 18.57 14.5564 18.572 9.83021C18.5728 7.53962 17.6816 5.38587 16.0627 3.76557ZM9.99708 16.9546H9.9943C8.71519 16.9539 7.46085 16.6105 6.36677 15.9613L6.10639 15.8069L3.40888 16.5142L4.12908 13.8851L3.95943 13.6156C3.24594 12.4811 2.86928 11.17 2.86983 9.82386C2.87139 5.89546 6.06845 2.69951 9.99977 2.69951C11.9035 2.7003 13.6928 3.44236 15.0385 4.789C16.3842 6.13564 17.1247 7.92579 17.1241 9.82968C17.1224 13.7582 13.9253 16.9546 9.99708 16.9546Z" fill="white"/><defs><linearGradient id="${gradientId}" x1="9.96087" y1="18.2514" x2="9.96087" y2="1.55118" gradientUnits="userSpaceOnUse"><stop stop-color="#20B038"/><stop offset="1" stop-color="#60D66A"/></linearGradient></defs></svg>`;
@@ -269,15 +269,22 @@ const SRP_PHONE_ICON =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 const SRP_SAMPLE_LISTINGS = [
-  { badge1: "Verified", badge2: "RERA", posted: "1 day ago", status: "Ready to Move", pricePerSqft: "₹714.24K/sq.ft.", price: "₹2.85 Cr", name: "Shapoorji Pallonji Joyville", config: "3 BHK Apartment", address: "Electronic city, Bangalore" },
-  { badge1: "Verified", badge2: "Zero brokerage", posted: "2 days ago", status: "Under Construction", pricePerSqft: "₹11.5K/sq.ft.", price: "₹1.42 Cr", name: "Sikka Karnam Greens", config: "2 BHK Apartment", address: "Sector 79, Gurgaon" },
-  { badge1: "RERA", badge2: "Verified", posted: "5 hours ago", status: "Ready to Move", pricePerSqft: "₹16.2K/sq.ft.", price: "₹3.10 Cr", name: "Sunil Apartment Homes", config: "3 BHK Apartment", address: "Dwarka, New Gurgaon" },
-  { badge1: "Verified", badge2: "RERA", posted: "1 week ago", status: "New Launch", pricePerSqft: "₹13.8K/sq.ft.", price: "₹95.4 L", name: "Palam Vihar Residency", config: "1 BHK Apartment", address: "Palam Vihar, Gurgaon" },
+  { badge1: "Verified", badge2: "RERA", posted: "1 day ago", status: "Ready to move", pricePerSqft: "₹714.24K/sq.ft.", price: "₹2.85 Cr", name: "Shapoorji Pallonji Joyville", config: "3 BHK Apartment", address: "Electronic City Phase 1, near Infosys Campus, Bangalore" },
+  { badge1: "Verified", badge2: "Zero brokerage", posted: "2 days ago", status: "Under Construction", pricePerSqft: "₹11.5K/sq.ft.", price: "₹1.42 Cr", name: "Sikka Karnam Greens", config: "2 BHK Apartment", address: "Sector 79, Southern Peripheral Road, Gurgaon" },
+  { badge1: "RERA", badge2: "Verified", posted: "5 hours ago", status: "Ready to move", pricePerSqft: "₹16.2K/sq.ft.", price: "₹3.10 Cr", name: "Sunil Apartment Homes", config: "3 BHK Apartment", address: "Dwarka Expressway, Sector 113, New Gurgaon" },
+  { badge1: "Verified", badge2: "RERA", posted: "1 week ago", status: "New Launch", pricePerSqft: "₹13.8K/sq.ft.", price: "₹95.4 L", name: "Palam Vihar Residency", config: "1 BHK Apartment", address: "Palam Vihar Extension, near Rezang La Chowk, Gurgaon" },
 ];
 
 function srpListingBhkLabel(config) {
   const match = config?.match(/^\d+\s+BHK/i);
   return match ? match[0].toUpperCase().replace(/bhk/i, "BHK") : config;
+}
+
+function srpCardAgentChipHtml() {
+  return `<div class="srp-card-agent-chip" aria-label="Sunder Homes agent">
+    <img class="srp-card-agent-photo" src="/Agent.png" alt="" />
+    <span class="srp-card-agent-badge">Sunder Homes</span>
+  </div>`;
 }
 
 function srpCardProjectHtml(listing) {
@@ -287,15 +294,26 @@ function srpCardProjectHtml(listing) {
   </div>`;
 }
 
+function srpStatusPillHtml(status) {
+  if (status === "Ready to move") {
+    return `<span class="srp-card-meta-pill srp-card-meta-pill--status"><span class="srp-card-meta-pill__sep" aria-hidden="true"></span><span>${status}</span></span>`;
+  }
+  return `<span class="srp-card-meta-pill">${status}</span>`;
+}
+
 function srpCardMetaPillsHtml(listing) {
   return `<div class="srp-card-image-meta">
+    ${srpStatusPillHtml(listing.status)}
     <span class="srp-card-meta-pill">${srpListingBhkLabel(listing.config)}</span>
-    <span class="srp-card-meta-pill">${listing.status}</span>
     <span class="srp-card-meta-pill">${listing.pricePerSqft}</span>
   </div>`;
 }
 
-function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 12, contactOnly = false } = {}) {
+function srpCardPriceRowHtml(listing) {
+  return `<p class="srp-card-price">${listing.price}</p>`;
+}
+
+function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24, contactOnly = false } = {}) {
   const imagesClass = carousel ? "srp-card-images srp-card-images--carousel" : "srp-card-images";
   const imagesInner = carousel
     ? `<div class="srp-card-images-track">${Array.from(
@@ -327,11 +345,13 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 12
             <button class="srp-card-carousel-nav srp-card-carousel-nav--prev" type="button" aria-label="Previous image">${SRP_CAROUSEL_CARET_LEFT}</button>
             <button class="srp-card-carousel-nav srp-card-carousel-nav--next" type="button" aria-label="Next image">${SRP_CAROUSEL_CARET_RIGHT}</button>
             <button class="srp-card-shortlist-btn" type="button" aria-label="Shortlist">${SRP_HEART_ICON}</button>
+            ${srpCardAgentChipHtml()}
             <div class="srp-card-image-dots" aria-hidden="true">
               <span class="srp-card-image-dot" data-slot="0"></span>
               <span class="srp-card-image-dot" data-slot="1"></span>
               <span class="srp-card-image-dot" data-slot="2"></span>
             </div>
+            <span class="srp-card-image-count">1 / ${imageCount}</span>
           </div>
         </div>
       </div>`
@@ -351,7 +371,7 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 12
       </div>`;
 
   const metaRowHtml = contactOnly
-    ? srpCardMetaPillsHtml(listing)
+    ? ""
     : `<div class="srp-card-status-row">
         <span>${listing.status}</span>
         <span class="srp-card-status-dot"></span>
@@ -359,9 +379,9 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 12
       </div>`;
 
   const detailsHtml = contactOnly
-    ? `<p class="srp-card-price">${listing.price}</p>
-      ${srpCardProjectHtml(listing)}
-      ${metaRowHtml}`
+    ? `${srpCardPriceRowHtml(listing)}
+      ${srpCardMetaPillsHtml(listing)}
+      ${srpCardProjectHtml(listing)}`
     : `${metaRowHtml}
       <p class="srp-card-price">${listing.price}</p>
       <p class="srp-card-name">${listing.name}</p>
@@ -388,10 +408,10 @@ function renderSrpResults() {
     let cardsHtml = "";
     for (let i = 0; i < 4; i++) {
       const listing = SRP_SAMPLE_LISTINGS[i % SRP_SAMPLE_LISTINGS.length];
-      const imgStride = opt === 1 ? 12 : 2;
+      const imgStride = opt === 1 ? 24 : 2;
       cardsHtml += srpCardHtml(listing, (opt * 4 + i) * imgStride, {
         carousel: opt === 1,
-        imageCount: 12,
+        imageCount: 24,
         contactOnly: opt === 1,
       });
     }
@@ -462,6 +482,7 @@ function initSrpCardImageCarousels() {
       const dotsContainer = carousel.querySelector(".srp-card-image-dots");
       const prevBtn = carousel.querySelector(".srp-card-carousel-nav--prev");
       const nextBtn = carousel.querySelector(".srp-card-carousel-nav--next");
+      const countEl = carousel.querySelector(".srp-card-image-count");
       const images = track ? Array.from(track.querySelectorAll("img")) : [];
       if (!track || !dotsContainer || !images.length) return;
 
@@ -486,6 +507,7 @@ function initSrpCardImageCarousels() {
       const setActiveDot = (imageIndex) => {
         activeImageIndex = Math.max(0, Math.min(totalImages - 1, imageIndex));
         dotWindowStart = updateCarouselDots(dotsContainer, activeImageIndex, totalImages, dotWindowStart);
+        if (countEl) countEl.textContent = `${activeImageIndex + 1} / ${totalImages}`;
         updateNavState();
       };
 
