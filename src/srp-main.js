@@ -7,6 +7,7 @@ import "./components/SrpBottomNav.css";
 import "./components/SrpSearch.css";
 import "./components/SrpDesktopNotice.css";
 import "./components/SrpOptions.css";
+import "./components/SrpContactSheet.css";
 import "./main.js";
 import magnifyingGlassUrl from "./assets/icons/magnifying-glass.svg";
 import sortUrl from "./assets/icons/sort-ascending.svg";
@@ -39,6 +40,7 @@ const SRP_NAV_ICON_ATTRS =
   'class="srp-bottom-nav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" aria-hidden="true"';
 
 const SRP_NAV_ICONS = {
+  home: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M104,216V152h48v64h64V120a8,8,0,0,0-2.34-5.66l-80-80a8,8,0,0,0-11.32,0l-80,80A8,8,0,0,0,40,120v96Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
   projects: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M136,216V32a8,8,0,0,0-12.44-6.65l-80,53.33A8,8,0,0,0,40,85.35V216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M136,88h72a8,8,0,0,1,8,8V216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="16" y1="216" x2="240" y2="216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="104" y1="112" x2="104" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="72" y1="112" x2="72" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="72" y1="168" x2="72" y2="184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="104" y1="168" x2="104" y2="184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
   suggestions: `<svg ${SRP_NAV_ICON_ATTRS}><line x1="88" y1="232" x2="168" y2="232" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="200" x2="128" y2="144" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="96 112 128 144 160 112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M78.7,167A79.87,79.87,0,0,1,48,104.45C47.76,61.09,82.72,25,126.07,24a80,80,0,0,1,51.34,142.9A24.3,24.3,0,0,0,168,186v6a8,8,0,0,1-8,8H96a8,8,0,0,1-8-8v-6A24.11,24.11,0,0,0,78.7,167Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
   saved: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M128,224S24,168,24,102A54,54,0,0,1,78,48c22.59,0,41.94,12.31,50,32,8.06-19.69,27.41-32,50-32a54,54,0,0,1,54,54C232,168,128,224,128,224Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
@@ -50,6 +52,7 @@ function renderSrpBottomNav() {
   if (!mobileContent || document.getElementById("srp-bottom-nav")) return;
 
   const items = [
+    { id: "home", label: "Home", href: "/", icon: SRP_NAV_ICONS.home },
     { id: "projects", label: "Projects", href: "#", icon: SRP_NAV_ICONS.projects },
     { id: "suggestions", label: "Suggestions", href: "#", icon: SRP_NAV_ICONS.suggestions },
     { id: "saved", label: "Saved", href: "#", icon: SRP_NAV_ICONS.saved },
@@ -268,6 +271,8 @@ async function initSrpPage() {
   initSrpBottomNavScroll();
   renderSrpSearch();
   renderSrpResults();
+  renderSrpContactSheet();
+  initSrpContactSheet();
 
   const remaining = Math.max(0, SRP_SKELETON_MIN_MS - (performance.now() - started));
   if (remaining > 0) {
@@ -320,15 +325,61 @@ const SRP_SAMPLE_LISTINGS = [
   { badge1: "Verified", badge2: "RERA", posted: "1 week ago", status: "New Launch", pricePerSqft: "₹13.8K/sq.ft.", price: "₹95.4 L", name: "Palam Vihar Residency", config: "1 BHK Apartment", address: "Palam Vihar Extension, near Rezang La Chowk, Gurgaon" },
 ];
 
+function srpEscapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function getSrpSearchContext() {
+  const params = new URLSearchParams(window.location.search);
+  const query = (params.get("q") || "").trim();
+  const locationParam = (params.get("location") || "").trim();
+  const countRaw = params.get("count");
+  const parsedCount = countRaw ? Number.parseInt(countRaw, 10) : 44;
+
+  let location = locationParam;
+  if (!location && query) {
+    const inMatch = query.match(/\bin\s+(.+)$/i);
+    if (inMatch) {
+      location = inMatch[1].trim();
+    } else {
+      const sectorMatch = query.match(/sector\s*\d+/i);
+      if (sectorMatch) {
+        location = sectorMatch[0].replace(/\bsector\b/i, "Sector");
+      }
+    }
+  }
+
+  if (!location) location = "Sector 44";
+
+  return {
+    query,
+    location,
+    count: Number.isFinite(parsedCount) ? parsedCount : 44,
+  };
+}
+
+function srpResultsMetaHtml() {
+  const { location, count } = getSrpSearchContext();
+  const noun = count === 1 ? "property" : "properties";
+  return `<div class="srp-results-meta-bar"><p class="srp-results-meta">Showing ${count} ${noun} in ${srpEscapeHtml(location)}</p></div>`;
+}
+
 function srpListingBhkLabel(config) {
   const match = config?.match(/^\d+\s+BHK/i);
   return match ? match[0].toUpperCase().replace(/bhk/i, "BHK") : config;
 }
 
-function srpCardAgentChipHtml() {
-  return `<div class="srp-card-agent-chip" aria-label="Sunder Homes agent">
-    <img class="srp-card-agent-photo" src="/Agent.png" alt="" />
-    <span class="srp-card-agent-badge">Sunder Homes</span>
+function srpCardSellerRowHtml(listing) {
+  return `<div class="srp-card-seller">
+    <div class="srp-card-seller__text">
+      <p class="srp-card-seller__name">Sunder Homes</p>
+      <p class="srp-card-seller__updated">Updated ${listing.posted}</p>
+    </div>
+    <img class="srp-card-seller__photo" src="/Agent.png" alt="" />
   </div>`;
 }
 
@@ -339,18 +390,11 @@ function srpCardProjectHtml(listing) {
   </div>`;
 }
 
-function srpStatusPillHtml(status) {
-  if (status === "Ready to move") {
-    return `<span class="srp-card-meta-pill srp-card-meta-pill--status"><span class="srp-card-meta-pill__sep" aria-hidden="true"></span><span>${status}</span></span>`;
-  }
-  return `<span class="srp-card-meta-pill">${status}</span>`;
-}
-
 function srpCardMetaPillsHtml(listing) {
   return `<div class="srp-card-image-meta">
-    ${srpStatusPillHtml(listing.status)}
-    <span class="srp-card-meta-pill">${srpListingBhkLabel(listing.config)}</span>
-    <span class="srp-card-meta-pill">${listing.pricePerSqft}</span>
+    <span class="srp-card-meta-item"><span>${srpListingBhkLabel(listing.config)}</span></span>
+    <span class="srp-card-meta-divider" aria-hidden="true"></span>
+    <span class="srp-card-meta-item"><span>${listing.pricePerSqft}</span></span>
   </div>`;
 }
 
@@ -370,12 +414,12 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24
 
   const ctaHtml = contactOnly
     ? `<div class="srp-card-cta-row srp-card-cta-row--contact-only">
-        <button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${imgIndexStart}`)}</button>
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button">Contact</button>
+        <button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${imgIndexStart}`)}</button>
+        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
       </div>`
     : `<div class="srp-card-cta-row">
         <button class="srp-card-cta-btn" type="button">${SRP_CHAT_ICON}<span>Chat</span></button>
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand" type="button">${SRP_PHONE_ICON}<span>Contact</span></button>
+        <button class="srp-card-cta-btn srp-card-cta-btn--brand" type="button" data-srp-contact-cta>${SRP_PHONE_ICON}<span>Contact</span></button>
         <button class="srp-card-cta-btn" type="button" aria-label="Save"><span>${SRP_HEART_ICON}</span></button>
       </div>`;
 
@@ -383,14 +427,14 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24
     ? `<div class="${imagesClass}">
         <div class="srp-card-images-stage">
           ${imagesInner}
-          <div class="srp-card-image-chrome">
+            <div class="srp-card-image-chrome">
             <div class="srp-card-badges srp-card-badges--overlay">
               ${srpBadgePillHtml(listing.badge1)}
+              ${srpBadgePillHtml(listing.status)}
             </div>
             <button class="srp-card-carousel-nav srp-card-carousel-nav--prev" type="button" aria-label="Previous image">${SRP_CAROUSEL_CARET_LEFT}</button>
             <button class="srp-card-carousel-nav srp-card-carousel-nav--next" type="button" aria-label="Next image">${SRP_CAROUSEL_CARET_RIGHT}</button>
             <button class="srp-card-shortlist-btn" type="button" aria-label="Shortlist">${SRP_HEART_ICON}</button>
-            ${srpCardAgentChipHtml()}
             <div class="srp-card-image-dots" aria-hidden="true">
               <span class="srp-card-image-dot" data-slot="0"></span>
               <span class="srp-card-image-dot" data-slot="1"></span>
@@ -433,9 +477,12 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24
       <p class="srp-card-config">${listing.config}</p>
       <p class="srp-card-address">${listing.address}</p>`;
 
+  const sellerRowHtml = contactOnly ? srpCardSellerRowHtml(listing) : "";
+
   return `
     <div class="srp-card${contactOnly ? " srp-card--option1" : ""}">
       ${stripBlock}
+      ${sellerRowHtml}
       ${imageBlock}
       ${detailsHtml}
       ${contactOnly ? "" : `<hr class="srp-card-divider" />`}
@@ -462,6 +509,7 @@ function renderSrpResults() {
     }
     sectionsHtml += `
       <section class="srp-option-section${opt === 1 ? " srp-option-section--image-carousel" : ""}" id="srp-option-section-${opt}" data-option-label="Option ${opt}">
+        ${opt === 1 ? srpResultsMetaHtml() : ""}
         <div class="srp-card-list">${cardsHtml}</div>
       </section>
     `;
@@ -634,4 +682,135 @@ function initSrpOptionIndicator() {
   );
 
   window.addEventListener("resize", updateLabel, { passive: true });
+}
+
+/* ------------------------------------------------------------------ *
+ * SRP contact bottom sheet — confirm seller connect + timer dismiss CTA.
+ * Opens on any Contact / WhatsApp CTA tap; slides up from bottom.
+ * ------------------------------------------------------------------ */
+
+const SRP_CONTACT_TIMER_MS = 10000;
+
+const SRP_CONTACT_SELLERS = [
+  { name: "Rohit Mehra", phone: "+91 97116XXXXX", photo: "/Agent.png" },
+  { name: "Priya Sharma", phone: "+91 98765XXXXX", photo: "/Agent.png" },
+  { name: "Amit Verma", phone: "+91 99887XXXXX", photo: "/Agent.png" },
+];
+
+function srpContactSellerCardHtml(seller, layer) {
+  const isFront = layer === 1;
+  const bodyHtml = isFront
+    ? `<img class="srp-contact-sheet__card-photo" src="${seller.photo}" alt="" />
+    <div class="srp-contact-sheet__card-text">
+      <p class="srp-contact-sheet__card-name">${srpEscapeHtml(seller.name)}</p>
+      <p class="srp-contact-sheet__card-phone">${srpEscapeHtml(seller.phone)}</p>
+    </div>`
+    : "";
+
+  return `<div class="srp-contact-sheet__card srp-contact-sheet__card--layer-${layer}"${isFront ? "" : ' aria-hidden="true"'}>${bodyHtml}</div>`;
+}
+
+function renderSrpContactSheet() {
+  const mobileContent = document.getElementById("srp-mobile-content");
+  if (!mobileContent || document.getElementById("srp-contact-sheet")) return;
+
+  const cardsHtml = [1, 2, 3]
+    .map((layer, i) => srpContactSellerCardHtml(SRP_CONTACT_SELLERS[i], layer))
+    .join("");
+
+  mobileContent.insertAdjacentHTML(
+    "beforeend",
+    `<div id="srp-contact-sheet" class="srp-contact-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="srp-contact-sheet-title">
+      <button type="button" class="srp-contact-sheet__scrim" id="srp-contact-sheet-scrim" aria-label="Close"></button>
+      <div class="srp-contact-sheet__panel">
+        <div class="srp-contact-sheet__intro">
+          <img class="srp-contact-sheet__logo" src="/logo.svg" width="48" height="48" alt="" decoding="async" />
+          <h2 id="srp-contact-sheet-title" class="srp-contact-sheet__title">Are you sure you want to connect with this seller?</h2>
+        </div>
+        <div class="srp-contact-sheet__footer">
+          <div class="srp-contact-sheet__card-stack">${cardsHtml}</div>
+          <button type="button" class="srp-contact-sheet__timer-cta" id="srp-contact-not-interested">
+            <span class="srp-contact-sheet__timer-cta-fill" id="srp-contact-timer-fill" aria-hidden="true"></span>
+            <span class="srp-contact-sheet__timer-cta-label">Not interested</span>
+          </button>
+        </div>
+      </div>
+    </div>`
+  );
+}
+
+function initSrpContactSheet() {
+  const sheet = document.getElementById("srp-contact-sheet");
+  const resultsRoot = document.getElementById("srp-results");
+  const appShell = document.getElementById("app");
+  if (!sheet || !resultsRoot) return;
+
+  const scrim = document.getElementById("srp-contact-sheet-scrim");
+  const notInterestedBtn = document.getElementById("srp-contact-not-interested");
+  const timerFill = document.getElementById("srp-contact-timer-fill");
+  const CLOSE_MS = 480;
+  let escHandler;
+  let closeTimer;
+  let dismissTimer;
+
+  const resetTimerCta = () => {
+    window.clearTimeout(dismissTimer);
+    if (!timerFill) return;
+    timerFill.classList.remove("is-running");
+    void timerFill.offsetWidth;
+  };
+
+  const startTimerCta = () => {
+    resetTimerCta();
+    timerFill?.classList.add("is-running");
+    dismissTimer = window.setTimeout(() => {
+      closeSheet();
+    }, SRP_CONTACT_TIMER_MS);
+  };
+
+  const closeSheet = () => {
+    if (!sheet.classList.contains("is-visible")) return;
+    resetTimerCta();
+    sheet.classList.remove("is-visible");
+    appShell?.classList.remove("srp-page--contact-sheet-open");
+    document.documentElement.style.overflow = "";
+    if (escHandler) {
+      document.removeEventListener("keydown", escHandler);
+      escHandler = undefined;
+    }
+    window.clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(() => {
+      sheet.setAttribute("hidden", "");
+    }, CLOSE_MS);
+  };
+
+  const openSheet = () => {
+    if (sheet.classList.contains("is-visible")) return;
+    sheet.removeAttribute("hidden");
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        sheet.classList.add("is-visible");
+        appShell?.classList.add("srp-page--contact-sheet-open");
+        document.documentElement.style.overflow = "hidden";
+        startTimerCta();
+      });
+    });
+    escHandler = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeSheet();
+      }
+    };
+    document.addEventListener("keydown", escHandler);
+  };
+
+  resultsRoot.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-srp-contact-cta]");
+    if (!btn) return;
+    e.preventDefault();
+    openSheet();
+  });
+
+  scrim?.addEventListener("click", closeSheet);
+  notInterestedBtn?.addEventListener("click", closeSheet);
 }

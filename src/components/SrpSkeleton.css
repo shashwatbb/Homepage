@@ -52,7 +52,7 @@
 .srp-skeleton__filters {
   display: flex;
   gap: 12px;
-  padding: calc(var(--ds-space-s) + var(--ds-space-2xs)) 0 var(--ds-space-s) 16px;
+  padding: var(--ds-space-xs) 0 var(--ds-space-xs) 16px;
   background-color: var(--ds-color-warm-neutral-0);
   overflow: hidden;
 }
@@ -92,7 +92,7 @@
 
 .srp-skeleton__image {
   width: 100%;
-  aspect-ratio: 4 / 2.7;
+  aspect-ratio: 6 / 5;
   border-radius: var(--ds-radius-l);
 }
 

@@ -9,9 +9,9 @@
   display: flex;
   align-items: stretch;
   justify-content: space-around;
-  gap: var(--ds-space-s);
+  gap: var(--ds-space-2xs);
   min-height: 60px;
-  padding: 0 var(--ds-space-m);
+  padding: 0 var(--ds-space-xs);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background-color: var(--ds-color-warm-neutral-0);
   border-top: 1px solid var(--ds-color-warm-neutral-200);
@@ -42,8 +42,8 @@
   justify-content: center;
   gap: 2px;
   min-width: 0;
-  max-width: 5.5rem;
-  padding: 8px 8px 4px;
+  max-width: 4.25rem;
+  padding: 8px 2px 4px;
   border: none;
   background: none;
   text-decoration: none;

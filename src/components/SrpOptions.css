@@ -25,6 +25,22 @@
   padding-top: 0;
 }
 
+.srp-results-meta-bar {
+  background-color: var(--ds-surface-white);
+  padding: var(--ds-space-xs) var(--ds-space-m) var(--ds-space-s);
+  margin-top: -1px;
+}
+
+.srp-results-meta {
+  margin: 0;
+  padding: 0;
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-s);
+}
+
 .srp-option-section:last-child {
   padding-bottom: var(--ds-space-xl);
 }
@@ -142,7 +158,7 @@
   white-space: nowrap;
 }
 
-/* Option 1 — every card: one image per view (4:2.7), swipe for more */
+/* Option 1 — every card: one image per view (6:5), swipe for more */
 .srp-option-section--image-carousel .srp-card-images--carousel {
   overflow: hidden;
   border-radius: var(--ds-radius-l);
@@ -174,7 +190,7 @@
   flex: 0 0 100%;
   width: 100%;
   min-width: 100%;
-  aspect-ratio: 4 / 2.7;
+  aspect-ratio: 6 / 5;
   height: auto;
   object-fit: cover;
   border-radius: 0;
@@ -193,6 +209,48 @@
 
 .srp-card-image-chrome .srp-card-shortlist-btn {
   pointer-events: auto;
+}
+
+/* Seller row — above image on Option 1 cards */
+.srp-card-seller {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-s);
+}
+
+.srp-card-seller__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3xs);
+}
+
+.srp-card-seller__name {
+  margin: 0;
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-m);
+}
+
+.srp-card-seller__updated {
+  margin: 0;
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-s);
+}
+
+.srp-card-seller__photo {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ds-radius-s);
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
 }
 
 .srp-card-agent-chip {
@@ -391,12 +449,30 @@
   }
 }
 
-/* Meta pills: BHK, status, price/sqft */
+/* Meta row: BHK + price/sqft */
 .srp-card-image-meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: var(--ds-space-s);
+  flex-wrap: wrap;
+}
+
+.srp-card-meta-item {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ds-text-secondary);
+  font-family: var(--ds-font-family-primary);
+  font-size: 14px;
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-m);
+  white-space: nowrap;
+}
+
+.srp-card-meta-divider {
+  width: 2px;
+  height: 14px;
+  flex-shrink: 0;
+  background-color: var(--ds-color-warm-neutral-300);
 }
 
 .srp-card-meta-pill {
@@ -575,10 +651,12 @@
   letter-spacing: var(--srp-card-tracking);
 }
 
+.srp-card--option1 .srp-card-seller__name,
+.srp-card--option1 .srp-card-seller__updated,
 .srp-card--option1 .srp-card-price,
 .srp-card--option1 .srp-card-name,
 .srp-card--option1 .srp-card-address,
-.srp-card--option1 .srp-card-meta-pill,
+.srp-card--option1 .srp-card-meta-item,
 .srp-card--option1 .srp-card-cta-btn,
 .srp-card--option1 .srp-card-badges--overlay .srp-badge--pill {
   letter-spacing: var(--srp-card-tracking);
