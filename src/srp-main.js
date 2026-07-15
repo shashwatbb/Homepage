@@ -690,6 +690,7 @@ function initSrpOptionIndicator() {
  * ------------------------------------------------------------------ */
 
 const SRP_CONTACT_TIMER_MS = 10000;
+const SRP_CONTACT_CANCELLED_MS = 2400;
 
 const SRP_CONTACT_SELLERS = [
   { name: "Rohit Mehra", phone: "+91 97116XXXXX", photo: "/Agent.png" },
@@ -714,8 +715,12 @@ function renderSrpContactSheet() {
   const mobileContent = document.getElementById("srp-mobile-content");
   if (!mobileContent || document.getElementById("srp-contact-sheet")) return;
 
-  const cardsHtml = [1, 2, 3]
-    .map((layer, i) => srpContactSellerCardHtml(SRP_CONTACT_SELLERS[i], layer))
+  const cardsHtml = [
+    { layer: 3, seller: SRP_CONTACT_SELLERS[2] },
+    { layer: 2, seller: SRP_CONTACT_SELLERS[1] },
+    { layer: 1, seller: SRP_CONTACT_SELLERS[0] },
+  ]
+    .map(({ layer, seller }) => srpContactSellerCardHtml(seller, layer))
     .join("");
 
   mobileContent.insertAdjacentHTML(
@@ -723,16 +728,24 @@ function renderSrpContactSheet() {
     `<div id="srp-contact-sheet" class="srp-contact-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="srp-contact-sheet-title">
       <button type="button" class="srp-contact-sheet__scrim" id="srp-contact-sheet-scrim" aria-label="Close"></button>
       <div class="srp-contact-sheet__panel">
-        <div class="srp-contact-sheet__intro">
-          <img class="srp-contact-sheet__logo" src="/logo.svg" width="48" height="48" alt="" decoding="async" />
-          <h2 id="srp-contact-sheet-title" class="srp-contact-sheet__title">Are you sure you want to connect with this seller?</h2>
+        <div class="srp-contact-sheet__confirm" id="srp-contact-confirm">
+          <div class="srp-contact-sheet__intro">
+            <img class="srp-contact-sheet__logo" src="/logo.svg" width="48" height="48" alt="" decoding="async" />
+            <h2 id="srp-contact-sheet-title" class="srp-contact-sheet__title">Are you sure you want to connect with this seller?</h2>
+          </div>
+          <div class="srp-contact-sheet__footer">
+            <div class="srp-contact-sheet__card-stack">
+              <div class="srp-contact-sheet__card-surface">${cardsHtml}</div>
+            </div>
+            <button type="button" class="srp-contact-sheet__timer-cta" id="srp-contact-not-interested">
+              <span class="srp-contact-sheet__timer-cta-fill" id="srp-contact-timer-fill" aria-hidden="true"></span>
+              <span class="srp-contact-sheet__timer-cta-label">Not interested</span>
+            </button>
+          </div>
         </div>
-        <div class="srp-contact-sheet__footer">
-          <div class="srp-contact-sheet__card-stack">${cardsHtml}</div>
-          <button type="button" class="srp-contact-sheet__timer-cta" id="srp-contact-not-interested">
-            <span class="srp-contact-sheet__timer-cta-fill" id="srp-contact-timer-fill" aria-hidden="true"></span>
-            <span class="srp-contact-sheet__timer-cta-label">Not interested</span>
-          </button>
+        <div class="srp-contact-sheet__cancelled" id="srp-contact-cancelled" hidden>
+          <p id="srp-contact-cancelled-title" class="srp-contact-sheet__cancelled-title">You've cancelled contacting this property</p>
+          <p class="srp-contact-sheet__cancelled-subtitle">You can reach out again anytime from the listing</p>
         </div>
       </div>
     </div>`
@@ -742,19 +755,29 @@ function renderSrpContactSheet() {
 function initSrpContactSheet() {
   const sheet = document.getElementById("srp-contact-sheet");
   const resultsRoot = document.getElementById("srp-results");
-  const appShell = document.getElementById("app");
   if (!sheet || !resultsRoot) return;
 
   const scrim = document.getElementById("srp-contact-sheet-scrim");
   const notInterestedBtn = document.getElementById("srp-contact-not-interested");
   const timerFill = document.getElementById("srp-contact-timer-fill");
+  const confirmView = document.getElementById("srp-contact-confirm");
+  const cancelledView = document.getElementById("srp-contact-cancelled");
   const CLOSE_MS = 480;
   let escHandler;
   let closeTimer;
   let dismissTimer;
+  let cancelledTimer;
+
+  const resetSheetContent = () => {
+    sheet.classList.remove("srp-contact-sheet--cancelled");
+    confirmView?.removeAttribute("hidden");
+    cancelledView?.setAttribute("hidden", "");
+    sheet.setAttribute("aria-labelledby", "srp-contact-sheet-title");
+  };
 
   const resetTimerCta = () => {
     window.clearTimeout(dismissTimer);
+    window.clearTimeout(cancelledTimer);
     if (!timerFill) return;
     timerFill.classList.remove("is-running");
     void timerFill.offsetWidth;
@@ -764,15 +787,26 @@ function initSrpContactSheet() {
     resetTimerCta();
     timerFill?.classList.add("is-running");
     dismissTimer = window.setTimeout(() => {
-      closeSheet();
+      showCancelled();
     }, SRP_CONTACT_TIMER_MS);
+  };
+
+  const showCancelled = () => {
+    if (sheet.classList.contains("srp-contact-sheet--cancelled")) return;
+    resetTimerCta();
+    sheet.classList.add("srp-contact-sheet--cancelled");
+    confirmView?.setAttribute("hidden", "");
+    cancelledView?.removeAttribute("hidden");
+    sheet.setAttribute("aria-labelledby", "srp-contact-cancelled-title");
+    cancelledTimer = window.setTimeout(() => {
+      closeSheet();
+    }, SRP_CONTACT_CANCELLED_MS);
   };
 
   const closeSheet = () => {
     if (!sheet.classList.contains("is-visible")) return;
     resetTimerCta();
     sheet.classList.remove("is-visible");
-    appShell?.classList.remove("srp-page--contact-sheet-open");
     document.documentElement.style.overflow = "";
     if (escHandler) {
       document.removeEventListener("keydown", escHandler);
@@ -781,16 +815,17 @@ function initSrpContactSheet() {
     window.clearTimeout(closeTimer);
     closeTimer = window.setTimeout(() => {
       sheet.setAttribute("hidden", "");
+      resetSheetContent();
     }, CLOSE_MS);
   };
 
   const openSheet = () => {
     if (sheet.classList.contains("is-visible")) return;
+    resetSheetContent();
     sheet.removeAttribute("hidden");
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         sheet.classList.add("is-visible");
-        appShell?.classList.add("srp-page--contact-sheet-open");
         document.documentElement.style.overflow = "hidden";
         startTimerCta();
       });
@@ -812,5 +847,5 @@ function initSrpContactSheet() {
   });
 
   scrim?.addEventListener("click", closeSheet);
-  notInterestedBtn?.addEventListener("click", closeSheet);
+  notInterestedBtn?.addEventListener("click", showCancelled);
 }
