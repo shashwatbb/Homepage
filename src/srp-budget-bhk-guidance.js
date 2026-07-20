@@ -2,8 +2,8 @@ import "./components/SrpBudgetBhkGuidance.css";
 import {
   SRP_BUDGET_BHK_GUIDANCE_MOCK,
   getBudgetBucket,
-  getBhkOption,
-  getBudgetResultCount,
+  getBhkBucket,
+  getBhkOnlyResultCount,
   getBhkResultCount,
 } from "./data/srpBudgetBhkGuidance.mock.js";
 import {
@@ -90,11 +90,10 @@ function findFilterButton(filtersEl, label) {
   );
 }
 
-function createEmptyFilterButton(label, filterKey, { hint = false } = {}) {
+function createEmptyFilterButton(label, filterKey) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "srp-filter-dropdown srp-filter-dropdown--empty-experiment";
-  if (hint) button.classList.add("srp-filter-dropdown--guidance-hint");
   button.dataset.srpExperimentFilter = filterKey;
   button.innerHTML = `<span>${label}</span>${SRP_FILTER_CHEVRON}`;
   return button;
@@ -192,8 +191,8 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
 
     if (state.budgetId && state.bhkId) {
       count = getBhkResultCount(state.budgetId, state.bhkId);
-    } else if (state.budgetId) {
-      count = getBudgetResultCount(state.budgetId);
+    } else if (state.bhkId) {
+      count = getBhkOnlyResultCount(state.bhkId);
     }
 
     const noun = count === 1 ? "property" : "properties";
@@ -218,24 +217,24 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
     const scroll = document.createElement("div");
     scroll.className = "srp-guidance-strip__scroll";
 
-    if (!state.budgetId) {
-      SRP_BUDGET_BHK_GUIDANCE_MOCK.budgetBuckets.forEach((bucket, index) => {
-        const pill = document.createElement("button");
-        pill.type = "button";
-        pill.className = "srp-guidance-pill";
-        pill.style.setProperty("--srp-pill-index", String(index));
-        pill.dataset.srpGuidanceBudget = bucket.id;
-        pill.innerHTML = `${bucket.label} <span class="srp-guidance-pill__count">(${bucket.count})</span>`;
-        scroll.appendChild(pill);
-      });
-    } else {
-      const options = SRP_BUDGET_BHK_GUIDANCE_MOCK.bhkByBudget[state.budgetId] ?? [];
-      options.forEach((option, index) => {
+    if (!state.bhkId) {
+      SRP_BUDGET_BHK_GUIDANCE_MOCK.bhkBuckets.forEach((option, index) => {
         const pill = document.createElement("button");
         pill.type = "button";
         pill.className = "srp-guidance-pill";
         pill.style.setProperty("--srp-pill-index", String(index));
         pill.dataset.srpGuidanceBhk = option.id;
+        pill.innerHTML = `${option.label} <span class="srp-guidance-pill__count">(${option.count})</span>`;
+        scroll.appendChild(pill);
+      });
+    } else {
+      const options = SRP_BUDGET_BHK_GUIDANCE_MOCK.budgetByBhk[state.bhkId] ?? [];
+      options.forEach((option, index) => {
+        const pill = document.createElement("button");
+        pill.type = "button";
+        pill.className = "srp-guidance-pill";
+        pill.style.setProperty("--srp-pill-index", String(index));
+        pill.dataset.srpGuidanceBudget = option.id;
         pill.innerHTML = `${option.label} <span class="srp-guidance-pill__count">(${option.count})</span>`;
         scroll.appendChild(pill);
       });
@@ -247,7 +246,7 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
   function renderGuidanceStrip() {
     if (!guidanceStrip) return;
 
-    if (state.bhkId) {
+    if (state.bhkId && state.budgetId) {
       hideGuidanceStrip(guidanceStrip);
       return;
     }
@@ -258,10 +257,9 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
   function renderBudgetChip() {
     if (!budgetSlot) return;
     const bucket = state.budgetId ? getBudgetBucket(state.budgetId) : null;
-    const hint = !state.budgetId && !state.bhkId;
     const node = bucket
       ? createAppliedFilterChip(bucket.label)
-      : createEmptyFilterButton("Budget", "budget", { hint });
+      : createEmptyFilterButton("Budget", "budget");
     replaceWithEnter(
       budgetSlot,
       node,
@@ -271,11 +269,10 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
 
   function renderBhkChip() {
     if (!bhkSlot) return;
-    const option = state.budgetId && state.bhkId ? getBhkOption(state.budgetId, state.bhkId) : null;
-    const hint = Boolean(state.budgetId && !state.bhkId);
+    const option = state.bhkId ? getBhkBucket(state.bhkId) : null;
     const node = option
       ? createAppliedFilterChip(option.label)
-      : createEmptyFilterButton("BHK", "bhk", { hint });
+      : createEmptyFilterButton("BHK", "bhk");
     replaceWithEnter(
       bhkSlot,
       node,
@@ -284,22 +281,22 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
   }
 
   function renderAll() {
-    renderBudgetChip();
     renderBhkChip();
+    renderBudgetChip();
     renderFiltersChip(filtersChipRestore, state);
     renderGuidanceStrip();
     updateResultsMeta();
   }
 
-  function setBudget(budgetId) {
-    state.budgetId = budgetId;
-    state.bhkId = null;
+  function setBhk(bhkId) {
+    state.bhkId = bhkId;
+    state.budgetId = null;
     renderAll();
   }
 
-  function setBhk(bhkId) {
-    if (!state.budgetId) return;
-    state.bhkId = bhkId;
+  function setBudget(budgetId) {
+    if (!state.bhkId) return;
+    state.budgetId = budgetId;
     renderAll();
   }
 
@@ -350,15 +347,17 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
     legacyBhkBtn?.classList.add("srp-filter-dropdown--legacy-bhk");
 
     originalBudgetBtn = budgetBtn.cloneNode(true);
-    budgetSlot = document.createElement("div");
-    budgetSlot.className = "srp-experiment-filter-slot";
-    budgetSlot.dataset.srpExperimentSlot = "budget";
-    budgetBtn.replaceWith(budgetSlot);
 
     bhkSlot = document.createElement("div");
     bhkSlot.className = "srp-experiment-filter-slot";
     bhkSlot.dataset.srpExperimentSlot = "bhk";
-    budgetSlot.insertAdjacentElement("afterend", bhkSlot);
+
+    budgetSlot = document.createElement("div");
+    budgetSlot.className = "srp-experiment-filter-slot";
+    budgetSlot.dataset.srpExperimentSlot = "budget";
+
+    budgetBtn.replaceWith(bhkSlot);
+    bhkSlot.insertAdjacentElement("afterend", budgetSlot);
 
     guidanceStrip = document.createElement("div");
     guidanceStrip.className = "srp-guidance-strip";
