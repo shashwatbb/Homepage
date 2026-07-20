@@ -225,7 +225,7 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
         pill.className = "srp-guidance-pill";
         pill.style.setProperty("--srp-pill-index", String(index));
         pill.dataset.srpGuidanceBudget = bucket.id;
-        pill.innerHTML = `${bucket.label} <span class="srp-guidance-pill__count">${bucket.count}</span>`;
+        pill.innerHTML = `${bucket.label} <span class="srp-guidance-pill__count">(${bucket.count})</span>`;
         scroll.appendChild(pill);
       });
     } else {
@@ -236,7 +236,7 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
         pill.className = "srp-guidance-pill";
         pill.style.setProperty("--srp-pill-index", String(index));
         pill.dataset.srpGuidanceBhk = option.id;
-        pill.innerHTML = `${option.label} <span class="srp-guidance-pill__count">${option.count}</span>`;
+        pill.innerHTML = `${option.label} <span class="srp-guidance-pill__count">(${option.count})</span>`;
         scroll.appendChild(pill);
       });
     }

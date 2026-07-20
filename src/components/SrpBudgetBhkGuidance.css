@@ -185,7 +185,7 @@ html.experiment-srp-budget-bhk-guidance-strip .srp-guidance-pill:active {
 }
 
 html.experiment-srp-budget-bhk-guidance-strip .srp-guidance-pill__count {
-  color: var(--ds-text-muted);
+  color: color-mix(in srgb, var(--ds-text-muted) 50%, var(--ds-color-warm-neutral-0));
   font-weight: var(--ds-font-weight-regular);
 }
 
