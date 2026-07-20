@@ -8,6 +8,8 @@ import "./components/SrpSearch.css";
 import "./components/SrpDesktopNotice.css";
 import "./components/SrpOptions.css";
 import "./components/SrpContactSheet.css";
+import { syncExperimentsToDocument } from "./experiments.js";
+import { initSrpBudgetBhkGuidance } from "./srp-budget-bhk-guidance.js";
 import "./main.js";
 import magnifyingGlassUrl from "./assets/icons/magnifying-glass.svg";
 import sortUrl from "./assets/icons/sort-ascending.svg";
@@ -271,6 +273,8 @@ async function initSrpPage() {
   initSrpBottomNavScroll();
   renderSrpSearch();
   renderSrpResults();
+  syncExperimentsToDocument();
+  initSrpBudgetBhkGuidance(getSrpSearchContext);
   renderSrpContactSheet();
   initSrpContactSheet();
 
@@ -365,7 +369,8 @@ function getSrpSearchContext() {
 function srpResultsMetaHtml() {
   const { location, count } = getSrpSearchContext();
   const noun = count === 1 ? "property" : "properties";
-  return `<div class="srp-results-meta-bar"><p class="srp-results-meta">Showing ${count} ${noun} in ${srpEscapeHtml(location)}</p></div>`;
+  const label = `Showing ${count} ${noun} in ${srpEscapeHtml(location)}`;
+  return `<div class="srp-results-meta-bar"><p class="srp-results-meta"><span class="srp-results-meta__text">${label}</span><span class="srp-results-meta__separator" aria-hidden="true"></span></p></div>`;
 }
 
 function srpListingBhkLabel(config) {
@@ -646,12 +651,19 @@ function initSrpCardImageCarousels() {
 function initSrpOptionIndicator() {
   const searchInput = document.querySelector(".srp-search-input");
   const stickyHeader = document.querySelector(".srp-search-chrome");
-  const sections = Array.from(document.querySelectorAll(".srp-option-section"));
-  if (!searchInput || !sections.length) return;
+  if (!searchInput) return;
+
+  const getVisibleSections = () =>
+    Array.from(document.querySelectorAll(".srp-option-section")).filter(
+      (section) => section.offsetHeight > 0
+    );
 
   const getAnchorY = () => (stickyHeader?.getBoundingClientRect().bottom ?? 0) + 1;
 
   const updateLabel = () => {
+    const sections = getVisibleSections();
+    if (!sections.length) return;
+
     const anchorY = getAnchorY();
     let active = sections[0];
     for (const section of sections) {

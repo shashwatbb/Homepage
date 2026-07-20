@@ -1,4 +1,5 @@
 import "./styles/base.css";
+import { initExperiments } from "./experiments.js";
 import buyAssetUrl from "./assets/buy.png?url";
 import projectsAssetUrl from "./assets/projects.png?url";
 
@@ -1673,6 +1674,7 @@ function initStickyHeaderCompact() {
 
 initStickyHeaderCompact();
 initHeaderLocationPicker();
+initExperiments();
 initBuyersMegaHover();
 initMobileNavDrawer();
 initSpotlightAd();

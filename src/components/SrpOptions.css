@@ -34,11 +34,34 @@
 .srp-results-meta {
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
   color: var(--ds-text-muted);
   font-family: var(--ds-font-family-primary);
   font-size: var(--ds-font-size-s);
   font-weight: var(--ds-font-weight-regular);
   line-height: var(--ds-line-height-s);
+}
+
+.srp-results-meta__text {
+  flex-shrink: 0;
+}
+
+.srp-results-meta__separator {
+  flex: 1;
+  min-width: 2.75rem;
+  height: 1px;
+  border: none;
+  background-image: linear-gradient(
+    to right,
+    var(--ds-color-warm-neutral-300) 0 3px,
+    transparent 3px 7px
+  );
+  background-size: 7px 1px;
+  background-repeat: repeat-x;
+  background-position: left center;
+  align-self: center;
 }
 
 .srp-option-section:last-child {
