@@ -20,6 +20,7 @@ const EXPERIMENT_CATEGORIES = [
 ];
 
 export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_strip";
+export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 
 const EXPERIMENT_DEFINITIONS = [
   {
@@ -31,6 +32,20 @@ const EXPERIMENT_DEFINITIONS = [
       window.dispatchEvent(
         new CustomEvent("housing:experiment-apply", {
           detail: { id: SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
+  {
+    id: SRP_BHK_BUDGET_CARD_EXPERIMENT_ID,
+    name: "BHK and Budget card on SRP",
+    platform: "mobile",
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-srp-bhk-budget-card", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: SRP_BHK_BUDGET_CARD_EXPERIMENT_ID, enabled },
           bubbles: true,
         })
       );
