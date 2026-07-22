@@ -28,8 +28,6 @@ const SRP_BHK_STEPPER_MINUS_ICON = `<svg xmlns="http://www.w3.org/2000/svg" widt
 
 const SRP_BHK_STEPPER_PLUS_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256" fill="none" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"/><line x1="128" y1="40" x2="128" y2="216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"/></svg>`;
 
-const SRP_BHK_PERSON_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></svg>`;
-
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -123,8 +121,6 @@ function createBudgetDialPicker(
 ) {
   container.innerHTML = `
     <div class="srp-ios-picker__selection-pill" aria-hidden="true"></div>
-    <button type="button" class="srp-budget-stepper__pill-btn srp-budget-stepper__pill-btn--minus" id="srp-budget-stepper-minus" aria-label="Decrease budget">${SRP_BHK_STEPPER_MINUS_ICON}</button>
-    <button type="button" class="srp-budget-stepper__pill-btn srp-budget-stepper__pill-btn--plus" id="srp-budget-stepper-plus" aria-label="Increase budget">${SRP_BHK_STEPPER_PLUS_ICON}</button>
     <div class="srp-ios-picker__rail" aria-hidden="true">
       <span class="srp-ios-picker__rail-line srp-ios-picker__rail-line--top"></span>
       <span class="srp-ios-picker__rail-line srp-ios-picker__rail-line--bottom"></span>
@@ -525,7 +521,6 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   let ctaBtn = null;
   let titleEl = null;
   let bhkValueEl = null;
-  let bhkPeopleEl = null;
   let bhkMinusBtn = null;
   let bhkPlusBtn = null;
   let budgetMinusBtn = null;
@@ -550,7 +545,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
 
   const STEP_COPY = {
     budget: { title: "What's your max budget?", cta: "Continue" },
-    bhk: { title: "How many bedrooms?", cta: "Done" },
+    bhk: { title: "What's your BHK type?", cta: "Done" },
   };
 
   function getLocationLabel() {
@@ -602,42 +597,12 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     else bhkValueEl.classList.add("srp-bhk-stepper__value--settle");
   }
 
-  function renderBhkPeople(direction = 0) {
-    if (!bhkPeopleEl) return;
-
-    const count = state.bhkValue;
-    bhkPeopleEl.dataset.count = String(count);
-
-    while (bhkPeopleEl.children.length > count) {
-      bhkPeopleEl.lastElementChild?.remove();
-    }
-
-    while (bhkPeopleEl.children.length < count) {
-      const index = bhkPeopleEl.children.length;
-      const person = document.createElement("span");
-      person.className =
-        index === 0
-          ? "srp-bhk-stepper__person srp-bhk-stepper__person--full"
-          : "srp-bhk-stepper__person srp-bhk-stepper__person--peek";
-      person.innerHTML = SRP_BHK_PERSON_ICON;
-      if (direction > 0 && index === count - 1) {
-        person.classList.add("srp-bhk-stepper__person--enter");
-      }
-      bhkPeopleEl.appendChild(person);
-    }
-
-    [...bhkPeopleEl.children].forEach((person, index) => {
-      person.style.setProperty("--person-index", String(index));
-    });
-  }
-
   function renderBhkStepper(direction = 0) {
     if (!bhkValueEl || !bhkMinusBtn || !bhkPlusBtn) return;
 
     bhkValueEl.textContent = String(state.bhkValue);
     bhkMinusBtn.disabled = state.bhkValue <= SRP_BHK_STEPPER_MIN;
     bhkPlusBtn.disabled = state.bhkValue >= SRP_BHK_STEPPER_MAX;
-    renderBhkPeople(direction);
     animateBhkValue(direction);
   }
 
@@ -828,16 +793,17 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
           <div class="srp-bhk-budget-sheet__body">
             <div class="srp-bhk-budget-sheet__step" data-step="budget">
               <div class="srp-budget-stepper" role="group" aria-label="Max budget">
+                <button type="button" class="srp-budget-stepper__btn" id="srp-budget-stepper-minus" aria-label="Decrease budget">${SRP_BHK_STEPPER_MINUS_ICON}</button>
                 <div class="srp-budget-stepper__picker">
                   <div class="srp-ios-picker srp-ios-picker--dial srp-ios-picker--single srp-ios-picker--odometer" id="srp-budget-sheet-max-picker"></div>
                 </div>
+                <button type="button" class="srp-budget-stepper__btn" id="srp-budget-stepper-plus" aria-label="Increase budget">${SRP_BHK_STEPPER_PLUS_ICON}</button>
               </div>
             </div>
             <div class="srp-bhk-budget-sheet__step" data-step="bhk" hidden>
-              <div class="srp-bhk-stepper" role="group" aria-label="Number of BHK">
+              <div class="srp-bhk-stepper" role="group" aria-label="BHK type">
                 <button type="button" class="srp-bhk-stepper__btn" id="srp-bhk-stepper-minus" aria-label="Decrease BHK">${SRP_BHK_STEPPER_MINUS_ICON}</button>
                 <div class="srp-bhk-stepper__display" aria-live="polite" aria-atomic="true">
-                  <div class="srp-bhk-stepper__people" id="srp-bhk-stepper-people" aria-hidden="true"></div>
                   <span class="srp-bhk-stepper__value" id="srp-bhk-stepper-value">${SRP_BHK_STEPPER_DEFAULT}</span>
                   <span class="srp-bhk-stepper__suffix">BHK</span>
                 </div>
@@ -858,7 +824,6 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     ctaBtn = document.getElementById("srp-budget-sheet-cta");
     titleEl = document.getElementById("srp-bhk-budget-sheet-title");
     bhkValueEl = document.getElementById("srp-bhk-stepper-value");
-    bhkPeopleEl = document.getElementById("srp-bhk-stepper-people");
     bhkMinusBtn = document.getElementById("srp-bhk-stepper-minus");
     bhkPlusBtn = document.getElementById("srp-bhk-stepper-plus");
 
@@ -936,7 +901,6 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     ctaBtn = null;
     titleEl = null;
     bhkValueEl = null;
-    bhkPeopleEl = null;
     bhkMinusBtn = null;
     bhkPlusBtn = null;
     budgetMinusBtn = null;
