@@ -582,7 +582,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 }
 
 .srp-ios-picker--odometer .srp-ios-picker__viewport {
-  scroll-snap-type: none;
+  scroll-snap-type: y mandatory;
 }
 
 .srp-ios-picker__viewport::-webkit-scrollbar {
@@ -615,7 +615,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 .srp-ios-picker--odometer .srp-ios-picker__item {
   position: relative;
   z-index: 2;
-  scroll-snap-align: none;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
 .srp-ios-picker--odometer .srp-ios-picker__item.is-selected {
