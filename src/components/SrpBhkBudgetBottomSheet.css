@@ -262,11 +262,11 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 }
 
 .srp-budget-stepper__pill-btn--minus {
-  left: calc(1.75rem + 0.375rem);
+  left: calc(var(--srp-picker-pill-inset, 1.5rem) + var(--srp-picker-pill-inner-pad, 0.75rem));
 }
 
 .srp-budget-stepper__pill-btn--plus {
-  right: calc(1.75rem + 0.375rem);
+  right: calc(var(--srp-picker-pill-inset, 1.5rem) + var(--srp-picker-pill-inner-pad, 0.75rem));
 }
 
 .srp-budget-stepper__pill-btn:hover:not(:disabled) {
@@ -527,6 +527,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 }
 
 .srp-ios-picker--odometer {
+  --srp-picker-pill-inset: 1.5rem;
+  --srp-picker-pill-inner-pad: 0.75rem;
   background: transparent;
   box-shadow: none;
 }
@@ -565,8 +567,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   display: block;
   position: absolute;
   top: 50%;
-  left: 1.75rem;
-  right: 1.75rem;
+  left: var(--srp-picker-pill-inset);
+  right: var(--srp-picker-pill-inset);
   z-index: 1;
   height: var(--srp-picker-selection-h);
   margin-top: calc(var(--srp-picker-selection-h) / -2);
@@ -637,6 +639,10 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   scrollbar-width: none;
 }
 
+.srp-ios-picker--odometer .srp-ios-picker__viewport {
+  scroll-snap-type: none;
+}
+
 .srp-ios-picker__viewport::-webkit-scrollbar {
   display: none;
 }
@@ -655,25 +661,27 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   scroll-snap-align: center;
   transform-origin: center center;
   font-family: var(--ds-font-family-primary);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: var(--ds-font-weight-regular);
   line-height: 1;
   letter-spacing: -0.02em;
   color: color-mix(in srgb, var(--ds-color-warm-neutral-700) 72%, transparent);
-  will-change: transform, opacity, font-size;
-}
-
-.srp-ios-picker__item.is-selected {
-  color: var(--ds-color-warm-neutral-900);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .srp-ios-picker--odometer .srp-ios-picker__item {
   position: relative;
   z-index: 2;
+  scroll-snap-align: none;
 }
 
 .srp-ios-picker--odometer .srp-ios-picker__item.is-selected {
   z-index: 3;
+}
+
+.srp-ios-picker__item.is-selected {
+  color: var(--ds-color-warm-neutral-900);
 }
 
 .srp-ios-picker--hard-floor .srp-ios-picker__item.is-below-floor {

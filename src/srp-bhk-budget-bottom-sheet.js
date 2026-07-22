@@ -137,6 +137,10 @@ function createBudgetDialPicker(
   let lastHapticIndex = selectedIndex;
   let isSnapping = false;
   let isDragging = false;
+  let isUserScrolling = false;
+  let settleMonitorId = 0;
+  let lastScrollTop = 0;
+  let lastScrollSampleAt = 0;
 
   if (hardFloor) {
     container.classList.add("srp-ios-picker--hard-floor");
@@ -202,18 +206,15 @@ function createBudgetDialPicker(
       const absDistance = Math.abs(distance);
 
       const norm = Math.min(absDistance / itemHeight, 2.5);
-      const focus = Math.max(0, 1 - norm * 0.5);
-      const scale = 0.9 + focus * 0.12;
-      const fontSize = 1.08 + focus * 0.42;
-      const opacity = 0.52 + focus * 0.48;
-      const fontWeight = focus > 0.7 ? 600 : focus > 0.35 ? 500 : 400;
+      const focus = Math.max(0, 1 - norm * 0.45);
+      const scale = 0.88 + focus * 0.14;
+      const opacity = 0.5 + focus * 0.5;
+      const fontWeight = focus > 0.72 ? 600 : focus > 0.38 ? 500 : 400;
 
-      item.style.transition =
-        isDragging || scrollAnimId ? "none" : "transform 0.14s ease, opacity 0.14s ease, font-size 0.14s ease";
-      item.style.transform = `scale(${scale.toFixed(3)})`;
-      item.style.fontSize = `${fontSize.toFixed(3)}rem`;
+      item.style.transition = "none";
+      item.style.transform = `scale(${scale.toFixed(3)}) translateZ(0)`;
       item.style.fontWeight = String(fontWeight);
-      item.style.opacity = String(Math.max(0.5, opacity));
+      item.style.opacity = String(Math.max(0.48, opacity));
       item.style.color =
         focus > 0.55
           ? "var(--ds-color-warm-neutral-900)"
@@ -270,27 +271,36 @@ function createBudgetDialPicker(
     }
   };
 
+  const cancelSettleMonitor = () => {
+    if (settleMonitorId) {
+      window.cancelAnimationFrame(settleMonitorId);
+      settleMonitorId = 0;
+    }
+  };
+
+  const easeOutQuart = (t) => 1 - (1 - t) ** 4;
+
   const animateScrollTo = (targetTop, onDone, { duration: durationOverride } = {}) => {
     cancelScrollAnimation();
     window.clearTimeout(scrollTimer);
+    cancelSettleMonitor();
     const startTop = viewport.scrollTop;
     const delta = targetTop - startTop;
 
     if (Math.abs(delta) < 0.5 || prefersReducedMotion()) {
       viewport.scrollTop = targetTop;
+      paintWheel();
       onDone?.();
       return;
     }
 
     const duration =
-      durationOverride ?? Math.min(420, Math.max(280, Math.abs(delta) * 0.72));
+      durationOverride ?? Math.min(480, Math.max(320, Math.abs(delta) * 0.85));
     const startTime = performance.now();
-
-    const easeOutCubic = (t) => 1 - (1 - t) ** 3;
 
     const tick = (now) => {
       const progress = Math.min(1, (now - startTime) / duration);
-      viewport.scrollTop = startTop + delta * easeOutCubic(progress);
+      viewport.scrollTop = startTop + delta * easeOutQuart(progress);
       paintWheel();
 
       if (progress < 1) {
@@ -322,7 +332,7 @@ function createBudgetDialPicker(
     };
 
     if (smooth) {
-      animateScrollTo(targetTop, finish, { duration: step ? 360 : undefined });
+      animateScrollTo(targetTop, finish, { duration: step ? 420 : undefined });
       return;
     }
 
@@ -333,22 +343,72 @@ function createBudgetDialPicker(
     finish();
   };
 
-  const settleScroll = () => {
+  const settleScroll = ({ emit = false } = {}) => {
+    if (scrollAnimId) return;
+
     isDragging = false;
-    viewport.style.scrollSnapType = "y proximity";
+    isUserScrolling = false;
     enforceScrollFloor();
     paintWheel();
 
     const index = Math.max(minIndex, selectedIndex);
     const targetTop = getScrollTopForIndex(index);
 
-    if (Math.abs(viewport.scrollTop - targetTop) <= 2) {
+    if (Math.abs(viewport.scrollTop - targetTop) <= 1) {
       selectedIndex = index;
+      viewport.scrollTop = targetTop;
       paintWheel();
       return;
     }
 
-    scrollToIndex(index, { smooth: true, emit: false });
+    scrollToIndex(index, { smooth: true, emit });
+  };
+
+  const scheduleSettle = (delay = 160) => {
+    window.clearTimeout(scrollTimer);
+    scrollTimer = window.setTimeout(() => settleScroll({ emit: false }), delay);
+  };
+
+  const beginUserScroll = () => {
+    isDragging = true;
+    isUserScrolling = true;
+    cancelScrollAnimation();
+    cancelSettleMonitor();
+    window.clearTimeout(scrollTimer);
+    schedulePaint();
+  };
+
+  const monitorScrollMomentum = () => {
+    cancelSettleMonitor();
+    lastScrollTop = viewport.scrollTop;
+    lastScrollSampleAt = performance.now();
+
+    const sample = () => {
+      if (scrollAnimId) {
+        settleMonitorId = window.requestAnimationFrame(sample);
+        return;
+      }
+
+      schedulePaint();
+
+      const now = performance.now();
+      const currentTop = viewport.scrollTop;
+      const elapsed = Math.max(16, now - lastScrollSampleAt);
+      const velocity = Math.abs(currentTop - lastScrollTop) / elapsed;
+
+      lastScrollTop = currentTop;
+      lastScrollSampleAt = now;
+
+      if (velocity > 0.08) {
+        settleMonitorId = window.requestAnimationFrame(sample);
+        return;
+      }
+
+      settleMonitorId = 0;
+      settleScroll({ emit: false });
+    };
+
+    settleMonitorId = window.requestAnimationFrame(sample);
   };
 
   const onScroll = () => {
@@ -363,29 +423,29 @@ function createBudgetDialPicker(
       hapticSoft();
     }
     schedulePaint();
-    window.clearTimeout(scrollTimer);
-    scrollTimer = window.setTimeout(settleScroll, isDragging ? 200 : 140);
+
+    if (isUserScrolling || isDragging) {
+      scheduleSettle(isDragging ? 180 : 140);
+    }
   };
 
   viewport.addEventListener(
     "touchstart",
     () => {
-      isDragging = true;
-      cancelScrollAnimation();
-      viewport.style.scrollSnapType = "none";
-      schedulePaint();
+      beginUserScroll();
     },
     { passive: true }
   );
-  viewport.addEventListener("touchend", () => window.setTimeout(settleScroll, 120), { passive: true });
-  viewport.addEventListener("touchcancel", () => window.setTimeout(settleScroll, 120), { passive: true });
+  viewport.addEventListener("touchend", () => monitorScrollMomentum(), { passive: true });
+  viewport.addEventListener("touchcancel", () => monitorScrollMomentum(), { passive: true });
   viewport.addEventListener("mousedown", () => {
-    isDragging = true;
-    cancelScrollAnimation();
-    viewport.style.scrollSnapType = "none";
-    schedulePaint();
+    beginUserScroll();
   });
-  viewport.addEventListener("mouseup", () => window.setTimeout(settleScroll, 120));
+  viewport.addEventListener("mouseup", () => monitorScrollMomentum());
+  viewport.addEventListener("wheel", () => {
+    beginUserScroll();
+    monitorScrollMomentum();
+  }, { passive: true });
   viewport.addEventListener("scroll", onScroll, { passive: true });
 
   scrollToIndex(selectedIndex, { smooth: false, emit: false });
@@ -415,6 +475,7 @@ function createBudgetDialPicker(
       viewport.removeEventListener("scroll", onScroll);
       window.clearTimeout(scrollTimer);
       cancelScrollAnimation();
+      cancelSettleMonitor();
       if (rafId) window.cancelAnimationFrame(rafId);
     },
   };
