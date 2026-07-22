@@ -138,15 +138,17 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-bhk-budget-sheet__header {
   position: relative;
+  z-index: 5;
   flex-shrink: 0;
-  padding: 0 2.25rem var(--ds-space-2xs);
+  padding: var(--ds-space-2xs) 2.75rem var(--ds-space-2xs);
   text-align: center;
 }
 
 .srp-bhk-budget-sheet__close {
   position: absolute;
-  top: 0.375rem;
-  right: -0.25rem;
+  top: 0;
+  right: 0;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -164,6 +166,13 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
     color 0.15s ease,
     transform 0.15s ease;
   -webkit-tap-highlight-color: transparent;
+}
+
+.srp-bhk-budget-sheet__close svg {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
 }
 
 .srp-bhk-budget-sheet__close:hover {
@@ -191,6 +200,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 }
 
 .srp-bhk-budget-sheet__body {
+  position: relative;
+  z-index: 1;
   flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
