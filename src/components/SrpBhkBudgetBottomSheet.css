@@ -317,8 +317,9 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 5.5rem;
-  padding: var(--ds-space-s) var(--ds-space-m);
+  width: 9.25rem;
+  min-width: 9.25rem;
+  padding: var(--ds-space-m) var(--ds-space-l);
   border-radius: 1rem;
   background: linear-gradient(
     180deg,
@@ -328,6 +329,69 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--ds-color-purple-700) 14%, var(--ds-color-warm-neutral-200)),
     0 4px 16px rgba(94, 39, 135, 0.08);
+}
+
+.srp-bhk-stepper__people {
+  --srp-bhk-person-size: 2.125rem;
+  --srp-bhk-person-peek: 42%;
+  --srp-bhk-person-overlap: 22%;
+  --srp-bhk-people-width: calc(
+    var(--srp-bhk-person-size) +
+    (var(--srp-bhk-person-size) * var(--srp-bhk-person-peek) / 100 - var(--srp-bhk-person-size) * var(--srp-bhk-person-overlap) / 100) * 4
+  );
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--srp-bhk-people-width);
+  min-width: var(--srp-bhk-people-width);
+  height: var(--srp-bhk-person-size);
+  margin-bottom: 0.5rem;
+  color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 88%, var(--ds-color-purple-700));
+}
+
+.srp-bhk-stepper__person {
+  display: inline-flex;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.srp-bhk-stepper__person--full {
+  width: var(--srp-bhk-person-size);
+  height: var(--srp-bhk-person-size);
+}
+
+.srp-bhk-stepper__person--peek {
+  width: calc(var(--srp-bhk-person-size) * var(--srp-bhk-person-peek) / 100);
+  height: var(--srp-bhk-person-size);
+  overflow: hidden;
+  margin-left: calc(var(--srp-bhk-person-size) * var(--srp-bhk-person-overlap) / -100);
+}
+
+.srp-bhk-stepper__person svg {
+  display: block;
+  width: var(--srp-bhk-person-size);
+  height: var(--srp-bhk-person-size);
+  fill: currentColor;
+}
+
+.srp-bhk-stepper__person--peek svg {
+  margin-left: calc(var(--srp-bhk-person-size) * -0.58);
+}
+
+.srp-bhk-stepper__person--enter {
+  animation: srp-bhk-person-in 0.34s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes srp-bhk-person-in {
+  0% {
+    opacity: 0;
+    transform: translateX(0.35rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .srp-bhk-stepper__value {
@@ -605,7 +669,8 @@ html.experiment-srp-bhk-budget-card #srp-results.srp-results--reload-reveal #srp
 
   .srp-bhk-stepper__value--rise,
   .srp-bhk-stepper__value--fall,
-  .srp-bhk-stepper__value--settle {
+  .srp-bhk-stepper__value--settle,
+  .srp-bhk-stepper__person--enter {
     animation: none;
   }
 
