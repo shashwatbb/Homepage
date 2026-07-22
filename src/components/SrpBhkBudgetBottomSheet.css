@@ -525,6 +525,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   --srp-picker-visible: 7;
   --srp-picker-item-h: 2.5rem;
   --srp-picker-selection-pad: 0.375rem;
+  --srp-picker-edge-pad: calc(var(--srp-picker-item-h) * (var(--srp-picker-visible) - 1) / 2);
   --srp-picker-selection-h: calc(var(--srp-picker-item-h) + var(--srp-picker-selection-pad) * 2);
   position: relative;
   width: 100%;
@@ -660,7 +661,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-ios-picker__list {
   margin: 0;
-  padding: calc(var(--srp-picker-item-h) * 2) 0;
+  padding: var(--srp-picker-edge-pad, calc(var(--srp-picker-item-h) * 2)) 0;
   list-style: none;
 }
 

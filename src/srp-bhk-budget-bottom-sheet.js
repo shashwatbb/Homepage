@@ -179,6 +179,16 @@ function createBudgetDialPicker(
     return floorItem.offsetTop - (viewport.clientHeight - itemHeight) / 2;
   };
 
+  const getMaxScrollTop = () => {
+    measureItemHeight();
+    const lastItem = items[options.length - 1];
+    if (!lastItem) return Math.max(0, viewport.scrollHeight - viewport.clientHeight);
+    return lastItem.offsetTop - (viewport.clientHeight - itemHeight) / 2;
+  };
+
+  const clampScrollTop = (top) =>
+    Math.min(getMaxScrollTop(), Math.max(getMinScrollTop(), top));
+
   const enforceScrollFloor = () => {
     if (!hardFloor || minIndex <= 0) return false;
     const floorScrollTop = getMinScrollTop();
@@ -272,7 +282,7 @@ function createBudgetDialPicker(
     const target = items[index];
     if (!target) return 0;
     const centered = target.offsetTop - (viewport.clientHeight - itemHeight) / 2;
-    return Math.max(getMinScrollTop(), centered);
+    return clampScrollTop(centered);
   };
 
   const cancelScrollAnimation = () => {
