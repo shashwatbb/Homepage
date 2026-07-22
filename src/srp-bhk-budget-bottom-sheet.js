@@ -127,8 +127,10 @@ function createBudgetDialPicker(
   let minIndex = floorIndex;
   let scrollTimer;
   let rafId;
+  let scrollAnimId;
   let lastHapticIndex = selectedIndex;
   let isSnapping = false;
+  let isDragging = false;
 
   if (hardFloor) {
     container.classList.add("srp-ios-picker--hard-floor");
@@ -238,51 +240,123 @@ function createBudgetDialPicker(
     });
   };
 
+  const getScrollTopForIndex = (index) => {
+    measureItemHeight();
+    const target = items[index];
+    if (!target) return 0;
+    const centered = target.offsetTop - (viewport.clientHeight - itemHeight) / 2;
+    return Math.max(getMinScrollTop(), centered);
+  };
+
+  const cancelScrollAnimation = () => {
+    if (scrollAnimId) {
+      window.cancelAnimationFrame(scrollAnimId);
+      scrollAnimId = 0;
+    }
+  };
+
+  const animateScrollTo = (targetTop, onDone) => {
+    cancelScrollAnimation();
+    const startTop = viewport.scrollTop;
+    const delta = targetTop - startTop;
+
+    if (Math.abs(delta) < 0.5 || prefersReducedMotion()) {
+      viewport.scrollTop = targetTop;
+      onDone?.();
+      return;
+    }
+
+    const duration = Math.min(340, Math.max(180, Math.abs(delta) * 0.55));
+    const startTime = performance.now();
+
+    const easeOutCubic = (t) => 1 - (1 - t) ** 3;
+
+    const tick = (now) => {
+      const progress = Math.min(1, (now - startTime) / duration);
+      viewport.scrollTop = startTop + delta * easeOutCubic(progress);
+
+      if (progress < 1) {
+        scrollAnimId = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      scrollAnimId = 0;
+      viewport.scrollTop = targetTop;
+      onDone?.();
+    };
+
+    scrollAnimId = window.requestAnimationFrame(tick);
+  };
+
   const scrollToIndex = (index, { smooth = false, emit = true } = {}) => {
     const clamped = Math.max(minIndex, Math.min(options.length - 1, index));
     isSnapping = true;
     selectedIndex = clamped;
     lastHapticIndex = clamped;
 
-    const target = items[clamped];
-    if (target) {
-      target.scrollIntoView({ block: "center", behavior: smooth ? "smooth" : "auto" });
+    const targetTop = getScrollTopForIndex(clamped);
+    const finish = () => {
+      enforceScrollFloor();
+      paintWheel();
+      isSnapping = false;
+      if (emit) onChange?.(selectedIndex, options[selectedIndex]);
+    };
+
+    if (smooth) {
+      animateScrollTo(targetTop, finish);
+      return;
     }
 
-    window.setTimeout(
-      () => {
-        enforceScrollFloor();
-        paintWheel();
-        isSnapping = false;
-        if (emit) onChange?.(selectedIndex, options[selectedIndex]);
-      },
-      smooth ? 220 : 0
-    );
+    cancelScrollAnimation();
+    viewport.scrollTop = targetTop;
+    finish();
   };
 
   const settleScroll = () => {
+    isDragging = false;
     enforceScrollFloor();
     paintWheel();
-    if (selectedIndex < minIndex) {
-      scrollToIndex(minIndex, { smooth: true, emit: true });
+
+    const index = Math.max(minIndex, selectedIndex);
+    const targetTop = getScrollTopForIndex(index);
+
+    if (Math.abs(viewport.scrollTop - targetTop) <= 1.5) {
+      selectedIndex = index;
+      paintWheel();
       return;
     }
-    scrollToIndex(selectedIndex, { smooth: true, emit: false });
+
+    scrollToIndex(index, { smooth: true, emit: false });
   };
 
   const onScroll = () => {
+    if (isSnapping) return;
+
     if (enforceScrollFloor()) {
       hapticSoft();
     }
     schedulePaint();
     window.clearTimeout(scrollTimer);
-    scrollTimer = window.setTimeout(settleScroll, 120);
+    scrollTimer = window.setTimeout(settleScroll, isDragging ? 160 : 100);
   };
 
-  viewport.addEventListener("touchstart", schedulePaint, { passive: true });
-  viewport.addEventListener("touchend", () => window.setTimeout(settleScroll, 80), { passive: true });
-  viewport.addEventListener("mousedown", schedulePaint);
-  viewport.addEventListener("mouseup", () => window.setTimeout(settleScroll, 80));
+  viewport.addEventListener(
+    "touchstart",
+    () => {
+      isDragging = true;
+      cancelScrollAnimation();
+      schedulePaint();
+    },
+    { passive: true }
+  );
+  viewport.addEventListener("touchend", () => window.setTimeout(settleScroll, 120), { passive: true });
+  viewport.addEventListener("touchcancel", () => window.setTimeout(settleScroll, 120), { passive: true });
+  viewport.addEventListener("mousedown", () => {
+    isDragging = true;
+    cancelScrollAnimation();
+    schedulePaint();
+  });
+  viewport.addEventListener("mouseup", () => window.setTimeout(settleScroll, 120));
   viewport.addEventListener("scroll", onScroll, { passive: true });
 
   scrollToIndex(selectedIndex, { smooth: false, emit: false });
@@ -311,6 +385,7 @@ function createBudgetDialPicker(
     destroy() {
       viewport.removeEventListener("scroll", onScroll);
       window.clearTimeout(scrollTimer);
+      cancelScrollAnimation();
       if (rafId) window.cancelAnimationFrame(rafId);
     },
   };
@@ -492,7 +567,9 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
 
   function setSheetOpenClass(open) {
     document.documentElement.classList.toggle("srp-budget-sheet-open", open);
-    document.documentElement.classList.toggle("srp-budget-sheet-closing", false);
+    if (open) {
+      document.documentElement.classList.remove("srp-budget-sheet-closing");
+    }
   }
 
   function openSheet() {
@@ -524,7 +601,6 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   function dismissSheet() {
     if (!sheetEl?.classList.contains("is-visible") || completed) return;
 
-    hapticSoft();
     closeSheet();
     showStep("bhk");
     resetBhkStepper();
@@ -535,6 +611,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
 
     sheetEl.classList.add("is-closing");
     sheetEl.classList.remove("is-visible");
+    document.documentElement.classList.remove("srp-budget-sheet-open");
     document.documentElement.classList.add("srp-budget-sheet-closing");
 
     if (escHandler) {
@@ -545,7 +622,6 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     window.clearTimeout(closeTimer);
     closeTimer = window.setTimeout(() => {
       document.documentElement.classList.remove("srp-budget-sheet-closing");
-      setSheetOpenClass(false);
       document.documentElement.style.overflow = "";
       sheetEl.classList.remove("is-closing");
       sheetEl.setAttribute("hidden", "");

@@ -41,27 +41,30 @@ html.experiment-srp-bhk-budget-card.srp-budget-sheet-open {
 
 html.experiment-srp-bhk-budget-card.srp-budget-sheet-open #srp-mobile-content,
 html.experiment-srp-bhk-budget-card.srp-budget-sheet-closing #srp-mobile-content {
-  transform: scale(0.935);
+  transform: scale(0.965);
   transform-origin: center top;
-  border-radius: 1.25rem;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 24px 80px rgba(26, 24, 22, 0.28);
+  box-shadow: 0 16px 48px rgba(26, 24, 22, 0.2);
 }
 
 html.experiment-srp-bhk-budget-card #srp-mobile-content {
+  --srp-backdrop-dur: 0.52s;
+  --srp-backdrop-ease: cubic-bezier(0.32, 0.72, 0, 1);
   transform: scale(1);
   transform-origin: center top;
   border-radius: 0;
   box-shadow: none;
+  will-change: transform, border-radius, box-shadow;
   transition:
-    transform 0.56s cubic-bezier(0.22, 1, 0.32, 1),
-    border-radius 0.56s cubic-bezier(0.22, 1, 0.32, 1),
-    box-shadow 0.56s cubic-bezier(0.22, 1, 0.32, 1);
+    transform var(--srp-backdrop-dur) var(--srp-backdrop-ease),
+    border-radius var(--srp-backdrop-dur) var(--srp-backdrop-ease),
+    box-shadow var(--srp-backdrop-dur) var(--srp-backdrop-ease);
   backface-visibility: hidden;
 }
 
 .srp-bhk-budget-sheet {
-  --srp-budget-sheet-ease: cubic-bezier(0.22, 1, 0.32, 1);
+  --srp-budget-sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --srp-budget-sheet-dur: 0.52s;
   --srp-picker-item-h: 3rem;
   position: fixed;
@@ -117,6 +120,14 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   transform: translate3d(0, 0, 0);
 }
 
+.srp-bhk-budget-sheet.is-closing .srp-bhk-budget-sheet__panel {
+  transform: translate3d(0, 100%, 0);
+}
+
+.srp-bhk-budget-sheet.is-closing .srp-bhk-budget-sheet__scrim {
+  opacity: 0;
+}
+
 .srp-bhk-budget-sheet__handle {
   flex-shrink: 0;
   width: 2.5rem;
@@ -129,7 +140,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 .srp-bhk-budget-sheet__header {
   position: relative;
   flex-shrink: 0;
-  padding: var(--ds-space-s) 2.25rem var(--ds-space-s);
+  padding: var(--ds-space-s) 2.25rem var(--ds-space-m);
   text-align: center;
 }
 
@@ -215,6 +226,11 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--ds-space-xs);
+  padding-top: var(--ds-space-s);
+}
+
+.srp-bhk-budget-sheet__step[data-step="budget"] {
+  padding-bottom: var(--ds-space-2xs);
 }
 
 .srp-bhk-budget-sheet__picker-col {
@@ -225,7 +241,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-bhk-budget-sheet__picker-label {
   display: block;
-  margin-bottom: var(--ds-space-2xs);
+  margin-bottom: var(--ds-space-xs);
   font-family: var(--ds-font-family-primary);
   font-size: 0.75rem;
   font-weight: var(--ds-font-weight-semibold);
@@ -421,8 +437,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-ios-picker__rail-line {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 1.75rem;
+  right: 1.75rem;
   height: 1px;
   background-color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 16%, transparent);
   transform: scaleY(0.5);
@@ -443,7 +459,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -464,7 +480,6 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   justify-content: center;
   height: var(--srp-picker-item-h);
   scroll-snap-align: center;
-  scroll-snap-stop: always;
   transform-origin: center center;
   font-family: var(--ds-font-family-primary);
   font-size: 1.3125rem;
@@ -473,6 +488,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   letter-spacing: -0.02em;
   color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 42%, transparent);
   will-change: transform, opacity;
+  transition: color 0.12s ease;
 }
 
 .srp-ios-picker__item.is-selected {
