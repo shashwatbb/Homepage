@@ -470,7 +470,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 }
 
 .srp-ios-picker--odometer {
-  --srp-picker-pill-inset: 0.75rem;
+  --srp-picker-pill-inset: 2.75rem;
   background: transparent;
   box-shadow: none;
 }
