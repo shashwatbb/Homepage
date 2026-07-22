@@ -720,30 +720,33 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     if (!sheetEl || sheetEl.classList.contains("is-visible") || completed) return;
 
     showStep("budget");
-    sheetEl.removeAttribute("hidden");
     resetBhkStepper();
+    sheetEl.classList.remove("is-closing", "is-visible");
+    sheetEl.removeAttribute("hidden");
+    void sheetEl.offsetHeight;
+
     window.requestAnimationFrame(() => {
+      setSheetOpenClass(true);
+      sheetEl.classList.add("is-visible");
+
       window.requestAnimationFrame(() => {
-        setSheetOpenClass(true);
-        sheetEl.classList.add("is-visible");
-
-        window.requestAnimationFrame(() => {
-          document.documentElement.style.overflow = "hidden";
-        });
-
-        escHandler = (event) => {
-          if (event.key === "Escape") {
-            event.preventDefault();
-            dismissSheet();
-          }
-        };
-        document.addEventListener("keydown", escHandler);
+        document.documentElement.style.overflow = "hidden";
       });
+
+      escHandler = (event) => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          dismissSheet();
+        }
+      };
+      document.addEventListener("keydown", escHandler);
     });
   }
 
   function dismissSheet() {
-    if (!sheetEl?.classList.contains("is-visible") || completed) return;
+    if (!sheetEl?.classList.contains("is-visible") || sheetEl.classList.contains("is-closing") || completed) {
+      return;
+    }
 
     closeSheet();
     showStep("budget");
@@ -751,12 +754,13 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   }
 
   function closeSheet() {
-    if (!sheetEl?.classList.contains("is-visible")) return;
+    if (!sheetEl?.classList.contains("is-visible") || sheetEl.classList.contains("is-closing")) return;
 
-    sheetEl.classList.add("is-closing");
-    sheetEl.classList.remove("is-visible");
     document.documentElement.classList.remove("srp-budget-sheet-open");
     document.documentElement.classList.add("srp-budget-sheet-closing");
+    sheetEl.classList.remove("is-visible");
+    void sheetEl.offsetHeight;
+    sheetEl.classList.add("is-closing");
 
     if (escHandler) {
       document.removeEventListener("keydown", escHandler);

@@ -81,6 +81,11 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   visibility: visible;
 }
 
+.srp-bhk-budget-sheet.is-closing {
+  pointer-events: none;
+  visibility: visible;
+}
+
 .srp-bhk-budget-sheet__scrim {
   position: absolute;
   inset: 0;
