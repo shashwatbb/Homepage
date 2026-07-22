@@ -1,12 +1,13 @@
 import "./components/SrpBhkBudgetBottomSheet.css";
 import {
   bhkValueToMockId,
-  formatBudgetRangeLabel,
+  formatMaxBudgetLabel,
   getBhkLabelFromValue,
   getSheetResultCount,
   SRP_BHK_STEPPER_DEFAULT,
   SRP_BHK_STEPPER_MAX,
   SRP_BHK_STEPPER_MIN,
+  SRP_BUDGET_SHEET_DEFAULT_INDEX,
   SRP_BUDGET_SHEET_STEPS,
 } from "./data/srpBhkBudgetBottomSheet.mock.js";
 import { SRP_BUDGET_BHK_GUIDANCE_MOCK } from "./data/srpBudgetBhkGuidance.mock.js";
@@ -112,6 +113,9 @@ function createBudgetDialPicker(
   { initialIndex = 0, floorIndex = 0, hardFloor = false, onChange } = {}
 ) {
   container.innerHTML = `
+    <div class="srp-ios-picker__selection-pill" aria-hidden="true"></div>
+    <button type="button" class="srp-budget-stepper__pill-btn srp-budget-stepper__pill-btn--minus" id="srp-budget-stepper-minus" aria-label="Decrease budget">${SRP_BHK_STEPPER_MINUS_ICON}</button>
+    <button type="button" class="srp-budget-stepper__pill-btn srp-budget-stepper__pill-btn--plus" id="srp-budget-stepper-plus" aria-label="Increase budget">${SRP_BHK_STEPPER_PLUS_ICON}</button>
     <div class="srp-ios-picker__rail" aria-hidden="true">
       <span class="srp-ios-picker__rail-line srp-ios-picker__rail-line--top"></span>
       <span class="srp-ios-picker__rail-line srp-ios-picker__rail-line--bottom"></span>
@@ -196,15 +200,24 @@ function createBudgetDialPicker(
       const itemCenter = rect.top + rect.height / 2;
       const distance = itemCenter - centerY;
       const absDistance = Math.abs(distance);
-      const t = Math.min(absDistance / itemHeight, 3);
 
-      // iOS timer wheel: flat, scale + fade + mild cylinder tilt
-      const scale = Math.max(0.78, 1.08 - t * 0.1);
-      const opacity = Math.max(0.22, 1 - t * 0.32);
-      const rotateX = Math.max(-14, Math.min(14, (distance / itemHeight) * -11));
+      const norm = Math.min(absDistance / itemHeight, 2.5);
+      const focus = Math.max(0, 1 - norm * 0.5);
+      const scale = 0.9 + focus * 0.12;
+      const fontSize = 1.08 + focus * 0.42;
+      const opacity = 0.52 + focus * 0.48;
+      const fontWeight = focus > 0.7 ? 600 : focus > 0.35 ? 500 : 400;
 
-      item.style.transform = `scale(${scale.toFixed(3)}) rotateX(${rotateX.toFixed(2)}deg)`;
-      item.style.opacity = String(opacity);
+      item.style.transition =
+        isDragging || scrollAnimId ? "none" : "transform 0.14s ease, opacity 0.14s ease, font-size 0.14s ease";
+      item.style.transform = `scale(${scale.toFixed(3)})`;
+      item.style.fontSize = `${fontSize.toFixed(3)}rem`;
+      item.style.fontWeight = String(fontWeight);
+      item.style.opacity = String(Math.max(0.5, opacity));
+      item.style.color =
+        focus > 0.55
+          ? "var(--ds-color-warm-neutral-900)"
+          : "color-mix(in srgb, var(--ds-color-warm-neutral-700) 72%, transparent)";
       item.classList.toggle("is-below-floor", isBelowFloor);
 
       if (absDistance < closestDistance) {
@@ -257,8 +270,9 @@ function createBudgetDialPicker(
     }
   };
 
-  const animateScrollTo = (targetTop, onDone) => {
+  const animateScrollTo = (targetTop, onDone, { duration: durationOverride } = {}) => {
     cancelScrollAnimation();
+    window.clearTimeout(scrollTimer);
     const startTop = viewport.scrollTop;
     const delta = targetTop - startTop;
 
@@ -268,7 +282,8 @@ function createBudgetDialPicker(
       return;
     }
 
-    const duration = Math.min(340, Math.max(180, Math.abs(delta) * 0.55));
+    const duration =
+      durationOverride ?? Math.min(420, Math.max(280, Math.abs(delta) * 0.72));
     const startTime = performance.now();
 
     const easeOutCubic = (t) => 1 - (1 - t) ** 3;
@@ -276,6 +291,7 @@ function createBudgetDialPicker(
     const tick = (now) => {
       const progress = Math.min(1, (now - startTime) / duration);
       viewport.scrollTop = startTop + delta * easeOutCubic(progress);
+      paintWheel();
 
       if (progress < 1) {
         scrollAnimId = window.requestAnimationFrame(tick);
@@ -284,20 +300,21 @@ function createBudgetDialPicker(
 
       scrollAnimId = 0;
       viewport.scrollTop = targetTop;
+      paintWheel();
       onDone?.();
     };
 
     scrollAnimId = window.requestAnimationFrame(tick);
   };
 
-  const scrollToIndex = (index, { smooth = false, emit = true } = {}) => {
+  const scrollToIndex = (index, { smooth = false, emit = true, step = false } = {}) => {
     const clamped = Math.max(minIndex, Math.min(options.length - 1, index));
     isSnapping = true;
-    selectedIndex = clamped;
     lastHapticIndex = clamped;
 
     const targetTop = getScrollTopForIndex(clamped);
     const finish = () => {
+      selectedIndex = clamped;
       enforceScrollFloor();
       paintWheel();
       isSnapping = false;
@@ -305,24 +322,27 @@ function createBudgetDialPicker(
     };
 
     if (smooth) {
-      animateScrollTo(targetTop, finish);
+      animateScrollTo(targetTop, finish, { duration: step ? 360 : undefined });
       return;
     }
 
     cancelScrollAnimation();
+    window.clearTimeout(scrollTimer);
+    selectedIndex = clamped;
     viewport.scrollTop = targetTop;
     finish();
   };
 
   const settleScroll = () => {
     isDragging = false;
+    viewport.style.scrollSnapType = "y proximity";
     enforceScrollFloor();
     paintWheel();
 
     const index = Math.max(minIndex, selectedIndex);
     const targetTop = getScrollTopForIndex(index);
 
-    if (Math.abs(viewport.scrollTop - targetTop) <= 1.5) {
+    if (Math.abs(viewport.scrollTop - targetTop) <= 2) {
       selectedIndex = index;
       paintWheel();
       return;
@@ -332,6 +352,11 @@ function createBudgetDialPicker(
   };
 
   const onScroll = () => {
+    if (scrollAnimId) {
+      schedulePaint();
+      return;
+    }
+
     if (isSnapping) return;
 
     if (enforceScrollFloor()) {
@@ -339,7 +364,7 @@ function createBudgetDialPicker(
     }
     schedulePaint();
     window.clearTimeout(scrollTimer);
-    scrollTimer = window.setTimeout(settleScroll, isDragging ? 160 : 100);
+    scrollTimer = window.setTimeout(settleScroll, isDragging ? 200 : 140);
   };
 
   viewport.addEventListener(
@@ -347,6 +372,7 @@ function createBudgetDialPicker(
     () => {
       isDragging = true;
       cancelScrollAnimation();
+      viewport.style.scrollSnapType = "none";
       schedulePaint();
     },
     { passive: true }
@@ -356,6 +382,7 @@ function createBudgetDialPicker(
   viewport.addEventListener("mousedown", () => {
     isDragging = true;
     cancelScrollAnimation();
+    viewport.style.scrollSnapType = "none";
     schedulePaint();
   });
   viewport.addEventListener("mouseup", () => window.setTimeout(settleScroll, 120));
@@ -366,7 +393,7 @@ function createBudgetDialPicker(
   return {
     getIndex: () => selectedIndex,
     getValue: () => options[selectedIndex],
-    setIndex: (index, smooth = true) => scrollToIndex(index, { smooth, emit: true }),
+    setIndex: (index, smooth = true) => scrollToIndex(index, { smooth, emit: true, step: smooth }),
     setFloorIndex(index) {
       minIndex = Math.max(0, Math.min(options.length - 1, index));
       items.forEach((item, itemIndex) => {
@@ -420,11 +447,12 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   let bhkPeopleEl = null;
   let bhkMinusBtn = null;
   let bhkPlusBtn = null;
-  let minPicker = null;
-  let maxPicker = null;
+  let budgetMinusBtn = null;
+  let budgetPlusBtn = null;
+  let budgetPicker = null;
   let openLock = false;
   let completed = false;
-  let currentStep = "bhk";
+  let currentStep = "budget";
   let escHandler = null;
   let closeTimer = null;
 
@@ -436,13 +464,12 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   const state = {
     bhkValue: SRP_BHK_STEPPER_DEFAULT,
     bhkId: null,
-    minValue: SRP_BUDGET_SHEET_STEPS[2].value,
-    maxValue: SRP_BUDGET_SHEET_STEPS[6].value,
+    maxValue: SRP_BUDGET_SHEET_STEPS[SRP_BUDGET_SHEET_DEFAULT_INDEX].value,
   };
 
   const STEP_COPY = {
-    bhk: { title: "How many bedrooms?", cta: "Continue" },
-    budget: { title: "Set your budget", cta: "Done" },
+    budget: { title: "What's your max budget?", cta: "Continue" },
+    bhk: { title: "How many bedrooms?", cta: "Done" },
   };
 
   function getLocationLabel() {
@@ -455,7 +482,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
 
     const location = getLocationLabel();
     const count = completed
-      ? getSheetResultCount(state.bhkId, state.minValue, state.maxValue)
+      ? getSheetResultCount(state.bhkId, SRP_BUDGET_SHEET_STEPS[0].value, state.maxValue)
       : SRP_BUDGET_BHK_GUIDANCE_MOCK.defaultResultCount;
     const noun = count === 1 ? "property" : "properties";
     const label = `Showing ${count} ${noun} in ${location}`;
@@ -473,9 +500,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
 
     if (completed && state.bhkId) {
       bhkSlot.replaceChildren(createAppliedFilterChip(getBhkLabelFromValue(state.bhkValue)));
-      budgetSlot.replaceChildren(
-        createAppliedFilterChip(formatBudgetRangeLabel(state.minValue, state.maxValue))
-      );
+      budgetSlot.replaceChildren(createAppliedFilterChip(formatMaxBudgetLabel(state.maxValue)));
       return;
     }
 
@@ -549,22 +574,29 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     renderBhkStepper(0);
   }
 
-  function syncBudgetStateFromPickers() {
-    const minIndex = minPicker?.getIndex() ?? 2;
-    const maxIndex = maxPicker?.getIndex() ?? 6;
-    state.minValue = SRP_BUDGET_SHEET_STEPS[minIndex].value;
+  function syncBudgetStateFromPicker() {
+    const maxIndex = budgetPicker?.getIndex() ?? SRP_BUDGET_SHEET_DEFAULT_INDEX;
     state.maxValue = SRP_BUDGET_SHEET_STEPS[maxIndex].value;
-  }
-
-  function onMinBudgetChange(minIndex) {
-    state.minValue = SRP_BUDGET_SHEET_STEPS[minIndex].value;
-    maxPicker?.setFloorIndex(minIndex);
-    syncBudgetStateFromPickers();
   }
 
   function onMaxBudgetChange(maxIndex) {
     state.maxValue = SRP_BUDGET_SHEET_STEPS[maxIndex].value;
-    syncBudgetStateFromPickers();
+    updateBudgetStepperButtons();
+  }
+
+  function updateBudgetStepperButtons() {
+    if (!budgetMinusBtn || !budgetPlusBtn) return;
+    const index = budgetPicker?.getIndex() ?? SRP_BUDGET_SHEET_DEFAULT_INDEX;
+    budgetMinusBtn.disabled = index <= 0;
+    budgetPlusBtn.disabled = index >= SRP_BUDGET_SHEET_STEPS.length - 1;
+  }
+
+  function setBudgetIndex(nextIndex) {
+    const clamped = Math.max(0, Math.min(SRP_BUDGET_SHEET_STEPS.length - 1, nextIndex));
+    if (clamped === budgetPicker?.getIndex()) return;
+    hapticSoft();
+    budgetPicker?.setIndex(clamped, true);
+    updateBudgetStepperButtons();
   }
 
   function updateHeader(step) {
@@ -588,12 +620,10 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
       }, 360);
     }
 
-    if (!isBhk) {
+    if (step === "budget") {
       window.setTimeout(() => {
-        const minIndex = minPicker?.getIndex() ?? 2;
-        maxPicker?.setFloorIndex(minIndex);
-        minPicker?.refresh();
-        maxPicker?.refresh();
+        budgetPicker?.refresh();
+        updateBudgetStepperButtons();
       }, 80);
     }
   }
@@ -608,7 +638,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   function openSheet() {
     if (!sheetEl || sheetEl.classList.contains("is-visible") || completed) return;
 
-    showStep("bhk");
+    showStep("budget");
     sheetEl.removeAttribute("hidden");
     resetBhkStepper();
     window.requestAnimationFrame(() => {
@@ -635,7 +665,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     if (!sheetEl?.classList.contains("is-visible") || completed) return;
 
     closeSheet();
-    showStep("bhk");
+    showStep("budget");
     resetBhkStepper();
   }
 
@@ -685,15 +715,15 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   function onCtaClick(event) {
     event.preventDefault();
 
-    if (currentStep === "bhk") {
-      state.bhkId = bhkValueToMockId(state.bhkValue);
+    if (currentStep === "budget") {
+      syncBudgetStateFromPicker();
       hapticConfirm();
-      showStep("budget");
-      syncBudgetStateFromPickers();
+      showStep("bhk");
       return;
     }
 
-    syncBudgetStateFromPickers();
+    state.bhkId = bhkValueToMockId(state.bhkValue);
+    syncBudgetStateFromPicker();
     applySelectionAndReload();
   }
 
@@ -708,10 +738,17 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
           <div class="srp-bhk-budget-sheet__handle" aria-hidden="true"></div>
           <header class="srp-bhk-budget-sheet__header">
             <button type="button" class="srp-bhk-budget-sheet__close" id="srp-budget-sheet-close" aria-label="Close">${SRP_SHEET_CLOSE_ICON}</button>
-            <h2 id="srp-bhk-budget-sheet-title" class="srp-bhk-budget-sheet__title">How many bedrooms?</h2>
+            <h2 id="srp-bhk-budget-sheet-title" class="srp-bhk-budget-sheet__title">What's your max budget?</h2>
           </header>
           <div class="srp-bhk-budget-sheet__body">
-            <div class="srp-bhk-budget-sheet__step" data-step="bhk">
+            <div class="srp-bhk-budget-sheet__step" data-step="budget">
+              <div class="srp-budget-stepper" role="group" aria-label="Max budget">
+                <div class="srp-budget-stepper__picker">
+                  <div class="srp-ios-picker srp-ios-picker--dial srp-ios-picker--single srp-ios-picker--odometer" id="srp-budget-sheet-max-picker"></div>
+                </div>
+              </div>
+            </div>
+            <div class="srp-bhk-budget-sheet__step" data-step="bhk" hidden>
               <div class="srp-bhk-stepper" role="group" aria-label="Number of BHK">
                 <button type="button" class="srp-bhk-stepper__btn" id="srp-bhk-stepper-minus" aria-label="Decrease BHK">${SRP_BHK_STEPPER_MINUS_ICON}</button>
                 <div class="srp-bhk-stepper__display" aria-live="polite" aria-atomic="true">
@@ -722,21 +759,9 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
                 <button type="button" class="srp-bhk-stepper__btn" id="srp-bhk-stepper-plus" aria-label="Increase BHK">${SRP_BHK_STEPPER_PLUS_ICON}</button>
               </div>
             </div>
-            <div class="srp-bhk-budget-sheet__step" data-step="budget" hidden>
-              <div class="srp-bhk-budget-sheet__budget-row">
-                <div class="srp-bhk-budget-sheet__picker-col">
-                  <span class="srp-bhk-budget-sheet__picker-label">Min</span>
-                  <div class="srp-ios-picker srp-ios-picker--dial" id="srp-budget-sheet-min-picker"></div>
-                </div>
-                <div class="srp-bhk-budget-sheet__picker-col">
-                  <span class="srp-bhk-budget-sheet__picker-label">Max</span>
-                  <div class="srp-ios-picker srp-ios-picker--dial" id="srp-budget-sheet-max-picker"></div>
-                </div>
-              </div>
-            </div>
           </div>
           <footer class="srp-bhk-budget-sheet__footer">
-            <button type="button" class="srp-bhk-budget-sheet__cta" id="srp-budget-sheet-cta">Continue</button>
+            <button type="button" class="srp-card-cta-btn srp-card-cta-btn--brand srp-bhk-budget-sheet__cta" id="srp-budget-sheet-cta">Continue</button>
           </footer>
         </div>
       </div>`
@@ -752,27 +777,23 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     bhkMinusBtn = document.getElementById("srp-bhk-stepper-minus");
     bhkPlusBtn = document.getElementById("srp-bhk-stepper-plus");
 
-    minPicker = createBudgetDialPicker(
-      document.getElementById("srp-budget-sheet-min-picker"),
-      SRP_BUDGET_SHEET_STEPS,
-      {
-        initialIndex: 2,
-        onChange: onMinBudgetChange,
-      }
-    );
-
-    maxPicker = createBudgetDialPicker(
+    budgetPicker = createBudgetDialPicker(
       document.getElementById("srp-budget-sheet-max-picker"),
       SRP_BUDGET_SHEET_STEPS,
       {
-        initialIndex: 6,
-        floorIndex: 2,
-        hardFloor: true,
+        initialIndex: SRP_BUDGET_SHEET_DEFAULT_INDEX,
         onChange: onMaxBudgetChange,
       }
     );
 
+    budgetMinusBtn = document.getElementById("srp-budget-stepper-minus");
+    budgetPlusBtn = document.getElementById("srp-budget-stepper-plus");
+
+    updateBudgetStepperButtons();
+
     ctaBtn.addEventListener("click", onCtaClick);
+    budgetMinusBtn?.addEventListener("click", () => setBudgetIndex((budgetPicker?.getIndex() ?? 0) - 1));
+    budgetPlusBtn?.addEventListener("click", () => setBudgetIndex((budgetPicker?.getIndex() ?? 0) + 1));
     bhkMinusBtn?.addEventListener("click", () => setBhkValue(state.bhkValue - 1));
     bhkPlusBtn?.addEventListener("click", () => setBhkValue(state.bhkValue + 1));
     document.getElementById("srp-budget-sheet-scrim")?.addEventListener("click", dismissSheet);
@@ -820,10 +841,8 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
 
   function destroySheetDom() {
     window.clearTimeout(closeTimer);
-    minPicker?.destroy();
-    maxPicker?.destroy();
-    minPicker = null;
-    maxPicker = null;
+    budgetPicker?.destroy();
+    budgetPicker = null;
 
     sheetEl?.remove();
     sheetEl = null;
@@ -835,6 +854,8 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     bhkPeopleEl = null;
     bhkMinusBtn = null;
     bhkPlusBtn = null;
+    budgetMinusBtn = null;
+    budgetPlusBtn = null;
     document.documentElement.classList.remove("srp-budget-sheet-closing");
     setSheetOpenClass(false);
     document.documentElement.style.overflow = "";
@@ -857,11 +878,10 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     mountFilterSlots();
     mounted = true;
     completed = false;
-    currentStep = "bhk";
+    currentStep = "budget";
     state.bhkValue = SRP_BHK_STEPPER_DEFAULT;
     state.bhkId = null;
-    state.minValue = SRP_BUDGET_SHEET_STEPS[2].value;
-    state.maxValue = SRP_BUDGET_SHEET_STEPS[6].value;
+    state.maxValue = SRP_BUDGET_SHEET_STEPS[SRP_BUDGET_SHEET_DEFAULT_INDEX].value;
     renderBhkStepper(0);
 
     maybeOpenOnLanding();
@@ -882,7 +902,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     mounted = false;
     completed = false;
     openLock = false;
-    currentStep = "bhk";
+    currentStep = "budget";
 
     updateResultsMeta();
   }

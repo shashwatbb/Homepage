@@ -4,22 +4,24 @@ import {
   SRP_BUDGET_BHK_GUIDANCE_MOCK,
 } from "./srpBudgetBhkGuidance.mock.js";
 
-/** Discrete budget steps for iOS-style min/max pickers (INR). */
+/** Discrete max-budget steps for the bottom-sheet wheel (INR). */
 export const SRP_BUDGET_SHEET_STEPS = [
-  { value: 2_500_000, label: "₹25 L" },
-  { value: 5_000_000, label: "₹50 L" },
-  { value: 7_500_000, label: "₹75 L" },
-  { value: 10_000_000, label: "₹1 Cr" },
-  { value: 15_000_000, label: "₹1.5 Cr" },
-  { value: 20_000_000, label: "₹2 Cr" },
-  { value: 25_000_000, label: "₹2.5 Cr" },
-  { value: 30_000_000, label: "₹3 Cr" },
-  { value: 35_000_000, label: "₹3.5 Cr" },
-  { value: 40_000_000, label: "₹4 Cr" },
-  { value: 50_000_000, label: "₹5 Cr" },
-  { value: 70_000_000, label: "₹7 Cr" },
-  { value: 100_000_000, label: "₹10 Cr" },
+  { value: 2_500_000, label: "25 L" },
+  { value: 5_000_000, label: "50 L" },
+  { value: 7_500_000, label: "75 L" },
+  { value: 10_000_000, label: "1 Cr" },
+  { value: 15_000_000, label: "1.5 Cr" },
+  { value: 20_000_000, label: "2 Cr" },
+  { value: 25_000_000, label: "2.5 Cr" },
+  { value: 30_000_000, label: "3 Cr" },
+  { value: 35_000_000, label: "3.5 Cr" },
+  { value: 40_000_000, label: "4 Cr" },
+  { value: 50_000_000, label: "5 Cr" },
+  { value: 70_000_000, label: "7 Cr" },
+  { value: 100_000_000, label: "10 Cr" },
 ];
+
+export const SRP_BUDGET_SHEET_DEFAULT_INDEX = 5;
 
 export const SRP_BHK_STEPPER_MIN = 1;
 export const SRP_BHK_STEPPER_MAX = 5;
@@ -35,12 +37,16 @@ export function getBhkLabelFromValue(value) {
   return `${value} BHK`;
 }
 
-export function formatBudgetRangeLabel(minValue, maxValue) {
-  const minStep = SRP_BUDGET_SHEET_STEPS.find((step) => step.value === minValue);
+export function formatMaxBudgetLabel(maxValue) {
   const maxStep = SRP_BUDGET_SHEET_STEPS.find((step) => step.value === maxValue);
-  if (!minStep || !maxStep) return "Budget";
-  if (minValue === maxValue) return minStep.label;
-  return `${minStep.label} – ${maxStep.label}`;
+  if (!maxStep) return "Budget";
+  return maxStep.label;
+}
+
+/** @deprecated Use formatMaxBudgetLabel — kept for any range callers. */
+export function formatBudgetRangeLabel(minValue, maxValue) {
+  void minValue;
+  return formatMaxBudgetLabel(maxValue);
 }
 
 function budgetBucketIdForMax(maxValue) {

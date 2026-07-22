@@ -66,7 +66,6 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 .srp-bhk-budget-sheet {
   --srp-budget-sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --srp-budget-sheet-dur: 0.52s;
-  --srp-picker-item-h: 3rem;
   position: fixed;
   inset: 0;
   z-index: 1300;
@@ -105,8 +104,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: min(88vh, 42rem);
-  padding: 0 var(--ds-space-m) calc(var(--ds-space-m) + env(safe-area-inset-bottom, 0px));
+  max-height: min(72vh, 34rem);
+  padding: 0 var(--ds-space-m) calc(var(--ds-space-s) + env(safe-area-inset-bottom, 0px));
   border-radius: 1.375rem 1.375rem 0 0;
   background-color: var(--ds-surface-white);
   box-shadow:
@@ -132,7 +131,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   flex-shrink: 0;
   width: 2.5rem;
   height: 0.25rem;
-  margin: 0.625rem auto 0;
+  margin: 0.625rem auto var(--ds-space-l);
   border-radius: var(--ds-radius-full);
   background-color: var(--ds-color-warm-neutral-300);
 }
@@ -140,7 +139,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 .srp-bhk-budget-sheet__header {
   position: relative;
   flex-shrink: 0;
-  padding: var(--ds-space-s) 2.25rem var(--ds-space-m);
+  padding: 0 2.25rem var(--ds-space-2xs);
   text-align: center;
 }
 
@@ -184,7 +183,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 .srp-bhk-budget-sheet__title {
   margin: 0;
   font-family: var(--ds-font-family-primary);
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: var(--ds-font-weight-semibold);
   line-height: 1.3;
   letter-spacing: -0.01em;
@@ -222,34 +221,75 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   }
 }
 
-.srp-bhk-budget-sheet__budget-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--ds-space-xs);
-  padding-top: var(--ds-space-s);
-}
-
-.srp-bhk-budget-sheet__step[data-step="budget"] {
-  padding-bottom: var(--ds-space-2xs);
-}
-
-.srp-bhk-budget-sheet__picker-col {
+.srp-bhk-budget-sheet__budget-picker,
+.srp-budget-stepper {
   display: flex;
-  flex-direction: column;
-  min-width: 0;
+  justify-content: center;
+  padding: 0 var(--ds-space-s) var(--ds-space-xs);
 }
 
-.srp-bhk-budget-sheet__picker-label {
-  display: block;
-  margin-bottom: var(--ds-space-xs);
-  font-family: var(--ds-font-family-primary);
-  font-size: 0.75rem;
-  font-weight: var(--ds-font-weight-semibold);
-  line-height: 1.2;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ds-color-grey-neutral-600);
-  text-align: center;
+.srp-budget-stepper__picker {
+  flex: 1 1 auto;
+  width: min(100%, 20rem);
+  min-width: 16rem;
+}
+
+.srp-budget-stepper__pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  z-index: 6;
+  width: 2.375rem;
+  height: 2.375rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--ds-radius-full);
+  background: var(--ds-color-warm-neutral-100);
+  color: var(--ds-color-warm-neutral-800);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translateY(-50%);
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.srp-budget-stepper__pill-btn--minus {
+  left: calc(1.75rem + 0.375rem);
+}
+
+.srp-budget-stepper__pill-btn--plus {
+  right: calc(1.75rem + 0.375rem);
+}
+
+.srp-budget-stepper__pill-btn:hover:not(:disabled) {
+  background-color: var(--ds-color-warm-neutral-200);
+}
+
+.srp-budget-stepper__pill-btn:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.srp-budget-stepper__pill-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  color: var(--ds-color-warm-neutral-500);
+}
+
+.srp-budget-stepper__pill-btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ds-color-warm-neutral-700) 45%, white);
+  outline-offset: 2px;
+}
+
+.srp-bhk-budget-sheet__step[data-step="bhk"] {
+  padding-bottom: var(--ds-space-2xs);
 }
 
 .srp-bhk-budget-sheet__footer {
@@ -257,13 +297,23 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   padding-top: var(--ds-space-s);
 }
 
+.srp-bhk-budget-sheet__cta {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--ds-space-s) var(--ds-space-m);
+  border-radius: var(--ds-radius-m);
+  font-size: var(--ds-font-size-lg);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-l);
+}
+
 /* BHK +/- stepper */
 .srp-bhk-stepper {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-space-l);
-  padding: var(--ds-space-xl) var(--ds-space-m);
+  gap: var(--ds-space-m);
+  padding: var(--ds-space-s) var(--ds-space-m) var(--ds-space-2xs);
 }
 
 .srp-bhk-stepper__btn {
@@ -459,20 +509,79 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   color: var(--ds-color-grey-neutral-600);
 }
 
-/* iOS timer-style budget dial — flat, hairline dividers only */
+/* Max budget vertical wheel */
 .srp-ios-picker--dial {
-  --srp-picker-visible: 5;
-  --srp-picker-item-h: 2.75rem;
+  --srp-picker-visible: 7;
+  --srp-picker-item-h: 3.125rem;
+  --srp-picker-selection-pad: 0.5rem;
+  --srp-picker-selection-h: calc(var(--srp-picker-item-h) + var(--srp-picker-selection-pad) * 2);
   position: relative;
+  width: 100%;
   height: calc(var(--srp-picker-item-h) * var(--srp-picker-visible));
   overflow: hidden;
-  background: transparent;
   border-radius: 0;
-  perspective: 640px;
 }
 
-.srp-ios-picker--dial::before,
-.srp-ios-picker--dial::after {
+.srp-ios-picker--single {
+  margin-inline: auto;
+}
+
+.srp-ios-picker--odometer {
+  background: transparent;
+  box-shadow: none;
+}
+
+.srp-ios-picker--odometer::before,
+.srp-ios-picker--odometer::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: calc(var(--srp-picker-item-h) * 2.1);
+  pointer-events: none;
+}
+
+.srp-ios-picker--odometer::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--ds-surface-white) 20%, rgba(255, 255, 255, 0));
+}
+
+.srp-ios-picker--odometer::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--ds-surface-white) 20%, rgba(255, 255, 255, 0));
+}
+
+.srp-ios-picker__slot,
+.srp-ios-picker__indicator {
+  display: none;
+}
+
+.srp-ios-picker__selection-pill {
+  display: none;
+}
+
+.srp-ios-picker--odometer .srp-ios-picker__selection-pill {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 1.75rem;
+  right: 1.75rem;
+  z-index: 1;
+  height: var(--srp-picker-selection-h);
+  margin-top: calc(var(--srp-picker-selection-h) / -2);
+  border: 1px solid var(--ds-color-warm-neutral-300);
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-surface-white);
+  pointer-events: none;
+}
+
+.srp-ios-picker--odometer .srp-ios-picker__rail-line {
+  display: none;
+}
+
+.srp-ios-picker--dial:not(.srp-ios-picker--odometer)::before,
+.srp-ios-picker--dial:not(.srp-ios-picker--odometer)::after {
   content: "";
   position: absolute;
   left: 0;
@@ -482,12 +591,12 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   pointer-events: none;
 }
 
-.srp-ios-picker--dial::before {
+.srp-ios-picker--dial:not(.srp-ios-picker--odometer)::before {
   top: 0;
   background: linear-gradient(to bottom, var(--ds-surface-white) 30%, rgba(255, 255, 255, 0));
 }
 
-.srp-ios-picker--dial::after {
+.srp-ios-picker--dial:not(.srp-ios-picker--odometer)::after {
   bottom: 0;
   background: linear-gradient(to top, var(--ds-surface-white) 30%, rgba(255, 255, 255, 0));
 }
@@ -501,8 +610,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-ios-picker__rail-line {
   position: absolute;
-  left: 1.75rem;
-  right: 1.75rem;
+  left: 2rem;
+  right: 2rem;
   height: 1px;
   background-color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 16%, transparent);
   transform: scaleY(0.5);
@@ -510,11 +619,11 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 }
 
 .srp-ios-picker__rail-line--top {
-  top: calc(50% - var(--srp-picker-item-h) / 2);
+  top: calc(50% - var(--srp-picker-selection-h) / 2);
 }
 
 .srp-ios-picker__rail-line--bottom {
-  top: calc(50% + var(--srp-picker-item-h) / 2 - 1px);
+  top: calc(50% + var(--srp-picker-selection-h) / 2 - 1.5px);
 }
 
 .srp-ios-picker__viewport {
@@ -546,67 +655,31 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   scroll-snap-align: center;
   transform-origin: center center;
   font-family: var(--ds-font-family-primary);
-  font-size: 1.3125rem;
+  font-size: 1rem;
   font-weight: var(--ds-font-weight-regular);
   line-height: 1;
   letter-spacing: -0.02em;
-  color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 42%, transparent);
-  will-change: transform, opacity;
-  transition: color 0.12s ease;
+  color: color-mix(in srgb, var(--ds-color-warm-neutral-700) 72%, transparent);
+  will-change: transform, opacity, font-size;
 }
 
 .srp-ios-picker__item.is-selected {
-  color: var(--ds-color-grey-neutral-900);
-  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-warm-neutral-900);
+}
+
+.srp-ios-picker--odometer .srp-ios-picker__item {
+  position: relative;
+  z-index: 2;
+}
+
+.srp-ios-picker--odometer .srp-ios-picker__item.is-selected {
+  z-index: 3;
 }
 
 .srp-ios-picker--hard-floor .srp-ios-picker__item.is-below-floor {
   visibility: hidden;
   pointer-events: none;
   scroll-snap-align: none;
-}
-
-.srp-bhk-budget-sheet__cta {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  min-height: 3.25rem;
-  padding: 0.875rem 1.25rem;
-  border: none;
-  border-radius: 0.875rem;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--ds-color-purple-700) 92%, white) 0%,
-    var(--ds-color-purple-700) 100%
-  );
-  color: var(--ds-color-warm-neutral-0);
-  font-family: var(--ds-font-family-primary);
-  font-size: 1rem;
-  font-weight: var(--ds-font-weight-semibold);
-  line-height: 1.25;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  box-shadow:
-    0 1px 2px rgba(94, 39, 135, 0.16),
-    0 8px 20px rgba(94, 39, 135, 0.22);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.srp-bhk-budget-sheet__cta:active {
-  transform: scale(0.982);
-  filter: brightness(0.96);
-  box-shadow:
-    0 1px 2px rgba(94, 39, 135, 0.12),
-    0 4px 12px rgba(94, 39, 135, 0.18);
-}
-
-.srp-bhk-budget-sheet__cta:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--ds-color-purple-700) 55%, white);
-  outline-offset: 2px;
 }
 
 /* Results reload skeleton overlay */
