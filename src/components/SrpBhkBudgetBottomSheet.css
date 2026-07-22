@@ -131,7 +131,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   flex-shrink: 0;
   width: 2.5rem;
   height: 0.25rem;
-  margin: 0.625rem auto var(--ds-space-l);
+  margin: 0.625rem auto var(--ds-space-s);
   border-radius: var(--ds-radius-full);
   background-color: var(--ds-color-warm-neutral-300);
 }
@@ -140,7 +140,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   position: relative;
   z-index: 5;
   flex-shrink: 0;
-  padding: var(--ds-space-2xs) 2.75rem var(--ds-space-2xs);
+  padding: 0 2.75rem 0;
   text-align: center;
 }
 
@@ -236,7 +236,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 .srp-budget-stepper {
   display: flex;
   justify-content: center;
-  padding: 0 var(--ds-space-s) var(--ds-space-xs);
+  padding: 0 var(--ds-space-s);
 }
 
 .srp-budget-stepper__picker {
@@ -305,7 +305,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-bhk-budget-sheet__footer {
   flex-shrink: 0;
-  padding-top: var(--ds-space-s);
+  padding-top: var(--ds-space-2xs);
 }
 
 .srp-bhk-budget-sheet__cta {
@@ -523,8 +523,8 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 /* Max budget vertical wheel */
 .srp-ios-picker--dial {
   --srp-picker-visible: 7;
-  --srp-picker-item-h: 3.125rem;
-  --srp-picker-selection-pad: 0.5rem;
+  --srp-picker-item-h: 2.5rem;
+  --srp-picker-selection-pad: 0.375rem;
   --srp-picker-selection-h: calc(var(--srp-picker-item-h) + var(--srp-picker-selection-pad) * 2);
   position: relative;
   width: 100%;
@@ -689,6 +689,7 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-ios-picker--odometer .srp-ios-picker__item.is-selected {
   z-index: 3;
+  font-weight: var(--ds-font-weight-bold, 700);
 }
 
 .srp-ios-picker__item.is-selected {

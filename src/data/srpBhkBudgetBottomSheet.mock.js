@@ -9,9 +9,11 @@ export const SRP_BUDGET_SHEET_STEPS = [
   { value: 2_500_000, label: "25 L" },
   { value: 5_000_000, label: "50 L" },
   { value: 7_500_000, label: "75 L" },
+  { value: 9_000_000, label: "90 L" },
   { value: 10_000_000, label: "1 Cr" },
   { value: 15_000_000, label: "1.5 Cr" },
   { value: 20_000_000, label: "2 Cr" },
+  { value: 22_500_000, label: "2.25 Cr" },
   { value: 25_000_000, label: "2.5 Cr" },
   { value: 30_000_000, label: "3 Cr" },
   { value: 35_000_000, label: "3.5 Cr" },
@@ -21,7 +23,7 @@ export const SRP_BUDGET_SHEET_STEPS = [
   { value: 100_000_000, label: "10 Cr" },
 ];
 
-export const SRP_BUDGET_SHEET_DEFAULT_INDEX = 5;
+export const SRP_BUDGET_SHEET_DEFAULT_INDEX = 6;
 
 export const SRP_BHK_STEPPER_MIN = 1;
 export const SRP_BHK_STEPPER_MAX = 5;

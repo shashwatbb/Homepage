@@ -43,6 +43,15 @@ function hapticMicro() {
   }
 }
 
+function hapticWheelTick() {
+  if (prefersReducedMotion()) return;
+  try {
+    if ("vibrate" in navigator) navigator.vibrate(1);
+  } catch {
+    /* progressive enhancement */
+  }
+}
+
 function hapticSoft() {
   if (prefersReducedMotion()) return;
   try {
@@ -209,7 +218,7 @@ function createBudgetDialPicker(
       const focus = Math.max(0, 1 - norm * 0.45);
       const scale = 0.88 + focus * 0.14;
       const opacity = 0.5 + focus * 0.5;
-      const fontWeight = focus > 0.72 ? 600 : focus > 0.38 ? 500 : 400;
+      const fontWeight = focus > 0.72 ? 700 : focus > 0.38 ? 500 : 400;
 
       item.style.transition = "none";
       item.style.transform = `scale(${scale.toFixed(3)}) translateZ(0)`;
@@ -240,7 +249,9 @@ function createBudgetDialPicker(
       selectedIndex = closestIndex;
       if (lastHapticIndex !== selectedIndex) {
         lastHapticIndex = selectedIndex;
-        hapticMicro();
+        if (isUserScrolling || isDragging || !isSnapping) {
+          hapticWheelTick();
+        }
       }
       if (!isSnapping) {
         onChange?.(selectedIndex, options[selectedIndex]);
@@ -320,7 +331,6 @@ function createBudgetDialPicker(
   const scrollToIndex = (index, { smooth = false, emit = true, step = false } = {}) => {
     const clamped = Math.max(minIndex, Math.min(options.length - 1, index));
     isSnapping = true;
-    lastHapticIndex = clamped;
 
     const targetTop = getScrollTopForIndex(clamped);
     const finish = () => {
@@ -655,7 +665,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   function setBudgetIndex(nextIndex) {
     const clamped = Math.max(0, Math.min(SRP_BUDGET_SHEET_STEPS.length - 1, nextIndex));
     if (clamped === budgetPicker?.getIndex()) return;
-    hapticSoft();
+    hapticWheelTick();
     budgetPicker?.setIndex(clamped, true);
     updateBudgetStepperButtons();
   }
