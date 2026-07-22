@@ -10,6 +10,7 @@ import "./components/SrpOptions.css";
 import "./components/SrpContactSheet.css";
 import { syncExperimentsToDocument } from "./experiments.js";
 import { initSrpBudgetBhkGuidance } from "./srp-budget-bhk-guidance.js";
+import { initSrpBhkBudgetBottomSheet } from "./srp-bhk-budget-bottom-sheet.js";
 import "./main.js";
 import magnifyingGlassUrl from "./assets/icons/magnifying-glass.svg";
 import sortUrl from "./assets/icons/sort-ascending.svg";
@@ -275,6 +276,7 @@ async function initSrpPage() {
   renderSrpResults();
   syncExperimentsToDocument();
   initSrpBudgetBhkGuidance(getSrpSearchContext);
+  initSrpBhkBudgetBottomSheet(getSrpSearchContext);
   renderSrpContactSheet();
   initSrpContactSheet();
 

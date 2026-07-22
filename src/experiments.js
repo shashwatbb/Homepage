@@ -10,6 +10,7 @@ import "./components/ExperimentsConfig.css";
  * Gate in CSS:  html.experiment-{id} .your-feature { … }
  * Gate in JS:   if (!isExperimentEnabled("{id}")) return;
  * Never render experimental markup unless the experiment is enabled.
+ * Only one experiment may be ON at a time; enabling one turns all others OFF.
  */
 
 const STORAGE_KEY = "housing:experiments";
@@ -39,7 +40,7 @@ const EXPERIMENT_DEFINITIONS = [
   },
   {
     id: SRP_BHK_BUDGET_CARD_EXPERIMENT_ID,
-    name: "BHK and Budget card on SRP",
+    name: "Bottom sheet Budget and BHK",
     platform: "mobile",
     apply(enabled) {
       document.documentElement.classList.toggle("experiment-srp-bhk-budget-card", enabled);
@@ -53,25 +54,40 @@ const EXPERIMENT_DEFINITIONS = [
   },
 ];
 
+function writeExperimentState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function normalizeExclusiveExperimentState(state) {
+  const enabledIds = EXPERIMENT_DEFINITIONS.filter((experiment) => state[experiment.id]).map(
+    (experiment) => experiment.id
+  );
+  if (enabledIds.length <= 1) return state;
+
+  const keepId = enabledIds[0];
+  const normalized = {};
+  EXPERIMENT_DEFINITIONS.forEach((experiment) => {
+    normalized[experiment.id] = experiment.id === keepId;
+  });
+  writeExperimentState(normalized);
+  return normalized;
+}
+
 function readExperimentState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return {};
     const parsed = JSON.parse(raw);
-    const state = parsed && typeof parsed === "object" ? { ...parsed } : {};
+    let state = parsed && typeof parsed === "object" ? { ...parsed } : {};
     if (state["budget-bhk-filter-srp"] && !state[SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID]) {
       state[SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID] = state["budget-bhk-filter-srp"];
       delete state["budget-bhk-filter-srp"];
       writeExperimentState(state);
     }
-    return state;
+    return normalizeExclusiveExperimentState(state);
   } catch {
     return {};
   }
-}
-
-function writeExperimentState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 export function isExperimentEnabled(id, state = readExperimentState()) {
@@ -199,22 +215,32 @@ function initExperimentsPanel(toast) {
     const experiment = EXPERIMENT_DEFINITIONS.find((item) => item.id === id);
     if (!experiment) return;
 
-    const state = readExperimentState();
-    state[id] = enabled;
-    writeExperimentState(state);
-    experiment.apply(enabled);
+    const previousState = readExperimentState();
+    const activeId = enabled ? id : null;
+    const nextState = {};
+
+    EXPERIMENT_DEFINITIONS.forEach((item) => {
+      const nextEnabled = activeId === item.id;
+      const wasEnabled = isExperimentEnabled(item.id, previousState);
+      nextState[item.id] = nextEnabled;
+
+      if (nextEnabled !== wasEnabled) {
+        item.apply(nextEnabled);
+        window.dispatchEvent(
+          new CustomEvent("housing:experiment-change", {
+            detail: { id: item.id, enabled: nextEnabled, name: item.name, platform: item.platform },
+            bubbles: true,
+          })
+        );
+      }
+    });
+
+    writeExperimentState(nextState);
     syncSwitchUi();
 
     if (enabled) {
       toast.show(`${experiment.name} is turned on`);
     }
-
-    window.dispatchEvent(
-      new CustomEvent("housing:experiment-change", {
-        detail: { id, enabled, name: experiment.name, platform: experiment.platform },
-        bubbles: true,
-      })
-    );
   };
 
   const closePanel = () => {
