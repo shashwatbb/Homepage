@@ -104,7 +104,11 @@ function waitForInitialPageSkeleton() {
   });
 }
 
-function createBudgetDialPicker(container, options, { initialIndex = 0, floorIndex = 0, onChange } = {}) {
+function createBudgetDialPicker(
+  container,
+  options,
+  { initialIndex = 0, floorIndex = 0, hardFloor = false, onChange } = {}
+) {
   container.innerHTML = `
     <div class="srp-ios-picker__rail" aria-hidden="true">
       <span class="srp-ios-picker__rail-line srp-ios-picker__rail-line--top"></span>
@@ -118,14 +122,17 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
   const viewport = container.querySelector(".srp-ios-picker__viewport");
   const list = container.querySelector(".srp-ios-picker__list");
   const items = [];
-  let itemHeight = 48;
+  let itemHeight = 44;
   let selectedIndex = Math.max(floorIndex, Math.min(options.length - 1, initialIndex));
   let minIndex = floorIndex;
   let scrollTimer;
   let rafId;
   let lastHapticIndex = selectedIndex;
-  let isDragging = false;
   let isSnapping = false;
+
+  if (hardFloor) {
+    container.classList.add("srp-ios-picker--hard-floor");
+  }
 
   options.forEach((option, index) => {
     const li = document.createElement("li");
@@ -143,7 +150,25 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
     }
   };
 
-  const paintWheel = ({ allowBelowFloor = isDragging } = {}) => {
+  const getMinScrollTop = () => {
+    if (!hardFloor || minIndex <= 0) return 0;
+    measureItemHeight();
+    const floorItem = items[minIndex];
+    if (!floorItem) return 0;
+    return floorItem.offsetTop - (viewport.clientHeight - itemHeight) / 2;
+  };
+
+  const enforceScrollFloor = () => {
+    if (!hardFloor || minIndex <= 0) return false;
+    const floorScrollTop = getMinScrollTop();
+    if (viewport.scrollTop < floorScrollTop - 0.5) {
+      viewport.scrollTop = floorScrollTop;
+      return true;
+    }
+    return false;
+  };
+
+  const paintWheel = () => {
     measureItemHeight();
     const viewportRect = viewport.getBoundingClientRect();
     const centerY = viewportRect.top + viewportRect.height / 2;
@@ -152,18 +177,29 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
     let closestDistance = Number.POSITIVE_INFINITY;
 
     items.forEach((item, index) => {
+      const isBelowFloor = index < minIndex;
+
+      if (hardFloor && isBelowFloor) {
+        item.style.transform = "scale(0.82) rotateX(0deg)";
+        item.style.opacity = "0";
+        item.classList.add("is-below-floor");
+        item.classList.remove("is-selected");
+        item.setAttribute("aria-selected", "false");
+        return;
+      }
+
       const rect = item.getBoundingClientRect();
       const itemCenter = rect.top + rect.height / 2;
       const distance = itemCenter - centerY;
       const absDistance = Math.abs(distance);
-      const normalized = Math.min(absDistance / itemHeight, 3.4);
-      const isBelowFloor = index < minIndex;
+      const t = Math.min(absDistance / itemHeight, 3);
 
-      const scale = Math.max(0.68, 1.16 - normalized * 0.12);
-      const opacity = isBelowFloor && !allowBelowFloor ? 0.14 : Math.max(0.18, 1 - normalized * 0.24);
-      const rotateX = Math.max(-22, Math.min(22, (distance / itemHeight) * -16));
+      // iOS timer wheel: flat, scale + fade + mild cylinder tilt
+      const scale = Math.max(0.78, 1.08 - t * 0.1);
+      const opacity = Math.max(0.22, 1 - t * 0.32);
+      const rotateX = Math.max(-14, Math.min(14, (distance / itemHeight) * -11));
 
-      item.style.transform = `scale(${scale}) rotateX(${rotateX}deg)`;
+      item.style.transform = `scale(${scale.toFixed(3)}) rotateX(${rotateX.toFixed(2)}deg)`;
       item.style.opacity = String(opacity);
       item.classList.toggle("is-below-floor", isBelowFloor);
 
@@ -173,11 +209,10 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
       }
     });
 
-    if (!allowBelowFloor && closestIndex < minIndex) {
-      closestIndex = minIndex;
-    }
+    closestIndex = Math.max(minIndex, closestIndex);
 
     items.forEach((item, index) => {
+      if (hardFloor && index < minIndex) return;
       const isSelected = index === closestIndex;
       item.classList.toggle("is-selected", isSelected);
       item.setAttribute("aria-selected", isSelected ? "true" : "false");
@@ -195,11 +230,11 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
     }
   };
 
-  const schedulePaint = (opts) => {
+  const schedulePaint = () => {
     if (rafId) return;
     rafId = window.requestAnimationFrame(() => {
       rafId = 0;
-      paintWheel(opts);
+      paintWheel();
     });
   };
 
@@ -216,7 +251,8 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
 
     window.setTimeout(
       () => {
-        paintWheel({ allowBelowFloor: false });
+        enforceScrollFloor();
+        paintWheel();
         isSnapping = false;
         if (emit) onChange?.(selectedIndex, options[selectedIndex]);
       },
@@ -225,7 +261,8 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
   };
 
   const settleScroll = () => {
-    paintWheel({ allowBelowFloor: false });
+    enforceScrollFloor();
+    paintWheel();
     if (selectedIndex < minIndex) {
       scrollToIndex(minIndex, { smooth: true, emit: true });
       return;
@@ -234,35 +271,18 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
   };
 
   const onScroll = () => {
-    schedulePaint({ allowBelowFloor: isDragging });
+    if (enforceScrollFloor()) {
+      hapticSoft();
+    }
+    schedulePaint();
     window.clearTimeout(scrollTimer);
     scrollTimer = window.setTimeout(settleScroll, 120);
   };
 
-  viewport.addEventListener(
-    "touchstart",
-    () => {
-      isDragging = true;
-      schedulePaint({ allowBelowFloor: true });
-    },
-    { passive: true }
-  );
-  viewport.addEventListener(
-    "touchend",
-    () => {
-      isDragging = false;
-      window.setTimeout(settleScroll, 80);
-    },
-    { passive: true }
-  );
-  viewport.addEventListener("mousedown", () => {
-    isDragging = true;
-    schedulePaint({ allowBelowFloor: true });
-  });
-  viewport.addEventListener("mouseup", () => {
-    isDragging = false;
-    window.setTimeout(settleScroll, 80);
-  });
+  viewport.addEventListener("touchstart", schedulePaint, { passive: true });
+  viewport.addEventListener("touchend", () => window.setTimeout(settleScroll, 80), { passive: true });
+  viewport.addEventListener("mousedown", schedulePaint);
+  viewport.addEventListener("mouseup", () => window.setTimeout(settleScroll, 80));
   viewport.addEventListener("scroll", onScroll, { passive: true });
 
   scrollToIndex(selectedIndex, { smooth: false, emit: false });
@@ -276,13 +296,18 @@ function createBudgetDialPicker(container, options, { initialIndex = 0, floorInd
       items.forEach((item, itemIndex) => {
         item.classList.toggle("is-below-floor", itemIndex < minIndex);
       });
+      enforceScrollFloor();
       if (selectedIndex < minIndex) {
         scrollToIndex(minIndex, { smooth: true, emit: true });
+        hapticSoft();
       } else {
-        paintWheel({ allowBelowFloor: false });
+        paintWheel();
       }
     },
-    refresh: () => paintWheel({ allowBelowFloor: false }),
+    refresh: () => {
+      enforceScrollFloor();
+      paintWheel();
+    },
     destroy() {
       viewport.removeEventListener("scroll", onScroll);
       window.clearTimeout(scrollTimer);
@@ -631,6 +656,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
       {
         initialIndex: 6,
         floorIndex: 2,
+        hardFloor: true,
         onChange: onMaxBudgetChange,
       }
     );

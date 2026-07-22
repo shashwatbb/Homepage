@@ -379,44 +379,54 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   color: var(--ds-color-grey-neutral-600);
 }
 
-/* Rotating budget dial — no selection box */
+/* iOS timer-style budget dial — flat, hairline dividers only */
 .srp-ios-picker--dial {
-  border-radius: 0;
+  --srp-picker-visible: 5;
+  --srp-picker-item-h: 2.75rem;
+  position: relative;
+  height: calc(var(--srp-picker-item-h) * var(--srp-picker-visible));
+  overflow: hidden;
   background: transparent;
-  perspective: 720px;
+  border-radius: 0;
+  perspective: 640px;
 }
 
 .srp-ios-picker--dial::before,
 .srp-ios-picker--dial::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
   height: calc(var(--srp-picker-item-h) * 2);
-  background: linear-gradient(
-    to bottom,
-    var(--ds-surface-white) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  pointer-events: none;
+}
+
+.srp-ios-picker--dial::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--ds-surface-white) 30%, rgba(255, 255, 255, 0));
 }
 
 .srp-ios-picker--dial::after {
-  background: linear-gradient(
-    to top,
-    var(--ds-surface-white) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  bottom: 0;
+  background: linear-gradient(to top, var(--ds-surface-white) 30%, rgba(255, 255, 255, 0));
 }
 
 .srp-ios-picker__rail {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 4;
   pointer-events: none;
 }
 
 .srp-ios-picker__rail-line {
   position: absolute;
-  left: 0.75rem;
-  right: 0.75rem;
+  left: 0;
+  right: 0;
   height: 1px;
-  background: color-mix(in srgb, var(--ds-color-warm-neutral-300) 80%, transparent);
+  background-color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 16%, transparent);
+  transform: scaleY(0.5);
+  transform-origin: center;
 }
 
 .srp-ios-picker__rail-line--top {
@@ -425,42 +435,6 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
 
 .srp-ios-picker__rail-line--bottom {
   top: calc(50% + var(--srp-picker-item-h) / 2 - 1px);
-}
-
-.srp-ios-picker {
-  --srp-picker-visible: 5;
-  position: relative;
-  height: calc(var(--srp-picker-item-h) * var(--srp-picker-visible));
-  overflow: hidden;
-  border-radius: 1rem;
-  background:
-    linear-gradient(180deg, var(--ds-color-warm-neutral-50) 0%, var(--ds-color-warm-neutral-0) 100%);
-  perspective: 900px;
-}
-
-.srp-ios-picker::before,
-.srp-ios-picker::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  height: calc(var(--srp-picker-item-h) * 1.75);
-  pointer-events: none;
-}
-
-.srp-ios-picker::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--ds-color-warm-neutral-0) 8%, rgba(250, 249, 247, 0));
-}
-
-.srp-ios-picker::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--ds-color-warm-neutral-0) 8%, rgba(250, 249, 247, 0));
-}
-
-.srp-ios-picker__highlight {
-  display: none;
 }
 
 .srp-ios-picker__viewport {
@@ -493,23 +467,23 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   scroll-snap-stop: always;
   transform-origin: center center;
   font-family: var(--ds-font-family-primary);
-  font-size: 1.0625rem;
-  font-weight: var(--ds-font-weight-medium);
-  line-height: 1.2;
-  color: var(--ds-color-grey-neutral-700);
+  font-size: 1.3125rem;
+  font-weight: var(--ds-font-weight-regular);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: color-mix(in srgb, var(--ds-color-grey-neutral-900) 42%, transparent);
   will-change: transform, opacity;
-  transition: color 0.12s ease;
 }
 
 .srp-ios-picker__item.is-selected {
-  color: var(--ds-color-purple-800);
-  font-size: 1.25rem;
+  color: var(--ds-color-grey-neutral-900);
   font-weight: var(--ds-font-weight-semibold);
-  letter-spacing: -0.015em;
 }
 
-.srp-ios-picker__item.is-below-floor {
-  color: var(--ds-color-grey-neutral-500);
+.srp-ios-picker--hard-floor .srp-ios-picker__item.is-below-floor {
+  visibility: hidden;
+  pointer-events: none;
+  scroll-snap-align: none;
 }
 
 .srp-bhk-budget-sheet__cta {
