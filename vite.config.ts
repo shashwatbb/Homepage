@@ -20,6 +20,7 @@ export default defineConfig({
         pdp: path.resolve(__dirname, "pdp.html"),
         buy: path.resolve(__dirname, "buy.html"),
         srp: path.resolve(__dirname, "srp.html"),
+        pdpMobile: path.resolve(__dirname, "pdp-mobile.html"),
         megamenu: path.resolve(__dirname, "buyers-megamenu.html"),
       },
     },

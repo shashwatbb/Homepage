@@ -409,7 +409,7 @@ function srpCardPriceRowHtml(listing) {
   return `<p class="srp-card-price">${listing.price}</p>`;
 }
 
-function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24, contactOnly = false } = {}) {
+function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24, contactOnly = false, listingId = "0" } = {}) {
   const imagesClass = carousel ? "srp-card-images srp-card-images--carousel" : "srp-card-images";
   const imagesInner = carousel
     ? `<div class="srp-card-images-track">${Array.from(
@@ -487,7 +487,7 @@ function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24
   const sellerRowHtml = contactOnly ? srpCardSellerRowHtml(listing) : "";
 
   return `
-    <div class="srp-card${contactOnly ? " srp-card--option1" : ""}">
+    <div class="srp-card${contactOnly ? " srp-card--option1" : ""}" data-listing-id="${listingId}" role="link" tabindex="0" aria-label="View ${srpEscapeHtml(listing.name)}">
       ${stripBlock}
       ${sellerRowHtml}
       ${imageBlock}
@@ -512,6 +512,7 @@ function renderSrpResults() {
         carousel: opt === 1,
         imageCount: 24,
         contactOnly: opt === 1,
+        listingId: String(i % SRP_SAMPLE_LISTINGS.length),
       });
     }
     sectionsHtml += `
@@ -526,6 +527,36 @@ function renderSrpResults() {
 
   initSrpCardImageCarousels();
   initSrpOptionIndicator();
+  initSrpCardNavigation();
+}
+
+function initSrpCardNavigation() {
+  const resultsRoot = document.getElementById("srp-results");
+  if (!resultsRoot) return;
+
+  const navigateFromCard = (card) => {
+    const id = card.dataset.listingId;
+    if (id == null) return;
+    try {
+      sessionStorage.setItem("pdp-m-from-srp", "1");
+    } catch (_) {}
+    window.location.href = `/pdp-mobile.html?id=${encodeURIComponent(id)}`;
+  };
+
+  resultsRoot.addEventListener("click", (e) => {
+    if (e.target.closest("button, a, [data-srp-contact-cta]")) return;
+    const card = e.target.closest(".srp-card");
+    if (!card) return;
+    navigateFromCard(card);
+  });
+
+  resultsRoot.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const card = e.target.closest(".srp-card");
+    if (!card || e.target.closest("button, a, [data-srp-contact-cta]")) return;
+    e.preventDefault();
+    navigateFromCard(card);
+  });
 }
 
 const SRP_CAROUSEL_DOT_WINDOW = 3;

@@ -84,6 +84,10 @@
   gap: var(--ds-space-s);
 }
 
+.srp-card[role="link"] {
+  cursor: pointer;
+}
+
 /* Seller/agent header strip */
 .srp-card-strip {
   display: flex;
