@@ -314,20 +314,18 @@ const SRP_HEART_OUTLINE_ICON = `<svg class="srp-card-shortlist-icon" xmlns="http
 
 const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>`;
 
-/** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on all cards.
- *  Per-card override: listing.showSeller = true | false */
+/** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on all cards
+ *  that do not set listing.showSeller. Per-card: listing.showSeller = true | false */
 const SRP_CARD_SHOW_SELLER = true;
 
 /**
- * Figma SRP cards component set (4436:6443) — 4 variants:
+ * Figma SRP cards component set (4436:6443) — 4 design templates:
  * Single/Resale, Single/Project, Multiple/Project, Multiple/Resale
  */
-const SRP_LISTING_VARIANTS = [
+const SRP_LISTING_TEMPLATES = [
   {
-    id: "0",
     variant: "single-resale",
     seller: { name: "Sunder Homes", photo: "/Agent.png" },
-    // Figma: one cream pill "RERA | Verified" + separate "Zero brokerage"
     badges: [
       {
         parts: [
@@ -345,7 +343,6 @@ const SRP_LISTING_VARIANTS = [
     configs: null,
   },
   {
-    id: "1",
     variant: "single-project",
     seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
     badges: [{ parts: [{ label: "RERA", verified: true }] }],
@@ -357,7 +354,6 @@ const SRP_LISTING_VARIANTS = [
     configs: null,
   },
   {
-    id: "2",
     variant: "multiple-project",
     seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
     badges: [{ parts: [{ label: "RERA", verified: true }] }],
@@ -373,7 +369,6 @@ const SRP_LISTING_VARIANTS = [
     ],
   },
   {
-    id: "3",
     variant: "multiple-resale",
     seller: { name: "Sunder Homes", photo: "/Agent.png" },
     badges: [
@@ -397,6 +392,47 @@ const SRP_LISTING_VARIANTS = [
     ],
   },
 ];
+
+/**
+ * Longer SRP feed: 4 design templates + 12 more copies (16 total).
+ * template index + showSeller mixed so scroll depth feels natural.
+ */
+const SRP_FEED_PLAN = [
+  { template: 0, showSeller: true },
+  { template: 1, showSeller: true },
+  { template: 2, showSeller: false },
+  { template: 3, showSeller: true },
+  { template: 1, showSeller: false },
+  { template: 3, showSeller: false },
+  { template: 0, showSeller: true },
+  { template: 2, showSeller: true },
+  { template: 0, showSeller: false },
+  { template: 1, showSeller: true },
+  { template: 3, showSeller: true },
+  { template: 2, showSeller: false },
+  { template: 1, showSeller: false },
+  { template: 0, showSeller: true },
+  { template: 3, showSeller: false },
+  { template: 2, showSeller: true },
+];
+
+const SRP_LISTING_VARIANTS = SRP_FEED_PLAN.map((plan, i) => {
+  const base = SRP_LISTING_TEMPLATES[plan.template];
+  return {
+    ...base,
+    id: String(i),
+    showSeller: plan.showSeller,
+    seller: base.seller ? { ...base.seller } : null,
+    badges: base.badges.map((b) => ({
+      ...b,
+      parts: b.parts.map((p) => ({ ...p })),
+    })),
+    meta: base.meta ? [...base.meta] : null,
+    configs: base.configs
+      ? base.configs.map((c) => ({ ...c }))
+      : null,
+  };
+});
 
 function srpEscapeHtml(text) {
   return String(text)
