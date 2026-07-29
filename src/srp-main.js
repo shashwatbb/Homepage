@@ -207,11 +207,16 @@ function initSrpStickySearchState(chrome) {
 
   /** Scroll distance (px) over which first-fold gradient eases into surface-default. */
   const STICK_FADE_RANGE_PX = 80;
+  const FILTERS_SCROLL_THRESHOLD = 6;
   let isStuck = false;
+  let filtersHidden = false;
+  let lastScrollY = window.scrollY;
 
   const update = () => {
     const sentinelTop = sentinel.getBoundingClientRect().top;
-    const atPageTop = window.scrollY <= 0;
+    const currentY = window.scrollY;
+    const atPageTop = currentY <= 0;
+    const delta = currentY - lastScrollY;
 
     let stickProgress = 0;
     if (!atPageTop && sentinelTop < 0) {
@@ -231,6 +236,23 @@ function initSrpStickySearchState(chrome) {
       isStuck = nextStuck;
       chrome.classList.toggle("srp-search-chrome--stuck", isStuck);
     }
+
+    /* Filters tray: hide on scroll down, gentle slide-down reveal on scroll up */
+    let nextFiltersHidden = filtersHidden;
+    if (atPageTop || currentY < 24) {
+      nextFiltersHidden = false;
+    } else if (delta > FILTERS_SCROLL_THRESHOLD) {
+      nextFiltersHidden = true;
+    } else if (delta < -FILTERS_SCROLL_THRESHOLD) {
+      nextFiltersHidden = false;
+    }
+
+    if (nextFiltersHidden !== filtersHidden) {
+      filtersHidden = nextFiltersHidden;
+      chrome.classList.toggle("srp-search-chrome--filters-hidden", filtersHidden);
+    }
+
+    lastScrollY = currentY;
   };
 
   let ticking = false;

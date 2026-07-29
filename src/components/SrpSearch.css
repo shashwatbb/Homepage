@@ -90,13 +90,16 @@
   padding-bottom: 12px;
 }
 
-/* Filters: white → surface-default via scroll-linked overlay */
+/* Filters: white → surface-default via scroll-linked overlay.
+   Hide on scroll-down / gentle slide-down reveal on scroll-up. */
 .srp-search-filters {
+  --srp-filters-h: 52px;
   position: relative;
   z-index: 0;
   box-sizing: border-box;
-  height: 52px;
-  min-height: 52px;
+  height: var(--srp-filters-h);
+  min-height: var(--srp-filters-h);
+  max-height: var(--srp-filters-h);
   padding: 0;
   margin-top: 0;
   overflow: hidden;
@@ -111,6 +114,34 @@
     0 4px 10px -4px rgba(15, 14, 13, calc(0.12 * var(--srp-chrome-stick, 0))),
     0 2px 4px -2px rgba(15, 14, 13, calc(0.05 * var(--srp-chrome-stick, 0)));
   isolation: isolate;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    max-height 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    min-height 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.36s ease,
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.36s ease,
+    box-shadow 0.36s ease;
+  will-change: max-height, opacity, transform;
+}
+
+.srp-search-chrome--filters-hidden .srp-search-filters {
+  height: 0;
+  min-height: 0;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  border-bottom-color: transparent;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srp-search-filters {
+    transition: none;
+  }
 }
 
 .srp-search-filters::before {
