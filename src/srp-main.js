@@ -337,7 +337,6 @@ const SRP_LISTING_VARIANTS = [
       },
       { parts: [{ label: "Zero brokerage" }] },
     ],
-    imageTag: "3 weeks",
     imageCount: 24,
     title: "3 BHK flat",
     address: "DLF City Pink Town, Phase 3, Gurgaon",
@@ -350,7 +349,6 @@ const SRP_LISTING_VARIANTS = [
     variant: "single-project",
     seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
     badges: [{ parts: [{ label: "RERA", verified: true }] }],
-    imageTag: "3 weeks",
     imageCount: 24,
     title: "Lodha Venezia Wing C",
     address: "Parel, Mumbai",
@@ -363,7 +361,6 @@ const SRP_LISTING_VARIANTS = [
     variant: "multiple-project",
     seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
     badges: [{ parts: [{ label: "RERA", verified: true }] }],
-    imageTag: "3 weeks",
     imageCount: 24,
     title: "Lodha Venezia Wing C",
     address: "Parel, Mumbai",
@@ -388,7 +385,6 @@ const SRP_LISTING_VARIANTS = [
       },
       { parts: [{ label: "Zero brokerage" }] },
     ],
-    imageTag: "3 weeks",
     imageCount: 24,
     title: "3 BHK flat",
     address: "DLF City Pink Town, Phase 3, Gurgaon",
@@ -521,9 +517,6 @@ function srpCardHtml(listing, imgIndexStart) {
   const priceHtml = listing.price
     ? `<p class="srp-card-price">${srpEscapeHtml(listing.price)}</p>`
     : "";
-  const tagHtml = listing.imageTag
-    ? `<span class="srp-card-image-tag">${srpEscapeHtml(listing.imageTag)}</span>`
-    : "";
 
   return `
     <article class="srp-card srp-card--imagine srp-card--${listing.variant}${showSeller ? " srp-card--seller" : ""}" data-listing-id="${srpEscapeHtml(listing.id)}" data-variant="${srpEscapeHtml(listing.variant)}" data-show-seller="${showSeller ? "true" : "false"}" role="link" tabindex="0" aria-label="View ${srpEscapeHtml(listing.title)}">
@@ -537,15 +530,12 @@ function srpCardHtml(listing, imgIndexStart) {
                 <div class="srp-card-badges srp-card-badges--overlay">${badgesHtml}</div>
                 <button class="srp-card-shortlist-btn" type="button" aria-label="Shortlist">${SRP_HEART_OUTLINE_ICON}</button>
               </div>
+              <div class="srp-card-image-dots" aria-hidden="true">
+                <span class="srp-card-image-dot" data-slot="0"></span>
+                <span class="srp-card-image-dot" data-slot="1"></span>
+                <span class="srp-card-image-dot" data-slot="2"></span>
+              </div>
               <div class="srp-card-image-footer">
-                <div class="srp-card-image-footer__left">
-                  ${tagHtml}
-                  <div class="srp-card-image-dots" aria-hidden="true">
-                    <span class="srp-card-image-dot" data-slot="0"></span>
-                    <span class="srp-card-image-dot" data-slot="1"></span>
-                    <span class="srp-card-image-dot" data-slot="2"></span>
-                  </div>
-                </div>
                 <span class="srp-card-image-count">1 / ${imageCount}</span>
               </div>
             </div>

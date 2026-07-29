@@ -989,20 +989,11 @@
   bottom: 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-end;
   min-height: 20px;
   pointer-events: none;
 }
 
-.srp-card--imagine .srp-card-image-footer__left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.srp-card--imagine .srp-card-image-tag,
 .srp-card--imagine .srp-card-image-count {
   position: static;
   right: auto;
@@ -1014,23 +1005,26 @@
   background-color: rgb(33 29 25 / 0.8); /* #211d19 @ 80% */
   color: var(--ds-color-warm-neutral-0);
   font-family: var(--ds-font-family-primary);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 20px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.1px;
   white-space: nowrap;
   pointer-events: none;
 }
 
+/* Gallery dots — horizontally centered on image, vertically mid of footer band */
 .srp-card--imagine .srp-card-image-dots {
-  position: static;
-  left: auto;
-  bottom: auto;
-  transform: none;
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  min-height: 6px;
+  height: 20px;
+  min-height: 20px;
   pointer-events: none;
 }
 
