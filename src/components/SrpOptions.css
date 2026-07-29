@@ -888,6 +888,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
+  min-height: 24px;
   pointer-events: none;
 }
 
@@ -901,25 +902,25 @@
   gap: 8px;
   min-width: 0;
   flex: 1 1 auto;
-  max-width: calc(100% - 28px); /* leave room for 20px heart + gap */
+  max-width: calc(100% - 32px); /* leave room for 24px heart + gap */
 }
 
-/* Cream gallery-index pills — #f6f4ed, r8, h20, pad 8 */
+/* Cream gallery-index pills — #f6f4ed, r8, h24, pad 8 */
 .srp-card--imagine .srp-card-badge {
   display: inline-flex;
   align-items: center;
   gap: 2px;
   box-sizing: border-box;
-  height: 20px;
+  height: 24px;
   padding: 0 8px;
   border-radius: 8px;
   background-color: var(--ds-color-warm-neutral-100); /* #f6f4ed */
   color: var(--ds-color-grey-neutral-900);
   font-family: var(--ds-font-family-primary);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
-  line-height: 12px;
-  letter-spacing: 0.2px;
+  line-height: 16px;
+  letter-spacing: 0.1px;
   white-space: nowrap;
 }
 
@@ -934,7 +935,7 @@
 .srp-card--imagine .srp-card-badge__sep {
   display: inline-block;
   width: 1px;
-  height: 12px;
+  height: 16px;
   margin: 0 4px;
   background-color: var(--ds-color-warm-neutral-300); /* #ddd9ce */
   flex-shrink: 0;
@@ -944,15 +945,15 @@
   display: inline-block;
 }
 
-/* Heart — Figma: dark translucent fill + white stroke, 20×20 */
+/* Heart — Figma: 24×24, dark translucent fill + white stroke */
 .srp-card--imagine .srp-card-shortlist-btn {
   position: absolute;
   top: 0;
   right: 0;
   left: auto;
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: none;
   background: none;
@@ -966,8 +967,8 @@
 }
 
 .srp-card--imagine .srp-card-shortlist-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: block;
   overflow: visible;
 }
@@ -1083,9 +1084,9 @@
   margin: 0;
   color: var(--ds-color-grey-neutral-800); /* #444 */
   font-family: var(--ds-font-family-primary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 20px;
   letter-spacing: 0;
 }
 
@@ -1097,10 +1098,10 @@
   margin: 0;
   color: var(--ds-color-grey-neutral-800);
   font-family: var(--ds-font-family-primary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0.1px;
+  line-height: 20px;
+  letter-spacing: 0;
 }
 
 .srp-card--imagine .srp-card-meta__sep {

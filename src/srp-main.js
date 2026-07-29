@@ -205,19 +205,32 @@ function initSrpStickySearchState(chrome) {
   sentinel.setAttribute("aria-hidden", "true");
   chrome.parentNode?.insertBefore(sentinel, chrome);
 
+  /** Scroll distance (px) over which first-fold gradient eases into surface-default. */
+  const STICK_FADE_RANGE_PX = 80;
   let isStuck = false;
 
   const update = () => {
     const sentinelTop = sentinel.getBoundingClientRect().top;
     const atPageTop = window.scrollY <= 0;
 
-    if (atPageTop || sentinelTop >= 0) {
-      isStuck = false;
-    } else if (sentinelTop < -1) {
-      isStuck = true;
+    let stickProgress = 0;
+    if (!atPageTop && sentinelTop < 0) {
+      const t = Math.min(1, -sentinelTop / STICK_FADE_RANGE_PX);
+      /* smoothstep — gentler ease in/out than linear */
+      stickProgress = t * t * (3 - 2 * t);
     }
 
-    chrome.classList.toggle("srp-search-chrome--stuck", isStuck);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      stickProgress = stickProgress >= 0.5 ? 1 : 0;
+    }
+
+    chrome.style.setProperty("--srp-chrome-stick", stickProgress.toFixed(4));
+
+    const nextStuck = stickProgress >= 0.995;
+    if (nextStuck !== isStuck) {
+      isStuck = nextStuck;
+      chrome.classList.toggle("srp-search-chrome--stuck", isStuck);
+    }
   };
 
   let ticking = false;
@@ -299,7 +312,7 @@ function srpImageSrc(index) {
 
 const SRP_HEART_OUTLINE_ICON = `<svg class="srp-card-shortlist-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path class="srp-card-shortlist-icon__shape" d="M232,102c0,66-104,122-104,122S24,168,24,102A54,54,0,0,1,78,48c22.59,0,41.94,12.31,50,32,8.06-19.69,27.41-32,50-32A54,54,0,0,1,232,102Z"/></svg>`;
 
-const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><circle cx="128" cy="128" r="96" fill="currentColor"/><polyline points="88 136 112 160 168 104" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"/></svg>`;
+const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>`;
 
 /** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on all cards.
  *  Per-card override: listing.showSeller = true | false */
@@ -341,7 +354,7 @@ const SRP_LISTING_VARIANTS = [
     imageCount: 24,
     title: "Lodha Venezia Wing C",
     address: "Parel, Mumbai",
-    meta: ["Possession: May, 2027", "₹14k sq.ft.", "2 BHK"],
+    meta: ["Ready to move", "₹14k sq.ft.", "3 BHK"],
     price: "₹2.7 Cr",
     configs: null,
   },
@@ -354,7 +367,7 @@ const SRP_LISTING_VARIANTS = [
     imageCount: 24,
     title: "Lodha Venezia Wing C",
     address: "Parel, Mumbai",
-    meta: ["Ready to move", "₹14k sq.ft.", "2 BHK"],
+    meta: ["Ready to move", "₹14k sq.ft."],
     price: null,
     configs: [
       { label: "1 BHK", price: "₹2.7 – 5.7 Cr" },
