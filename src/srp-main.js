@@ -207,7 +207,7 @@ function initSrpStickySearchState(chrome) {
 
   /** Scroll distance (px) over which first-fold gradient eases into surface-default. */
   const STICK_FADE_RANGE_PX = 80;
-  const FILTERS_SCROLL_THRESHOLD = 6;
+  const FILTERS_SCROLL_THRESHOLD = 10;
   let isStuck = false;
   let filtersHidden = false;
   let lastScrollY = window.scrollY;
@@ -237,9 +237,9 @@ function initSrpStickySearchState(chrome) {
       chrome.classList.toggle("srp-search-chrome--stuck", isStuck);
     }
 
-    /* Filters tray: hide on scroll down, gentle slide-down reveal on scroll up */
+    /* Filters tray: hide on scroll down, slide back on scroll up (only once stuck) */
     let nextFiltersHidden = filtersHidden;
-    if (atPageTop || currentY < 24) {
+    if (atPageTop || currentY < 48 || stickProgress < 0.35) {
       nextFiltersHidden = false;
     } else if (delta > FILTERS_SCROLL_THRESHOLD) {
       nextFiltersHidden = true;
