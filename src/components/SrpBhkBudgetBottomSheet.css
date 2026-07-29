@@ -11,21 +11,22 @@ html.experiment-srp-bhk-budget-card .srp-filter-dropdown--legacy-bhk {
 html.experiment-srp-bhk-budget-card .srp-filter-chip--experiment {
   flex-shrink: 0;
   display: inline-flex;
-  height: 40px;
-  border-radius: 12px;
-  border: 1px solid var(--ds-color-purple-700);
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #5e23dc;
   background-color: var(--ds-color-lavender-mist-50);
   overflow: hidden;
   align-items: center;
-  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.04);
+  box-shadow: none;
 }
 
 html.experiment-srp-bhk-budget-card .srp-filter-chip--experiment .srp-filter-applied-label {
   color: var(--ds-color-purple-700);
-  font-weight: 500;
+  font-weight: 400;
   padding: 8px 12px;
   font-family: var(--ds-font-family-primary);
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 16px;
   white-space: nowrap;
 }
 
@@ -616,7 +617,6 @@ html.experiment-srp-bhk-budget-card #srp-mobile-content {
   position: relative;
   z-index: 2;
   scroll-snap-align: center;
-  scroll-snap-stop: always;
 }
 
 .srp-ios-picker--odometer .srp-ios-picker__item.is-selected {

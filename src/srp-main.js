@@ -12,8 +12,7 @@ import { syncExperimentsToDocument } from "./experiments.js";
 import { initSrpBudgetBhkGuidance } from "./srp-budget-bhk-guidance.js";
 import { initSrpBhkBudgetBottomSheet } from "./srp-bhk-budget-bottom-sheet.js";
 import "./main.js";
-import magnifyingGlassUrl from "./assets/icons/magnifying-glass.svg";
-import sortUrl from "./assets/icons/sort-ascending.svg";
+import arrowLeftUrl from "./assets/icons/arrow-left.svg";
 import aiLogoUrl from "./assets/icons/ai-logo.png";
 
 const SRP_HEART_ICON = `<svg class="srp-card-shortlist-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path class="srp-card-shortlist-icon__shape" d="M232,102c0,66-104,122-104,122S24,168,24,102A54,54,0,0,1,78,48c22.59,0,41.94,12.31,50,32,8.06-19.69,27.41-32,50-32A54,54,0,0,1,232,102Z"/></svg>`;
@@ -37,26 +36,25 @@ function srpBadgePillHtml(label) {
   return `<span class="srp-badge srp-badge--pill">${label}</span>`;
 }
 
-const SRP_BACK_ICON = `<svg class="srp-search-back__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
 
 const SRP_NAV_ICON_ATTRS =
-  'class="srp-bottom-nav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" aria-hidden="true"';
+  'class="srp-bottom-nav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"';
 
+/** Phosphor regular — Figma Bottom navigation (4497:28960) */
 const SRP_NAV_ICONS = {
-  home: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M104,216V152h48v64h64V120a8,8,0,0,0-2.34-5.66l-80-80a8,8,0,0,0-11.32,0l-80,80A8,8,0,0,0,40,120v96Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
-  projects: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M136,216V32a8,8,0,0,0-12.44-6.65l-80,53.33A8,8,0,0,0,40,85.35V216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M136,88h72a8,8,0,0,1,8,8V216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="16" y1="216" x2="240" y2="216" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="104" y1="112" x2="104" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="72" y1="112" x2="72" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="72" y1="168" x2="72" y2="184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="104" y1="168" x2="104" y2="184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
-  suggestions: `<svg ${SRP_NAV_ICON_ATTRS}><line x1="88" y1="232" x2="168" y2="232" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="200" x2="128" y2="144" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="96 112 128 144 160 112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M78.7,167A79.87,79.87,0,0,1,48,104.45C47.76,61.09,82.72,25,126.07,24a80,80,0,0,1,51.34,142.9A24.3,24.3,0,0,0,168,186v6a8,8,0,0,1-8,8H96a8,8,0,0,1-8-8v-6A24.11,24.11,0,0,0,78.7,167Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
-  saved: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M128,224S24,168,24,102A54,54,0,0,1,78,48c22.59,0,41.94,12.31,50,32,8.06-19.69,27.41-32,50-32a54,54,0,0,1,54,54C232,168,128,224,128,224Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
-  profile: `<svg class="srp-bottom-nav__icon srp-bottom-nav__icon--filled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg>`,
+  project: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M240,208H224V96a16,16,0,0,0-16-16H144V32a16,16,0,0,0-24.88-13.32L39.12,72A16,16,0,0,0,32,85.34V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM208,96V208H144V96ZM48,85.34,128,32V208H48ZM112,112v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm-32,0v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm0,56v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Zm32,0v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Z"/></svg>`,
+  suggestions: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M212.24,30A28,28,0,0,0,161,36.77L148,85.09,135.05,36.77A28,28,0,1,0,81,51.26l9.38,35-8.73-1.68A28,28,0,0,0,56.8,132.38,27.86,27.86,0,0,0,48,152.87V160a80,80,0,0,0,80,80h.61c43.78-.33,79.39-36.62,79.39-80.9v-3.34a55.88,55.88,0,0,0-11.77-34.27L215,51.26A27.8,27.8,0,0,0,212.24,30ZM97.61,38a12,12,0,0,1,22,2.9l14.77,55.15a28,28,0,0,0-14,4.77,2.26,2.26,0,0,0-.16-.26A27.65,27.65,0,0,0,108,90.35L96.42,47.12A11.94,11.94,0,0,1,97.61,38Zm-33.36,71.6a12,12,0,0,1,14.25-9.34l20.71,4a12,12,0,0,1,9.36,14.16,12,12,0,0,1-14.25,9.34l-20.75-4a12,12,0,0,1-9.32-14.15Zm0,40.72a12,12,0,0,1,14-9.37l10.11,2a12,12,0,0,1,9.36,14.15,12,12,0,0,1-14.2,9.35l-10-2a12,12,0,0,1-9.34-14.16ZM192,159.1c0,35.53-28.49,64.64-63.5,64.9a64.08,64.08,0,0,1-61.56-44.78,30.74,30.74,0,0,0,3.48.95h0l10,2a28.33,28.33,0,0,0,5.61.57,28,28,0,0,0,24.16-42.14c.79-.43,1.57-.89,2.32-1.4l.16.26a27.82,27.82,0,0,0,17.78,12l6.32,1.26a36,36,0,0,0,9.53,32.49A8,8,0,0,0,157.71,174a20,20,0,0,1-3.31-23.51,8,8,0,0,0-5.46-11.66l-15.34-3.07a12,12,0,0,1-9.35-14.15h0a12,12,0,0,1,14.18-9.35l21.41,4.28A40.1,40.1,0,0,1,192,155.76Zm7.59-112-16.62,62a55.55,55.55,0,0,0-20-8.28l-2.5-.5L176.4,40.91a12,12,0,1,1,23.18,6.21Z"/></svg>`,
+  saved: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"/></svg>`,
+  profile: `<svg ${SRP_NAV_ICON_ATTRS}><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg>`,
 };
 
 function renderSrpBottomNav() {
   const mobileContent = document.getElementById("srp-mobile-content");
   if (!mobileContent || document.getElementById("srp-bottom-nav")) return;
 
+  /* Figma Bottom navigation — Project / Suggestions / Saved / Profile (no Home) */
   const items = [
-    { id: "home", label: "Home", href: "/", icon: SRP_NAV_ICONS.home },
-    { id: "projects", label: "Projects", href: "#", icon: SRP_NAV_ICONS.projects },
+    { id: "project", label: "Project", href: "#", icon: SRP_NAV_ICONS.project },
     { id: "suggestions", label: "Suggestions", href: "#", icon: SRP_NAV_ICONS.suggestions },
     { id: "saved", label: "Saved", href: "#", icon: SRP_NAV_ICONS.saved },
     { id: "profile", label: "Profile", href: "#", icon: SRP_NAV_ICONS.profile },
@@ -70,10 +68,9 @@ function renderSrpBottomNav() {
     .map(
       (item) => `
     <a
-      class="srp-bottom-nav__item${item.active ? " srp-bottom-nav__item--active" : ""}"
+      class="srp-bottom-nav__item"
       href="${item.href}"
       data-srp-nav="${item.id}"
-      ${item.active ? 'aria-current="page"' : ""}
     >
       <span class="srp-bottom-nav__icon-wrap">${item.icon}</span>
       <span class="srp-bottom-nav__label">${item.label}</span>
@@ -134,84 +131,67 @@ function renderSrpSearch() {
   chrome.innerHTML = `
         <div class="srp-search-container">
           <div class="srp-search-row">
-            <a href="/" class="srp-search-back" aria-label="Back to homepage">${SRP_BACK_ICON}</a>
+            <a href="/" class="srp-search-back" aria-label="Back to homepage">
+              <img class="srp-search-back__icon" src="${arrowLeftUrl}" alt="" width="24" height="24" decoding="async" />
+            </a>
             <div class="srp-search-field">
-              <img src="${magnifyingGlassUrl}" alt="" class="srp-search-icon" />
+              <span class="srp-search-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="18" height="18" fill="none">
+                  <circle cx="112" cy="112" r="80" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                  <line x1="168.57" y1="168.57" x2="224" y2="224" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+              </span>
               <input
                 type="search"
                 class="srp-search-input"
                 placeholder="What are you looking for?"
                 autocomplete="off"
+                enterkeyhint="search"
               />
-              <button class="srp-search-magic" aria-label="AI Magic">
-                <img src="${aiLogoUrl}" alt="AI" />
+              <span class="srp-search-divider" aria-hidden="true"></span>
+              <button type="button" class="srp-search-magic" aria-label="AI search">
+                <img src="${aiLogoUrl}" alt="" width="20" height="20" decoding="async" />
               </button>
             </div>
           </div>
         </div>
 
         <div class="srp-search-filters">
-          <button class="srp-filter-sort" aria-label="Sort">
-            <img src="${sortUrl}" alt="" />
+          <div class="srp-search-filters__scroller">
+          <button type="button" class="srp-filter-sort" aria-label="Sort">
+            <svg class="srp-filter-sort__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="112 176 80 208 48 176" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+              <line x1="80" y1="48" x2="80" y2="208" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+              <polyline points="144 80 176 48 208 80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+              <line x1="176" y1="208" x2="176" y2="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
           </button>
 
           <div class="srp-filter-chip">
-            <button class="srp-filter-active">
-              <svg class="srp-filter-icon" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="104" cy="80" r="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-                <circle cx="168" cy="176" r="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-                <line x1="128" y1="80" x2="216" y2="80" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-                <line x1="40" y1="80" x2="80" y2="80" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-                <line x1="192" y1="176" x2="216" y2="176" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-                <line x1="40" y1="176" x2="144" y2="176" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            <button type="button" class="srp-filter-active">
+              <svg class="srp-filter-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true">
+                <path fill="currentColor" d="M200,136a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,136Zm32-56H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16Zm-80,96H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16Z"/>
               </svg>
               <span>Filters (3)</span>
             </button>
-            <div class="srp-filter-chip-separator"></div>
-            <button class="srp-filter-clear">Clear</button>
+            <span class="srp-filter-chip-separator" aria-hidden="true"></span>
+            <button type="button" class="srp-filter-clear">Clear</button>
           </div>
 
-          <button class="srp-filter-dropdown">
+          <button type="button" class="srp-filter-dropdown">
             <span>Budget</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
             </svg>
           </button>
 
-          <button class="srp-filter-dropdown">
-            <span>Property Type</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-
-          <button class="srp-filter-dropdown">
+          <button type="button" class="srp-filter-dropdown">
             <span>BHK type</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
             </svg>
           </button>
-
-          <button class="srp-filter-dropdown">
-            <span>Furnished</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-
-          <button class="srp-filter-dropdown">
-            <span>Possession</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-
-          <button class="srp-filter-dropdown">
-            <span>New/Resale</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
+          </div>
         </div>
   `;
 
@@ -317,18 +297,96 @@ function srpImageSrc(index) {
   return encodeURI("/" + SRP_IMAGE_FILES[index % SRP_IMAGE_FILES.length]);
 }
 
-const SRP_CLOCK_ICON =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const SRP_CHAT_ICON =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const SRP_PHONE_ICON =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const SRP_HEART_OUTLINE_ICON = `<svg class="srp-card-shortlist-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path class="srp-card-shortlist-icon__shape" d="M232,102c0,66-104,122-104,122S24,168,24,102A54,54,0,0,1,78,48c22.59,0,41.94,12.31,50,32,8.06-19.69,27.41-32,50-32A54,54,0,0,1,232,102Z"/></svg>`;
 
-const SRP_SAMPLE_LISTINGS = [
-  { badge1: "Verified", badge2: "RERA", posted: "1 day ago", status: "Ready to move", pricePerSqft: "₹714.24K/sq.ft.", price: "₹2.85 Cr", name: "Shapoorji Pallonji Joyville", config: "3 BHK Apartment", address: "Electronic City Phase 1, near Infosys Campus, Bangalore" },
-  { badge1: "Verified", badge2: "Zero brokerage", posted: "2 days ago", status: "Under Construction", pricePerSqft: "₹11.5K/sq.ft.", price: "₹1.42 Cr", name: "Sikka Karnam Greens", config: "2 BHK Apartment", address: "Sector 79, Southern Peripheral Road, Gurgaon" },
-  { badge1: "RERA", badge2: "Verified", posted: "5 hours ago", status: "Ready to move", pricePerSqft: "₹16.2K/sq.ft.", price: "₹3.10 Cr", name: "Sunil Apartment Homes", config: "3 BHK Apartment", address: "Dwarka Expressway, Sector 113, New Gurgaon" },
-  { badge1: "Verified", badge2: "RERA", posted: "1 week ago", status: "New Launch", pricePerSqft: "₹13.8K/sq.ft.", price: "₹95.4 L", name: "Palam Vihar Residency", config: "1 BHK Apartment", address: "Palam Vihar Extension, near Rezang La Chowk, Gurgaon" },
+const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><circle cx="128" cy="128" r="96" fill="currentColor"/><polyline points="88 136 112 160 168 104" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"/></svg>`;
+
+/** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on all cards.
+ *  Per-card override: listing.showSeller = true | false */
+const SRP_CARD_SHOW_SELLER = true;
+
+/**
+ * Figma SRP cards component set (4436:6443) — 4 variants:
+ * Single/Resale, Single/Project, Multiple/Project, Multiple/Resale
+ */
+const SRP_LISTING_VARIANTS = [
+  {
+    id: "0",
+    variant: "single-resale",
+    seller: { name: "Sunder Homes", photo: "/Agent.png" },
+    // Figma: one cream pill "RERA | Verified" + separate "Zero brokerage"
+    badges: [
+      {
+        parts: [
+          { label: "RERA", verified: true },
+          { label: "Verified" },
+        ],
+      },
+      { parts: [{ label: "Zero brokerage" }] },
+    ],
+    imageTag: "3 weeks",
+    imageCount: 24,
+    title: "3 BHK flat",
+    address: "DLF City Pink Town, Phase 3, Gurgaon",
+    meta: ["Ready to move", "₹14k sq.ft.", "3 BHK"],
+    price: "₹2.7 Cr",
+    configs: null,
+  },
+  {
+    id: "1",
+    variant: "single-project",
+    seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
+    badges: [{ parts: [{ label: "RERA", verified: true }] }],
+    imageTag: "3 weeks",
+    imageCount: 24,
+    title: "Lodha Venezia Wing C",
+    address: "Parel, Mumbai",
+    meta: ["Possession: May, 2027", "₹14k sq.ft.", "2 BHK"],
+    price: "₹2.7 Cr",
+    configs: null,
+  },
+  {
+    id: "2",
+    variant: "multiple-project",
+    seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
+    badges: [{ parts: [{ label: "RERA", verified: true }] }],
+    imageTag: "3 weeks",
+    imageCount: 24,
+    title: "Lodha Venezia Wing C",
+    address: "Parel, Mumbai",
+    meta: ["Ready to move", "₹14k sq.ft.", "2 BHK"],
+    price: null,
+    configs: [
+      { label: "1 BHK", price: "₹2.7 – 5.7 Cr" },
+      { label: "2 BHK", price: "₹2.7 – 5.7 Cr" },
+      { label: "3 BHK", price: "₹2.7 – 5.7 Cr" },
+    ],
+  },
+  {
+    id: "3",
+    variant: "multiple-resale",
+    seller: { name: "Sunder Homes", photo: "/Agent.png" },
+    badges: [
+      {
+        parts: [
+          { label: "RERA", verified: true },
+          { label: "Verified" },
+        ],
+      },
+      { parts: [{ label: "Zero brokerage" }] },
+    ],
+    imageTag: "3 weeks",
+    imageCount: 24,
+    title: "3 BHK flat",
+    address: "DLF City Pink Town, Phase 3, Gurgaon",
+    meta: ["Ready to move", "₹14k sq.ft."],
+    price: null,
+    configs: [
+      { label: "1 BHK", price: "₹2.7 Cr" },
+      { label: "2 BHK", price: "₹5.7 Cr" },
+      { label: "3 BHK", price: "₹5.7 Cr" },
+    ],
+  },
 ];
 
 function srpEscapeHtml(text) {
@@ -359,7 +417,7 @@ function getSrpSearchContext() {
     }
   }
 
-  if (!location) location = "Sector 44";
+  if (!location) location = "New Gurgaon";
 
   return {
     query,
@@ -370,131 +428,131 @@ function getSrpSearchContext() {
 
 function srpResultsMetaHtml() {
   const { location, count } = getSrpSearchContext();
-  const noun = count === 1 ? "property" : "properties";
-  const label = `Showing ${count} ${noun} in ${srpEscapeHtml(location)}`;
-  return `<div class="srp-results-meta-bar"><p class="srp-results-meta"><span class="srp-results-meta__text">${label}</span><span class="srp-results-meta__separator" aria-hidden="true"></span></p></div>`;
+  const noun = count === 1 ? "project" : "projects";
+  return `<div class="srp-results-meta-bar">
+    <p class="srp-results-meta">
+      <span class="srp-results-meta__count">${count} ${noun}</span>
+      <span class="srp-results-meta__location">in ${srpEscapeHtml(location)}</span>
+      <span class="srp-results-meta__separator" aria-hidden="true"></span>
+    </p>
+  </div>`;
 }
 
-function srpListingBhkLabel(config) {
-  const match = config?.match(/^\d+\s+BHK/i);
-  return match ? match[0].toUpperCase().replace(/bhk/i, "BHK") : config;
+function srpCardShouldShowSeller(listing) {
+  if (typeof listing.showSeller === "boolean") return listing.showSeller;
+  return SRP_CARD_SHOW_SELLER;
 }
 
-function srpCardSellerRowHtml(listing) {
+function srpCardSellerHtml(listing) {
+  if (!srpCardShouldShowSeller(listing) || !listing.seller) return "";
+  const photoClass = listing.seller.isBrand
+    ? "srp-card-seller__photo srp-card-seller__photo--brand"
+    : "srp-card-seller__photo";
   return `<div class="srp-card-seller">
-    <div class="srp-card-seller__text">
-      <p class="srp-card-seller__name">Sunder Homes</p>
-      <p class="srp-card-seller__updated">Updated ${listing.posted}</p>
-    </div>
-    <img class="srp-card-seller__photo" src="/Agent.png" alt="" />
+    <img class="${photoClass}" src="${listing.seller.photo}" alt="" width="20" height="20" decoding="async" />
+    <p class="srp-card-seller__name">${srpEscapeHtml(listing.seller.name)}</p>
   </div>`;
 }
 
-function srpCardProjectHtml(listing) {
-  return `<div class="srp-card-project">
-    <p class="srp-card-name">${listing.name}</p>
-    <p class="srp-card-address">${SRP_MAP_PIN_ICON}<span>${listing.address}</span></p>
-  </div>`;
+function srpCardBadgeHtml(badge) {
+  const parts = badge.parts || [{ label: badge.label, verified: badge.verified }];
+  const showCheck = parts.some((p) => p.verified);
+  const inner = parts
+    .map((part, i) => {
+      const sep =
+        i > 0
+          ? `<span class="srp-card-badge__sep" aria-hidden="true"></span>`
+          : "";
+      return `${sep}<span class="srp-card-badge__label">${srpEscapeHtml(part.label)}</span>`;
+    })
+    .join("");
+  return `<span class="srp-card-badge">${showCheck ? SRP_RERA_CHECK_ICON : ""}${inner}</span>`;
 }
 
-function srpCardMetaPillsHtml(listing) {
-  return `<div class="srp-card-image-meta">
-    <span class="srp-card-meta-item"><span>${srpListingBhkLabel(listing.config)}</span></span>
-    <span class="srp-card-meta-divider" aria-hidden="true"></span>
-    <span class="srp-card-meta-item"><span>${listing.pricePerSqft}</span></span>
-  </div>`;
+function srpCardMetaHtml(meta) {
+  if (!meta?.length) return "";
+  return `<p class="srp-card-meta">${meta
+    .map((item, i) => {
+      const sep =
+        i > 0 ? `<span class="srp-card-meta__sep" aria-hidden="true"></span>` : "";
+      return `${sep}<span class="srp-card-meta__item">${srpEscapeHtml(item)}</span>`;
+    })
+    .join("")}</p>`;
 }
 
-function srpCardPriceRowHtml(listing) {
-  return `<p class="srp-card-price">${listing.price}</p>`;
-}
-
-function srpCardHtml(listing, imgIndexStart, { carousel = false, imageCount = 24, contactOnly = false, listingId = "0" } = {}) {
-  const imagesClass = carousel ? "srp-card-images srp-card-images--carousel" : "srp-card-images";
-  const imagesInner = carousel
-    ? `<div class="srp-card-images-track">${Array.from(
-        { length: imageCount },
-        (_, i) => `<img src="${srpImageSrc(imgIndexStart + i)}" alt="" />`
-      ).join("")}</div>`
-    : `<img src="${srpImageSrc(imgIndexStart)}" alt="" />
-        <img src="${srpImageSrc(imgIndexStart + 1)}" alt="" />`;
-
-  const ctaHtml = contactOnly
-    ? `<div class="srp-card-cta-row srp-card-cta-row--contact-only">
-        <button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${imgIndexStart}`)}</button>
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
+function srpCardConfigsHtml(configs) {
+  if (!configs?.length) return "";
+  return `<div class="srp-card-configs" role="list">
+    ${configs
+      .map(
+        (cfg, i) => `
+      ${i > 0 ? `<span class="srp-card-configs__sep" aria-hidden="true"></span>` : ""}
+      <div class="srp-card-configs__col" role="listitem">
+        <span class="srp-card-configs__label">${srpEscapeHtml(cfg.label)}</span>
+        <span class="srp-card-configs__price">${srpEscapeHtml(cfg.price)}</span>
       </div>`
-    : `<div class="srp-card-cta-row">
-        <button class="srp-card-cta-btn" type="button">${SRP_CHAT_ICON}<span>Chat</span></button>
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand" type="button" data-srp-contact-cta>${SRP_PHONE_ICON}<span>Contact</span></button>
-        <button class="srp-card-cta-btn" type="button" aria-label="Save"><span>${SRP_HEART_ICON}</span></button>
-      </div>`;
+      )
+      .join("")}
+  </div>`;
+}
 
-  const imageBlock = contactOnly
-    ? `<div class="${imagesClass}">
-        <div class="srp-card-images-stage">
-          ${imagesInner}
-            <div class="srp-card-image-chrome">
-            <div class="srp-card-badges srp-card-badges--overlay">
-              ${srpBadgePillHtml(listing.badge1)}
-              ${srpBadgePillHtml(listing.status)}
-            </div>
-            <button class="srp-card-carousel-nav srp-card-carousel-nav--prev" type="button" aria-label="Previous image">${SRP_CAROUSEL_CARET_LEFT}</button>
-            <button class="srp-card-carousel-nav srp-card-carousel-nav--next" type="button" aria-label="Next image">${SRP_CAROUSEL_CARET_RIGHT}</button>
-            <button class="srp-card-shortlist-btn" type="button" aria-label="Shortlist">${SRP_HEART_ICON}</button>
-            <div class="srp-card-image-dots" aria-hidden="true">
-              <span class="srp-card-image-dot" data-slot="0"></span>
-              <span class="srp-card-image-dot" data-slot="1"></span>
-              <span class="srp-card-image-dot" data-slot="2"></span>
-            </div>
-            <span class="srp-card-image-count">1 / ${imageCount}</span>
-          </div>
-        </div>
-      </div>`
-    : `<div class="${imagesClass}">
-        ${imagesInner}
-        <span class="srp-card-image-count">1/12</span>
-      </div>`;
+function srpCardHtml(listing, imgIndexStart) {
+  const imageCount = listing.imageCount || 24;
+  const showSeller = srpCardShouldShowSeller(listing);
+  const imagesInner = `<div class="srp-card-images-track">${Array.from(
+    { length: imageCount },
+    (_, i) => `<img src="${srpImageSrc(imgIndexStart + i)}" alt="" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} />`
+  ).join("")}</div>`;
 
-  const stripBlock = contactOnly
-    ? ""
-    : `<div class="srp-card-strip">
-        <div class="srp-card-badges">
-          <span class="srp-badge">${listing.badge1}</span>
-          <span class="srp-badge">${listing.badge2}</span>
-        </div>
-        <div class="srp-card-strip-meta">${SRP_CLOCK_ICON}<span>${listing.posted}</span></div>
-      </div>`;
-
-  const metaRowHtml = contactOnly
-    ? ""
-    : `<div class="srp-card-status-row">
-        <span>${listing.status}</span>
-        <span class="srp-card-status-dot"></span>
-        <span>Avg. Price/sq.ft. ${listing.pricePerSqft}</span>
-      </div>`;
-
-  const detailsHtml = contactOnly
-    ? `${srpCardPriceRowHtml(listing)}
-      ${srpCardMetaPillsHtml(listing)}
-      ${srpCardProjectHtml(listing)}`
-    : `${metaRowHtml}
-      <p class="srp-card-price">${listing.price}</p>
-      <p class="srp-card-name">${listing.name}</p>
-      <p class="srp-card-config">${listing.config}</p>
-      <p class="srp-card-address">${listing.address}</p>`;
-
-  const sellerRowHtml = contactOnly ? srpCardSellerRowHtml(listing) : "";
+  const badgesHtml = (listing.badges || []).map(srpCardBadgeHtml).join("");
+  const priceHtml = listing.price
+    ? `<p class="srp-card-price">${srpEscapeHtml(listing.price)}</p>`
+    : "";
+  const tagHtml = listing.imageTag
+    ? `<span class="srp-card-image-tag">${srpEscapeHtml(listing.imageTag)}</span>`
+    : "";
 
   return `
-    <div class="srp-card${contactOnly ? " srp-card--option1" : ""}" data-listing-id="${listingId}" role="link" tabindex="0" aria-label="View ${srpEscapeHtml(listing.name)}">
-      ${stripBlock}
-      ${sellerRowHtml}
-      ${imageBlock}
-      ${detailsHtml}
-      ${contactOnly ? "" : `<hr class="srp-card-divider" />`}
-      ${ctaHtml}
-    </div>
+    <article class="srp-card srp-card--imagine srp-card--${listing.variant}${showSeller ? " srp-card--seller" : ""}" data-listing-id="${srpEscapeHtml(listing.id)}" data-variant="${srpEscapeHtml(listing.variant)}" data-show-seller="${showSeller ? "true" : "false"}" role="link" tabindex="0" aria-label="View ${srpEscapeHtml(listing.title)}">
+      <div class="srp-card-media${showSeller ? " srp-card-media--seller" : ""}">
+        ${srpCardSellerHtml(listing)}
+        <div class="srp-card-images srp-card-images--carousel">
+          <div class="srp-card-images-stage">
+            ${imagesInner}
+            <div class="srp-card-image-chrome">
+              <div class="srp-card-image-chrome__top">
+                <div class="srp-card-badges srp-card-badges--overlay">${badgesHtml}</div>
+                <button class="srp-card-shortlist-btn" type="button" aria-label="Shortlist">${SRP_HEART_OUTLINE_ICON}</button>
+              </div>
+              <div class="srp-card-image-footer">
+                <div class="srp-card-image-footer__left">
+                  ${tagHtml}
+                  <div class="srp-card-image-dots" aria-hidden="true">
+                    <span class="srp-card-image-dot" data-slot="0"></span>
+                    <span class="srp-card-image-dot" data-slot="1"></span>
+                    <span class="srp-card-image-dot" data-slot="2"></span>
+                  </div>
+                </div>
+                <span class="srp-card-image-count">1 / ${imageCount}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="srp-card-body">
+        <div class="srp-card-info">
+          <h2 class="srp-card-title">${srpEscapeHtml(listing.title)}</h2>
+          <p class="srp-card-address">${srpEscapeHtml(listing.address)}</p>
+          ${srpCardMetaHtml(listing.meta)}
+        </div>
+        ${priceHtml}
+        ${srpCardConfigsHtml(listing.configs)}
+      </div>
+      <div class="srp-card-cta-row">
+        <button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>
+        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
+      </div>
+    </article>
   `;
 }
 
@@ -502,28 +560,16 @@ function renderSrpResults() {
   const resultsContainer = document.getElementById("srp-results");
   if (!resultsContainer) return;
 
-  let sectionsHtml = "";
-  for (let opt = 1; opt <= 3; opt++) {
-    let cardsHtml = "";
-    for (let i = 0; i < 4; i++) {
-      const listing = SRP_SAMPLE_LISTINGS[i % SRP_SAMPLE_LISTINGS.length];
-      const imgStride = opt === 1 ? 24 : 2;
-      cardsHtml += srpCardHtml(listing, (opt * 4 + i) * imgStride, {
-        carousel: opt === 1,
-        imageCount: 24,
-        contactOnly: opt === 1,
-        listingId: String(i % SRP_SAMPLE_LISTINGS.length),
-      });
-    }
-    sectionsHtml += `
-      <section class="srp-option-section${opt === 1 ? " srp-option-section--image-carousel" : ""}" id="srp-option-section-${opt}" data-option-label="Option ${opt}">
-        ${opt === 1 ? srpResultsMetaHtml() : ""}
-        <div class="srp-card-list">${cardsHtml}</div>
-      </section>
-    `;
-  }
+  const cardsHtml = SRP_LISTING_VARIANTS.map((listing, i) =>
+    srpCardHtml(listing, i * 8)
+  ).join("");
 
-  resultsContainer.innerHTML = `<div id="srp-options-root">${sectionsHtml}</div>`;
+  resultsContainer.innerHTML = `<div id="srp-options-root">
+    <section class="srp-option-section srp-option-section--imagine" id="srp-option-section-1" data-option-label="Buy">
+      ${srpResultsMetaHtml()}
+      <div class="srp-card-list">${cardsHtml}</div>
+    </section>
+  </div>`;
 
   initSrpCardImageCarousels();
   initSrpOptionIndicator();
@@ -607,7 +653,7 @@ function updateCarouselDots(dotsContainer, activeIndex, total, prevWindowStart =
 
 function initSrpCardImageCarousels() {
   document
-    .querySelectorAll(".srp-option-section--image-carousel .srp-card-images--carousel")
+    .querySelectorAll(".srp-option-section--imagine .srp-card-images--carousel")
     .forEach((carousel) => {
       const track = carousel.querySelector(".srp-card-images-track");
       const dotsContainer = carousel.querySelector(".srp-card-image-dots");

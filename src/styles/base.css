@@ -227,11 +227,11 @@ body {
   white-space: nowrap;
 }
 
-/* Google Sans Flex (OFL) — PDP listing title; variable file via Fontsource / jsDelivr */
+/* Google Sans Flex (OFL) — primary UI font; variable file via Fontsource / jsDelivr */
 @font-face {
   font-family: "Google Sans Flex";
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
   font-weight: 100 900;
   src: url("https://cdn.jsdelivr.net/fontsource/fonts/google-sans-flex:vf@latest/latin-wght-normal.woff2")
     format("woff2-variations");

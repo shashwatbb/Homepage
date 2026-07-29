@@ -179,7 +179,7 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
   };
 
   function getLocationLabel() {
-    return getSearchContext()?.location ?? "Sector 44";
+    return getSearchContext()?.location ?? "New Gurgaon";
   }
 
   function updateResultsMeta() {
@@ -195,8 +195,25 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
       count = getBhkOnlyResultCount(state.bhkId);
     }
 
-    const noun = count === 1 ? "property" : "properties";
-    const label = `Showing ${count} ${noun} in ${location}`;
+    const noun = count === 1 ? "project" : "projects";
+    const countEl = metaEl.querySelector(".srp-results-meta__count");
+    const locationEl = metaEl.querySelector(".srp-results-meta__location");
+
+    if (countEl && locationEl) {
+      if (!prefersReducedMotion()) {
+        countEl.classList.add("srp-results-meta__text--pulse");
+        countEl.addEventListener(
+          "animationend",
+          () => countEl.classList.remove("srp-results-meta__text--pulse"),
+          { once: true }
+        );
+      }
+      countEl.textContent = `${count} ${noun}`;
+      locationEl.textContent = `in ${location}`;
+      return;
+    }
+
+    const label = `${count} ${noun} in ${location}`;
     const textEl = metaEl.querySelector(".srp-results-meta__text");
     if (textEl) {
       if (!prefersReducedMotion()) {
@@ -409,13 +426,17 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
     const metaEl = document.querySelector(".srp-results-meta");
     if (metaEl) {
       const { location, count } = getSearchContext();
-      const noun = count === 1 ? "property" : "properties";
-      const label = `Showing ${count} ${noun} in ${location}`;
-      const textEl = metaEl.querySelector(".srp-results-meta__text");
-      if (textEl) {
-        textEl.textContent = label;
+      const noun = count === 1 ? "project" : "projects";
+      const countEl = metaEl.querySelector(".srp-results-meta__count");
+      const locationEl = metaEl.querySelector(".srp-results-meta__location");
+      if (countEl && locationEl) {
+        countEl.textContent = `${count} ${noun}`;
+        locationEl.textContent = `in ${location}`;
       } else {
-        metaEl.textContent = label;
+        const textEl = metaEl.querySelector(".srp-results-meta__text");
+        const label = `${count} ${noun} in ${location}`;
+        if (textEl) textEl.textContent = label;
+        else metaEl.textContent = label;
       }
     }
   }

@@ -26,9 +26,13 @@
 }
 
 .srp-results-meta-bar {
-  background-color: var(--ds-surface-white);
-  padding: var(--ds-space-xs) var(--ds-space-m) var(--ds-space-s);
-  margin-top: -1px;
+  /* Figma Frame 2147261540 — 360×32, white */
+  box-sizing: border-box;
+  height: 32px;
+  min-height: 32px;
+  padding: 8px 16px;
+  margin: 0;
+  background-color: var(--ds-color-warm-neutral-0);
 }
 
 .srp-results-meta {
@@ -36,12 +40,23 @@
   padding: 0;
   display: flex;
   align-items: center;
-  gap: var(--ds-space-xs);
-  color: var(--ds-text-muted);
+  gap: 4px;
+  height: 16px;
+  color: var(--ds-color-grey-neutral-800); /* #444444 */
   font-family: var(--ds-font-family-primary);
-  font-size: var(--ds-font-size-s);
-  font-weight: var(--ds-font-weight-regular);
-  line-height: var(--ds-line-height-s);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+
+.srp-results-meta__count {
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.srp-results-meta__location {
+  flex-shrink: 0;
+  font-weight: 400;
 }
 
 .srp-results-meta__text {
@@ -52,7 +67,10 @@
   flex: 1;
   min-width: 2.75rem;
   height: 1px;
+  margin-left: 4px; /* 8px from location text (4 gap + 4) */
   border: none;
+  /* Figma Line 42 — dashed stroke #ddd9ce */
+  background-color: transparent;
   background-image: linear-gradient(
     to right,
     var(--ds-color-warm-neutral-300) 0 3px,
@@ -724,4 +742,485 @@
 
 .srp-card-address__icon path {
   fill: currentColor;
+}
+
+/* ============================================================
+   Imagine SRP cards — Figma component set 4436:6443
+   Variants: single-resale | single-project | multiple-project | multiple-resale
+   Seller strip (Sunder / Lodha + photo) toggled via SRP_CARD_SHOW_SELLER
+   / listing.showSeller → .srp-card-media--seller
+   ============================================================ */
+
+.srp-option-section--imagine {
+  padding: 0;
+}
+
+.srp-option-section--imagine:last-child {
+  padding-bottom: var(--ds-space-xl);
+}
+
+.srp-option-section--imagine .srp-card-list {
+  gap: var(--ds-space-xs); /* 8px — page bg shows through */
+}
+
+/* Card shell — 360 wide, white, 12 top/bottom, children inset 16 */
+.srp-card--imagine {
+  box-sizing: border-box;
+  padding: 12px 0;
+  gap: 12px;
+  border-radius: 0;
+  background-color: var(--ds-color-warm-neutral-0);
+}
+
+/* ---- Media: image ± seller lavender shell ---- */
+.srp-card--imagine .srp-card-media {
+  margin: 0 16px;
+  width: auto;
+  max-width: none;
+}
+
+.srp-card--imagine .srp-card-media--seller {
+  background-color: var(--ds-color-lavender-mist-50); /* #f6f1f8 */
+  border-radius: var(--ds-radius-l); /* 16 */
+  padding-top: 8px;
+}
+
+.srp-card--imagine .srp-card-seller {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  margin: 0 12px 8px;
+  min-height: 20px;
+}
+
+.srp-card--imagine .srp-card-seller__photo {
+  width: 20px;
+  height: 20px;
+  border-radius: 4.7px;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  box-sizing: border-box;
+  border: 1px solid var(--ds-color-warm-neutral-0);
+  background-color: var(--ds-color-warm-neutral-100);
+}
+
+.srp-card--imagine .srp-card-seller__photo--brand {
+  border-radius: 4.7px;
+}
+
+.srp-card--imagine .srp-card-seller__name {
+  margin: 0;
+  color: var(--ds-color-grey-neutral-900); /* #0f0e0d */
+  font-family: var(--ds-font-family-primary);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Image carousel — 328×200, r16 */
+.srp-option-section--imagine .srp-card-images--carousel {
+  position: relative;
+  display: block;
+  gap: 0;
+  overflow: hidden;
+  border-radius: var(--ds-radius-l);
+}
+
+.srp-option-section--imagine .srp-card-images-stage {
+  position: relative;
+  touch-action: pan-x pan-y;
+  border-radius: var(--ds-radius-l);
+  overflow: hidden;
+}
+
+.srp-option-section--imagine .srp-card-images--carousel .srp-card-images-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.srp-option-section--imagine .srp-card-images--carousel .srp-card-images-track::-webkit-scrollbar {
+  display: none;
+}
+
+.srp-option-section--imagine .srp-card-images--carousel .srp-card-images-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  height: 200px;
+  aspect-ratio: auto;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background-color: var(--ds-surface-default);
+}
+
+.srp-card--imagine .srp-card-image-chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Overlays are absolutely placed — no chrome padding (avoids double inset). */
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+.srp-card--imagine .srp-card-image-chrome__top {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.srp-card--imagine .srp-card-badges--overlay {
+  position: static;
+  top: auto;
+  left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+  max-width: calc(100% - 28px); /* leave room for 20px heart + gap */
+}
+
+/* Cream gallery-index pills — #f6f4ed, r8, h20, pad 8 */
+.srp-card--imagine .srp-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background-color: var(--ds-color-warm-neutral-100); /* #f6f4ed */
+  color: var(--ds-color-grey-neutral-900);
+  font-family: var(--ds-font-family-primary);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.srp-card--imagine .srp-card-badge-check {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  display: block;
+  color: var(--ds-semantic-icon-success);
+}
+
+.srp-card--imagine .srp-card-badge__sep {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  margin: 0 4px;
+  background-color: var(--ds-color-warm-neutral-300); /* #ddd9ce */
+  flex-shrink: 0;
+}
+
+.srp-card--imagine .srp-card-badge__label {
+  display: inline-block;
+}
+
+/* Heart — Figma: dark translucent fill + white stroke, 20×20 */
+.srp-card--imagine .srp-card-shortlist-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: auto;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: transparent;
+  filter: none;
+  pointer-events: auto;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.srp-card--imagine .srp-card-shortlist-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  overflow: visible;
+}
+
+.srp-card--imagine .srp-card-shortlist-icon__shape {
+  fill: rgb(15 14 13 / 0.6); /* #0f0e0d @ 60% — Figma photo-overlay fill */
+  stroke: var(--ds-color-warm-neutral-0);
+  stroke-width: 12;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  paint-order: stroke fill;
+}
+
+.srp-card--imagine .srp-card-image-footer {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 20px;
+  pointer-events: none;
+}
+
+.srp-card--imagine .srp-card-image-footer__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.srp-card--imagine .srp-card-image-tag,
+.srp-card--imagine .srp-card-image-count {
+  position: static;
+  right: auto;
+  bottom: auto;
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background-color: rgb(33 29 25 / 0.8); /* #211d19 @ 80% */
+  color: var(--ds-color-warm-neutral-0);
+  font-family: var(--ds-font-family-primary);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.srp-card--imagine .srp-card-image-dots {
+  position: static;
+  left: auto;
+  bottom: auto;
+  transform: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 6px;
+  pointer-events: none;
+}
+
+.srp-card--imagine .srp-card-image-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 30px;
+  background-color: var(--ds-color-warm-neutral-0);
+  opacity: 0.45;
+  transform: none;
+}
+
+.srp-card--imagine .srp-card-image-dot--active {
+  opacity: 1;
+  background-color: var(--ds-color-warm-neutral-0);
+  transform: none;
+}
+
+.srp-card--imagine .srp-card-image-dot--preview {
+  opacity: 0.45;
+  transform: none;
+}
+
+/* ---- Body ---- */
+.srp-card--imagine .srp-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 16px;
+  margin: 0;
+}
+
+.srp-card--imagine .srp-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.srp-card--imagine .srp-card-title {
+  margin: 0;
+  color: var(--ds-color-grey-neutral-900);
+  font-family: var(--ds-font-family-primary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0;
+}
+
+.srp-card--imagine .srp-card-address {
+  margin: 0;
+  color: var(--ds-color-grey-neutral-800); /* #444 */
+  font-family: var(--ds-font-family-primary);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+
+.srp-card--imagine .srp-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--ds-color-grey-neutral-800);
+  font-family: var(--ds-font-family-primary);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.1px;
+}
+
+.srp-card--imagine .srp-card-meta__sep {
+  display: inline-block;
+  width: 1px;
+  height: 11px;
+  background-color: var(--ds-color-warm-neutral-300); /* #ddd9ce */
+  flex-shrink: 0;
+}
+
+.srp-card--imagine .srp-card-meta__item {
+  flex-shrink: 0;
+}
+
+.srp-card--imagine .srp-card-price {
+  margin: 0;
+  color: var(--ds-color-grey-neutral-900);
+  font-family: var(--ds-font-family-primary);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+
+/* Config grid — Multiple/* variants */
+.srp-card--imagine .srp-card-configs {
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 54px;
+  padding: 8px 12px;
+  border: 1px solid var(--ds-color-warm-neutral-200); /* #edebdf */
+  border-radius: var(--ds-radius-m); /* 12 */
+  gap: 0;
+}
+
+.srp-card--imagine .srp-card-configs__col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+}
+
+.srp-card--imagine .srp-card-configs__sep {
+  flex: 0 0 auto;
+  width: 1px;
+  align-self: center;
+  height: 32px;
+  margin: 0 12px;
+  background-color: var(--ds-color-warm-neutral-200); /* #edebdf */
+}
+
+.srp-card--imagine .srp-card-configs__label {
+  color: var(--ds-color-grey-neutral-800);
+  font-family: var(--ds-font-family-primary);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+
+.srp-card--imagine .srp-card-configs__price {
+  color: var(--ds-color-grey-neutral-900);
+  font-family: var(--ds-font-family-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* ---- CTA row — WA 48×48 + Contact fill ---- */
+.srp-card--imagine .srp-card-cta-row {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  padding: 0 16px;
+  margin: 0;
+}
+
+.srp-card--imagine .srp-card-cta-btn--whatsapp {
+  flex: 0 0 48px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: var(--ds-radius-m);
+  border: 1px solid var(--ds-color-purple-700); /* #4a16d9 */
+  background-color: var(--ds-color-warm-neutral-0);
+  color: var(--ds-color-purple-700);
+}
+
+.srp-card--imagine .srp-card-cta-btn--whatsapp svg,
+.srp-card--imagine .srp-card-cta-whatsapp-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.srp-card--imagine .srp-card-cta-btn--contact-primary {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 48px;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--ds-radius-m);
+  border: 1px solid var(--ds-color-purple-700);
+  background-color: var(--ds-color-purple-700);
+  color: var(--ds-color-warm-neutral-0);
+  font-family: var(--ds-font-family-primary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+}
+
+/* Hide seller entirely when flag off (no leftover lavender) */
+.srp-card--imagine:not(.srp-card--seller) .srp-card-seller {
+  display: none;
 }

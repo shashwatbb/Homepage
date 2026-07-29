@@ -578,7 +578,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
   };
 
   function getLocationLabel() {
-    return getSearchContext()?.location ?? "Sector 44";
+    return getSearchContext()?.location ?? "New Gurgaon";
   }
 
   function updateResultsMeta() {
@@ -589,10 +589,18 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     const count = completed
       ? getSheetResultCount(state.bhkId, SRP_BUDGET_SHEET_STEPS[0].value, state.maxValue)
       : SRP_BUDGET_BHK_GUIDANCE_MOCK.defaultResultCount;
-    const noun = count === 1 ? "property" : "properties";
-    const label = `Showing ${count} ${noun} in ${location}`;
-    const textEl = metaEl.querySelector(".srp-results-meta__text");
+    const noun = count === 1 ? "project" : "projects";
+    const countEl = metaEl.querySelector(".srp-results-meta__count");
+    const locationEl = metaEl.querySelector(".srp-results-meta__location");
 
+    if (countEl && locationEl) {
+      countEl.textContent = `${count} ${noun}`;
+      locationEl.textContent = `in ${location}`;
+      return;
+    }
+
+    const textEl = metaEl.querySelector(".srp-results-meta__text");
+    const label = `${count} ${noun} in ${location}`;
     if (textEl) {
       textEl.textContent = label;
     } else {
