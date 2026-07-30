@@ -16,7 +16,6 @@
   /* 0 = first fold (gradient), 1 = fully stuck (surface-default) */
   --srp-chrome-stick: 0;
   background-color: transparent;
-  overflow: clip;
 }
 
 /* Search band: surface-default base + gradient layer that fades out on scroll */
