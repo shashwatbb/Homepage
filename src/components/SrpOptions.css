@@ -760,7 +760,7 @@
 }
 
 .srp-option-section--imagine .srp-card-list {
-  gap: var(--ds-space-xs); /* 8px — page bg shows through */
+  gap: 0; /* was 8px page-bg separator — restore via gap: var(--ds-space-xs) */
 }
 
 /* Card shell — 360 wide, white, 12 top/bottom, children inset 16 */
