@@ -89,7 +89,7 @@
 .srp-card-list {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-xs); /* 8px gap; page bg shows through here */
+  gap: 0; /* was 8px page-bg separator between cards — restore via gap: var(--ds-space-xs) */
 }
 
 /* -- Card -- */
