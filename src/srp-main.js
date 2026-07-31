@@ -564,11 +564,11 @@ function srpCardCtaRowHtml(listing) {
   const wa = `<button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>`;
 
   if (listing.phoneCtas) {
-    /* Dialer primary extreme left → WhatsApp → View phone number */
+    /* WhatsApp (extreme left) → View phone number → Dialer primary (right) */
     return `<div class="srp-card-cta-row srp-card-cta-row--phone">
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--dialer" type="button" data-srp-contact-cta aria-label="Call">${SRP_PHONE_DIALER_ICON}</button>
         ${wa}
         <button class="srp-card-cta-btn srp-card-cta-btn--view-phone" type="button" data-srp-contact-cta>View phone number</button>
+        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--dialer" type="button" data-srp-contact-cta aria-label="Call">${SRP_PHONE_DIALER_ICON}</button>
       </div>`;
   }
 
