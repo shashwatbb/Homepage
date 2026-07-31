@@ -982,38 +982,7 @@
   paint-order: stroke fill;
 }
 
-.srp-card--imagine .srp-card-image-footer {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-height: 20px;
-  pointer-events: none;
-}
-
-.srp-card--imagine .srp-card-image-count {
-  position: static;
-  right: auto;
-  bottom: auto;
-  box-sizing: border-box;
-  height: 20px;
-  padding: 0 8px;
-  border-radius: 8px;
-  background-color: rgb(33 29 25 / 0.8); /* #211d19 @ 80% */
-  color: var(--ds-color-warm-neutral-0);
-  font-family: var(--ds-font-family-primary);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.1px;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* Gallery dots — horizontally centered on image, vertically mid of footer band */
+/* Gallery dots — horizontally centered on image */
 .srp-card--imagine .srp-card-image-dots {
   position: absolute;
   left: 50%;
