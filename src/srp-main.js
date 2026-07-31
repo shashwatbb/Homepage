@@ -592,9 +592,6 @@ function srpCardHtml(listing, imgIndexStart, cardIndex = 0) {
                 <span class="srp-card-image-dot" data-slot="1"></span>
                 <span class="srp-card-image-dot" data-slot="2"></span>
               </div>
-              <div class="srp-card-image-footer">
-                <span class="srp-card-image-count">1 / ${imageCount}</span>
-              </div>
             </div>
           </div>
         </div>
@@ -719,7 +716,6 @@ function initSrpCardImageCarousels() {
       const dotsContainer = carousel.querySelector(".srp-card-image-dots");
       const prevBtn = carousel.querySelector(".srp-card-carousel-nav--prev");
       const nextBtn = carousel.querySelector(".srp-card-carousel-nav--next");
-      const countEl = carousel.querySelector(".srp-card-image-count");
       const images = track ? Array.from(track.querySelectorAll("img")) : [];
       if (!track || !dotsContainer || !images.length) return;
 
@@ -728,11 +724,24 @@ function initSrpCardImageCarousels() {
       let dotWindowStart = null;
       const visibleRatios = new Map();
 
+      const hydrateAround = (centerIndex) => {
+        const start = Math.max(0, centerIndex - 1);
+        const end = Math.min(totalImages - 1, centerIndex + 1);
+        for (let i = start; i <= end; i++) {
+          const img = images[i];
+          const pending = img?.getAttribute("data-src");
+          if (!pending) continue;
+          img.setAttribute("src", pending);
+          img.removeAttribute("data-src");
+        }
+      };
+
       const getSlideWidth = () => images[0].getBoundingClientRect().width;
 
       const scrollToIndex = (index) => {
         const slideWidth = getSlideWidth();
         if (!slideWidth) return;
+        hydrateAround(index);
         track.scrollTo({ left: slideWidth * index, behavior: "smooth" });
       };
 
@@ -743,8 +752,8 @@ function initSrpCardImageCarousels() {
 
       const setActiveDot = (imageIndex) => {
         activeImageIndex = Math.max(0, Math.min(totalImages - 1, imageIndex));
+        hydrateAround(activeImageIndex);
         dotWindowStart = updateCarouselDots(dotsContainer, activeImageIndex, totalImages, dotWindowStart);
-        if (countEl) countEl.textContent = `${activeImageIndex + 1} / ${totalImages}`;
         updateNavState();
       };
 
@@ -781,6 +790,7 @@ function initSrpCardImageCarousels() {
       nextBtn?.addEventListener("click", () => scrollToIndex(activeImageIndex + 1));
       track.addEventListener("scroll", syncFromScroll, { passive: true });
       window.addEventListener("resize", syncFromScroll, { passive: true });
+      hydrateAround(0);
       dotWindowStart = updateCarouselDots(dotsContainer, 0, totalImages);
       updateNavState();
     });
