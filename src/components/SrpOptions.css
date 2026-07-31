@@ -961,7 +961,7 @@
 .srp-card--imagine .srp-card-badge__sep {
   display: inline-block;
   width: 1px;
-  height: 16px;
+  height: 10px;
   margin: 0 4px;
   background-color: var(--ds-color-warm-neutral-300); /* #ddd9ce */
   flex-shrink: 0;
