@@ -592,6 +592,7 @@ function srpCardHtml(listing, imgIndexStart, cardIndex = 0) {
                 <span class="srp-card-image-dot" data-slot="1"></span>
                 <span class="srp-card-image-dot" data-slot="2"></span>
               </div>
+              <span class="srp-card-image-posted">2 weeks ago</span>
             </div>
           </div>
         </div>
