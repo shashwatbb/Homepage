@@ -307,16 +307,16 @@ document.addEventListener("DOMContentLoaded", () => {
  * ------------------------------------------------------------------ */
 
 const SRP_IMAGE_FILES = [
-  "SRP images/Screenshot 2026-07-02 at 1.03.22 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.03.40 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.03.59 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.04.18 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.04.32 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.04.43 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.07.33 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.08.33 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.08.58 PM.png",
-  "SRP images/Screenshot 2026-07-02 at 1.09.27 PM.png",
+  "SRP images/Screenshot 2026-07-02 at 1.03.22 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.03.40 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.03.59 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.04.18 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.04.32 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.04.43 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.07.33 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.08.33 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.08.58 PM.webp",
+  "SRP images/Screenshot 2026-07-02 at 1.09.27 PM.webp",
 ];
 
 function srpImageSrc(index) {
@@ -554,12 +554,20 @@ function srpCardConfigsHtml(configs) {
   </div>`;
 }
 
-function srpCardHtml(listing, imgIndexStart) {
+function srpCardHtml(listing, imgIndexStart, cardIndex = 0) {
   const imageCount = listing.imageCount || 24;
   const showSeller = srpCardShouldShowSeller(listing);
+  /* Horizontal carousels ignore native lazy-load — only hydrate nearby slides. */
   const imagesInner = `<div class="srp-card-images-track">${Array.from(
     { length: imageCount },
-    (_, i) => `<img src="${srpImageSrc(imgIndexStart + i)}" alt="" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} />`
+    (_, i) => {
+      const src = srpImageSrc(imgIndexStart + i);
+      if (i === 0) {
+        const eager = cardIndex < 2;
+        return `<img src="${src}" alt="" width="800" height="500" decoding="async"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} />`;
+      }
+      return `<img data-src="${src}" alt="" width="800" height="500" decoding="async" />`;
+    }
   ).join("")}</div>`;
 
   const badgesHtml = (listing.badges || []).map(srpCardBadgeHtml).join("");
@@ -613,7 +621,7 @@ function renderSrpResults() {
   if (!resultsContainer) return;
 
   const cardsHtml = SRP_LISTING_VARIANTS.map((listing, i) =>
-    srpCardHtml(listing, i * 8)
+    srpCardHtml(listing, i * 8, i)
   ).join("");
 
   resultsContainer.innerHTML = `<div id="srp-options-root">
