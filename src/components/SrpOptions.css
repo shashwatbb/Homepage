@@ -834,6 +834,8 @@
 
 .srp-card--imagine .srp-card-seller__photo--brand {
   border-radius: 4px;
+  object-fit: contain;
+  background-color: #ffffff;
 }
 
 .srp-card--imagine .srp-card-seller__name {

@@ -360,7 +360,7 @@ const SRP_LISTING_TEMPLATES = [
   },
   {
     variant: "single-project",
-    seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
+    seller: { name: "Lodha Group", photo: "/lodha-logo.jpg", isBrand: true },
     badges: [{ parts: [{ label: "RERA", verified: true }] }],
     imageCount: 24,
     title: "Lodha Venezia Wing C",
@@ -372,7 +372,7 @@ const SRP_LISTING_TEMPLATES = [
   },
   {
     variant: "multiple-project",
-    seller: { name: "Lodha Group", photo: "/Agent.png", isBrand: true },
+    seller: { name: "Lodha Group", photo: "/lodha-logo.jpg", isBrand: true },
     badges: [{ parts: [{ label: "RERA", verified: true }] }],
     imageCount: 24,
     title: "Lodha Venezia Wing C",
@@ -503,6 +503,8 @@ function srpResultsMetaHtml() {
 }
 
 function srpCardShouldShowSeller(listing) {
+  /* Brand/developer pills (Lodha) always show — never drop mid-feed */
+  if (listing.seller?.isBrand) return true;
   if (typeof listing.showSeller === "boolean") return listing.showSeller;
   return SRP_CARD_SHOW_SELLER;
 }
