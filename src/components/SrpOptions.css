@@ -1232,7 +1232,7 @@
   letter-spacing: 0.1px;
 }
 
-/* Phone CTAs: WhatsApp (left) + View phone number + Dialer primary (right) */
+/* Phone CTAs: WhatsApp (left) + View phone + Dialer primary (right) */
 .srp-card--imagine .srp-card-cta-row--phone {
   gap: 8px;
 }

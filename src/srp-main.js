@@ -356,7 +356,7 @@ const SRP_LISTING_TEMPLATES = [
     meta: ["Ready to move", "₹14k sq.ft.", "3 BHK"],
     price: "₹2.7 Cr",
     configs: null,
-    phoneCtas: true,
+    phoneCtas: false,
   },
   {
     variant: "single-project",
@@ -564,10 +564,10 @@ function srpCardCtaRowHtml(listing) {
   const wa = `<button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>`;
 
   if (listing.phoneCtas) {
-    /* WhatsApp (extreme left) → View phone number → Dialer primary (right) */
+    /* WhatsApp (extreme left) → View phone → Dialer primary (right) */
     return `<div class="srp-card-cta-row srp-card-cta-row--phone">
         ${wa}
-        <button class="srp-card-cta-btn srp-card-cta-btn--view-phone" type="button" data-srp-contact-cta>View phone number</button>
+        <button class="srp-card-cta-btn srp-card-cta-btn--view-phone" type="button" data-srp-contact-cta>View phone</button>
         <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--dialer" type="button" data-srp-contact-cta aria-label="Call">${SRP_PHONE_DIALER_ICON}</button>
       </div>`;
   }
