@@ -327,6 +327,8 @@ const SRP_HEART_OUTLINE_ICON = `<svg class="srp-card-shortlist-icon" xmlns="http
 
 const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>`;
 
+const SRP_PHONE_DIALER_ICON = `<svg class="srp-card-cta-dialer-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" d="M231.88,175.08A56.26,56.26,0,0,1,176,224C96.6,224,32,159.4,32,80A56.26,56.26,0,0,1,80.92,24.12a16,16,0,0,1,16.62,9.52l21.12,47.15,0,.12A16,16,0,0,1,117.39,96c-.18.27-.37.52-.57.77L96,121.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.71a8.12,8.12,0,0,1,.75-.56,16,16,0,0,1,15.17-1.4l.13.06,47.11,21.11A16,16,0,0,1,231.88,175.08Z"/></svg>`;
+
 /** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on all cards
  *  that do not set listing.showSeller. Per-card: listing.showSeller = true | false */
 const SRP_CARD_SHOW_SELLER = true;
@@ -354,6 +356,7 @@ const SRP_LISTING_TEMPLATES = [
     meta: ["Ready to move", "₹14k sq.ft.", "3 BHK"],
     price: "₹2.7 Cr",
     configs: null,
+    phoneCtas: true,
   },
   {
     variant: "single-project",
@@ -365,6 +368,7 @@ const SRP_LISTING_TEMPLATES = [
     meta: ["Ready to move", "₹14k sq.ft.", "3 BHK"],
     price: "₹2.7 Cr",
     configs: null,
+    phoneCtas: false,
   },
   {
     variant: "multiple-project",
@@ -380,6 +384,7 @@ const SRP_LISTING_TEMPLATES = [
       { label: "2 BHK", price: "₹2.7 – 5.7 Cr" },
       { label: "3 BHK", price: "₹2.7 – 5.7 Cr" },
     ],
+    phoneCtas: false,
   },
   {
     variant: "multiple-resale",
@@ -403,6 +408,7 @@ const SRP_LISTING_TEMPLATES = [
       { label: "2 BHK", price: "₹5.7 Cr" },
       { label: "3 BHK", price: "₹5.7 Cr" },
     ],
+    phoneCtas: true,
   },
 ];
 
@@ -554,6 +560,24 @@ function srpCardConfigsHtml(configs) {
   </div>`;
 }
 
+function srpCardCtaRowHtml(listing) {
+  const wa = `<button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>`;
+
+  if (listing.phoneCtas) {
+    /* Dialer primary extreme left → WhatsApp → View phone number */
+    return `<div class="srp-card-cta-row srp-card-cta-row--phone">
+        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--dialer" type="button" data-srp-contact-cta aria-label="Call">${SRP_PHONE_DIALER_ICON}</button>
+        ${wa}
+        <button class="srp-card-cta-btn srp-card-cta-btn--view-phone" type="button" data-srp-contact-cta>View phone number</button>
+      </div>`;
+  }
+
+  return `<div class="srp-card-cta-row">
+        ${wa}
+        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
+      </div>`;
+}
+
 function srpCardHtml(listing, imgIndexStart, cardIndex = 0) {
   const imageCount = listing.imageCount || 24;
   const showSeller = srpCardShouldShowSeller(listing);
@@ -606,10 +630,7 @@ function srpCardHtml(listing, imgIndexStart, cardIndex = 0) {
         ${priceHtml}
         ${srpCardConfigsHtml(listing.configs)}
       </div>
-      <div class="srp-card-cta-row">
-        <button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
-      </div>
+      ${srpCardCtaRowHtml(listing)}
     </article>
   `;
 }

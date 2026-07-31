@@ -1229,6 +1229,53 @@
   letter-spacing: 0.1px;
 }
 
+/* Phone CTAs: Dialer (primary, extreme left) + WA + View phone number */
+.srp-card--imagine .srp-card-cta-row--phone {
+  gap: 8px;
+}
+
+.srp-card--imagine .srp-card-cta-btn--dialer {
+  flex: 0 0 48px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: var(--ds-radius-m);
+  border: 1px solid var(--ds-color-purple-700);
+  background-color: var(--ds-color-purple-700);
+  color: var(--ds-color-warm-neutral-0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.srp-card--imagine .srp-card-cta-dialer-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  fill: currentColor;
+  color: var(--ds-color-warm-neutral-0);
+}
+
+.srp-card--imagine .srp-card-cta-btn--view-phone {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 48px;
+  height: 48px;
+  padding: 0 12px;
+  border-radius: var(--ds-radius-m);
+  border: 1px solid var(--ds-color-purple-700);
+  background-color: var(--ds-color-warm-neutral-0);
+  color: var(--ds-color-purple-700);
+  font-family: var(--ds-font-family-primary);
+  font-size: 14px;
+  font-weight: var(--ds-font-weight-medium);
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+}
+
 /* Hide seller entirely when flag off (no leftover lavender) */
 .srp-card--imagine:not(.srp-card--seller) .srp-card-seller {
   display: none;
