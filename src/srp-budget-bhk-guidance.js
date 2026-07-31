@@ -358,7 +358,7 @@ export function initSrpBudgetBhkGuidance(getSearchContext) {
     if (!chrome || !filtersEl) return;
 
     const budgetBtn = findFilterButton(filtersEl, "Budget");
-    legacyBhkBtn = findFilterButton(filtersEl, "BHK type");
+    legacyBhkBtn = findFilterButton(filtersEl, "BHK");
     if (!budgetBtn) return;
 
     legacyBhkBtn?.classList.add("srp-filter-dropdown--legacy-bhk");

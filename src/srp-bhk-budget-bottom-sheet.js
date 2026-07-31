@@ -893,7 +893,7 @@ export function initSrpBhkBudgetBottomSheet(getSearchContext) {
     const budgetBtn = filtersEl ? findFilterButton(filtersEl, "Budget") : null;
     if (!budgetBtn) return;
 
-    legacyBhkBtn = findFilterButton(filtersEl, "BHK type");
+    legacyBhkBtn = findFilterButton(filtersEl, "BHK");
     legacyBhkBtn?.classList.add("srp-filter-dropdown--legacy-bhk");
 
     originalBudgetBtn = budgetBtn.cloneNode(true);

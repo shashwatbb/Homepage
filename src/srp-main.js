@@ -190,7 +190,63 @@ function renderSrpSearch() {
           </button>
 
           <button type="button" class="srp-filter-dropdown">
-            <span>BHK type</span>
+            <span>BHK</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Property type</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Construction status</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Area</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Furnishing</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Posted by</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Bathrooms</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Amenities</span>
+            <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+              <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+          </button>
+
+          <button type="button" class="srp-filter-dropdown">
+            <span>Age of property</span>
             <svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
               <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
             </svg>
