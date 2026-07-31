@@ -38,7 +38,12 @@ body:has(.srp-page)::-webkit-scrollbar {
   display: none;
 }
 
+/* m-web Buy SRP is gated by experiment-mweb-buy-srp (logo panel). Off → blank. */
 .srp-mobile-content {
+  display: none;
+}
+
+html.experiment-mweb-buy-srp .srp-mobile-content {
   display: block;
 }
 
@@ -56,7 +61,8 @@ body:has(.srp-page)::-webkit-scrollbar {
     background-color: var(--ds-color-warm-neutral-200);
   }
 
-  .srp-mobile-content {
+  .srp-mobile-content,
+  html.experiment-mweb-buy-srp .srp-mobile-content {
     display: none;
   }
 }

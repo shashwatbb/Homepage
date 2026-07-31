@@ -10,7 +10,9 @@ import "./components/ExperimentsConfig.css";
  * Gate in CSS:  html.experiment-{id} .your-feature { … }
  * Gate in JS:   if (!isExperimentEnabled("{id}")) return;
  * Never render experimental markup unless the experiment is enabled.
- * Only one experiment may be ON at a time; enabling one turns all others OFF.
+ * Exclusive experiments: only one may be ON at a time (enabling one turns
+ * other exclusive experiments OFF). Gate experiments (exclusive: false) stack
+ * independently — e.g. m-web Buy SRP can stay on with a feature experiment.
  */
 
 const STORAGE_KEY = "housing:experiments";
@@ -20,10 +22,26 @@ const EXPERIMENT_CATEGORIES = [
   { id: "web", label: "Web" },
 ];
 
+export const SRP_MWEB_BUY_EXPERIMENT_ID = "mweb_buy_srp";
 export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_strip";
 export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 
 const EXPERIMENT_DEFINITIONS = [
+  {
+    id: SRP_MWEB_BUY_EXPERIMENT_ID,
+    name: "Buy SRP (m-web)",
+    platform: "mobile",
+    exclusive: false,
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-mweb-buy-srp", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: SRP_MWEB_BUY_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
   {
     id: SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID,
     name: "Budget and BHK filter on SRP",
@@ -54,19 +72,25 @@ const EXPERIMENT_DEFINITIONS = [
   },
 ];
 
+function isExclusiveExperiment(experiment) {
+  return experiment.exclusive !== false;
+}
+
 function writeExperimentState(state) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function normalizeExclusiveExperimentState(state) {
-  const enabledIds = EXPERIMENT_DEFINITIONS.filter((experiment) => state[experiment.id]).map(
-    (experiment) => experiment.id
-  );
-  if (enabledIds.length <= 1) return state;
+  const exclusiveEnabled = EXPERIMENT_DEFINITIONS.filter(
+    (experiment) => isExclusiveExperiment(experiment) && state[experiment.id]
+  ).map((experiment) => experiment.id);
 
-  const keepId = enabledIds[0];
-  const normalized = {};
+  if (exclusiveEnabled.length <= 1) return state;
+
+  const keepId = exclusiveEnabled[0];
+  const normalized = { ...state };
   EXPERIMENT_DEFINITIONS.forEach((experiment) => {
+    if (!isExclusiveExperiment(experiment)) return;
     normalized[experiment.id] = experiment.id === keepId;
   });
   writeExperimentState(normalized);
@@ -216,11 +240,17 @@ function initExperimentsPanel(toast) {
     if (!experiment) return;
 
     const previousState = readExperimentState();
-    const activeId = enabled ? id : null;
-    const nextState = {};
+    const nextState = { ...previousState };
 
     EXPERIMENT_DEFINITIONS.forEach((item) => {
-      const nextEnabled = activeId === item.id;
+      let nextEnabled = isExperimentEnabled(item.id, previousState);
+
+      if (item.id === id) {
+        nextEnabled = enabled;
+      } else if (enabled && isExclusiveExperiment(experiment) && isExclusiveExperiment(item)) {
+        nextEnabled = false;
+      }
+
       const wasEnabled = isExperimentEnabled(item.id, previousState);
       nextState[item.id] = nextEnabled;
 

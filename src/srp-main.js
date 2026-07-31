@@ -8,7 +8,11 @@ import "./components/SrpSearch.css";
 import "./components/SrpDesktopNotice.css";
 import "./components/SrpOptions.css";
 import "./components/SrpContactSheet.css";
-import { syncExperimentsToDocument } from "./experiments.js";
+import {
+  syncExperimentsToDocument,
+  isExperimentEnabled,
+  SRP_MWEB_BUY_EXPERIMENT_ID,
+} from "./experiments.js";
 import { initSrpBudgetBhkGuidance } from "./srp-budget-bhk-guidance.js";
 import { initSrpBhkBudgetBottomSheet } from "./srp-bhk-budget-bottom-sheet.js";
 import "./main.js";
@@ -260,6 +264,16 @@ function hideSrpSkeleton(skeleton) {
 }
 
 async function initSrpPage() {
+  syncExperimentsToDocument();
+
+  /* Blank m-web until "Buy SRP (m-web)" experiment is on (logo double-tap panel). */
+  if (!isExperimentEnabled(SRP_MWEB_BUY_EXPERIMENT_ID)) {
+    document.getElementById("srp-skeleton")?.remove();
+    const results = document.getElementById("srp-results");
+    if (results) results.innerHTML = "";
+    return;
+  }
+
   const skeleton = document.getElementById("srp-skeleton");
   const started = performance.now();
 
@@ -267,7 +281,6 @@ async function initSrpPage() {
   initSrpBottomNavScroll();
   renderSrpSearch();
   renderSrpResults();
-  syncExperimentsToDocument();
   initSrpBudgetBhkGuidance(getSrpSearchContext);
   initSrpBhkBudgetBottomSheet(getSrpSearchContext);
   renderSrpContactSheet();
