@@ -1256,8 +1256,8 @@
 }
 
 .srp-card--imagine .srp-card-cta-dialer-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   display: block;
   fill: currentColor;
   color: var(--ds-color-purple-700);
