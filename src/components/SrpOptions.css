@@ -1022,6 +1022,25 @@
   pointer-events: none;
 }
 
+.srp-card--imagine .srp-card-image-posted {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background-color: rgb(33 29 25 / 0.8); /* #211d19 @ 80% — same as former photo count */
+  color: var(--ds-color-warm-neutral-0);
+  font-family: var(--ds-font-family-primary);
+  font-size: 12px;
+  font-weight: var(--ds-font-weight-regular);
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .srp-card--imagine .srp-card-image-dot {
   width: 6px;
   height: 6px;
