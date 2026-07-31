@@ -816,6 +816,7 @@
     var(--ds-color-lavender-mist-50) 80%,
     transparent
   ); /* strip purple #f6f1f8 @ 80% */
+  color: #000000;
   pointer-events: none;
 }
 
@@ -837,7 +838,7 @@
 
 .srp-card--imagine .srp-card-seller__name {
   margin: 0;
-  color: var(--ds-color-grey-neutral-900);
+  color: #000000;
   font-family: var(--ds-font-family-primary);
   font-size: 12px;
   font-weight: var(--ds-font-weight-medium);
