@@ -1234,7 +1234,7 @@
   letter-spacing: 0.1px;
 }
 
-/* Phone CTAs: WhatsApp (left) + View phone + Dialer primary (right) */
+/* Phone CTAs: WhatsApp (left) + Dialer secondary + View phone primary (right) */
 .srp-card--imagine .srp-card-cta-row--phone {
   gap: 8px;
 }
@@ -1248,8 +1248,8 @@
   padding: 0;
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
-  background-color: var(--ds-color-purple-700);
-  color: var(--ds-color-warm-neutral-0);
+  background-color: var(--ds-color-warm-neutral-0);
+  color: var(--ds-color-purple-700);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1260,7 +1260,7 @@
   height: 24px;
   display: block;
   fill: currentColor;
-  color: var(--ds-color-warm-neutral-0);
+  color: var(--ds-color-purple-700);
 }
 
 .srp-card--imagine .srp-card-cta-btn--view-phone {
@@ -1271,8 +1271,8 @@
   padding: 0 12px;
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
-  background-color: var(--ds-color-warm-neutral-0);
-  color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-purple-700);
+  color: var(--ds-color-warm-neutral-0);
   font-family: var(--ds-font-family-primary);
   font-size: 14px;
   font-weight: var(--ds-font-weight-medium);
