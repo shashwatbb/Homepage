@@ -1179,8 +1179,7 @@
 }
 
 .srp-card--imagine .srp-card-owner-meta {
-  flex: 0 1 auto;
-  max-width: 40%;
+  flex: 1 1 auto;
   min-width: 0;
   max-height: var(--ds-space-3xl); /* ≤ CTA height */
   display: flex;
@@ -1227,11 +1226,9 @@
 }
 
 .srp-card--imagine .srp-card-cta-actions {
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 0 0 auto;
   display: flex;
   align-items: stretch;
-  justify-content: flex-end;
   gap: var(--ds-space-xs); /* 8 */
   height: var(--ds-space-3xl); /* 40 */
 }
@@ -1256,11 +1253,11 @@
 }
 
 .srp-card--imagine .srp-card-cta-btn--contact-primary {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
   min-height: var(--ds-space-3xl);
   height: var(--ds-space-3xl);
-  padding: 0 var(--ds-space-2xl); /* 32 */
+  padding: 0 var(--ds-space-2xl); /* 32 — mid between hug-24 and fill */
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
   background-color: var(--ds-color-purple-700);
@@ -1302,11 +1299,11 @@
 }
 
 .srp-card--imagine .srp-card-cta-btn--view-phone {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
   min-height: var(--ds-space-3xl);
   height: var(--ds-space-3xl);
-  padding: 0 var(--ds-space-2xl); /* 32 */
+  padding: 0 var(--ds-space-2xl); /* 32 — mid between hug-24 and fill */
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
   background-color: var(--ds-color-purple-700);
