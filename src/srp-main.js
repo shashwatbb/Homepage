@@ -385,9 +385,9 @@ const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www
 
 const SRP_PHONE_DIALER_ICON = `<svg class="srp-card-cta-dialer-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" d="M231.88,175.08A56.26,56.26,0,0,1,176,224C96.6,224,32,159.4,32,80A56.26,56.26,0,0,1,80.92,24.12a16,16,0,0,1,16.62,9.52l21.12,47.15,0,.12A16,16,0,0,1,117.39,96c-.18.27-.37.52-.57.77L96,121.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.71a8.12,8.12,0,0,1,.75-.56,16,16,0,0,1,15.17-1.4l.13.06,47.11,21.11A16,16,0,0,1,231.88,175.08Z"/></svg>`;
 
-/** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on all cards
- *  that do not set listing.showSeller. Per-card: listing.showSeller = true | false */
-const SRP_CARD_SHOW_SELLER = true;
+/** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on the image.
+ *  Seller names now render as a CTA-row pill. Per-card: listing.showSeller = true | false */
+const SRP_CARD_SHOW_SELLER = false;
 
 /**
  * Figma SRP cards component set (4436:6443) — 4 design templates:
@@ -559,8 +559,7 @@ function srpResultsMetaHtml() {
 }
 
 function srpCardShouldShowSeller(listing) {
-  /* Brand/developer pills (Lodha) always show — never drop mid-feed */
-  if (listing.seller?.isBrand) return true;
+  /* Image seller strip is off by default; seller name lives in the CTA pill */
   if (typeof listing.showSeller === "boolean") return listing.showSeller;
   return SRP_CARD_SHOW_SELLER;
 }
@@ -618,16 +617,16 @@ function srpCardConfigsHtml(configs) {
   </div>`;
 }
 
-/** Sample owner meta for CTA row (hardcoded until listing fields exist). */
+/** Owner meta for CTA row — seller name pill + Dealer | posted. */
 const SRP_CARD_OWNER_META = {
-  name: "Suresh Mehta",
   role: "Dealer",
   posted: "3w ago",
 };
 
-function srpCardOwnerMetaHtml() {
+function srpCardOwnerMetaHtml(listing) {
+  const name = listing?.seller?.name || "Seller";
   return `<div class="srp-card-owner-meta">
-    <p class="srp-card-owner-meta__name">${srpEscapeHtml(SRP_CARD_OWNER_META.name)}</p>
+    <span class="srp-card-owner-meta__name">${srpEscapeHtml(name)}</span>
     <p class="srp-card-owner-meta__sub">
       <span class="srp-card-owner-meta__role">${srpEscapeHtml(SRP_CARD_OWNER_META.role)}</span>
       <span class="srp-card-owner-meta__sep" aria-hidden="true"></span>
@@ -638,7 +637,7 @@ function srpCardOwnerMetaHtml() {
 
 function srpCardCtaRowHtml(listing) {
   const wa = `<button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>`;
-  const owner = srpCardOwnerMetaHtml();
+  const owner = srpCardOwnerMetaHtml(listing);
 
   if (listing.phoneCtas) {
     /* Owner meta (left) → WhatsApp → Dialer secondary → View phone primary (right) */
