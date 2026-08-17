@@ -1256,7 +1256,7 @@
   min-width: 0;
   min-height: var(--ds-space-3xl);
   height: var(--ds-space-3xl);
-  padding: 0 var(--ds-space-m); /* 16 */
+  padding: 0 var(--ds-space-l); /* 20 — slightly wider primary */
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
   background-color: var(--ds-color-purple-700);
@@ -1302,7 +1302,7 @@
   min-width: 0;
   min-height: var(--ds-space-3xl);
   height: var(--ds-space-3xl);
-  padding: 0 var(--ds-space-s); /* 12 */
+  padding: 0 var(--ds-space-l); /* 20 — slightly wider primary */
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
   background-color: var(--ds-color-purple-700);
