@@ -1183,7 +1183,7 @@
   border-radius: var(--ds-radius-m); /* 12 */
   background: linear-gradient(
     90deg,
-    var(--ds-color-lavender-mist-50) 0%,
+    var(--ds-color-lavender-mist-100) 0%,
     var(--ds-surface-white) 100%
   );
 }
