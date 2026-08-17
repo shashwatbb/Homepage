@@ -620,7 +620,7 @@ function srpCardOwnerMetaHtml(listing) {
   const photoHtml = photo
     ? `<img class="srp-card-owner-meta__photo${isBrand ? " srp-card-owner-meta__photo--brand" : ""}" src="${srpEscapeHtml(photo)}" alt="" width="32" height="32" decoding="async" />`
     : "";
-  return `<div class="srp-card-owner-meta">
+  return `<div class="srp-card-owner-meta${isBrand ? "" : " srp-card-owner-meta--agent"}">
     ${photoHtml}
     <div class="srp-card-owner-meta__text">
       <span class="srp-card-owner-meta__name">${srpEscapeHtml(name)}</span>

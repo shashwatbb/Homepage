@@ -1173,10 +1173,25 @@
   overflow: hidden;
 }
 
+/* Agent (Sunder Homes): subtle L→R wash + clean inset */
+.srp-card--imagine .srp-card-owner-meta--agent {
+  max-height: none;
+  min-height: var(--ds-space-3xl); /* 40 */
+  box-sizing: border-box;
+  padding: var(--ds-space-2xs) var(--ds-space-xs) var(--ds-space-2xs) var(--ds-space-2xs); /* 4 8 4 4 */
+  gap: var(--ds-space-xs); /* 8 */
+  border-radius: var(--ds-radius-m); /* 12 */
+  background: linear-gradient(
+    90deg,
+    var(--ds-color-lavender-mist-50) 0%,
+    var(--ds-surface-white) 100%
+  );
+}
+
 .srp-card--imagine .srp-card-owner-meta__photo {
-  width: var(--ds-space-xl); /* 24 — larger avatar, still ≤ CTA */
-  height: var(--ds-space-xl);
-  border-radius: var(--ds-radius-xs); /* 4 */
+  width: var(--ds-space-2xl); /* 32 */
+  height: var(--ds-space-2xl);
+  border-radius: var(--ds-radius-s); /* 8 */
   object-fit: cover;
   flex-shrink: 0;
   display: block;
