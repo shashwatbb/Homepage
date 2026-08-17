@@ -89,7 +89,7 @@
 .srp-card-list {
   display: flex;
   flex-direction: column;
-  gap: 0; /* was 8px page-bg separator between cards — restore via gap: var(--ds-space-xs) */
+  gap: var(--ds-space-xs); /* 8px page-bg separator between cards */
 }
 
 /* -- Card -- */
@@ -760,7 +760,7 @@
 }
 
 .srp-option-section--imagine .srp-card-list {
-  gap: 0; /* was 8px page-bg separator — restore via gap: var(--ds-space-xs) */
+  gap: var(--ds-space-xs); /* 8px page-bg separator */
 }
 
 /* Card shell — 360 wide, white, 12 top/bottom, children inset 16 */
