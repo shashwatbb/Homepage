@@ -1165,26 +1165,17 @@
 .srp-card--imagine .srp-card-owner-meta {
   flex: 1 1 auto;
   min-width: 0;
-  max-height: var(--ds-space-3xl); /* ≤ CTA height */
+  max-height: var(--ds-space-3xl); /* ≤ CTA height (40) */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--ds-space-3xs); /* 2 */
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ds-space-2xs); /* 4 */
   overflow: hidden;
 }
 
-.srp-card--imagine .srp-card-owner-meta__identity {
-  display: flex;
-  align-items: center;
-  align-self: flex-start;
-  gap: var(--ds-space-2xs); /* 4 */
-  max-width: 100%;
-  min-width: 0;
-}
-
 .srp-card--imagine .srp-card-owner-meta__photo {
-  width: 16px;
-  height: 16px;
+  width: var(--ds-space-xl); /* 24 — larger avatar, still ≤ CTA */
+  height: var(--ds-space-xl);
   border-radius: var(--ds-radius-xs); /* 4 */
   object-fit: cover;
   flex-shrink: 0;
@@ -1195,6 +1186,15 @@
 .srp-card--imagine .srp-card-owner-meta__photo--brand {
   object-fit: contain;
   background-color: var(--ds-surface-white);
+}
+
+.srp-card--imagine .srp-card-owner-meta__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--ds-space-3xs); /* 2 */
+  min-width: 0;
+  overflow: hidden;
 }
 
 .srp-card--imagine .srp-card-owner-meta__name {

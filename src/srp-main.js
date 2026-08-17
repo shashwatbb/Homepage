@@ -618,18 +618,18 @@ function srpCardOwnerMetaHtml(listing) {
   const photo = listing?.seller?.photo;
   const isBrand = Boolean(listing?.seller?.isBrand);
   const photoHtml = photo
-    ? `<img class="srp-card-owner-meta__photo${isBrand ? " srp-card-owner-meta__photo--brand" : ""}" src="${srpEscapeHtml(photo)}" alt="" width="16" height="16" decoding="async" />`
+    ? `<img class="srp-card-owner-meta__photo${isBrand ? " srp-card-owner-meta__photo--brand" : ""}" src="${srpEscapeHtml(photo)}" alt="" width="32" height="32" decoding="async" />`
     : "";
   return `<div class="srp-card-owner-meta">
-    <div class="srp-card-owner-meta__identity">
-      ${photoHtml}
+    ${photoHtml}
+    <div class="srp-card-owner-meta__text">
       <span class="srp-card-owner-meta__name">${srpEscapeHtml(name)}</span>
+      <p class="srp-card-owner-meta__sub">
+        <span class="srp-card-owner-meta__role">${srpEscapeHtml(SRP_CARD_OWNER_META.role)}</span>
+        <span class="srp-card-owner-meta__sep" aria-hidden="true"></span>
+        <span class="srp-card-owner-meta__posted">${srpEscapeHtml(SRP_CARD_OWNER_META.posted)}</span>
+      </p>
     </div>
-    <p class="srp-card-owner-meta__sub">
-      <span class="srp-card-owner-meta__role">${srpEscapeHtml(SRP_CARD_OWNER_META.role)}</span>
-      <span class="srp-card-owner-meta__sep" aria-hidden="true"></span>
-      <span class="srp-card-owner-meta__posted">${srpEscapeHtml(SRP_CARD_OWNER_META.posted)}</span>
-    </p>
   </div>`;
 }
 
