@@ -1065,9 +1065,9 @@
   margin: 0;
   color: var(--ds-color-grey-neutral-900);
   font-family: var(--ds-font-family-primary);
-  font-size: var(--ds-font-size-xl); /* 18 — project / BHK name */
+  font-size: var(--ds-font-size-lg); /* 16 — match price */
   font-weight: var(--ds-font-weight-medium);
-  line-height: var(--ds-line-height-xl); /* 26 */
+  line-height: var(--ds-line-height-l); /* 22 — match price */
   letter-spacing: 0;
 }
 
