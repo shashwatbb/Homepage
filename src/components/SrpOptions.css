@@ -1066,7 +1066,7 @@
   color: var(--ds-color-grey-neutral-900);
   font-family: var(--ds-font-family-primary);
   font-size: var(--ds-font-size-xl); /* 18 — project / BHK name */
-  font-weight: var(--ds-font-weight-semibold);
+  font-weight: var(--ds-font-weight-medium);
   line-height: var(--ds-line-height-xl); /* 26 */
   letter-spacing: 0;
 }
@@ -1112,7 +1112,7 @@
   color: var(--ds-color-grey-neutral-900);
   font-family: var(--ds-font-family-primary);
   font-size: var(--ds-font-size-lg); /* 16 — smaller than title */
-  font-weight: var(--ds-font-weight-bold); /* 700 */
+  font-weight: var(--ds-font-weight-medium);
   line-height: var(--ds-line-height-l); /* 22 */
   letter-spacing: 0;
 }
