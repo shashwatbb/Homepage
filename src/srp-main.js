@@ -398,9 +398,11 @@ const SRP_LISTING_TEMPLATES = [
     seller: { name: "Sunder Homes", photo: "/Agent.png" },
     badges: [
       {
-        parts: [{ label: "RERA", verified: true }],
+        parts: [
+          { label: "RERA", verified: true },
+          { label: "Zero brokerage" },
+        ],
       },
-      { parts: [{ label: "Zero brokerage" }] },
     ],
     imageCount: 24,
     title: "3 BHK flat",
@@ -443,9 +445,11 @@ const SRP_LISTING_TEMPLATES = [
     seller: { name: "Sunder Homes", photo: "/Agent.png" },
     badges: [
       {
-        parts: [{ label: "RERA", verified: true }],
+        parts: [
+          { label: "RERA", verified: true },
+          { label: "Zero brokerage" },
+        ],
       },
-      { parts: [{ label: "Zero brokerage" }] },
     ],
     imageCount: 24,
     title: "3 BHK flat",
@@ -560,7 +564,10 @@ function srpCardSellerHtml(_listing) {
 }
 
 function srpCardBadgeHtml(badge) {
-  const parts = badge.parts || [{ label: badge.label, verified: badge.verified }];
+  const parts = (badge.parts || [{ label: badge.label, verified: badge.verified }]).filter(
+    (part) => part.label !== "Verified"
+  );
+  if (!parts.length) return "";
   const showCheck = parts.some((p) => p.verified);
   const inner = parts
     .map((part, i) => {
