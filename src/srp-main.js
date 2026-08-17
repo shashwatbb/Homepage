@@ -398,10 +398,7 @@ const SRP_LISTING_TEMPLATES = [
     seller: { name: "Sunder Homes", photo: "/Agent.png" },
     badges: [
       {
-        parts: [
-          { label: "RERA", verified: true },
-          { label: "Verified" },
-        ],
+        parts: [{ label: "RERA", verified: true }],
       },
       { parts: [{ label: "Zero brokerage" }] },
     ],
@@ -446,10 +443,7 @@ const SRP_LISTING_TEMPLATES = [
     seller: { name: "Sunder Homes", photo: "/Agent.png" },
     badges: [
       {
-        parts: [
-          { label: "RERA", verified: true },
-          { label: "Verified" },
-        ],
+        parts: [{ label: "RERA", verified: true }],
       },
       { parts: [{ label: "Zero brokerage" }] },
     ],
