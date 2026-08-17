@@ -1173,9 +1173,14 @@
   align-items: center;
   gap: var(--ds-space-s); /* 12 */
   padding: 0 var(--ds-space-m); /* 16 */
-  /* Card gap is 12; pull CTA up so body→CTA reads as ~4 */
+  /* Card gap is 12; pull CTA up so price→CTA reads as ~4 */
   margin: calc(var(--ds-space-2xs) - var(--ds-space-s)) 0 0; /* 4 - 12 = -8 */
   min-height: var(--ds-space-3xl); /* 40 */
+}
+
+/* Config grid cards: keep full body→CTA gap (negative margin was for price only) */
+.srp-card--imagine:has(.srp-card-configs) .srp-card-cta-row {
+  margin-top: 0;
 }
 
 .srp-card--imagine .srp-card-owner-meta {
