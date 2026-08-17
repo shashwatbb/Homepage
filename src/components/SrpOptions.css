@@ -794,30 +794,9 @@
   padding-top: 0;
 }
 
-/* Seller chip — bottom-left on image; lavender accent @ 80% (same alpha as former dark pill) */
+/* Seller chip on image — permanently hidden (moved to CTA owner meta) */
 .srp-card--imagine .srp-card-seller {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  z-index: 2;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-content: flex-start;
-  margin: 0;
-  max-width: min(70%, calc(100% - 72px));
-  height: 24px;
-  min-height: 24px;
-  padding: 0 8px 0 4px;
-  border-radius: 8px;
-  background-color: color-mix(
-    in srgb,
-    var(--ds-color-lavender-mist-50) 80%,
-    transparent
-  ); /* strip purple #f6f1f8 @ 80% */
-  color: #000000;
-  pointer-events: none;
+  display: none !important;
 }
 
 .srp-card--imagine .srp-card-seller__photo {
@@ -1194,17 +1173,33 @@
   overflow: hidden;
 }
 
-.srp-card--imagine .srp-card-owner-meta__name {
-  display: inline-flex;
+.srp-card--imagine .srp-card-owner-meta__identity {
+  display: flex;
   align-items: center;
   align-self: flex-start;
-  box-sizing: border-box;
+  gap: var(--ds-space-2xs); /* 4 */
   max-width: 100%;
-  margin: 0;
-  padding: var(--ds-space-3xs) var(--ds-space-2xs); /* 2 4 — keep pill ≤ CTA height with sub line */
-  border-radius: var(--ds-radius-s); /* 8 */
-  border: 1px solid var(--ds-border-subtle);
+  min-width: 0;
+}
+
+.srp-card--imagine .srp-card-owner-meta__photo {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--ds-radius-xs); /* 4 */
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
   background-color: var(--ds-surface-subtle);
+}
+
+.srp-card--imagine .srp-card-owner-meta__photo--brand {
+  object-fit: contain;
+  background-color: var(--ds-surface-white);
+}
+
+.srp-card--imagine .srp-card-owner-meta__name {
+  margin: 0;
+  min-width: 0;
   color: var(--ds-color-grey-neutral-900);
   font-family: var(--ds-font-family-primary);
   font-size: var(--ds-font-size-s); /* 12 */

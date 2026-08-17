@@ -385,8 +385,7 @@ const SRP_RERA_CHECK_ICON = `<svg class="srp-card-badge-check" xmlns="http://www
 
 const SRP_PHONE_DIALER_ICON = `<svg class="srp-card-cta-dialer-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" d="M231.88,175.08A56.26,56.26,0,0,1,176,224C96.6,224,32,159.4,32,80A56.26,56.26,0,0,1,80.92,24.12a16,16,0,0,1,16.62,9.52l21.12,47.15,0,.12A16,16,0,0,1,117.39,96c-.18.27-.37.52-.57.77L96,121.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.71a8.12,8.12,0,0,1,.75-.56,16,16,0,0,1,15.17-1.4l.13.06,47.11,21.11A16,16,0,0,1,231.88,175.08Z"/></svg>`;
 
-/** Flip to false to hide seller strip (Sunder Homes / Lodha Group) on the image.
- *  Seller names now render as a CTA-row pill. Per-card: listing.showSeller = true | false */
+/** Image seller strip is retired — seller photo + name live in CTA owner meta. */
 const SRP_CARD_SHOW_SELLER = false;
 
 /**
@@ -470,25 +469,24 @@ const SRP_LISTING_TEMPLATES = [
 
 /**
  * Longer SRP feed: 4 design templates + 12 more copies (16 total).
- * template index + showSeller mixed so scroll depth feels natural.
  */
 const SRP_FEED_PLAN = [
-  { template: 0, showSeller: true },
-  { template: 1, showSeller: true },
-  { template: 2, showSeller: false },
-  { template: 3, showSeller: true },
-  { template: 1, showSeller: false },
-  { template: 3, showSeller: false },
-  { template: 0, showSeller: true },
-  { template: 2, showSeller: true },
-  { template: 0, showSeller: false },
-  { template: 1, showSeller: true },
-  { template: 3, showSeller: true },
-  { template: 2, showSeller: false },
-  { template: 1, showSeller: false },
-  { template: 0, showSeller: true },
-  { template: 3, showSeller: false },
-  { template: 2, showSeller: true },
+  { template: 0 },
+  { template: 1 },
+  { template: 2 },
+  { template: 3 },
+  { template: 1 },
+  { template: 3 },
+  { template: 0 },
+  { template: 2 },
+  { template: 0 },
+  { template: 1 },
+  { template: 3 },
+  { template: 2 },
+  { template: 1 },
+  { template: 0 },
+  { template: 3 },
+  { template: 2 },
 ];
 
 const SRP_LISTING_VARIANTS = SRP_FEED_PLAN.map((plan, i) => {
@@ -496,7 +494,7 @@ const SRP_LISTING_VARIANTS = SRP_FEED_PLAN.map((plan, i) => {
   return {
     ...base,
     id: String(i),
-    showSeller: plan.showSeller,
+    showSeller: false,
     seller: base.seller ? { ...base.seller } : null,
     badges: base.badges.map((b) => ({
       ...b,
@@ -558,21 +556,13 @@ function srpResultsMetaHtml() {
   </div>`;
 }
 
-function srpCardShouldShowSeller(listing) {
-  /* Image seller strip is off by default; seller name lives in the CTA pill */
-  if (typeof listing.showSeller === "boolean") return listing.showSeller;
-  return SRP_CARD_SHOW_SELLER;
+function srpCardShouldShowSeller(_listing) {
+  /* Image seller chips removed — always off */
+  return false;
 }
 
-function srpCardSellerHtml(listing) {
-  if (!srpCardShouldShowSeller(listing) || !listing.seller) return "";
-  const photoClass = listing.seller.isBrand
-    ? "srp-card-seller__photo srp-card-seller__photo--brand"
-    : "srp-card-seller__photo";
-  return `<div class="srp-card-seller">
-    <img class="${photoClass}" src="${listing.seller.photo}" alt="" width="20" height="20" decoding="async" />
-    <p class="srp-card-seller__name">${srpEscapeHtml(listing.seller.name)}</p>
-  </div>`;
+function srpCardSellerHtml(_listing) {
+  return "";
 }
 
 function srpCardBadgeHtml(badge) {
@@ -617,7 +607,7 @@ function srpCardConfigsHtml(configs) {
   </div>`;
 }
 
-/** Owner meta for CTA row — seller name pill + Dealer | posted. */
+/** Owner meta for CTA row — seller photo + name, then Dealer | posted. */
 const SRP_CARD_OWNER_META = {
   role: "Dealer",
   posted: "3w ago",
@@ -625,8 +615,16 @@ const SRP_CARD_OWNER_META = {
 
 function srpCardOwnerMetaHtml(listing) {
   const name = listing?.seller?.name || "Seller";
+  const photo = listing?.seller?.photo;
+  const isBrand = Boolean(listing?.seller?.isBrand);
+  const photoHtml = photo
+    ? `<img class="srp-card-owner-meta__photo${isBrand ? " srp-card-owner-meta__photo--brand" : ""}" src="${srpEscapeHtml(photo)}" alt="" width="16" height="16" decoding="async" />`
+    : "";
   return `<div class="srp-card-owner-meta">
-    <span class="srp-card-owner-meta__name">${srpEscapeHtml(name)}</span>
+    <div class="srp-card-owner-meta__identity">
+      ${photoHtml}
+      <span class="srp-card-owner-meta__name">${srpEscapeHtml(name)}</span>
+    </div>
     <p class="srp-card-owner-meta__sub">
       <span class="srp-card-owner-meta__role">${srpEscapeHtml(SRP_CARD_OWNER_META.role)}</span>
       <span class="srp-card-owner-meta__sep" aria-hidden="true"></span>
