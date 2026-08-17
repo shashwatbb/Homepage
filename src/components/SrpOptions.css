@@ -1025,28 +1025,6 @@
   pointer-events: none;
 }
 
-.srp-card--imagine .srp-card-image-posted {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  height: 24px;
-  min-height: 24px;
-  padding: 0 8px;
-  border-radius: 8px;
-  background-color: rgb(33 29 25 / 0.8); /* #211d19 @ 80% — same as former photo count */
-  color: var(--ds-color-warm-neutral-0);
-  font-family: var(--ds-font-family-primary);
-  font-size: 12px;
-  font-weight: var(--ds-font-weight-regular);
-  line-height: 16px;
-  letter-spacing: 0.1px;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
 .srp-card--imagine .srp-card-image-dot {
   width: 6px;
   height: 6px;
@@ -1189,21 +1167,77 @@
   white-space: nowrap;
 }
 
-/* ---- CTA row — WA 48×48 + Contact fill ---- */
+/* ---- CTA row — owner meta (left) + medium CTAs (right, 40h) ---- */
 .srp-card--imagine .srp-card-cta-row {
   display: flex;
-  align-items: stretch;
-  gap: 12px;
-  padding: 0 16px;
+  align-items: center;
+  gap: var(--ds-space-s); /* 12 */
+  padding: 0 var(--ds-space-m); /* 16 */
   margin: 0;
+  min-height: var(--ds-space-3xl); /* 40 */
+}
+
+.srp-card--imagine .srp-card-owner-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-height: var(--ds-space-3xl); /* ≤ CTA height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--ds-space-3xs); /* 2 */
+  overflow: hidden;
+}
+
+.srp-card--imagine .srp-card-owner-meta__name {
+  margin: 0;
+  color: var(--ds-color-grey-neutral-900);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s); /* 12 */
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-s); /* 16 */
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.srp-card--imagine .srp-card-owner-meta__sub {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs); /* 4 */
+  color: var(--ds-color-grey-neutral-800);
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-xs); /* 10 */
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-xs); /* 12 */
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.srp-card--imagine .srp-card-owner-meta__sep {
+  display: inline-block;
+  width: 1px;
+  height: 10px;
+  background-color: var(--ds-color-warm-neutral-300);
+  flex-shrink: 0;
+}
+
+.srp-card--imagine .srp-card-cta-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: var(--ds-space-xs); /* 8 */
+  height: var(--ds-space-3xl); /* 40 */
 }
 
 .srp-card--imagine .srp-card-cta-btn--whatsapp {
-  flex: 0 0 48px;
-  width: 48px;
-  min-width: 48px;
-  height: 48px;
-  min-height: 48px;
+  flex: 0 0 var(--ds-space-3xl);
+  width: var(--ds-space-3xl); /* 40 */
+  min-width: var(--ds-space-3xl);
+  height: var(--ds-space-3xl);
+  min-height: var(--ds-space-3xl);
   padding: 0;
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700); /* #4a16d9 */
@@ -1213,38 +1247,38 @@
 
 .srp-card--imagine .srp-card-cta-btn--whatsapp svg,
 .srp-card--imagine .srp-card-cta-whatsapp-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .srp-card--imagine .srp-card-cta-btn--contact-primary {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
-  min-height: 48px;
-  height: 48px;
-  padding: 0 16px;
+  min-height: var(--ds-space-3xl);
+  height: var(--ds-space-3xl);
+  padding: 0 var(--ds-space-m); /* 16 */
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
   background-color: var(--ds-color-purple-700);
   color: var(--ds-color-warm-neutral-0);
   font-family: var(--ds-font-family-primary);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
+  font-size: var(--ds-font-size-m); /* 14 */
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-m); /* 20 */
   letter-spacing: 0.1px;
 }
 
-/* Phone CTAs: WhatsApp (left) + Dialer secondary + View phone primary (right) */
-.srp-card--imagine .srp-card-cta-row--phone {
-  gap: 8px;
+/* Phone CTAs: same hierarchy — WA + Dialer + View phone on the right */
+.srp-card--imagine .srp-card-cta-row--phone .srp-card-cta-actions {
+  gap: var(--ds-space-xs); /* 8 */
 }
 
 .srp-card--imagine .srp-card-cta-btn--dialer {
-  flex: 0 0 48px;
-  width: 48px;
-  min-width: 48px;
-  height: 48px;
-  min-height: 48px;
+  flex: 0 0 var(--ds-space-3xl);
+  width: var(--ds-space-3xl);
+  min-width: var(--ds-space-3xl);
+  height: var(--ds-space-3xl);
+  min-height: var(--ds-space-3xl);
   padding: 0;
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
@@ -1256,27 +1290,27 @@
 }
 
 .srp-card--imagine .srp-card-cta-dialer-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: block;
   fill: currentColor;
   color: var(--ds-color-purple-700);
 }
 
 .srp-card--imagine .srp-card-cta-btn--view-phone {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
-  min-height: 48px;
-  height: 48px;
-  padding: 0 12px;
+  min-height: var(--ds-space-3xl);
+  height: var(--ds-space-3xl);
+  padding: 0 var(--ds-space-s); /* 12 */
   border-radius: var(--ds-radius-m);
   border: 1px solid var(--ds-color-purple-700);
   background-color: var(--ds-color-purple-700);
   color: var(--ds-color-warm-neutral-0);
   font-family: var(--ds-font-family-primary);
-  font-size: 14px;
+  font-size: var(--ds-font-size-m);
   font-weight: var(--ds-font-weight-medium);
-  line-height: 20px;
+  line-height: var(--ds-line-height-m);
   letter-spacing: 0.1px;
   white-space: nowrap;
 }

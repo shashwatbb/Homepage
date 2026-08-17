@@ -618,21 +618,46 @@ function srpCardConfigsHtml(configs) {
   </div>`;
 }
 
+/** Sample owner meta for CTA row (hardcoded until listing fields exist). */
+const SRP_CARD_OWNER_META = {
+  name: "Suresh Mehta",
+  role: "Dealer",
+  posted: "3w ago",
+};
+
+function srpCardOwnerMetaHtml() {
+  return `<div class="srp-card-owner-meta">
+    <p class="srp-card-owner-meta__name">${srpEscapeHtml(SRP_CARD_OWNER_META.name)}</p>
+    <p class="srp-card-owner-meta__sub">
+      <span class="srp-card-owner-meta__role">${srpEscapeHtml(SRP_CARD_OWNER_META.role)}</span>
+      <span class="srp-card-owner-meta__sep" aria-hidden="true"></span>
+      <span class="srp-card-owner-meta__posted">${srpEscapeHtml(SRP_CARD_OWNER_META.posted)}</span>
+    </p>
+  </div>`;
+}
+
 function srpCardCtaRowHtml(listing) {
   const wa = `<button class="srp-card-cta-btn srp-card-cta-btn--whatsapp" type="button" data-srp-contact-cta aria-label="WhatsApp">${srpWhatsappIconHtml(`srp-wa-${listing.id}`)}</button>`;
+  const owner = srpCardOwnerMetaHtml();
 
   if (listing.phoneCtas) {
-    /* WhatsApp (left) → Dialer secondary → View phone primary (extreme right) */
+    /* Owner meta (left) → WhatsApp → Dialer secondary → View phone primary (right) */
     return `<div class="srp-card-cta-row srp-card-cta-row--phone">
-        ${wa}
-        <button class="srp-card-cta-btn srp-card-cta-btn--dialer" type="button" data-srp-contact-cta aria-label="Call">${SRP_PHONE_DIALER_ICON}</button>
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--view-phone" type="button" data-srp-contact-cta>View phone</button>
+        ${owner}
+        <div class="srp-card-cta-actions">
+          ${wa}
+          <button class="srp-card-cta-btn srp-card-cta-btn--dialer" type="button" data-srp-contact-cta aria-label="Call">${SRP_PHONE_DIALER_ICON}</button>
+          <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--view-phone" type="button" data-srp-contact-cta>View phone</button>
+        </div>
       </div>`;
   }
 
   return `<div class="srp-card-cta-row">
-        ${wa}
-        <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
+        ${owner}
+        <div class="srp-card-cta-actions">
+          ${wa}
+          <button class="srp-card-cta-btn srp-card-cta-btn--brand srp-card-cta-btn--contact-primary" type="button" data-srp-contact-cta>Contact</button>
+        </div>
       </div>`;
 }
 
@@ -674,7 +699,6 @@ function srpCardHtml(listing, imgIndexStart, cardIndex = 0) {
                 <span class="srp-card-image-dot" data-slot="1"></span>
                 <span class="srp-card-image-dot" data-slot="2"></span>
               </div>
-              <span class="srp-card-image-posted">2 weeks ago</span>
             </div>
           </div>
         </div>
