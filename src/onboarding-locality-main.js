@@ -149,7 +149,7 @@ function after(ms, fn) {
 
 /** Steps that get their own history entry, so hardware/browser back steps
  * back through the flow instead of leaving straight to the real homepage.
- * "service" (and "splash") are the flow's root — back from there falls
+ * "login" (and "splash") are the flow's root — back from there falls
  * through to the page that linked here. */
 const DISCOVERY_STEPS = [
   "locality-check",
@@ -163,7 +163,7 @@ const DISCOVERY_STEPS = [
 ];
 
 const HISTORY_TRAPPED_STEPS = new Set([
-  "login",
+  "service",
   "otp",
   "details",
   "blocked",
@@ -197,7 +197,11 @@ function handleHardwareBack() {
       skipDetails();
       break;
     case "blocked":
-    case "login":
+      goTo("login");
+      break;
+    case "service":
+      goTo("login");
+      break;
     case "locality":
       goTo("service");
       break;
@@ -229,7 +233,7 @@ function handleHardwareBack() {
       goTo("discovery-lifestyle");
       break;
     default:
-      // "service" / "splash": the flow's root — let the browser continue
+      // "login" / "splash": the flow's root — let the browser continue
       // back to whatever page linked here instead of trapping it.
       break;
   }
@@ -317,7 +321,7 @@ function mountSplashLottie() {
       splashQuote = pickRandomQuote();
       render();
       after(1500, () => {
-        if (state.step === "splash") goTo("service");
+        if (state.step === "splash") goTo("login");
       });
     });
   } else {
@@ -364,23 +368,16 @@ function serviceScreen() {
   </div>`;
 }
 
+/** Login now happens before this — service selection just records the
+ * choice and heads straight to locality. */
 function onServicePress(serviceId) {
   state.service = serviceId;
-  if (serviceId === "sell" || state.loginSkipped) {
-    goTo("locality");
-    return;
-  }
-  openLoginFlow();
+  goTo("locality");
 }
 
 // ---------------------------------------------------------------------------
 // Login flow: Phone entry (PhoneEntryScreen.tsx)
 // ---------------------------------------------------------------------------
-
-function openLoginFlow() {
-  goTo("login");
-  if (isValidPhone(state.phone)) refreshWhatsAppOptIn(state.phone);
-}
 
 function phoneClearButtonHtml() {
   return state.phone.length > 0
@@ -516,7 +513,7 @@ async function submitPhone() {
 
 function skipLogin() {
   state.loginSkipped = true;
-  onServicePress(state.service);
+  goTo("service");
 }
 
 async function startWhatsAppLogin() {
@@ -794,11 +791,11 @@ async function submitDetails() {
   await saveUserDetails({ name: state.name, email: state.email });
   state.isSubmittingDetails = false;
   showToast(STRINGS["login.flow.loggedIn"], ICON.checkCircle);
-  goTo("locality");
+  goTo("service");
 }
 
 function skipDetails() {
-  onServicePress(state.service);
+  goTo("service");
 }
 
 async function googleFillAndSubmit() {
@@ -815,7 +812,7 @@ async function completeLogin(phone) {
   const user = await fetchUserDetails(phone);
   showToast(STRINGS["login.flow.loggedIn"], ICON.checkCircle);
   if (user.name && user.email) {
-    onServicePress(state.service);
+    goTo("service");
     return;
   }
   state.name = user.name;
