@@ -33,17 +33,22 @@ import {
   signInWithWhatsApp,
 } from "./data/onboardingLocality.mock.js";
 import { ICON as BRICKS_ICON } from "./data/onboardingLocalityIcons.js";
+import { BRICKS_ICONS } from "./data/bricksIcons.js";
 import { ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID } from "./experiments.js";
 import "./components/OnboardingLocalityDiscovery.css";
 import "leaflet/dist/leaflet.css";
 import {
   BHK_OPTIONS,
   PROPERTY_TYPE_OPTIONS,
-  ANCHOR_TYPES,
+  BUDGET_STEPS_BUY,
+  BUDGET_STEPS_RENT,
+  BUDGET_STEPS_DEFAULT_INDEX,
   COMMUTE_OPTIONS,
   INTENT_OPTIONS,
   LIFESTYLE_TAGS,
   cityCenter,
+  searchLandmarks,
+  landmarkCoords,
   getRecommendedLocalities,
 } from "./data/onboardingLocalityDiscovery.mock.js";
 
@@ -107,12 +112,12 @@ const state = {
   loginSkipped: false,
   city: null,
   // Locality Discovery flow state (feature-flagged).
-  budgetMin: 0.5,
-  budgetMax: 1.5,
+  discoveryMode: null, // "know_locality" | "discover"
+  budgetIndex: BUDGET_STEPS_DEFAULT_INDEX,
   buyStatus: "ready", // "ready" | "under_construction"
   bhk: null,
   propertyType: null,
-  anchors: [], // { typeId, label, address, coords }
+  landmarks: [], // { id, name, category, coords }, max 2
   commuteTolerance: null,
   intent: null, // "live_in" | "investment" | null (skippable)
   lifestyleTags: [],
@@ -150,7 +155,7 @@ const DISCOVERY_STEPS = [
   "locality-check",
   "discovery-budget",
   "discovery-bhk",
-  "discovery-anchors",
+  "discovery-landmarks",
   "discovery-commute",
   "discovery-intent",
   "discovery-lifestyle",
@@ -208,14 +213,14 @@ function handleHardwareBack() {
     case "discovery-bhk":
       goTo("discovery-budget");
       break;
-    case "discovery-anchors":
+    case "discovery-landmarks":
       goTo("discovery-bhk");
       break;
     case "discovery-commute":
-      goTo("discovery-anchors");
+      goTo("discovery-landmarks");
       break;
     case "discovery-intent":
-      goTo(state.anchors.length > 0 ? "discovery-commute" : "discovery-anchors");
+      goTo(state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks");
       break;
     case "discovery-lifestyle":
       goTo(previousDiscoveryStep("discovery-lifestyle"));
@@ -944,22 +949,38 @@ function afterCityPicked() {
 // Locality Discovery flow (feature-flagged: onboarding_locality_discovery_flow)
 // ---------------------------------------------------------------------------
 
+/** Onboarding-flow icons — all pulled from the Bricks Iconography Figma
+ * library (see src/data/bricksIcons.js) except `close`, a plain X glyph with
+ * no matching component in that set. */
 const OD_ICON = {
-  office: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M6 21V7l6-4 6 4v14M9 21v-6h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  school: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  family: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M10 20c0-3 2.5-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
-  pin: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>`,
-  compass: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="m15 9-2 6-6 2 2-6 6-2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+  office: BRICKS_ICONS.buildingOffice,
+  school: BRICKS_ICONS.graduationCap,
+  family: BRICKS_ICONS.usersThree,
+  pin: BRICKS_ICONS.mapPin,
+  compass: BRICKS_ICONS.compass,
   close: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
-  check: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  chevronRight: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  home: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5M6 10v9a1 1 0 0 0 1 1h4v-5h2v5h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  trendingUp: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  readyKey: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="8" cy="15" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 12.5 18 5m0 0h-3.5M18 5v3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  crane: `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 21V6l8-3v3M4 10h9M16 10v11M12 21h9M13 10l7-3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  check: BRICKS_ICONS.check,
+  chevronRight: BRICKS_ICONS.caretRight,
+  home: BRICKS_ICONS.houseSimple,
+  trendingUp: BRICKS_ICONS.trendUp,
+  readyKey: BRICKS_ICONS.doorOpen,
+  crane: BRICKS_ICONS.crane,
+  plus: BRICKS_ICONS.plus,
+  minus: BRICKS_ICONS.minus,
+  search: BRICKS_ICONS.magnifyingGlass,
+  filters: BRICKS_ICONS.slidersHorizontal,
+  hospital: BRICKS_ICONS.hospital,
+  metro: BRICKS_ICONS.subway,
+  mall: BRICKS_ICONS.storefront,
 };
 
-const ANCHOR_ICON = { workplace: OD_ICON.office, school: OD_ICON.school, family: OD_ICON.family, liked_area: OD_ICON.pin, none: OD_ICON.compass };
+const LANDMARK_CATEGORY_ICON = {
+  office: OD_ICON.office,
+  hospital: OD_ICON.hospital,
+  school: OD_ICON.school,
+  metro: OD_ICON.metro,
+  mall: OD_ICON.mall,
+};
 
 const INTENT_ICON = { live_in: OD_ICON.home, investment: OD_ICON.trendingUp };
 
@@ -995,9 +1016,9 @@ function nextDiscoveryStep(current) {
     case "discovery-budget":
       return "discovery-bhk";
     case "discovery-bhk":
-      return "discovery-anchors";
-    case "discovery-anchors":
-      if (state.anchors.length > 0) return "discovery-commute";
+      return "discovery-landmarks";
+    case "discovery-landmarks":
+      if (state.landmarks.length > 0) return "discovery-commute";
       return state.service === "buy" ? "discovery-intent" : "discovery-lifestyle";
     case "discovery-commute":
       return state.service === "buy" ? "discovery-intent" : "discovery-lifestyle";
@@ -1013,9 +1034,9 @@ function nextDiscoveryStep(current) {
 function previousDiscoveryStep(current) {
   if (current === "discovery-lifestyle") {
     if (state.service === "buy") return "discovery-intent";
-    return state.anchors.length > 0 ? "discovery-commute" : "discovery-anchors";
+    return state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks";
   }
-  return "discovery-anchors";
+  return "discovery-landmarks";
 }
 
 function odTopBar(backAction) {
@@ -1026,11 +1047,24 @@ function odTopBar(backAction) {
   </div>`;
 }
 
+/** The steps this session will actually traverse, computed fresh from what's
+ * already known — so the progress bar never counts a screen that will be
+ * skipped (Commute needs 0 landmarks decided yet, Intent needs service). */
+function activeDiscoverySteps() {
+  if (state.discoveryMode === "know_locality") {
+    return ["locality-check", "discovery-budget", "discovery-bhk"];
+  }
+  const steps = ["locality-check", "discovery-budget", "discovery-bhk", "discovery-landmarks"];
+  if (state.landmarks.length > 0) steps.push("discovery-commute");
+  if (state.service === "buy") steps.push("discovery-intent");
+  steps.push("discovery-lifestyle", "discovery-map");
+  return steps;
+}
+
 function odProgressHtml(stepId) {
-  const idx = DISCOVERY_STEPS.indexOf(stepId);
-  return `<div class="od-progress">${DISCOVERY_STEPS.map(
-    (_, i) => `<span class="od-progress__dot ${i <= idx ? "is-done" : ""}"></span>`
-  ).join("")}</div>`;
+  const steps = activeDiscoverySteps();
+  const idx = steps.indexOf(stepId);
+  return `<div class="od-progress">${steps.map((_, i) => `<span class="od-progress__dot ${i <= idx ? "is-done" : ""}"></span>`).join("")}</div>`;
 }
 
 function odSkipRow(action) {
@@ -1040,11 +1074,12 @@ function odSkipRow(action) {
 // -- Step 0: locality check --------------------------------------------------
 
 function localityCheckScreen() {
-  return `<div class="ol-screen">
+  return `<div class="ol-screen od-screen--thumb-zone">
     ${odTopBar("locality-check-back")}
-    <h1 class="od-heading od-heading--lg">Do you already know which locality you're looking at?</h1>
+    <h1 class="od-heading od-heading--lg">Know your locality yet?</h1>
+    <div class="od-screen--thumb-zone__spacer"></div>
     <div class="od-choice-list">
-      ${odChoiceCardHtml({ action: "locality-check-yes", icon: OD_ICON.pin, label: "Yes, I know the locality", trailing: "chevron" })}
+      ${odChoiceCardHtml({ action: "locality-check-yes", icon: OD_ICON.pin, label: "Yes, I know it", trailing: "chevron" })}
       ${odChoiceCardHtml({ action: "locality-check-not-sure", icon: OD_ICON.compass, label: "Not sure, help me find one", trailing: "chevron" })}
     </div>
   </div>`;
@@ -1052,20 +1087,41 @@ function localityCheckScreen() {
 
 // -- Step 1: budget -----------------------------------------------------------
 
+function currentBudgetSteps() {
+  return state.service === "rent" ? BUDGET_STEPS_RENT : BUDGET_STEPS_BUY;
+}
+
+function budgetValue() {
+  return currentBudgetSteps()[state.budgetIndex].value;
+}
+
+/** Shared plus/minus stepper markup — used for both Budget and BHK. */
+function odStepperHtml({ id, value, label, minusAction, plusAction, minusDisabled, plusDisabled }) {
+  return `<div class="od-stepper">
+    <button type="button" class="od-stepper__btn" data-action="${minusAction}" aria-label="Decrease" ${minusDisabled ? "disabled" : ""}>${OD_ICON.minus}</button>
+    <div class="od-stepper__display" id="${id}" aria-live="polite" aria-atomic="true">
+      <span class="od-stepper__value">${escapeHtml(label ?? String(value))}</span>
+    </div>
+    <button type="button" class="od-stepper__btn" data-action="${plusAction}" aria-label="Increase" ${plusDisabled ? "disabled" : ""}>${OD_ICON.plus}</button>
+  </div>`;
+}
+
 function discoveryBudgetScreen() {
   const isRent = state.service === "rent";
-  const scaleMax = isRent ? 100 : 10;
+  const steps = currentBudgetSteps();
   return `<div class="ol-screen">
     ${odTopBar("discovery-budget-back")}
     ${odProgressHtml("discovery-budget")}
     <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your budget?"}</h1>
-    <p class="od-budget-value">₹${state.budgetMin}${isRent ? "k" : ""} &ndash; ₹${state.budgetMax}${isRent ? "k" : ""}${!isRent ? " Cr" : ""}</p>
-    <div class="od-range-row">
-      <div class="od-range-track"><div class="od-range-fill"></div></div>
-      <input type="range" class="od-range" id="od-budget-min" min="0.1" max="${scaleMax}" step="0.1" value="${state.budgetMin}" aria-label="Minimum budget" />
-      <input type="range" class="od-range" id="od-budget-max" min="0.1" max="${scaleMax}" step="0.1" value="${state.budgetMax}" aria-label="Maximum budget" />
-    </div>
-    <div class="od-range-labels"><span>₹0.1${isRent ? "k" : " Cr"}</span><span>₹${scaleMax}${isRent ? "k" : " Cr"}+</span></div>
+    <p class="od-subtitle">${isRent ? "Your max monthly rent" : "Your max budget"}</p>
+    ${odStepperHtml({
+      id: "od-budget-stepper",
+      label: steps[state.budgetIndex].label,
+      minusAction: "budget-step-minus",
+      plusAction: "budget-step-plus",
+      minusDisabled: state.budgetIndex === 0,
+      plusDisabled: state.budgetIndex === steps.length - 1,
+    })}
     ${
       !isRent
         ? `<div class="od-toggle-row">
@@ -1080,36 +1136,27 @@ function discoveryBudgetScreen() {
   </div>`;
 }
 
-function updateBudgetRangeFill(root) {
-  const row = root.querySelector(".od-range-row");
-  const minInput = document.getElementById("od-budget-min");
-  const maxInput = document.getElementById("od-budget-max");
-  if (!row || !minInput || !maxInput) return;
-  const lo = Number(minInput.min);
-  const hi = Number(minInput.max);
-  const minPct = ((Number(minInput.value) - lo) / (hi - lo)) * 100;
-  const maxPct = ((Number(maxInput.value) - lo) / (hi - lo)) * 100;
-  row.style.setProperty("--od-fill-left", `${minPct}%`);
-  row.style.setProperty("--od-fill-width", `${Math.max(0, maxPct - minPct)}%`);
-}
-
 // -- Step 2: BHK + property type ----------------------------------------------
 
+function bhkIndex() {
+  return state.bhk ? BHK_OPTIONS.indexOf(state.bhk) : -1;
+}
+
 function discoveryBhkScreen() {
+  const idx = bhkIndex();
   return `<div class="ol-screen">
     ${odTopBar("discovery-bhk-back")}
     ${odProgressHtml("discovery-bhk")}
-    ${odSkipRow("discovery-skip-bhk")}
     <h1 class="od-heading">Which configuration?</h1>
     <p class="ol-section-label">BHK</p>
-    <div class="od-chip-grid">
-      ${BHK_OPTIONS.map(
-        (opt) =>
-          `<button type="button" class="od-chip ${state.bhk === opt ? "is-active" : ""}" data-action="pick-bhk" data-value="${opt}">${
-            state.bhk === opt ? `<span class="od-chip__check">${OD_ICON.check}</span>` : ""
-          }${opt}</button>`
-      ).join("")}
-    </div>
+    ${odStepperHtml({
+      id: "od-bhk-stepper",
+      label: idx === -1 ? "Select BHK" : BHK_OPTIONS[idx],
+      minusAction: "bhk-step-minus",
+      plusAction: "bhk-step-plus",
+      minusDisabled: idx <= 0,
+      plusDisabled: idx === BHK_OPTIONS.length - 1,
+    })}
     <p class="ol-section-label" style="margin-top:var(--ds-space-l);">Property type</p>
     <div class="od-chip-grid">
       ${PROPERTY_TYPE_OPTIONS.map(
@@ -1120,71 +1167,87 @@ function discoveryBhkScreen() {
       ).join("")}
     </div>
     <div class="ol-details__submit" style="margin-top:var(--ds-space-2xl);">
-      <button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk">${STRINGS["common.continue"]}</button>
+      <button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk" ${state.bhk ? "" : "disabled"}>${STRINGS["common.continue"]}</button>
     </div>
   </div>`;
 }
 
-// -- Step 3: anchors -----------------------------------------------------------
+// -- Step 3: landmark search ---------------------------------------------------
 
-let odActiveAnchorInputTypeId = null;
-let odAnchorInputValue = "";
+let odLandmarkQuery = "";
 
-function anchorRowHtml(type) {
-  const active = state.anchors.some((a) => a.typeId === type.id);
-  const noneActive = state.anchors.some((a) => a.typeId === "none");
-  const disabled = type.id !== "none" && noneActive;
-  return `<div>
-    <button type="button" class="od-anchor-row ${active ? "is-active" : ""} ${disabled ? "is-disabled" : ""}" data-action="pick-anchor-type" data-anchor-id="${type.id}">
-      <span class="od-anchor-row__icon">${ANCHOR_ICON[type.id]}</span>
-      <span class="od-anchor-row__label">${type.label}</span>
-      ${active ? `<span class="od-choice-card__check">${OD_ICON.check}</span>` : ""}
-    </button>
-    ${
-      odActiveAnchorInputTypeId === type.id
-        ? `<div class="od-anchor-input">
-        <label class="ol-text-field" style="flex:1;">
-          <input type="text" class="ol-text-field__input" id="od-anchor-input" placeholder="${
-            type.needsInput === "locality" ? "Search a locality..." : "Enter address..."
-          }" value="${escapeHtml(odAnchorInputValue)}" autocomplete="off" />
-        </label>
-        <button type="button" class="od-anchor-input-save" data-action="save-anchor-address" data-anchor-id="${type.id}">Save</button>
-      </div>`
-        : ""
-    }
-  </div>`;
+function landmarkResultsHtml() {
+  if (state.landmarks.length >= 2) return "";
+  const results = searchLandmarks(state.city, odLandmarkQuery);
+  if (!odLandmarkQuery.trim() || !results.length) return "";
+  return `<ul class="od-landmark-results">${results
+    .map(
+      (l) =>
+        `<li><button type="button" class="od-landmark-result" data-action="pick-landmark" data-landmark-id="${l.id}">
+          <span class="od-landmark-result__icon">${LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin}</span>
+          <span class="od-landmark-result__name">${escapeHtml(l.name)}</span>
+        </button></li>`
+    )
+    .join("")}</ul>`;
 }
 
-function anchorChipsHtml() {
-  if (!state.anchors.length) return "";
-  return `<div class="od-anchor-chips">${state.anchors
+function landmarkChipsHtml() {
+  if (!state.landmarks.length) return "";
+  return `<div class="od-anchor-chips">${state.landmarks
     .map(
-      (a) =>
-        `<span class="od-anchor-chip">${escapeHtml(a.address || a.label)}<button type="button" class="od-anchor-chip__remove" data-action="remove-anchor" data-anchor-id="${a.typeId}" aria-label="Remove">${OD_ICON.close}</button></span>`
+      (l) =>
+        `<span class="od-anchor-chip">${escapeHtml(l.name)}<button type="button" class="od-anchor-chip__remove" data-action="remove-landmark" data-landmark-id="${l.id}" aria-label="Remove">${OD_ICON.close}</button></span>`
     )
     .join("")}</div>`;
 }
 
-function discoveryAnchorsScreen() {
-  return `<div class="ol-screen">
-    ${odTopBar("discovery-anchors-back")}
-    ${odProgressHtml("discovery-anchors")}
-    ${odSkipRow("discovery-skip-anchors")}
-    <h1 class="od-heading">Anything you'd like to stay close to?</h1>
-    <p class="od-subtitle">Pick as many as apply</p>
-    <div class="od-anchor-list" id="od-anchor-list">${ANCHOR_TYPES.map(anchorRowHtml).join("")}</div>
-    <div id="od-anchor-chips-wrap">${anchorChipsHtml()}</div>
-    <div class="ol-details__submit" style="margin-top:var(--ds-space-2xl);">
-      <button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-anchors">${STRINGS["common.continue"]}</button>
-    </div>
-  </div>`;
+function landmarkPreviewMapHtml() {
+  if (!state.landmarks.length) return "";
+  return `<div class="od-map-container od-map-container--preview is-loading" id="od-landmark-map"></div>`;
 }
 
-function renderAnchorList() {
-  const list = document.getElementById("od-anchor-list");
-  if (list) list.innerHTML = ANCHOR_TYPES.map(anchorRowHtml).join("");
-  const chips = document.getElementById("od-anchor-chips-wrap");
-  if (chips) chips.innerHTML = anchorChipsHtml();
+function renderLandmarkPicker() {
+  const results = document.getElementById("od-landmark-results-wrap");
+  if (results) results.innerHTML = landmarkResultsHtml();
+  const chips = document.getElementById("od-landmark-chips-wrap");
+  if (chips) chips.innerHTML = landmarkChipsHtml();
+  const input = document.getElementById("od-landmark-input");
+  if (input) input.disabled = state.landmarks.length >= 2;
+  const mapWrap = document.getElementById("od-landmark-map-wrap");
+  if (mapWrap) {
+    mapWrap.innerHTML = landmarkPreviewMapHtml();
+    if (state.landmarks.length) mountLandmarkPreviewMap();
+  }
+}
+
+function discoveryLandmarksScreen() {
+  const capped = state.landmarks.length >= 2;
+  return `<div class="ol-screen">
+    ${odTopBar("discovery-landmarks-back")}
+    ${odProgressHtml("discovery-landmarks")}
+    <h1 class="od-heading">Anything you'd like to stay close to?</h1>
+    <p class="od-subtitle">Search up to 2 places &mdash; office, hospital, school, metro...</p>
+    <label class="ol-search-field">
+      <input
+        type="text"
+        class="ol-search-field__input"
+        id="od-landmark-input"
+        placeholder="Search a landmark, hospital, school, metro, office..."
+        value="${escapeHtml(odLandmarkQuery)}"
+        autocomplete="off"
+        ${capped ? "disabled" : ""}
+      />
+      <span class="od-search-field__icon">${OD_ICON.search}</span>
+    </label>
+    ${capped ? `<p class="od-landmark-cap-note">2 of 2 added &mdash; remove one to search again.</p>` : ""}
+    <div id="od-landmark-results-wrap">${landmarkResultsHtml()}</div>
+    <div id="od-landmark-chips-wrap">${landmarkChipsHtml()}</div>
+    <div id="od-landmark-map-wrap">${landmarkPreviewMapHtml()}</div>
+    <button type="button" class="od-no-landmark-btn" data-action="no-landmark-preference">${OD_ICON.compass} I don't have a specific place in mind</button>
+    <div class="ol-details__submit" style="margin-top:var(--ds-space-2xl);">
+      <button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>
+    </div>
+  </div>`;
 }
 
 // -- Step 4: commute tolerance (only if anchors picked) ------------------------
@@ -1256,10 +1319,42 @@ function discoveryLifestyleScreen() {
 
 // -- Final: map + list recommendation screen -----------------------------------
 
+/** Minimal, roads/terrain-only basemap — no baked-in POI icons, transit
+ * lines, or place labels (unlike standard OSM raster tiles), so only our own
+ * pins/labels carry information. Free, no API key; requires attribution. */
+// CARTO's no-labels basemap now requires a registered API key for outside
+// domains (returns a watermarked "API key required" tile), so this stays on
+// standard OpenStreetMap raster tiles — free, keyless, always available —
+// and gets muted toward roads/terrain via the `.od-map-container` CSS filter
+// below instead of a different tile provider.
+const MINIMAL_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const MINIMAL_TILE_ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
+
 let odLeafletMap = null;
+let odLandmarkLeafletMap = null;
+
+const ADJUST_FILTER_TARGETS = [
+  { step: "discovery-budget", label: "Budget" },
+  { step: "discovery-bhk", label: "BHK" },
+  { step: "discovery-landmarks", label: "Landmarks" },
+  { step: "discovery-lifestyle", label: "Lifestyle" },
+];
+
+function adjustFiltersHtml() {
+  return `<div class="od-adjust-filters">
+    <span class="od-adjust-filters__label">${OD_ICON.filters} Adjust filters</span>
+    <div class="od-adjust-filters__chips">
+      ${ADJUST_FILTER_TARGETS.map(
+        (t) => `<button type="button" class="od-adjust-filters__chip" data-action="adjust-filter" data-step="${t.step}">${t.label}</button>`
+      ).join("")}
+    </div>
+  </div>`;
+}
 
 function localityCardHtml(loc, rank) {
   const isPrimary = rank !== null;
+  const bandModifier = loc.price_band_match === "above_budget" ? "od-locality-card__band--warn" : "od-locality-card__band--good";
   const bandLabel = loc.price_band_match === "within_budget" ? "Within budget" : loc.price_band_match === "below_budget" ? "Below budget" : "Above budget";
   const signals = [...loc.matched_signals, ...loc.appreciation_signals];
   return `<div class="od-locality-card ${isPrimary ? "" : "od-locality-card--secondary"}">
@@ -1267,7 +1362,7 @@ function localityCardHtml(loc, rank) {
     <div class="od-locality-card__body">
       <div class="od-locality-card__head">
         <h3 class="od-locality-card__name">${escapeHtml(loc.name)}</h3>
-        <span class="od-locality-card__band">${bandLabel}</span>
+        <span class="od-locality-card__band ${bandModifier}">${bandLabel}</span>
       </div>
       <div class="od-locality-card__signals">${signals.map((s) => `<span class="od-signal-badge">${escapeHtml(s)}</span>`).join("")}</div>
       <button type="button" class="od-locality-card__cta" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore this locality</button>
@@ -1283,6 +1378,7 @@ function discoveryMapScreen() {
   return `<div class="ol-screen">
     ${odTopBar("discovery-map-back")}
     <h1 class="od-heading">Recommended localities</h1>
+    ${adjustFiltersHtml()}
     <div class="od-map-toggle">
       <button type="button" class="od-map-toggle__btn ${state.mapListMode === "map" ? "is-active" : ""}" data-action="set-map-mode" data-value="map">Map</button>
       <button type="button" class="od-map-toggle__btn ${state.mapListMode === "list" ? "is-active" : ""}" data-action="set-map-mode" data-value="list">List</button>
@@ -1311,17 +1407,17 @@ function mountDiscoveryMap() {
       odLeafletMap = null;
     }
     const center = cityCenter(state.city);
-    odLeafletMap = L.map(container, { attributionControl: false, zoomControl: false }).setView(center, 12);
-    const tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18 }).addTo(odLeafletMap);
+    odLeafletMap = L.map(container, { attributionControl: true, zoomControl: false }).setView(center, 12);
+    const tiles = L.tileLayer(MINIMAL_TILE_URL, { maxZoom: 18, attribution: MINIMAL_TILE_ATTRIBUTION }).addTo(odLeafletMap);
     tiles.once("load", () => container.classList.remove("is-loading"));
 
-    state.anchors.forEach((a) => {
-      if (!a.coords) return;
-      L.marker(a.coords, {
-        icon: L.divIcon({ className: "", html: `<div class="od-map-pin-badge od-map-pin-badge--anchor"><span>${a.label[0]}</span></div>`, iconSize: [28, 28] }),
+    state.landmarks.forEach((l) => {
+      if (!l.coords) return;
+      L.marker(l.coords, {
+        icon: L.divIcon({ className: "", html: `<div class="od-map-pin-badge od-map-pin-badge--anchor"><span>${l.name[0]}</span></div>`, iconSize: [28, 28] }),
       })
         .addTo(odLeafletMap)
-        .bindTooltip(a.address || a.label);
+        .bindTooltip(l.name);
     });
 
     const primary = state.recommendedLocalities.slice(0, 5);
@@ -1343,7 +1439,53 @@ function mountDiscoveryMap() {
   });
 }
 
+function mountLandmarkPreviewMap() {
+  const container = document.getElementById("od-landmark-map");
+  if (!container) return;
+  import("leaflet").then(({ default: L }) => {
+    if (document.getElementById("od-landmark-map") !== container) return;
+    if (odLandmarkLeafletMap) {
+      odLandmarkLeafletMap.remove();
+      odLandmarkLeafletMap = null;
+    }
+    const center = cityCenter(state.city);
+    odLandmarkLeafletMap = L.map(container, { attributionControl: true, zoomControl: false }).setView(center, 12);
+    const tiles = L.tileLayer(MINIMAL_TILE_URL, { maxZoom: 18, attribution: MINIMAL_TILE_ATTRIBUTION }).addTo(odLandmarkLeafletMap);
+    tiles.once("load", () => container.classList.remove("is-loading"));
+
+    const points = [];
+    state.landmarks.forEach((l) => {
+      if (!l.coords) return;
+      points.push(l.coords);
+      L.marker(l.coords, {
+        icon: L.divIcon({ className: "", html: `<div class="od-map-pin-badge od-map-pin-badge--anchor"><span>${l.name[0]}</span></div>`, iconSize: [28, 28] }),
+      })
+        .addTo(odLandmarkLeafletMap)
+        .bindTooltip(l.name);
+    });
+    if (points.length > 1) odLandmarkLeafletMap.fitBounds(points, { padding: [32, 32] });
+  });
+}
+
+/** Budget/BHK/property-type query params shared by both handoffs to SRP —
+ * the full match (with locality name) and the "I know my locality" quick
+ * exit that skips the discovery flow entirely. */
+function budgetQueryParams() {
+  const params = new URLSearchParams();
+  params.set("budgetMax", String(budgetValue()));
+  if (state.bhk) params.set("bhk", state.bhk);
+  if (state.propertyType) params.set("propertyType", state.propertyType);
+  return params;
+}
+
+function handoffToSearchPreFiltered() {
+  const params = budgetQueryParams();
+  window.location.assign(`/srp.html?${params.toString()}`);
+}
+
 function beginLocalityMatch() {
+  state.budgetMax = budgetValue();
+  state.budgetMin = state.budgetMax * 0.6;
   const { ranked } = getRecommendedLocalities(state);
   state.recommendedLocalities = ranked;
   state.mapListMode = "map";
@@ -1351,10 +1493,8 @@ function beginLocalityMatch() {
 }
 
 function exploreLocality(localityId, localityName) {
-  const params = new URLSearchParams();
+  const params = budgetQueryParams();
   if (localityName) params.set("q", `${state.bhk || ""} ${state.propertyType || ""} in ${localityName}`.trim());
-  if (state.budgetMin) params.set("budgetMin", String(state.budgetMin));
-  if (state.budgetMax) params.set("budgetMax", String(state.budgetMax));
   window.location.assign(`/srp.html?${params.toString()}`);
 }
 
@@ -1392,7 +1532,7 @@ const SCREEN_BUILDERS = {
   "locality-check": localityCheckScreen,
   "discovery-budget": discoveryBudgetScreen,
   "discovery-bhk": discoveryBhkScreen,
-  "discovery-anchors": discoveryAnchorsScreen,
+  "discovery-landmarks": discoveryLandmarksScreen,
   "discovery-commute": discoveryCommuteScreen,
   "discovery-intent": discoveryIntentScreen,
   "discovery-lifestyle": discoveryLifestyleScreen,
@@ -1472,9 +1612,11 @@ function wireEvents(root) {
         goTo("locality");
         break;
       case "locality-check-yes":
-        goTo("done"); // unchanged existing path
+        state.discoveryMode = "know_locality";
+        goTo("discovery-budget");
         break;
       case "locality-check-not-sure":
+        state.discoveryMode = "discover";
         goTo("discovery-budget");
         break;
       case "discovery-budget-back":
@@ -1484,76 +1626,64 @@ function wireEvents(root) {
         state.buyStatus = btn.getAttribute("data-value");
         render();
         break;
+      case "budget-step-minus":
+        state.budgetIndex = Math.max(0, state.budgetIndex - 1);
+        render();
+        break;
+      case "budget-step-plus":
+        state.budgetIndex = Math.min(currentBudgetSteps().length - 1, state.budgetIndex + 1);
+        render();
+        break;
       case "discovery-bhk-back":
         goTo("discovery-budget");
         break;
-      case "discovery-skip-bhk":
-        goTo(nextDiscoveryStep("discovery-bhk"));
-        break;
-      case "pick-bhk":
-        state.bhk = btn.getAttribute("data-value");
+      case "bhk-step-minus": {
+        const idx = bhkIndex();
+        if (idx > 0) state.bhk = BHK_OPTIONS[idx - 1];
         render();
         break;
+      }
+      case "bhk-step-plus": {
+        const idx = bhkIndex();
+        state.bhk = idx === -1 ? BHK_OPTIONS[2] : BHK_OPTIONS[Math.min(BHK_OPTIONS.length - 1, idx + 1)];
+        render();
+        break;
+      }
       case "pick-property-type":
         state.propertyType = btn.getAttribute("data-value");
         render();
         break;
-      case "discovery-anchors-back":
+      case "discovery-landmarks-back":
         goTo("discovery-bhk");
         break;
-      case "discovery-skip-anchors":
-        goTo(nextDiscoveryStep("discovery-anchors"));
-        break;
-      case "pick-anchor-type": {
-        const anchorId = btn.getAttribute("data-anchor-id");
-        const type = ANCHOR_TYPES.find((t) => t.id === anchorId);
-        if (!type) break;
-        const already = state.anchors.some((a) => a.typeId === anchorId);
-        if (already) {
-          state.anchors = state.anchors.filter((a) => a.typeId !== anchorId);
-          odActiveAnchorInputTypeId = null;
-          renderAnchorList();
-          break;
-        }
-        if (type.exclusive) {
-          state.anchors = [{ typeId: "none", label: type.label, address: type.label, coords: null }];
-          odActiveAnchorInputTypeId = null;
-          renderAnchorList();
-          break;
-        }
-        state.anchors = state.anchors.filter((a) => a.typeId !== "none");
-        odActiveAnchorInputTypeId = anchorId;
-        odAnchorInputValue = "";
-        renderAnchorList();
+      case "pick-landmark": {
+        const landmarkId = btn.getAttribute("data-landmark-id");
+        const results = searchLandmarks(state.city, odLandmarkQuery);
+        const found = results.find((l) => l.id === landmarkId);
+        if (!found || state.landmarks.length >= 2) break;
+        state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
+        odLandmarkQuery = "";
+        renderLandmarkPicker();
         break;
       }
-      case "save-anchor-address": {
-        const anchorId = btn.getAttribute("data-anchor-id");
-        const type = ANCHOR_TYPES.find((t) => t.id === anchorId);
-        const value = odAnchorInputValue.trim();
-        if (!type || !value) break;
-        // Mock geocode: jitter around the city center deterministically per anchor slot.
-        const base = cityCenter(state.city);
-        const jitter = (state.anchors.length + 1) * 0.015;
-        state.anchors.push({ typeId: anchorId, label: type.label, address: value, coords: [base[0] + jitter, base[1] - jitter] });
-        odActiveAnchorInputTypeId = null;
-        odAnchorInputValue = "";
-        renderAnchorList();
+      case "remove-landmark":
+        state.landmarks = state.landmarks.filter((l) => l.id !== btn.getAttribute("data-landmark-id"));
+        renderLandmarkPicker();
         break;
-      }
-      case "remove-anchor":
-        state.anchors = state.anchors.filter((a) => a.typeId !== btn.getAttribute("data-anchor-id"));
-        renderAnchorList();
+      case "no-landmark-preference":
+        state.landmarks = [];
+        odLandmarkQuery = "";
+        goTo(nextDiscoveryStep("discovery-landmarks"));
         break;
       case "discovery-commute-back":
-        goTo("discovery-anchors");
+        goTo("discovery-landmarks");
         break;
       case "pick-commute":
         state.commuteTolerance = btn.getAttribute("data-value");
         goTo(nextDiscoveryStep("discovery-commute"));
         break;
       case "discovery-intent-back":
-        goTo(state.anchors.length > 0 ? "discovery-commute" : "discovery-anchors");
+        goTo(state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks");
         break;
       case "discovery-skip-intent":
         state.intent = null;
@@ -1579,6 +1709,10 @@ function wireEvents(root) {
       }
       case "discovery-continue": {
         const from = btn.getAttribute("data-from");
+        if (from === "discovery-bhk" && state.discoveryMode === "know_locality") {
+          handoffToSearchPreFiltered();
+          break;
+        }
         if (from === "discovery-lifestyle") {
           beginLocalityMatch();
           break;
@@ -1595,6 +1729,9 @@ function wireEvents(root) {
         break;
       case "explore-locality":
         exploreLocality(btn.getAttribute("data-locality-id"), btn.getAttribute("data-locality-name"));
+        break;
+      case "adjust-filter":
+        goTo(btn.getAttribute("data-step"));
         break;
       case "dismiss-toast":
         window.clearTimeout(toastTimer);
@@ -1623,12 +1760,12 @@ function wireEvents(root) {
           isSubmittingDetails: false,
           loginSkipped: false,
           city: null,
-          budgetMin: 0.5,
-          budgetMax: 1.5,
+          discoveryMode: null,
+          budgetIndex: BUDGET_STEPS_DEFAULT_INDEX,
           buyStatus: "ready",
           bhk: null,
           propertyType: null,
-          anchors: [],
+          landmarks: [],
           commuteTolerance: null,
           intent: null,
           lifestyleTags: [],
@@ -1644,11 +1781,14 @@ function wireEvents(root) {
         toast = null;
         splashIntroFinished = false;
         splashQuote = "";
-        odActiveAnchorInputTypeId = null;
-        odAnchorInputValue = "";
+        odLandmarkQuery = "";
         if (odLeafletMap) {
           odLeafletMap.remove();
           odLeafletMap = null;
+        }
+        if (odLandmarkLeafletMap) {
+          odLandmarkLeafletMap.remove();
+          odLandmarkLeafletMap = null;
         }
         render();
         break;
@@ -1680,22 +1820,12 @@ function wireEvents(root) {
       citySearchQuery = event.target.value;
       const results = root.querySelector("#ol-city-results");
       if (results) results.innerHTML = cityResultsHtml();
-    } else if (event.target.id === "od-budget-min" || event.target.id === "od-budget-max") {
-      event.target.style.zIndex = "2";
-      (event.target.id === "od-budget-min"
-        ? document.getElementById("od-budget-max")
-        : document.getElementById("od-budget-min")
-      )?.style.setProperty("z-index", "1");
-      const min = event.target.id === "od-budget-min" ? Number(event.target.value) : state.budgetMin;
-      const max = event.target.id === "od-budget-max" ? Number(event.target.value) : state.budgetMax;
-      state.budgetMin = Math.min(min, max);
-      state.budgetMax = Math.max(min, max);
-      const valueEl = root.querySelector(".od-budget-value");
-      const isRent = state.service === "rent";
-      if (valueEl) valueEl.textContent = `₹${state.budgetMin}${isRent ? "k" : ""} – ₹${state.budgetMax}${isRent ? "k" : " Cr"}`;
-      updateBudgetRangeFill(root);
-    } else if (event.target.id === "od-anchor-input") {
-      odAnchorInputValue = event.target.value;
+    } else if (event.target.id === "od-landmark-input") {
+      // Patch just the results dropdown in place — a full render() here
+      // would steal focus from the input on every keystroke.
+      odLandmarkQuery = event.target.value;
+      const results = root.querySelector("#od-landmark-results-wrap");
+      if (results) results.innerHTML = landmarkResultsHtml();
     }
   });
 
@@ -1743,7 +1873,7 @@ function render() {
   root.innerHTML = SCREEN_BUILDERS[state.step]() + toastHtml();
   if (state.step === "splash") mountSplashLottie();
   if (state.step === "otp") focusOtpHiddenInput();
-  if (state.step === "discovery-budget") updateBudgetRangeFill(root);
+  if (state.step === "discovery-landmarks" && state.landmarks.length) mountLandmarkPreviewMap();
   if (state.step === "discovery-map" && state.mapListMode === "map") mountDiscoveryMap();
 }
 
