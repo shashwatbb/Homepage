@@ -240,3 +240,25 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Flow row CTA — minimal textual link, no toggle. */
+.experiments-config__flow-cta {
+  flex-shrink: 0;
+  font-family: var(--ds-font-family-primary);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-semibold);
+  line-height: var(--ds-line-height-s);
+  color: var(--ds-text-brand, var(--ds-surface-brand));
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.experiments-config__flow-cta:hover {
+  text-decoration: underline;
+}
+
+.experiments-config__flow-cta:focus-visible {
+  outline: 2px solid var(--ds-border-brand);
+  outline-offset: 2px;
+  border-radius: var(--ds-radius-s, 4px);
+}

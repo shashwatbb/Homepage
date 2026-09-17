@@ -25,6 +25,7 @@ const EXPERIMENT_CATEGORIES = [
 export const SRP_MWEB_BUY_EXPERIMENT_ID = "mweb_buy_srp";
 export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_strip";
 export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
+export const ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID = "onboarding_locality_discovery_flow";
 
 const EXPERIMENT_DEFINITIONS = [
   {
@@ -69,6 +70,34 @@ const EXPERIMENT_DEFINITIONS = [
         })
       );
     },
+  },
+  {
+    id: ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID,
+    name: "Onboarding locality discovery flow",
+    platform: "mobile",
+    exclusive: false,
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-onboarding-locality-discovery-flow", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
+];
+
+/**
+ * Flows are not experiments — no toggle, no state, no gating class.
+ * They are standalone pages opened from the panel via a textual CTA.
+ */
+const FLOW_DEFINITIONS = [
+  {
+    id: "onboarding_locality_discovery",
+    name: "Onboarding Locality discovery",
+    platform: "mobile",
+    href: "/onboarding-locality.html",
   },
 ];
 
@@ -142,11 +171,20 @@ function experimentRowHtml(experiment) {
     </li>`;
 }
 
+function flowRowHtml(flow) {
+  return `<li class="experiments-config__row">
+      <span class="experiments-config__label">${flow.name}</span>
+      <a class="experiments-config__flow-cta" href="${flow.href}" data-flow-id="${flow.id}">View flow</a>
+    </li>`;
+}
+
 function experimentsSectionsHtml() {
   return EXPERIMENT_CATEGORIES.map((category) => {
     const items = EXPERIMENT_DEFINITIONS.filter((experiment) => experiment.platform === category.id);
-    const listHtml = items.length
-      ? `<ul class="experiments-config__list">${items.map(experimentRowHtml).join("")}</ul>`
+    const flows = FLOW_DEFINITIONS.filter((flow) => flow.platform === category.id);
+    const rowsHtml = items.map(experimentRowHtml).join("") + flows.map(flowRowHtml).join("");
+    const listHtml = rowsHtml
+      ? `<ul class="experiments-config__list">${rowsHtml}</ul>`
       : `<p class="experiments-config__empty">No ${category.label.toLowerCase()} experiments yet.</p>`;
 
     return `<section class="experiments-config__section" aria-labelledby="experiments-section-${category.id}">
@@ -317,6 +355,7 @@ function initExperimentsPanel(toast) {
   backdrop.addEventListener("click", closePanel);
 
   panel.addEventListener("click", (event) => {
+    if (event.target.closest("[data-flow-id]")) return; // flow links navigate natively
     const toggle = event.target.closest("[data-experiment-id]");
     if (!toggle) return;
     const id = toggle.getAttribute("data-experiment-id");

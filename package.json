@@ -11,19 +11,21 @@
     "design-system:sync": "node scripts/figma-sync-new-bricks.mjs"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-web": "^0.80.0",
+    "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "happy-dom": "^17.4.4",
-    "vitest": "^3.0.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "happy-dom": "^17.4.4",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.0.5"
   }
 }
