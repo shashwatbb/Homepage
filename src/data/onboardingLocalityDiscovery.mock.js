@@ -182,6 +182,19 @@ function priceBandMatch(priceIndex, budgetMin, budgetMax, budgetCeilingIndex) {
   return "above_budget";
 }
 
+/** Formats a mock locality price for the recommendation card's budget line —
+ * ₹ Cr/L for buy, ₹ k or L per month for rent. Simple, deliberately
+ * unsophisticated (this is a mocked-data prototype, not a real pricing feed). */
+export function formatLocalityBudget(value, unit) {
+  const v = Math.max(value, unit === "rent" ? 4 : 0.1);
+  if (unit === "rent") {
+    if (v >= 100) return `₹${(v / 100).toFixed(1).replace(/\.0$/, "")} L/mo`;
+    return `₹${Math.round(v)} k/mo`;
+  }
+  if (v >= 1) return `₹${v % 1 === 0 ? v : v.toFixed(2).replace(/0$/, "").replace(/\.$/, "")} Cr`;
+  return `₹${Math.round(v * 100)} L`;
+}
+
 /**
  * Score + rank mock localities against collected discovery state.
  * Returns { center, ranked } where ranked[].matched_signals /
@@ -204,6 +217,7 @@ export function getRecommendedLocalities(state) {
     const farthestMinutes = hasLandmarks ? Math.max(...distance_from_landmarks.map((d) => d.minutes)) : 0;
     const withinCommute = !hasLandmarks || farthestMinutes <= commuteLimit;
 
+    const estimated_price = base.price_index * budgetCeilingIndex;
     const price_band_match = priceBandMatch(base.price_index, state.budgetMin, state.budgetMax, budgetCeilingIndex);
     const bhkAvailable = !state.bhk || base.bhk_availability.includes(state.bhk);
 
@@ -249,6 +263,7 @@ export function getRecommendedLocalities(state) {
       name: base.name,
       coordinates: coords,
       distance_from_landmarks,
+      estimated_price,
       price_band_match,
       bhk_available: bhkAvailable,
       demand_tier: base.demand_tier,
