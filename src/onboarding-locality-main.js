@@ -1066,6 +1066,14 @@ function activeDiscoverySteps() {
   return steps;
 }
 
+/** Compact "Mumbai · 2 BHK · ₹2 Cr" recap — carries budget/BHK choices
+ * forward visually once the flow has moved past those screens, reusing the
+ * already-formatted stepper label so no new formatting logic is needed. */
+function discoverySummaryHtml() {
+  const parts = [state.city, state.bhk, currentBudgetSteps()[state.budgetIndex]?.label].filter(Boolean);
+  return parts.length ? `<p class="od-summary-strip">${escapeHtml(parts.join(" · "))}</p>` : "";
+}
+
 function odProgressHtml(stepId) {
   const steps = activeDiscoverySteps();
   const idx = steps.indexOf(stepId);
@@ -1077,6 +1085,7 @@ function odProgressHtml(stepId) {
 function localityCheckScreen() {
   return `<div class="ol-screen">
     ${odTopBar("locality-check-back")}
+    ${odProgressHtml("locality-check")}
     <h1 class="od-heading od-heading--lg">Do you know the area you want to move to?</h1>
     <div class="od-choice-list">
       ${odChoiceCardHtml({ action: "locality-check-yes", icon: OD_ICON.pin, label: "Yes, I know it", trailing: "chevron" })}
@@ -1133,6 +1142,7 @@ function discoveryBudgetScreen() {
       ${budgetStepperHtml()}
     </div>
     ${odProgressHtml("discovery-budget")}
+    ${discoveryValueMapHtml()}
     <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your budget?"}</h1>
     <p class="od-subtitle">${isRent ? "Your max monthly rent" : "Your max budget"}</p>
     ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-budget">${STRINGS["common.continue"]}</button>`)}
@@ -1168,6 +1178,7 @@ function discoveryBhkScreen() {
       ${bhkStepperHtml()}
     </div>
     ${odProgressHtml("discovery-bhk")}
+    ${discoveryValueMapHtml()}
     <h1 class="od-heading">Which configuration?</h1>
     <p class="ol-section-label">Property type</p>
     <div class="od-chip-grid">
@@ -1225,6 +1236,15 @@ function renderLandmarkPicker() {
   if (input) input.disabled = state.landmarks.length >= 2;
   const mapWrap = document.getElementById("od-landmark-map-wrap");
   if (mapWrap) mapWrap.innerHTML = landmarkPreviewMapHtml();
+  const secondaryCta = document.getElementById("od-landmark-secondary-cta-wrap");
+  if (secondaryCta) secondaryCta.innerHTML = landmarkSecondaryCtaHtml();
+}
+
+/** Hidden once at least one landmark is picked — "no specific place in
+ * mind" contradicts the state once the user has already named one. */
+function landmarkSecondaryCtaHtml() {
+  if (state.landmarks.length > 0) return "";
+  return odSecondaryCta("no-landmark-preference", "I don't have a specific place in mind");
 }
 
 function discoveryLandmarksScreen() {
@@ -1252,7 +1272,7 @@ function discoveryLandmarksScreen() {
     <div id="od-landmark-map-wrap">${landmarkPreviewMapHtml()}</div>
     ${odPageCta(
       `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>`,
-      odSecondaryCta("no-landmark-preference", "I don't have a specific place in mind")
+      `<div id="od-landmark-secondary-cta-wrap">${landmarkSecondaryCtaHtml()}</div>`
     )}
   </div>`;
 }
@@ -1263,6 +1283,7 @@ function discoveryCommuteScreen() {
   return `<div class="ol-screen">
     ${odTopBar("discovery-commute-back")}
     ${odProgressHtml("discovery-commute")}
+    ${discoverySummaryHtml()}
     <h1 class="od-heading">How far are you willing to commute?</h1>
     <div class="od-choice-list">
       ${COMMUTE_OPTIONS.map((opt) =>
@@ -1284,6 +1305,7 @@ function discoveryIntentScreen() {
   return `<div class="ol-screen ol-screen--has-cta">
     ${odTopBar("discovery-intent-back")}
     ${odProgressHtml("discovery-intent")}
+    ${discoverySummaryHtml()}
     <h1 class="od-heading">Is this to live in, or an investment?</h1>
     <div class="od-choice-list">
       ${INTENT_OPTIONS.map((opt) =>
@@ -1306,6 +1328,7 @@ function discoveryLifestyleScreen() {
   return `<div class="ol-screen ol-screen--has-cta">
     ${odTopBar("discovery-lifestyle-back")}
     ${odProgressHtml("discovery-lifestyle")}
+    ${discoverySummaryHtml()}
     <h1 class="od-heading">What matters most where you live?</h1>
     <p class="od-subtitle">Optional, pick any that apply</p>
     <div class="od-chip-grid">
@@ -1335,8 +1358,8 @@ const MAP_PIN_SLOTS = [
   { left: 55, top: 80 },
 ];
 
-function mapIllustrationHtml(pins) {
-  return `<div class="od-map-illustration">
+function mapIllustrationHtml(pins, { id, pulse } = {}) {
+  return `<div class="od-map-illustration${pulse ? " od-map-illustration--pulse" : ""}" ${id ? `id="${id}"` : ""}>
     <img class="od-map-illustration__bg" src="/assets/map-illustration.svg" alt="" />
     ${pins
       .map((p, i) => {
@@ -1345,6 +1368,14 @@ function mapIllustrationHtml(pins) {
       })
       .join("")}
   </div>`;
+}
+
+/** Budget/BHK screens reuse the same map illustration as a "coming into
+ * focus" backdrop — re-rendered (via patchNode) on every stepper tap so the
+ * CSS entrance animation on `.od-map-illustration--pulse` retriggers as a
+ * short value-change cue. */
+function discoveryValueMapHtml() {
+  return mapIllustrationHtml([], { id: "od-value-map-wrap", pulse: true });
 }
 
 /** Budget line derives from the same price-band signal the mock ranking
@@ -1357,8 +1388,9 @@ function localityBudgetLine(loc) {
   return `${low} - ${high}`;
 }
 
-function localityBadgeLabel(loc, isPrimary) {
-  if (isPrimary) return "Recommended";
+function localityBadgeLabel(loc, rank) {
+  if (rank === 1) return "Recommended";
+  if (rank !== null) return "Also matches";
   if (loc.price_band_match === "within_budget") return "In budget";
   if (loc.price_band_match === "below_budget") return "Great value";
   return "Above budget";
@@ -1373,8 +1405,8 @@ function localityCardHtml(loc, rank) {
     <span class="od-locality-card__rank">${isPrimary ? rank : ""}</span>
     <div class="od-locality-card__body">
       <div class="od-locality-card__head">
-        <h3 class="od-locality-card__name">${escapeHtml(loc.name)}</h3>
-        <span class="od-signal-badge od-signal-badge--rank">${localityBadgeLabel(loc, isPrimary)}</span>
+        <h2 class="od-locality-card__name">${escapeHtml(loc.name)}</h2>
+        <span class="od-signal-badge od-signal-badge--rank">${localityBadgeLabel(loc, rank)}</span>
       </div>
       <p class="od-locality-card__budget">${escapeHtml(localityBudgetLine(loc))}</p>
       <p class="od-locality-card__distance">${escapeHtml(distanceLine)}</p>
@@ -1390,6 +1422,7 @@ function discoveryMapScreen() {
 
   return `<div class="ol-screen">
     ${odTopBar("discovery-map-back")}
+    ${discoverySummaryHtml()}
     <h1 class="od-heading">Recommended localities</h1>
     ${primary.length ? mapIllustrationHtml(primary.map((_, i) => ({ label: String(i + 1) }))) : ""}
     <div class="od-locality-list">
@@ -1560,10 +1593,12 @@ function wireEvents(root) {
       case "budget-step-minus":
         state.budgetIndex = Math.max(0, state.budgetIndex - 1);
         patchNode("od-topbar-stepper", budgetStepperHtml());
+        patchNode("od-value-map-wrap", discoveryValueMapHtml());
         break;
       case "budget-step-plus":
         state.budgetIndex = Math.min(currentBudgetSteps().length - 1, state.budgetIndex + 1);
         patchNode("od-topbar-stepper", budgetStepperHtml());
+        patchNode("od-value-map-wrap", discoveryValueMapHtml());
         break;
       case "discovery-bhk-back":
         goTo("discovery-budget");
@@ -1572,12 +1607,14 @@ function wireEvents(root) {
         const idx = bhkIndex();
         if (idx > 0) state.bhk = BHK_OPTIONS[idx - 1];
         patchNode("od-topbar-stepper", bhkStepperHtml());
+        patchNode("od-value-map-wrap", discoveryValueMapHtml());
         break;
       }
       case "bhk-step-plus": {
         const idx = bhkIndex();
         state.bhk = BHK_OPTIONS[Math.min(BHK_OPTIONS.length - 1, idx + 1)];
         patchNode("od-topbar-stepper", bhkStepperHtml());
+        patchNode("od-value-map-wrap", discoveryValueMapHtml());
         break;
       }
       case "pick-property-type":
