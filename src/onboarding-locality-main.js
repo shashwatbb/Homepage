@@ -1637,7 +1637,11 @@ function landmarkPreviewMapHtml() {
 function mountLandmarkMap() {
   mountDiscoveryMap("od-landmark-map", {
     center: cityCenter(state.city),
-    pins: state.landmarks.map((l, i) => ({ label: String(i + 1), coords: l.coords })),
+    pins: state.landmarks.map((l, i) =>
+      l.id === "current-location"
+        ? { variant: "current", icon: "", coords: l.coords, title: l.name }
+        : { label: String(i + 1), coords: l.coords }
+    ),
   });
 }
 
@@ -1896,16 +1900,20 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   pins.forEach((p) => {
     if (!p.coords) return;
     const isAnchor = p.variant === "anchor";
+    // "You are here" — a plain pulsing dot, no icon/number glyph inside it.
+    const isCurrent = p.variant === "current";
     const icon = L.divIcon({
       className: "od-leaflet-div-icon",
-      html: `<div class="od-map-pin-container ${isAnchor ? "od-map-pin-container--anchor" : ""}">
+      html: isCurrent
+        ? `<div class="od-map-pin-container"><span class="od-map-pin-badge od-map-pin-badge--current"></span></div>`
+        : `<div class="od-map-pin-container ${isAnchor ? "od-map-pin-container--anchor" : ""}">
         <span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}">
           ${p.icon || p.label}
         </span>
         ${p.title && isAnchor ? `<span class="od-map-pin-label">${escapeHtml(p.title)}</span>` : ""}
       </div>`,
-      iconSize: isAnchor ? [120, 48] : [28, 28],
-      iconAnchor: isAnchor ? [60, 24] : [14, 14],
+      iconSize: isAnchor ? [120, 48] : [22, 22],
+      iconAnchor: isAnchor ? [60, 24] : [11, 11],
     });
 
     const marker = L.marker(p.coords, { icon }).addTo(map);
@@ -2444,9 +2452,30 @@ function wireEvents(root) {
         if (state.landmarks.length >= 2) break;
         btn.disabled = true;
         btn.textContent = "Detecting…";
+
+        // Belt-and-suspenders against getting stuck: getCurrentPosition's own
+        // `timeout` option isn't reliably honored by every browser when the
+        // permission prompt is silently blocked (no prompt shown, neither
+        // callback ever fires) — a plain JS timeout guarantees the button
+        // always recovers. `settled` stops whichever fires second (real
+        // callback vs. this timeout) from double-handling the result.
+        let settled = false;
+        const resetButton = () => {
+          btn.disabled = false;
+          btn.innerHTML = `<span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span> Detect current location`;
+        };
+        const giveUp = window.setTimeout(() => {
+          if (settled) return;
+          settled = true;
+          resetButton();
+          showToast("Couldn't get your location — check permissions");
+        }, 12000);
+
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            btn.disabled = false;
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(giveUp);
             if (state.landmarks.length >= 2 || state.landmarks.some((l) => l.id === "current-location")) {
               renderLandmarkPicker();
               return;
@@ -2461,8 +2490,10 @@ function wireEvents(root) {
             renderLandmarkPicker();
           },
           () => {
-            btn.disabled = false;
-            btn.innerHTML = `<span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span> Detect current location`;
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(giveUp);
+            resetButton();
             showToast("Couldn't get your location — check permissions");
           },
           { enableHighAccuracy: true, timeout: 10000 }
@@ -2757,10 +2788,11 @@ function render() {
           tooltip: `<b>${escapeHtml(l.name)}</b><br><span style="color:#6b7280">${escapeHtml(localityBudgetLine(l))}</span>`,
         })),
         ...state.landmarks.map((l) => {
+          const isCurrentLocation = l.id === "current-location";
           const categoryIcon = LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin;
           return {
-            icon: categoryIcon,
-            variant: "anchor",
+            icon: isCurrentLocation ? "" : categoryIcon,
+            variant: isCurrentLocation ? "current" : "anchor",
             coords: l.coords,
             title: l.name,
             tooltip:

@@ -999,6 +999,46 @@
   height: 16px;
 }
 
+/* "You are here" — classic blue dot with a soft pulsing ring, distinct from
+   every other pin type so it reads immediately as the user's own position,
+   not another landmark. */
+.od-map-pin-badge--current {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #2563eb;
+  border: 2px solid var(--ds-surface-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.od-map-pin-badge--current::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background-color: rgba(37, 99, 235, 0.25);
+  animation: od-current-location-pulse 2s ease-out infinite;
+}
+
+@keyframes od-current-location-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .od-map-pin-badge--current::after {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
 .od-map-pin-label {
   position: absolute;
   top: 100%;
