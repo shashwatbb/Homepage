@@ -464,6 +464,23 @@
   color: var(--ds-color-warm-neutral-800);
 }
 
+/* Rent's budget labels ("₹8 k/mo"..."₹1.5 L/mo") are wider than buy's
+   ("₹25 L"..."₹10 Cr") — the shared picker item has no white-space rule, so
+   in the tightest cases a label could wrap to 2 lines inside its fixed
+   2.5rem row height and visually collide with the row above/below it. Force
+   one line and give the wheel a little more width to fit it comfortably. */
+.od-flow .srp-ios-picker__item {
+  white-space: nowrap;
+}
+
+.od-flow .srp-ios-picker--odometer {
+  --srp-picker-item-h: 2.75rem;
+}
+
+.od-flow .srp-budget-stepper__picker {
+  max-width: 18rem;
+}
+
 /* Chip grids (BHK, property type, lifestyle) ------------------------------- */
 /* Square-rounded pills on the same shadow elevation as the choice cards.
    Selected = purple-700 stroke + purple-50 tint, matching every other
@@ -947,17 +964,23 @@
   border: 1px solid var(--ds-color-grey-neutral-100);
 }
 
-/* Real Leaflet map (OpenStreetMap raster tiles) — shared by the fixed-height
-   landmark-picker preview and the full-screen recommendations map. */
+/* Real Leaflet map (Wikimedia's retina-capable OSM-intl tiles) — shared by
+   the fixed-height landmark-picker preview and the full-screen
+   recommendations map. */
 .od-map-illustration .leaflet-control-attribution,
 .od-map-full__canvas .leaflet-control-attribution {
   font-size: 9px;
   background: rgba(255, 255, 255, 0.75);
 }
 
+/* Wikimedia's own style is already lighter than stock OSM carto, so this
+   only needs a light desaturating touch now — the old, much stronger
+   contrast/brightness reduction was making the whole map read hazy/soft on
+   top of the separate 1x-tiles-on-retina blur (fixed by switching tile
+   source; see mountDiscoveryMap). */
 .od-map-illustration .leaflet-tile-pane,
 .od-map-full__canvas .leaflet-tile-pane {
-  filter: grayscale(0.9) brightness(1.12) contrast(0.85) saturate(0.4);
+  filter: grayscale(0.5) saturate(0.7);
 }
 
 .od-leaflet-div-icon {

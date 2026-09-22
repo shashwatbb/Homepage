@@ -1857,13 +1857,16 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
 
   // CARTO's basemap CDN (the source of the "Positron" style the user
   // linked) now gates its free tier behind an API key — confirmed live,
-  // it served an "API key required" watermark instead of tiles. Falling
-  // back to plain OpenStreetMap raster tiles: genuinely free, no key,
-  // guaranteed to work. Swap this URL (and add a key param) if a CARTO/
-  // MapTiler/Stadia key becomes available for the real Positron look.
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    subdomains: "abc",
+  // it served an "API key required" watermark instead of tiles. Wikimedia's
+  // OSM-intl tiles are free, keyless, and — unlike the plain openstreetmap.org
+  // tile server — actually serve @2x tiles, which is what was reading as
+  // "blurry": standard OSM tiles are 1x/256px, so on any retina phone
+  // screen they were being upscaled 2-3x by the browser. `{r}` lets
+  // Leaflet request the sharp @2x variant automatically on high-DPI
+  // screens (detectRetina) and falls back to 1x elsewhere.
+  L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png", {
     maxZoom: 19,
+    detectRetina: true,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
