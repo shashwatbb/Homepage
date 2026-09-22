@@ -120,8 +120,9 @@
 }
 
 .od-screen--split__pin {
-  width: 160px;
-  height: 160px;
+  width: 240px;
+  height: 240px;
+  max-width: 60vw;
   object-fit: contain;
 }
 
@@ -379,6 +380,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* .od-step-screen is a flex column, so sibling margins never collapse —
+     without an explicit top margin here, a heading with no subtitle above
+     (BHK's "Which configuration?") sat only 4px from the stepper below it. */
+  margin-top: var(--ds-space-xl);
 }
 
 .od-step-centre .srp-ios-picker--odometer::before {
@@ -542,6 +547,9 @@
 
 .od-search-field {
   position: relative;
+  /* No subtitle on this screen to carry the gap from the heading (which
+     only has a 4px bottom margin of its own) — give the field its own. */
+  margin-top: var(--ds-space-l);
   margin-bottom: var(--ds-space-l);
 }
 
