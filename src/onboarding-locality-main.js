@@ -2068,18 +2068,30 @@ function localityCardHtml(loc, rank) {
   </div>`;
 }
 
+/** The travel-radius circle only means something when the user actually
+ * picked a commute tolerance — "flexible" has no upper bound, and no
+ * selection at all has no distance to show. Previously this silently fell
+ * back to a generic 30-min circle in both cases, which drew a radius the
+ * user never chose. Returns null when there's nothing real to draw. */
+function selectedCommuteRadiusKm() {
+  const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
+  if (!commuteOpt || !Number.isFinite(commuteOpt.maxMinutes)) return null;
+  return commuteMinutesToKm(commuteOpt.maxMinutes);
+}
+
 function discoveryMapScreen() {
   const ranked = state.recommendedLocalities;
   const primary = ranked.slice(0, 5);
   const secondary = ranked.slice(5);
-  const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
-  const commuteMinutes = commuteOpt?.maxMinutes && Number.isFinite(commuteOpt.maxMinutes) ? commuteOpt.maxMinutes : 30;
-  const radiusKm = Math.round(commuteMinutesToKm(commuteMinutes) * 10) / 10;
   const hasAnchors = state.landmarks.length > 0;
+  const radiusKm = selectedCommuteRadiusKm();
   // One clean line instead of the old separate "stay closer to" panel +
   // map legend block — same info (which anchors, what radius), said once.
+  // No invented distance when the user didn't pick a commute tolerance.
   const anchorNote = hasAnchors
-    ? `Within ~${radiusKm} km of ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
+    ? radiusKm !== null
+      ? `Within ~${Math.round(radiusKm * 10) / 10} km of ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
+      : `Near ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
     : "";
 
   // Plain flex column, top-to-bottom, both zones always in normal flow — no
@@ -2100,7 +2112,6 @@ function discoveryMapScreen() {
         <span class="od-drawer__handle"></span>
         <span class="od-drawer__header">
           <span class="od-drawer__title">Recommended localities</span>
-          <span class="od-drawer__count">${ranked.length}</span>
         </span>
       </div>
       <div class="od-drawer__body" id="od-drawer-body">
@@ -2638,9 +2649,8 @@ function render() {
   if (state.step === "discovery-landmarks") mountLandmarkMap();
   if (state.step === "discovery-map") {
     const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
-    const commuteMinutes = commuteOpt?.maxMinutes && Number.isFinite(commuteOpt.maxMinutes) ? commuteOpt.maxMinutes : 30;
-    const radiusKm = commuteMinutesToKm(commuteMinutes);
-    const radiusMeters = Math.max(radiusKm * 1000, 2500);
+    const radiusKm = selectedCommuteRadiusKm();
+    const radiusMeters = radiusKm !== null ? Math.max(radiusKm * 1000, 2500) : null;
 
     mountDiscoveryMap("od-results-map", {
       center: cityCenter(state.city),
@@ -2658,15 +2668,24 @@ function render() {
             variant: "anchor",
             coords: l.coords,
             title: l.name,
-            tooltip: `<b>${escapeHtml(l.name)}</b><br><span style="color:#6d28d9">Travel radius: ~${Math.round(radiusKm * 10) / 10} km (${commuteOpt?.label || "Within 30 min"})</span>`,
+            tooltip:
+              radiusKm !== null
+                ? `<b>${escapeHtml(l.name)}</b><br><span style="color:#6d28d9">Travel radius: ~${Math.round(radiusKm * 10) / 10} km (${commuteOpt?.label})</span>`
+                : `<b>${escapeHtml(l.name)}</b>`,
           };
         }),
       ],
-      circles: state.landmarks.map((l) => ({
-        coords: l.coords,
-        radiusMeters,
-        label: `${l.name} · ~${Math.round(radiusKm * 10) / 10} km travel radius`,
-      })),
+      // No circle at all when there's no real commute tolerance selected
+      // (unset, or "flexible") — a generic default radius here would be a
+      // distance the user never actually chose.
+      circles:
+        radiusMeters !== null
+          ? state.landmarks.map((l) => ({
+              coords: l.coords,
+              radiusMeters,
+              label: `${l.name} · ~${Math.round(radiusKm * 10) / 10} km travel radius`,
+            }))
+          : [],
     });
     wireResultsDrawerScroll();
   }
