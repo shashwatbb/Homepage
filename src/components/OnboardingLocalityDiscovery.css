@@ -80,6 +80,17 @@
   margin-top: var(--ds-space-l);
 }
 
+.od-screen--split {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.od-screen--split__question {
+  text-align: center;
+  margin-top: var(--ds-space-l);
+}
+
 .od-choice-card {
   display: flex;
   align-items: center;
