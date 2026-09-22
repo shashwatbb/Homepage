@@ -143,6 +143,11 @@ let activeLetter = "A";
 let toast = null; // { message, icon }
 let toastTimer = null;
 
+/** Best-effort haptic tick — no-op on desktop/unsupported browsers. */
+function haptic(pattern = 10) {
+  navigator.vibrate?.(pattern);
+}
+
 let timers = [];
 function clearTimers() {
   timers.forEach((t) => window.clearTimeout(t));
@@ -1518,7 +1523,7 @@ function discoveryBhkScreen() {
     <h1 class="od-heading">Which configuration?</h1>
     <div class="od-step-centre">${bhkStepperHtml()}</div>
     <p class="ol-section-label">Property type</p>
-    <div class="od-chip-grid">
+    <div class="od-chip-grid" id="od-property-type-grid">
       ${PROPERTY_TYPE_OPTIONS.map(
         (opt) =>
           `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}">${opt}</button>`
@@ -1968,9 +1973,11 @@ function wireEvents(root) {
         goTo("locality-check");
         break;
       case "budget-step-minus":
+        haptic(8);
         odBudgetPicker?.setIndex(Math.max(0, state.budgetIndex - 1));
         break;
       case "budget-step-plus":
+        haptic(8);
         odBudgetPicker?.setIndex(Math.min(currentBudgetSteps().length - 1, state.budgetIndex + 1));
         break;
       case "discovery-bhk-back":
@@ -1979,12 +1986,14 @@ function wireEvents(root) {
       case "bhk-step-minus": {
         const idx = bhkIndex();
         if (idx > 0) state.bhk = BHK_OPTIONS[idx - 1];
+        haptic(8);
         patchNode("od-bhk-stepper", bhkStepperHtml("fall"));
         break;
       }
       case "bhk-step-plus": {
         const idx = bhkIndex();
         state.bhk = BHK_OPTIONS[Math.min(BHK_OPTIONS.length - 1, idx + 1)];
+        haptic(8);
         patchNode("od-bhk-stepper", bhkStepperHtml("rise"));
         break;
       }
@@ -1995,6 +2004,7 @@ function wireEvents(root) {
         root.querySelectorAll('[data-action="pick-property-type"]').forEach((el) => {
           el.classList.toggle("is-active", el.getAttribute("data-value") === state.propertyType);
         });
+        haptic(10);
         break;
       case "discovery-landmarks-back":
         goTo("discovery-bhk");
@@ -2006,6 +2016,7 @@ function wireEvents(root) {
         if (!found || state.landmarks.length >= 2) break;
         state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
         odLandmarkQuery = "";
+        haptic(10);
         renderLandmarkPicker();
         break;
       }
@@ -2016,6 +2027,7 @@ function wireEvents(root) {
       case "no-landmark-preference":
         state.landmarks = [];
         odLandmarkQuery = "";
+        haptic(10);
         goTo(nextDiscoveryStep("discovery-landmarks"));
         break;
       case "discovery-commute-back":
@@ -2023,6 +2035,7 @@ function wireEvents(root) {
         break;
       case "pick-commute":
         state.commuteTolerance = btn.getAttribute("data-value");
+        haptic(10);
         goTo(nextDiscoveryStep("discovery-commute"));
         break;
       case "discovery-intent-back":
@@ -2034,6 +2047,7 @@ function wireEvents(root) {
         break;
       case "pick-intent":
         state.intent = btn.getAttribute("data-value");
+        haptic(10);
         goTo(nextDiscoveryStep("discovery-intent"));
         break;
       case "discovery-lifestyle-back":
@@ -2049,14 +2063,28 @@ function wireEvents(root) {
           ? state.lifestyleTags.filter((t) => t !== tagId)
           : [...state.lifestyleTags, tagId];
         btn.classList.toggle("is-active", state.lifestyleTags.includes(tagId));
+        haptic(8);
         break;
       }
       case "discovery-continue": {
         const from = btn.getAttribute("data-from");
+        if (from === "discovery-bhk" && !state.propertyType) {
+          haptic([15, 40, 15]);
+          showToast("Pick a property type to continue");
+          const grid = document.getElementById("od-property-type-grid");
+          if (grid) {
+            grid.classList.remove("is-shaking");
+            void grid.offsetWidth; // restart the animation on repeated taps
+            grid.classList.add("is-shaking");
+          }
+          break;
+        }
         if (from === "discovery-lifestyle") {
+          haptic(10);
           beginLocalityMatch();
           break;
         }
+        haptic(10);
         goTo(nextDiscoveryStep(from));
         break;
       }

@@ -354,6 +354,10 @@
   margin-top: var(--ds-space-m);
 }
 
+.od-chip-grid.is-shaking {
+  animation: ol-shake 0.18s linear;
+}
+
 .od-chip {
   display: inline-flex;
   align-items: center;
