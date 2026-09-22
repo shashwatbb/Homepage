@@ -7,9 +7,11 @@
    SRP surface that also uses them is untouched.
 
    Visual language: soft shadow elevation (--od-shadow-*, see .od-flow)
-   instead of flat 1px borders everywhere, and one committed purple accent
-   (--ds-color-purple-700) carrying every selected/active/focus state, the
-   progress fill, and the primary CTA — not just the CTA button alone. */
+   instead of flat 1px borders everywhere. Purple (--ds-color-purple-700)
+   is reserved for meaning "selected/active/focused/primary action" —
+   the progress fill, focus rings, the CTA, and a card only once it's
+   actually chosen. Everything unselected stays neutral (warm-neutral)
+   so purple keeps reading as a signal, not a background wash. */
 
 .od-progress {
   height: 6px;
@@ -165,8 +167,10 @@
   width: 48px;
   height: 48px;
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-color-purple-50);
-  color: var(--ds-color-purple-700);
+  /* Neutral by default — purple is reserved for the selected state below,
+     so it stays a meaningful signal instead of coloring every card. */
+  background-color: var(--ds-color-warm-neutral-100);
+  color: var(--ds-color-warm-neutral-800);
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
@@ -182,7 +186,7 @@
 .od-choice-card__trailing {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--ds-color-purple-700);
+  color: var(--ds-color-grey-neutral-500);
 }
 
 .od-choice-card__trailing svg {
@@ -215,7 +219,9 @@
 .od-commute-bars.is-filled-3 span:nth-child(1),
 .od-commute-bars.is-filled-3 span:nth-child(2),
 .od-commute-bars.is-filled-3 span:nth-child(3) {
-  background-color: var(--ds-color-purple-700);
+  /* Neutral by default, same reasoning as the icon tile above — purple
+     only appears once this specific card is the selected one. */
+  background-color: var(--ds-color-warm-neutral-800);
 }
 
 .od-choice-card.is-selected .od-commute-bars span {
@@ -586,7 +592,7 @@
 .od-landmark-result__icon {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--ds-color-purple-700);
+  color: var(--ds-icon-grey-1);
 }
 
 .od-landmark-result__icon svg {
