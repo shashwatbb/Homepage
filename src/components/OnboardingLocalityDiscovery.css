@@ -553,7 +553,10 @@
   left: 0;
   right: 0;
   top: calc(100% + var(--ds-space-2xs));
-  z-index: 20;
+  /* Leaflet's own panes/controls run up to z-index 1000 internally (the
+     map below this field), so anything lower gets buried under the map
+     the instant it renders. */
+  z-index: 1010;
 }
 
 .od-landmark-results {
