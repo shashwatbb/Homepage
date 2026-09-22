@@ -295,6 +295,12 @@ function toastHtml() {
 // Splash (SplashScreen.tsx)
 // ---------------------------------------------------------------------------
 
+/** Recommendations screen's bottom drawer — peek by default (map takes the
+ * screen), tap the handle/header to expand over the list. Module-level so
+ * it survives the drawer's own DOM toggle without a full re-render (which
+ * would remount the Leaflet map underneath it). */
+let resultsDrawerExpanded = false;
+
 let splashIntroFinished = false;
 let splashQuote = "";
 let splashLottieInstance = null;
@@ -318,7 +324,14 @@ function splashScreen() {
 function mountSplashLottie() {
   const canvas = document.getElementById("ol-splash-canvas");
   if (!canvas) return;
-  const rect = canvas.getBoundingClientRect();
+  let rect = canvas.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) {
+    // Right after innerHTML swap, the canvas hasn't been laid out yet — a
+    // 0x0 rect makes DotLottie fail to load ("source width is zero").
+    // One rAF is enough for the browser to run layout before we read it.
+    requestAnimationFrame(() => mountSplashLottie());
+    return;
+  }
   canvas.width = rect.width * window.devicePixelRatio;
   canvas.height = rect.height * window.devicePixelRatio;
 
@@ -1900,67 +1913,35 @@ function discoveryMapScreen() {
   const commuteMinutes = commuteOpt?.maxMinutes && Number.isFinite(commuteOpt.maxMinutes) ? commuteOpt.maxMinutes : 30;
   const radiusKm = Math.round(commuteMinutesToKm(commuteMinutes) * 10) / 10;
   const hasAnchors = state.landmarks.length > 0;
-  const commuteLabel = commuteOpt?.label || "Within 30 min";
+  // One clean line instead of the old separate "stay closer to" panel +
+  // map legend block — same info (which anchors, what radius), said once.
+  const anchorNote = hasAnchors
+    ? `Within ~${radiusKm} km of ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
+    : "";
 
-  return `<div class="ol-screen od-flow od-flow--results">
-    ${odTopBar("discovery-map-back")}
-    ${discoverySummaryHtml()}
-    <h1 class="od-heading">Recommended localities</h1>
-    ${
-      hasAnchors
-        ? `<div class="od-anchors-panel">
-            <div class="od-anchors-panel__header">
-              <span class="od-anchors-panel__title">Stay closer to</span>
-              <span class="od-anchors-panel__badge">${escapeHtml(commuteLabel)} (~${radiusKm} km radius)</span>
-            </div>
-            <div class="od-anchors-panel__chips">
-              ${state.landmarks
-                .map((l) => {
-                  const icon = LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin;
-                  const catLabel = l.category ? l.category.charAt(0).toUpperCase() + l.category.slice(1) : "Landmark";
-                  return `<div class="od-anchor-card">
-                    <span class="od-anchor-card__icon">${icon}</span>
-                    <div class="od-anchor-card__info">
-                      <span class="od-anchor-card__name">${escapeHtml(l.name)}</span>
-                      <span class="od-anchor-card__cat">${escapeHtml(catLabel)}</span>
-                    </div>
-                  </div>`;
-                })
-                .join("")}
-            </div>
-          </div>`
-        : ""
-    }
-    ${
-      primary.length
-        ? `<div class="od-map-wrap">
-            ${mapIllustrationHtml(
-              primary.map((l, i) => ({ label: String(i + 1), coords: l.coordinates })),
-              { id: "od-results-map" }
-            )}
-            ${
-              hasAnchors
-                ? `<div class="od-map-legend">
-                    <div class="od-map-legend__item">
-                      <span class="od-map-legend__indicator od-map-legend__indicator--anchor"></span>
-                      <span>Marked area & travel circumference (~${radiusKm} km)</span>
-                    </div>
-                    <div class="od-map-legend__item">
-                      <span class="od-map-legend__indicator od-map-legend__indicator--locality">1-5</span>
-                      <span>Recommended localities in & around area</span>
-                    </div>
-                  </div>`
-                : ""
-            }
-          </div>`
-        : ""
-    }
-    <div class="od-locality-list">
-      ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
-      ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
-      ${secondary.map((l) => localityCardHtml(l, null)).join("")}
+  return `<div class="ol-screen od-flow od-map-full">
+    <div class="od-map-full__canvas" id="od-results-map"></div>
+    <div class="od-map-full__topbar">
+      <button type="button" class="ol-icon-btn od-map-full__back" data-action="discovery-map-back" aria-label="Back">${ICON.arrowLeft}</button>
+      ${anchorNote ? `<span class="od-map-full__note">${anchorNote}</span>` : ""}
     </div>
-    ${ranked.length === 0 ? `<p class="od-empty-note">No matching localities yet, try widening your budget.</p>` : ""}
+    <div class="od-drawer ${resultsDrawerExpanded ? "od-drawer--expanded" : ""}" id="od-results-drawer">
+      <button type="button" class="od-drawer__handle-row" data-action="toggle-results-drawer" aria-expanded="${resultsDrawerExpanded}" aria-controls="od-drawer-body">
+        <span class="od-drawer__handle"></span>
+        <span class="od-drawer__header">
+          <span class="od-drawer__title">Recommended localities</span>
+          <span class="od-drawer__count">${ranked.length}</span>
+        </span>
+      </button>
+      <div class="od-drawer__body" id="od-drawer-body">
+        <div class="od-locality-list">
+          ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
+          ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
+          ${secondary.map((l) => localityCardHtml(l, null)).join("")}
+        </div>
+        ${ranked.length === 0 ? `<p class="od-empty-note">No matching localities yet, try widening your budget.</p>` : ""}
+      </div>
+    </div>
   </div>`;
 }
 
@@ -1985,6 +1966,7 @@ function beginLocalityMatch() {
   state.budgetMin = state.budgetMax * 0.6;
   const { ranked } = getRecommendedLocalities(state);
   state.recommendedLocalities = ranked;
+  resultsDrawerExpanded = false;
   goTo("discovery-map");
 }
 
@@ -2301,6 +2283,12 @@ function wireEvents(root) {
       case "discovery-map-back":
         goTo("discovery-lifestyle");
         break;
+      case "toggle-results-drawer": {
+        resultsDrawerExpanded = !resultsDrawerExpanded;
+        const drawer = document.getElementById("od-results-drawer");
+        if (drawer) drawer.classList.toggle("od-drawer--expanded", resultsDrawerExpanded);
+        break;
+      }
       case "explore-locality":
         exploreLocality(btn.getAttribute("data-locality-id"), btn.getAttribute("data-locality-name"));
         break;
