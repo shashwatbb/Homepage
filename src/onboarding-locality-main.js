@@ -2091,7 +2091,7 @@ function localityCardHtml(loc, rank) {
       </div>
       <p class="od-locality-card__budget">${escapeHtml(localityBudgetLine(loc))}</p>
       <p class="od-locality-card__distance">${escapeHtml(distanceLine)}</p>
-      <button type="button" class="od-locality-card__cta ${isTopPick ? "" : "od-locality-card__cta--secondary"}" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore this locality</button>
+      <button type="button" class="od-locality-card__cta ${isTopPick ? "" : "od-locality-card__cta--secondary"}" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore locality</button>
     </div>
   </div>`;
 }

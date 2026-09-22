@@ -848,7 +848,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
+  border-radius: var(--ds-radius-2xl) var(--ds-radius-2xl) 0 0;
   background-color: var(--ds-surface-white);
   box-shadow: 0 -4px 24px rgba(26, 26, 26, 0.12);
 }
