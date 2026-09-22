@@ -1199,7 +1199,10 @@ function animateProgressFill(root) {
 
 function localityCheckScreen() {
   return `<div class="ol-screen od-screen--split od-flow">
-    <h1 class="od-heading od-heading--lg od-screen--split__question">Do you know the area you want to move to?</h1>
+    <div class="od-screen--split__top">
+      <h1 class="od-heading od-heading--lg od-screen--split__question">Do you know the area you want to move to?</h1>
+      <img class="od-screen--split__pin" src="${ASSET}/images/locality-check-pin.jpg" width="72" height="72" alt="" />
+    </div>
     <div class="od-choice-list">
       ${odChoiceCardHtml({ action: "locality-check-yes", icon: OD_ICON.pin, label: "Yes, I know it", trailing: "chevron" })}
       ${odChoiceCardHtml({ action: "locality-check-not-sure", icon: OD_ICON.compass, label: "Not sure, help me find one", trailing: "chevron" })}

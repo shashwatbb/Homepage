@@ -102,9 +102,22 @@
   justify-content: space-between;
 }
 
+.od-screen--split__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .od-screen--split__question {
   text-align: center;
   margin-top: var(--ds-space-l);
+}
+
+.od-screen--split__pin {
+  width: 72px;
+  height: 72px;
+  margin-top: var(--ds-space-xl);
+  object-fit: contain;
 }
 
 .od-choice-card {
