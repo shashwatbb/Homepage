@@ -277,7 +277,7 @@ function brandTile() {
 function toastHtml() {
   if (!toast) return "";
   return `<div class="ol-toast-layer">
-    <div class="ol-toast">
+    <div class="ol-toast" role="status" aria-live="polite">
       ${toast.icon ? `<span class="ol-toast__icon">${toast.icon}</span>` : ""}
       <span class="ol-toast__message">${escapeHtml(toast.message)}</span>
       <span class="ol-toast__divider"></span>
@@ -1069,6 +1069,8 @@ function commuteBarsHtml(optionId) {
 function odChoiceCardHtml({ action, value, icon, label, selected, trailing }) {
   return `<button type="button" class="od-choice-card ${selected ? "is-selected" : ""}" data-action="${action}" ${
     value !== undefined ? `data-value="${value}"` : ""
+  } ${
+    selected !== undefined ? `aria-pressed="${selected}"` : ""
   }>
     <span class="od-choice-card__icon">${icon}</span>
     <span class="od-choice-card__label">${label}</span>
@@ -1526,7 +1528,7 @@ function discoveryBhkScreen() {
     <div class="od-chip-grid" id="od-property-type-grid">
       ${PROPERTY_TYPE_OPTIONS.map(
         (opt) =>
-          `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}">${opt}</button>`
+          `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}" aria-pressed="${state.propertyType === opt}">${opt}</button>`
       ).join("")}
     </div>
     ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk">${STRINGS["common.continue"]}</button>`)}
@@ -1678,7 +1680,7 @@ function discoveryLifestyleScreen() {
     <div class="od-chip-grid">
       ${LIFESTYLE_TAGS.map((tag) => {
         const active = state.lifestyleTags.includes(tag.id);
-        return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}">${tag.label}</button>`;
+        return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}" aria-pressed="${active}">${tag.label}</button>`;
       }).join("")}
     </div>
     ${odPageCta(
@@ -1996,7 +1998,9 @@ function wireEvents(root) {
         // source of the full-page flash/CLS on a plain chip tap.
         state.propertyType = btn.getAttribute("data-value");
         root.querySelectorAll('[data-action="pick-property-type"]').forEach((el) => {
-          el.classList.toggle("is-active", el.getAttribute("data-value") === state.propertyType);
+          const isActive = el.getAttribute("data-value") === state.propertyType;
+          el.classList.toggle("is-active", isActive);
+          el.setAttribute("aria-pressed", String(isActive));
         });
         haptic(10);
         break;
@@ -2057,6 +2061,7 @@ function wireEvents(root) {
           ? state.lifestyleTags.filter((t) => t !== tagId)
           : [...state.lifestyleTags, tagId];
         btn.classList.toggle("is-active", state.lifestyleTags.includes(tagId));
+        btn.setAttribute("aria-pressed", String(state.lifestyleTags.includes(tagId)));
         haptic(8);
         break;
       }
@@ -2237,6 +2242,35 @@ function patchNode(id, html) {
   el.outerHTML = html;
 }
 
+/** Steps in the "discover" sub-flow — the one entered via "Not sure, help
+ * me find one" — that need focus moved on render. Every step here is a
+ * full innerHTML replace with no native page navigation, so nothing moves
+ * focus on its own; without this a keyboard/screen-reader user's focus
+ * silently resets to <body> on every single one of the flow's 7 steps.
+ * (Deliberately narrower than the DISCOVERY_STEPS history list above —
+ * this one excludes locality-check/locality-search, which aren't part of
+ * the "Not sure" branch.) */
+const FOCUS_MANAGED_STEPS = new Set([
+  "discovery-budget",
+  "discovery-bhk",
+  "discovery-landmarks",
+  "discovery-commute",
+  "discovery-intent",
+  "discovery-lifestyle",
+  "discovery-map",
+]);
+
+/** Moves focus to the new screen's heading after a full re-render, so
+ * keyboard/AT users land somewhere meaningful instead of losing their
+ * place. The heading is given tabindex="-1" so it's programmatically
+ * focusable without joining the natural tab order. */
+function focusDiscoveryHeading(root) {
+  const heading = root.querySelector(".od-heading");
+  if (!heading) return;
+  heading.setAttribute("tabindex", "-1");
+  heading.focus({ preventScroll: false });
+}
+
 function render() {
   const root = document.getElementById("onboarding-locality");
   if (!root) return;
@@ -2246,6 +2280,7 @@ function render() {
   if (state.step === "discovery-budget") mountBudgetDial();
   if (state.step === "splash") mountSplashLottie();
   if (state.step === "otp") focusOtpHiddenInput();
+  if (FOCUS_MANAGED_STEPS.has(state.step)) focusDiscoveryHeading(root);
 }
 
 function init() {

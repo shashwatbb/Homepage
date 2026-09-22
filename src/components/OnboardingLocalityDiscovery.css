@@ -465,6 +465,24 @@
   outline-offset: 2px;
 }
 
+/* Choice-card/chip entrance stagger and the validation shake were the two
+   most-interacted animations in this flow but the only ones in this file
+   with no reduced-motion accommodation — everything else here already had
+   one. Show content immediately instead of animating in, and drop the
+   shake (the toast + border/tint state are the accessible signal). */
+@media (prefers-reduced-motion: reduce) {
+  .od-choice-card,
+  .od-chip {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .od-chip-grid.is-shaking {
+    animation: none;
+  }
+}
+
 /* Landmark search (Screen 3) -------------------------------------------------- */
 /* Stroked input, matching the SRP search field pattern (48px, r12, 1px
    warm-neutral stroke) instead of the shadow-only `.ol-search-field`. The
@@ -622,13 +640,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  /* 24x24 is the WCAG 2.2 SC 2.5.8 minimum target size; the icon itself
+     stays visually small via the svg, the tap area is what grows. */
+  width: 24px;
+  height: 24px;
+  margin: -3px -3px -3px 0;
   border: none;
   border-radius: var(--ds-radius-full);
   background: transparent;
   color: inherit;
   cursor: pointer;
+}
+
+.od-anchor-chip__remove svg {
+  width: 12px;
+  height: 12px;
 }
 
 .od-anchor-chip__remove:hover {
