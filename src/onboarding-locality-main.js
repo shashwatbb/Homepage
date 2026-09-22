@@ -1668,7 +1668,7 @@ function renderLandmarkPicker() {
  * mind" contradicts the state once the user has already named one. */
 function landmarkSecondaryCtaHtml() {
   if (state.landmarks.length > 0) return "";
-  return odSecondaryCta("no-landmark-preference", "I don't have a specific place in mind");
+  return odSecondaryCta("no-landmark-preference", "Not sure");
 }
 
 /** Continue only appears once there's something to continue *with* — with
@@ -1985,6 +1985,11 @@ function wireResultsDrawerScroll() {
         return;
       }
       if (body.scrollTop <= 0 && draggedUp < -10) {
+        // This is the one branch that was missing preventDefault — left
+        // unhandled, the same downward drag that closes the drawer also
+        // reads to the browser as a page-level pull past the top, which
+        // is exactly what triggers Chrome's native pull-to-refresh.
+        e.preventDefault();
         setOpen(false);
       }
     },

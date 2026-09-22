@@ -633,14 +633,27 @@
   color: var(--ds-text-muted);
 }
 
+/* Horizontal rail, bleeding past the screen's own side padding so it scrolls
+   flush to both edges — same negative-margin-then-repad technique as
+   .od-ls-rail, since this screen (unlike the locality-search one) doesn't
+   already run full-bleed. */
 .od-landmark-suggestions__chips {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--ds-space-xs);
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 calc(-1 * var(--ds-space-m));
+  padding: 0 var(--ds-space-m) var(--ds-space-2xs);
+}
+
+.od-landmark-suggestions__chips::-webkit-scrollbar {
+  display: none;
 }
 
 .od-landmark-suggestion {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: var(--ds-space-2xs);
   padding: var(--ds-space-xs) var(--ds-space-s) var(--ds-space-xs) var(--ds-space-xs);
@@ -652,39 +665,40 @@
   cursor: pointer;
 }
 
+/* Plain icon, no round tint behind it — the pill's own border is enough
+   framing, and dark brown reads as neutral/informational rather than as a
+   "selected" purple accent. */
 .od-landmark-suggestion__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background-color: var(--ds-color-purple-50);
-  color: var(--ds-color-purple-700);
+  color: var(--ds-color-warm-neutral-800);
   flex-shrink: 0;
 }
 
 .od-landmark-suggestion__icon svg {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
 }
 
 .od-anchor-chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-space-xs);
-  margin: var(--ds-space-m) 0;
+  margin: var(--ds-space-m) 0 var(--ds-space-l);
 }
 
 /* Numbered so a chip and its matching map pin (Screen 3 preview, and the
-   recommendations map illustration) are visibly linked. */
+   recommendations map illustration) are visibly linked. Same pill shape
+   (radius-full) and padding as .od-landmark-suggestion — an added landmark
+   is the "selected" state of the exact same pill, not a different shape. */
 .od-anchor-chip {
   display: inline-flex;
   align-items: center;
   gap: var(--ds-space-2xs);
   padding: var(--ds-space-xs) var(--ds-space-s) var(--ds-space-xs) var(--ds-space-xs);
   border: 1px solid var(--ds-color-purple-200);
-  border-radius: var(--ds-radius-m);
+  border-radius: var(--ds-radius-full);
   background-color: var(--ds-color-purple-50);
   color: var(--ds-color-purple-800);
   font-size: var(--ds-font-size-s);
@@ -757,6 +771,11 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  /* Belt-and-suspenders against the browser's native pull-to-refresh —
+     the JS gate (wireResultsDrawerScroll) already preventDefaults the
+     gesture, this stops it from chaining to the page even if a stray
+     touchmove slips through. */
+  overscroll-behavior-y: none;
 }
 
 .od-map-full__map-zone {
@@ -880,6 +899,7 @@
   overflow-y: auto;
   padding: 0 var(--ds-space-m) var(--ds-space-l);
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 .od-map-illustration {
