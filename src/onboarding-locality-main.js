@@ -1574,27 +1574,32 @@ function discoveryBhkScreen() {
 
 let odLandmarkQuery = "";
 
-/** Quick-pick chips for a handful of obviously-known landmarks in the
- * user's city (metro stations, big offices/malls) — shown before the user
- * types anything, so this step doesn't read as an empty search box. Hidden
- * once search is in progress (own results take over) or the 2-landmark cap
- * is hit. Reuses LANDMARKS_BY_CITY, same pool the search itself queries. */
-function recommendedLandmarksHtml() {
-  if (state.landmarks.length >= 2 || odLandmarkQuery.trim()) return "";
-  const already = new Set(state.landmarks.map((l) => l.id));
-  const list = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon).filter((l) => !already.has(l.id)).slice(0, 4);
-  if (!list.length) return "";
+/** Single row of landmark pills: a handful of obviously-known places
+ * (metro stations, big offices/malls) plus any landmark the user picked
+ * via search that isn't already in that set — so a picked landmark is
+ * never rendered as a second, separate row below this one. Picking one
+ * toggles it selected *in place* (fills in with the selected color) rather
+ * than moving it anywhere. Hidden while actively typing a search query,
+ * where the results dropdown takes over instead. */
+function landmarkPillsHtml() {
+  if (odLandmarkQuery.trim()) return "";
+  const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
+  const popular = pool.slice(0, 4);
+  const extraSelected = state.landmarks.filter((l) => !popular.some((p) => p.id === l.id));
+  const items = [...popular, ...extraSelected];
+  if (!items.length) return "";
+  const selectedIds = new Set(state.landmarks.map((l) => l.id));
   return `<div class="od-landmark-suggestions">
     <p class="od-landmark-suggestions__label">Popular nearby</p>
     <div class="od-landmark-suggestions__chips">
-      ${list
-        .map(
-          (l) =>
-            `<button type="button" class="od-landmark-suggestion" data-action="pick-landmark" data-landmark-id="${l.id}">
+      ${items
+        .map((l) => {
+          const selected = selectedIds.has(l.id);
+          return `<button type="button" class="od-landmark-suggestion ${selected ? "is-selected" : ""}" data-action="toggle-landmark" data-landmark-id="${l.id}" aria-pressed="${selected}">
               <span class="od-landmark-suggestion__icon">${LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin}</span>
               ${escapeHtml(l.name)}
-            </button>`
-        )
+            </button>`;
+        })
         .join("")}
     </div>
   </div>`;
@@ -1615,18 +1620,6 @@ function landmarkResultsHtml() {
     .join("")}</ul>`;
 }
 
-/** Chips share a numbered badge with the matching pin on the map illustration
- * below, so the user can tell which chip maps to which marker. */
-function landmarkChipsHtml() {
-  if (!state.landmarks.length) return "";
-  return `<div class="od-anchor-chips">${state.landmarks
-    .map(
-      (l, i) =>
-        `<span class="od-anchor-chip"><span class="od-anchor-chip__num">${i + 1}</span>${escapeHtml(l.name)}<button type="button" class="od-anchor-chip__remove" data-action="remove-landmark" data-landmark-id="${l.id}" aria-label="Remove">${OD_ICON.close}</button></span>`
-    )
-    .join("")}</div>`;
-}
-
 /** Shown from the moment the screen mounts (not just once a landmark is
  * picked) — same "coming into focus" device as the budget/BHK screens, so
  * this step doesn't read as an empty page while the search field is idle. */
@@ -1644,13 +1637,45 @@ function mountLandmarkMap() {
   });
 }
 
+/** Cosmetic only — a fake, cycling placeholder ("Search landmark", "Search
+ * hospital", …) since a native <input placeholder> can't animate just part
+ * of itself. The real accessible hint lives in the input's aria-label; this
+ * overlay is aria-hidden and disappears the moment there's a real value. */
+const LANDMARK_GHOST_WORDS = ["landmark", "hospital", "school", "metro", "office"];
+let landmarkGhostInterval = null;
+let landmarkGhostIndex = 0;
+
+function mountLandmarkGhost() {
+  const ghost = document.getElementById("od-landmark-ghost");
+  const word = document.getElementById("od-landmark-ghost-word");
+  if (!ghost || !word) return;
+  landmarkGhostIndex = 0;
+  word.textContent = LANDMARK_GHOST_WORDS[0];
+  ghost.style.display = odLandmarkQuery ? "none" : "";
+  landmarkGhostInterval = window.setInterval(() => {
+    word.classList.add("is-swapping");
+    window.setTimeout(() => {
+      landmarkGhostIndex = (landmarkGhostIndex + 1) % LANDMARK_GHOST_WORDS.length;
+      word.textContent = LANDMARK_GHOST_WORDS[landmarkGhostIndex];
+      word.classList.remove("is-swapping");
+    }, 180);
+  }, 1800);
+}
+
+function stopLandmarkGhost() {
+  if (landmarkGhostInterval) {
+    window.clearInterval(landmarkGhostInterval);
+    landmarkGhostInterval = null;
+  }
+}
+
 function renderLandmarkPicker() {
   const results = document.getElementById("od-landmark-results-wrap");
   if (results) results.innerHTML = landmarkResultsHtml();
   const suggestions = document.getElementById("od-landmark-suggestions-wrap");
-  if (suggestions) suggestions.innerHTML = recommendedLandmarksHtml();
-  const chips = document.getElementById("od-landmark-chips-wrap");
-  if (chips) chips.innerHTML = landmarkChipsHtml();
+  if (suggestions) suggestions.innerHTML = landmarkPillsHtml();
+  const ghost = document.getElementById("od-landmark-ghost");
+  if (ghost) ghost.style.display = odLandmarkQuery ? "none" : "";
   const input = document.getElementById("od-landmark-input");
   if (input) input.disabled = state.landmarks.length >= 2;
   const mapWrap = document.getElementById("od-landmark-map-wrap");
@@ -1686,23 +1711,23 @@ function discoveryLandmarksScreen() {
     ${odTopBar("discovery-landmarks-back")}
     ${odProgressHtml("discovery-landmarks")}
     <h1 class="od-heading">Anything you'd like to stay close to?</h1>
-    <p class="od-subtitle">Search up to 2 places: office, hospital, school, metro.</p>
     <div class="od-search-field">
       <input
         type="text"
         class="od-search-field__input"
         id="od-landmark-input"
-        placeholder="Search a landmark, hospital, school, metro, office..."
+        placeholder=""
+        aria-label="Search a landmark, hospital, school, metro, office"
         value="${escapeHtml(odLandmarkQuery)}"
         autocomplete="off"
         ${capped ? "disabled" : ""}
       />
+      <span class="od-search-field__ghost" id="od-landmark-ghost" aria-hidden="true">Search <span class="od-search-field__ghost-word" id="od-landmark-ghost-word">${LANDMARK_GHOST_WORDS[0]}</span></span>
       <span class="od-search-field__icon">${OD_ICON.search}</span>
       <div id="od-landmark-results-wrap" class="od-landmark-results-wrap">${landmarkResultsHtml()}</div>
     </div>
-    <div id="od-landmark-suggestions-wrap">${recommendedLandmarksHtml()}</div>
+    <div id="od-landmark-suggestions-wrap">${landmarkPillsHtml()}</div>
     ${capped ? `<p class="od-landmark-cap-note">2 of 2 added, remove one to search again.</p>` : ""}
-    <div id="od-landmark-chips-wrap">${landmarkChipsHtml()}</div>
     <div id="od-landmark-map-wrap">${landmarkPreviewMapHtml()}</div>
     ${odPageCta(
       `<div id="od-landmark-primary-cta-wrap">${landmarkPrimaryCtaHtml()}</div>`,
@@ -2363,23 +2388,37 @@ function wireEvents(root) {
         goTo("discovery-bhk");
         break;
       case "pick-landmark": {
+        // From the typed-search results dropdown only — always adds (the
+        // dropdown itself already excludes anything at the 2-landmark cap).
         const landmarkId = btn.getAttribute("data-landmark-id");
-        // Full city pool, not just the current search results — the "Popular
-        // nearby" quick-pick chips (shown with no query typed) come from the
-        // same pool but aren't part of any active search.
         const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
         const found = pool.find((l) => l.id === landmarkId);
-        if (!found || state.landmarks.length >= 2) break;
+        const alreadyAdded = state.landmarks.some((l) => l.id === landmarkId);
+        if (!found || alreadyAdded || state.landmarks.length >= 2) break;
         state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
         odLandmarkQuery = "";
         haptic(10);
         renderLandmarkPicker();
         break;
       }
-      case "remove-landmark":
-        state.landmarks = state.landmarks.filter((l) => l.id !== btn.getAttribute("data-landmark-id"));
+      case "toggle-landmark": {
+        // From the "Popular nearby" row — the same pill selects/deselects
+        // in place instead of moving into a separate row once picked.
+        const landmarkId = btn.getAttribute("data-landmark-id");
+        const existingIdx = state.landmarks.findIndex((l) => l.id === landmarkId);
+        if (existingIdx !== -1) {
+          state.landmarks.splice(existingIdx, 1);
+        } else {
+          if (state.landmarks.length >= 2) break;
+          const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
+          const found = pool.find((l) => l.id === landmarkId);
+          if (!found) break;
+          state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
+        }
+        haptic(10);
         renderLandmarkPicker();
         break;
+      }
       case "no-landmark-preference":
         state.landmarks = [];
         odLandmarkQuery = "";
@@ -2541,7 +2580,9 @@ function wireEvents(root) {
       const results = root.querySelector("#od-landmark-results-wrap");
       if (results) results.innerHTML = landmarkResultsHtml();
       const suggestions = root.querySelector("#od-landmark-suggestions-wrap");
-      if (suggestions) suggestions.innerHTML = recommendedLandmarksHtml();
+      if (suggestions) suggestions.innerHTML = landmarkPillsHtml();
+      const ghost = root.querySelector("#od-landmark-ghost");
+      if (ghost) ghost.style.display = odLandmarkQuery ? "none" : "";
     } else if (event.target.id === "od-locality-search-input") {
       // Same pattern: patch the sections below in place, leave the input
       // (and focus) alone. Plain client-side substring filter, no backend.
@@ -2644,9 +2685,13 @@ function render() {
   // destroy whatever was mounted on the outgoing screen before it's gone,
   // so Leaflet doesn't hold references to detached nodes.
   Object.keys(activeDiscoveryMaps).forEach(destroyDiscoveryMap);
+  stopLandmarkGhost();
   root.innerHTML = SCREEN_BUILDERS[state.step]() + toastHtml();
   if (state.step === "discovery-budget") mountBudgetDial();
-  if (state.step === "discovery-landmarks") mountLandmarkMap();
+  if (state.step === "discovery-landmarks") {
+    mountLandmarkMap();
+    mountLandmarkGhost();
+  }
   if (state.step === "discovery-map") {
     const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
     const radiusKm = selectedCommuteRadiusKm();
