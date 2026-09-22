@@ -85,6 +85,10 @@
   margin-top: var(--ds-space-l);
 }
 
+.od-choice-list.is-shaking {
+  animation: ol-shake 0.18s linear;
+}
+
 .od-flow {
   background-color: #faf9f5;
   /* Elevation scale — kept deliberately quiet: neutral warm-brown tint
@@ -437,6 +441,7 @@
   font-size: var(--ds-font-size-m);
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-text-primary);
+  white-space: nowrap;
   cursor: pointer;
   opacity: 0;
   transform: translateY(10px);
@@ -484,7 +489,8 @@
     animation: none;
   }
 
-  .od-chip-grid.is-shaking {
+  .od-chip-grid.is-shaking,
+  .od-choice-list.is-shaking {
     animation: none;
   }
 }
@@ -680,46 +686,33 @@
 .od-map-illustration {
   position: relative;
   width: 100%;
-  max-height: 260px;
+  height: 220px;
   margin: 0 0 var(--ds-space-m);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
-  /* Was --ds-surface-subtle — the exact same warm-neutral-50 as the page
-     background, which is why this card read as an empty gray void instead
-     of a distinct surface. Tinted purple so it reads as its own card. */
   background-color: var(--ds-color-purple-50);
   box-shadow: var(--od-shadow-sm);
 }
 
-.od-map-illustration__bg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Real Leaflet map (OpenStreetMap raster tiles — CARTO's free Positron
+   tier now requires an API key, see mountDiscoveryMap) lives inside; only
+   style the parts that are ours. Leaflet already positions
+   .leaflet-marker-icon — the pin badge is just its inner content. */
+.od-map-illustration .leaflet-control-attribution {
+  font-size: 9px;
+  background: rgba(255, 255, 255, 0.75);
 }
 
-/* Budget/BHK value-change cue — re-inserted (patchNode) on every stepper
-   tap, so this entrance animation retriggers as a short "settle" pulse. */
-.od-map-illustration--pulse {
-  max-height: 180px;
-  animation: od-map-pulse 200ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes od-map-pulse {
-  from { opacity: 0.7; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .od-map-illustration--pulse {
-    animation: none;
-  }
+/* Standard OSM tiles are busy/colorful — every road labeled, saturated
+   land-use fills. Desaturating + flattening contrast on the tile layer
+   only (never the pin markers) gets closer to a clean, minimal basemap
+   without a paid/key-gated tile provider. */
+.od-map-illustration .leaflet-tile-pane {
+  filter: grayscale(0.9) brightness(1.12) contrast(0.85) saturate(0.4);
 }
 
 .od-map-pin-badge {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 28px;
@@ -863,6 +856,18 @@
 .od-locality-card__cta:active {
   opacity: 0.85;
   transform: scale(0.98);
+}
+
+/* Every card but the #1 pick — outline instead of filled, so the one
+   actual recommendation is the only card that reads as "the answer". */
+.od-locality-card__cta--secondary {
+  background-color: var(--ds-surface-white);
+  color: var(--ds-color-purple-700);
+  border: 1px solid var(--ds-color-purple-700);
+}
+
+.od-locality-card__cta--secondary:active {
+  background-color: var(--ds-color-purple-50);
 }
 
 .od-locality-card__cta:focus-visible {

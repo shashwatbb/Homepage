@@ -97,7 +97,7 @@ export const LANDMARKS_BY_CITY = {
 };
 
 export function searchLandmarks(city, query) {
-  const list = LANDMARKS_BY_CITY[city] || LANDMARKS_BY_CITY.Mumbai;
+  const list = LANDMARKS_BY_CITY[city] || LANDMARKS_BY_CITY.Gurgaon;
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return list.filter((l) => l.name.toLowerCase().includes(q) || l.category.toLowerCase().includes(q)).slice(0, 6);
@@ -138,23 +138,27 @@ export const CITY_CENTERS = {
   Gurgaon: [28.4595, 77.0266],
   Hyderabad: [17.385, 78.4867],
 };
-const DEFAULT_CENTER = CITY_CENTERS.Mumbai;
+const DEFAULT_CENTER = CITY_CENTERS.Gurgaon;
 
 export function cityCenter(city) {
   return CITY_CENTERS[city] || DEFAULT_CENTER;
 }
 
 /** Mock locality pool. Coordinates are jittered around a city center below,
- * not real geocoding. lifestyle_tags used only for matched_signals text. */
+ * not real geocoding. lifestyle_tags used only for matched_signals text.
+ * Named for real Gurgaon-area localities — this flow's primary market —
+ * rather than generic placeholder names, so results read as authentic
+ * even though matching/pricing itself is mocked. Reused as-is for other
+ * cities too (no real per-city dataset), same simplification as before. */
 export const LOCALITY_POOL = [
-  { name: "Sector 21", offset: [0.03, -0.04], demand_tier: "high", trending_score: 0.86, lifestyle_tags: ["transit", "social_infra"], price_index: 0.62, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
-  { name: "Green Meadows", offset: [-0.05, 0.02], demand_tier: "medium", trending_score: 0.52, lifestyle_tags: ["green", "low_traffic"], price_index: 0.48, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
-  { name: "Central Heights", offset: [0.015, 0.06], demand_tier: "high", trending_score: 0.91, lifestyle_tags: ["transit", "new_dev"], price_index: 0.74, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
-  { name: "Riverside Enclave", offset: [-0.02, -0.07], demand_tier: "medium", trending_score: 0.44, lifestyle_tags: ["green", "safety"], price_index: 0.55, bhk_availability: ["1 BHK", "2 BHK"] },
-  { name: "Old Town", offset: [0.06, 0.01], demand_tier: "low", trending_score: 0.21, lifestyle_tags: ["social_infra"], price_index: 0.33, bhk_availability: ["1 RK", "1 BHK", "2 BHK"] },
-  { name: "Lakeview Residency", offset: [-0.04, 0.05], demand_tier: "medium", trending_score: 0.6, lifestyle_tags: ["safety", "green"], price_index: 0.58, bhk_availability: ["2 BHK", "3 BHK"] },
-  { name: "Tech Park North", offset: [0.02, -0.02], demand_tier: "high", trending_score: 0.78, lifestyle_tags: ["transit", "new_dev"], price_index: 0.7, bhk_availability: ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"] },
-  { name: "Silver Oaks", offset: [-0.06, -0.03], demand_tier: "low", trending_score: 0.3, lifestyle_tags: ["low_traffic"], price_index: 0.4, bhk_availability: ["1 RK", "1 BHK"] },
+  { name: "Sector 29", offset: [0.03, -0.04], demand_tier: "high", trending_score: 0.86, lifestyle_tags: ["transit", "social_infra"], price_index: 0.62, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
+  { name: "South City 1", offset: [-0.05, 0.02], demand_tier: "medium", trending_score: 0.52, lifestyle_tags: ["green", "low_traffic"], price_index: 0.48, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
+  { name: "DLF Phase 3", offset: [0.015, 0.06], demand_tier: "high", trending_score: 0.91, lifestyle_tags: ["transit", "new_dev"], price_index: 0.74, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
+  { name: "Sushant Lok 1", offset: [-0.02, -0.07], demand_tier: "medium", trending_score: 0.44, lifestyle_tags: ["green", "safety"], price_index: 0.55, bhk_availability: ["1 BHK", "2 BHK"] },
+  { name: "Palam Vihar", offset: [0.06, 0.01], demand_tier: "low", trending_score: 0.21, lifestyle_tags: ["social_infra"], price_index: 0.33, bhk_availability: ["1 RK", "1 BHK", "2 BHK"] },
+  { name: "Sohna Road", offset: [-0.04, 0.05], demand_tier: "medium", trending_score: 0.6, lifestyle_tags: ["safety", "green"], price_index: 0.58, bhk_availability: ["2 BHK", "3 BHK"] },
+  { name: "Golf Course Road", offset: [0.02, -0.02], demand_tier: "high", trending_score: 0.78, lifestyle_tags: ["transit", "new_dev"], price_index: 0.7, bhk_availability: ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"] },
+  { name: "Sector 56", offset: [-0.06, -0.03], demand_tier: "low", trending_score: 0.3, lifestyle_tags: ["low_traffic"], price_index: 0.4, bhk_availability: ["1 RK", "1 BHK"] },
 ];
 
 /** Small, deliberately simple mock content for the locality/area search screen
@@ -163,14 +167,14 @@ export const LOCALITY_POOL = [
  * (LOCALITY_POOL itself isn't), same simplification the recommendations
  * screen above already makes. */
 export const RECENT_LOCALITY_SEARCHES = [
-  { name: "Sector 21", note: "Buy 2 BHK under 3 Cr", tag: "3 new" },
-  { name: "Central Heights", note: "Buy 3 BHK under 4 Cr" },
-  { name: "Tech Park North", note: "Rent 2 BHK under 60k" },
+  { name: "Sector 29", note: "Buy 2 BHK under 3 Cr", tag: "3 new" },
+  { name: "DLF Phase 3", note: "Buy 3 BHK under 4 Cr" },
+  { name: "Golf Course Road", note: "Rent 2 BHK under 60k" },
 ];
 
 export const LOCALITY_HOTSPOTS = [
-  { name: "Tech Park North", note: "High demand, new launches", yoyPercent: 12 },
-  { name: "Old Town", note: "Cooling off this quarter", yoyPercent: -4 },
+  { name: "Golf Course Road", note: "High demand, new launches", yoyPercent: 12 },
+  { name: "Palam Vihar", note: "Cooling off this quarter", yoyPercent: -4 },
 ];
 
 /** Fixed developer roster for the "Top developers" rail (Buy only). */
@@ -182,9 +186,9 @@ export const TOP_DEVELOPERS = [
 ];
 
 export const TRENDING_PROJECTS = [
-  { name: "Central Heights Residences", locality: "Central Heights", pricePerSqft: 14500 },
-  { name: "Lakeview Towers", locality: "Lakeview Residency", pricePerSqft: 9800 },
-  { name: "Tech Park Vista", locality: "Tech Park North", pricePerSqft: 12200 },
+  { name: "DLF Phase 3 Residences", locality: "DLF Phase 3", pricePerSqft: 14500 },
+  { name: "Sohna Road Towers", locality: "Sohna Road", pricePerSqft: 9800 },
+  { name: "Golf Course Vista", locality: "Golf Course Road", pricePerSqft: 12200 },
 ];
 
 /** ₹/sqft, formatted for the "Popular localities" and "Trending projects"

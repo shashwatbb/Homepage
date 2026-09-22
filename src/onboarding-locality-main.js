@@ -8,6 +8,8 @@
 import "./styles/base.css";
 import "./components/OnboardingLocality.css";
 import { DotLottie } from "@lottiefiles/dotlottie-web";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import {
   STRINGS,
   SERVICE_OPTIONS,
@@ -1273,7 +1275,7 @@ function odTrendingProjectCardHtml(item) {
   return `<button type="button" class="od-ls-project" data-action="locality-search-pick" data-locality-name="${escapeHtml(item.locality)}">
     <span class="od-ls-project__head">
       <span class="od-ls-project__name">${escapeHtml(item.name)}</span>
-      <span class="od-ls-project__address">${escapeHtml(item.locality)}, ${escapeHtml(state.city || "Mumbai")}</span>
+      <span class="od-ls-project__address">${escapeHtml(item.locality)}, ${escapeHtml(state.city || "Gurgaon")}</span>
     </span>
     <span class="od-ls-project__divider"></span>
     <span class="od-ls-project__info">${escapeHtml(formatPricePerSqft(item.pricePerSqft))}</span>
@@ -1349,7 +1351,7 @@ function odSuggestionRowHtml(item, query) {
 function odSearchResultsHtml(query) {
   const q = query.trim().toLowerCase();
   const localities = LOCALITY_POOL.filter((l) => l.name.toLowerCase().includes(q)).map((l) => ({
-    name: `${l.name}, ${state.city || "Mumbai"}`,
+    name: `${l.name}, ${state.city || "Gurgaon"}`,
     caption: "Locality",
     icon: OD_ICON.pin,
   }));
@@ -1360,7 +1362,7 @@ function odSearchResultsHtml(query) {
   }));
   const landmarks = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai)
     .filter((l) => l.name.toLowerCase().includes(q))
-    .map((l) => ({ name: `${l.name}, ${state.city || "Mumbai"}`, caption: "Landmark", icon: OD_ICON.pin }));
+    .map((l) => ({ name: `${l.name}, ${state.city || "Gurgaon"}`, caption: "Landmark", icon: OD_ICON.pin }));
   const results = [...localities, ...projects, ...landmarks].slice(0, 10);
 
   const queryRow = `<button type="button" class="od-ls-queryrow" data-action="locality-search-submit">
@@ -1375,7 +1377,7 @@ function odSearchResultsHtml(query) {
           <span class="od-ls-alert">!</span>
           <p class="od-ls-empty__text">Oops, no results found!</p>
         </div>
-        <button type="button" class="od-ls-empty__cta" data-action="locality-search-explore-nearby">Explore all of ${escapeHtml(state.city || "Mumbai")}</button>
+        <button type="button" class="od-ls-empty__cta" data-action="locality-search-explore-nearby">Explore all of ${escapeHtml(state.city || "Gurgaon")}</button>
       </div>`;
   }
 
@@ -1397,7 +1399,7 @@ function localitySearchScreen() {
         </button>
         <button type="button" class="od-ls-topbar__city" data-action="locality-search-change-city">
           <span class="od-ls-topbar__pin">${OD_ICON.pin}</span>
-          <span class="od-ls-topbar__cityname">${escapeHtml(state.city || "Mumbai")}</span>
+          <span class="od-ls-topbar__cityname">${escapeHtml(state.city || "Gurgaon")}</span>
           <span class="od-ls-topbar__caret">${OD_ICON.chevronRight}</span>
         </button>
       </div>
@@ -1570,7 +1572,17 @@ function landmarkChipsHtml() {
  * picked) — same "coming into focus" device as the budget/BHK screens, so
  * this step doesn't read as an empty page while the search field is idle. */
 function landmarkPreviewMapHtml() {
-  return mapIllustrationHtml(state.landmarks.map((l, i) => ({ label: String(i + 1) })));
+  return mapIllustrationHtml(
+    state.landmarks.map((l, i) => ({ label: String(i + 1), coords: l.coords })),
+    { id: "od-landmark-map" }
+  );
+}
+
+function mountLandmarkMap() {
+  mountDiscoveryMap("od-landmark-map", {
+    center: cityCenter(state.city),
+    pins: state.landmarks.map((l, i) => ({ label: String(i + 1), coords: l.coords })),
+  });
 }
 
 function renderLandmarkPicker() {
@@ -1581,9 +1593,14 @@ function renderLandmarkPicker() {
   const input = document.getElementById("od-landmark-input");
   if (input) input.disabled = state.landmarks.length >= 2;
   const mapWrap = document.getElementById("od-landmark-map-wrap");
-  if (mapWrap) mapWrap.innerHTML = landmarkPreviewMapHtml();
+  if (mapWrap) {
+    mapWrap.innerHTML = landmarkPreviewMapHtml();
+    mountLandmarkMap();
+  }
   const secondaryCta = document.getElementById("od-landmark-secondary-cta-wrap");
   if (secondaryCta) secondaryCta.innerHTML = landmarkSecondaryCtaHtml();
+  const primaryCta = document.getElementById("od-landmark-primary-cta-wrap");
+  if (primaryCta) primaryCta.innerHTML = landmarkPrimaryCtaHtml();
 }
 
 /** Hidden once at least one landmark is picked — "no specific place in
@@ -1591,6 +1608,15 @@ function renderLandmarkPicker() {
 function landmarkSecondaryCtaHtml() {
   if (state.landmarks.length > 0) return "";
   return odSecondaryCta("no-landmark-preference", "I don't have a specific place in mind");
+}
+
+/** Continue only appears once there's something to continue *with* — with
+ * zero landmarks picked, "Continue" and the secondary "no specific place"
+ * button led to the exact same next step, which was pure decision noise
+ * (two buttons, one outcome). One clear action per state instead. */
+function landmarkPrimaryCtaHtml() {
+  if (state.landmarks.length === 0) return "";
+  return `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>`;
 }
 
 function discoveryLandmarksScreen() {
@@ -1617,7 +1643,7 @@ function discoveryLandmarksScreen() {
     <div id="od-landmark-chips-wrap">${landmarkChipsHtml()}</div>
     <div id="od-landmark-map-wrap">${landmarkPreviewMapHtml()}</div>
     ${odPageCta(
-      `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>`,
+      `<div id="od-landmark-primary-cta-wrap">${landmarkPrimaryCtaHtml()}</div>`,
       `<div id="od-landmark-secondary-cta-wrap">${landmarkSecondaryCtaHtml()}</div>`
     )}
   </div>`;
@@ -1626,12 +1652,12 @@ function discoveryLandmarksScreen() {
 // -- Step 4: commute tolerance (only if anchors picked) ------------------------
 
 function discoveryCommuteScreen() {
-  return `<div class="ol-screen od-flow">
+  return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-commute-back")}
     ${odProgressHtml("discovery-commute")}
     ${discoverySummaryHtml()}
     <h1 class="od-heading">How far are you willing to commute?</h1>
-    <div class="od-choice-list">
+    <div class="od-choice-list" id="od-commute-list">
       ${COMMUTE_OPTIONS.map((opt) =>
         odChoiceCardHtml({
           action: "pick-commute",
@@ -1642,6 +1668,7 @@ function discoveryCommuteScreen() {
         })
       ).join("")}
     </div>
+    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-commute">${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
 
@@ -1664,7 +1691,10 @@ function discoveryIntentScreen() {
         })
       ).join("")}
     </div>
-    ${odPageCta(odSecondaryCta("discovery-skip-intent", STRINGS["common.skip"]))}
+    ${odPageCta(
+      `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-intent">${STRINGS["common.continue"]}</button>`,
+      odSecondaryCta("discovery-skip-intent", STRINGS["common.skip"])
+    )}
   </div>`;
 }
 
@@ -1690,30 +1720,71 @@ function discoveryLifestyleScreen() {
   </div>`;
 }
 
-// -- Final: recommendations screen (list-first, decorative map illustration) --
+// -- Final: recommendations screen (list-first, live map) --------------------
 
-/** Fixed, deterministic pin slots over the static map illustration — this is
- * decorative dressing (per CLAUDE.md, no live-map dependency), not real
- * geocoding, so approximate placement is fine. */
-const MAP_PIN_SLOTS = [
-  { left: 28, top: 20 },
-  { left: 68, top: 30 },
-  { left: 42, top: 46 },
-  { left: 76, top: 58 },
-  { left: 24, top: 68 },
-  { left: 55, top: 80 },
-];
+/** Real Leaflet map on CARTO's free, keyless "Positron" light tiles — swaps
+ * the old static SVG illustration for an actual live map centered on the
+ * user's real city coordinates (see cityCenter/CITY_CENTERS), with numbered
+ * pin markers at each result's real (mock-jittered, not geocoded) lat/lng.
+ * One live instance per container id; re-mounting destroys the previous one
+ * so patchNode-driven re-renders (landmark add/remove) don't leak instances. */
+const activeDiscoveryMaps = {};
 
-function mapIllustrationHtml(pins, { id, pulse } = {}) {
-  return `<div class="od-map-illustration${pulse ? " od-map-illustration--pulse" : ""}" ${id ? `id="${id}"` : ""}>
-    <img class="od-map-illustration__bg" src="/assets/map-illustration.svg" alt="" />
-    ${pins
-      .map((p, i) => {
-        const slot = MAP_PIN_SLOTS[i % MAP_PIN_SLOTS.length];
-        return `<span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}" style="left:${slot.left}%;top:${slot.top}%;">${p.label}</span>`;
-      })
-      .join("")}
-  </div>`;
+function destroyDiscoveryMap(id) {
+  activeDiscoveryMaps[id]?.remove();
+  delete activeDiscoveryMaps[id];
+}
+
+function mountDiscoveryMap(id, { center, pins }) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  destroyDiscoveryMap(id);
+
+  const map = L.map(el, {
+    zoomControl: false,
+    attributionControl: true,
+    scrollWheelZoom: false,
+  }).setView(center, 13);
+
+  // CARTO's basemap CDN (the source of the "Positron" style the user
+  // linked) now gates its free tier behind an API key — confirmed live,
+  // it served an "API key required" watermark instead of tiles. Falling
+  // back to plain OpenStreetMap raster tiles: genuinely free, no key,
+  // guaranteed to work. Swap this URL (and add a key param) if a CARTO/
+  // MapTiler/Stadia key becomes available for the real Positron look.
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    subdomains: "abc",
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  const bounds = [];
+  pins.forEach((p) => {
+    if (!p.coords) return;
+    const icon = L.divIcon({
+      className: "",
+      html: `<span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}">${p.label}</span>`,
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    L.marker(p.coords, { icon }).addTo(map);
+    bounds.push(p.coords);
+  });
+
+  if (bounds.length > 1) {
+    map.fitBounds(bounds, { padding: [32, 32], maxZoom: 15 });
+  }
+
+  activeDiscoveryMaps[id] = map;
+  // A map mounted while its container was display:none or off-flow (a
+  // fresh screen's fade-in, or the shared results/landmarks container)
+  // renders at the wrong size until Leaflet re-measures it.
+  requestAnimationFrame(() => map.invalidateSize());
+}
+
+function mapIllustrationHtml(pins, { id } = {}) {
+  const mapId = id || `od-map-${Math.random().toString(36).slice(2, 9)}`;
+  return `<div class="od-map-illustration" id="${mapId}"></div>`;
 }
 
 /** Budget line derives from the same price-band signal the mock ranking
@@ -1736,6 +1807,11 @@ function localityBadgeLabel(loc, rank) {
 
 function localityCardHtml(loc, rank) {
   const isPrimary = rank !== null;
+  // Only the #1 "Recommended" card gets the primary (filled purple) CTA —
+  // every other card, including ranks 2-5 "Also matches", was using the
+  // same primary button, which flattened the one actual recommendation
+  // to look identical to five other options.
+  const isTopPick = rank === 1;
   const distanceLine = loc.distance_from_landmarks.length
     ? `${loc.distance_from_landmarks[0].minutes} min from ${loc.distance_from_landmarks[0].landmark_name}`
     : loc.matched_signals[0] || "Good match for your search";
@@ -1748,7 +1824,7 @@ function localityCardHtml(loc, rank) {
       </div>
       <p class="od-locality-card__budget">${escapeHtml(localityBudgetLine(loc))}</p>
       <p class="od-locality-card__distance">${escapeHtml(distanceLine)}</p>
-      <button type="button" class="od-locality-card__cta" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore this locality</button>
+      <button type="button" class="od-locality-card__cta ${isTopPick ? "" : "od-locality-card__cta--secondary"}" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore this locality</button>
     </div>
   </div>`;
 }
@@ -1762,7 +1838,14 @@ function discoveryMapScreen() {
     ${odTopBar("discovery-map-back")}
     ${discoverySummaryHtml()}
     <h1 class="od-heading">Recommended localities</h1>
-    ${primary.length ? mapIllustrationHtml(primary.map((_, i) => ({ label: String(i + 1) }))) : ""}
+    ${
+      primary.length
+        ? mapIllustrationHtml(
+            primary.map((l, i) => ({ label: String(i + 1), coords: l.coordinates })),
+            { id: "od-results-map" }
+          )
+        : ""
+    }
     <div class="od-locality-list">
       ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
       ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
@@ -1902,7 +1985,7 @@ function wireEvents(root) {
         goTo("service");
         break;
       case "use-current-location":
-        state.city = "Mumbai";
+        state.city = "Gurgaon";
         afterCityPicked();
         break;
       case "pick-city":
@@ -2033,8 +2116,12 @@ function wireEvents(root) {
         break;
       case "pick-commute":
         state.commuteTolerance = btn.getAttribute("data-value");
+        root.querySelectorAll('[data-action="pick-commute"]').forEach((el) => {
+          const isSelected = el.getAttribute("data-value") === state.commuteTolerance;
+          el.classList.toggle("is-selected", isSelected);
+          el.setAttribute("aria-pressed", String(isSelected));
+        });
         haptic(10);
-        goTo(nextDiscoveryStep("discovery-commute"));
         break;
       case "discovery-intent-back":
         goTo(state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks");
@@ -2045,8 +2132,12 @@ function wireEvents(root) {
         break;
       case "pick-intent":
         state.intent = btn.getAttribute("data-value");
+        root.querySelectorAll('[data-action="pick-intent"]').forEach((el) => {
+          const isSelected = el.getAttribute("data-value") === state.intent;
+          el.classList.toggle("is-selected", isSelected);
+          el.setAttribute("aria-pressed", String(isSelected));
+        });
         haptic(10);
-        goTo(nextDiscoveryStep("discovery-intent"));
         break;
       case "discovery-lifestyle-back":
         goTo(previousDiscoveryStep("discovery-lifestyle"));
@@ -2075,6 +2166,17 @@ function wireEvents(root) {
             grid.classList.remove("is-shaking");
             void grid.offsetWidth; // restart the animation on repeated taps
             grid.classList.add("is-shaking");
+          }
+          break;
+        }
+        if (from === "discovery-commute" && !state.commuteTolerance) {
+          haptic([15, 40, 15]);
+          showToast("Pick a commute tolerance to continue");
+          const list = document.getElementById("od-commute-list");
+          if (list) {
+            list.classList.remove("is-shaking");
+            void list.offsetWidth;
+            list.classList.add("is-shaking");
           }
           break;
         }
@@ -2276,8 +2378,19 @@ function render() {
   if (!root) return;
   odBudgetPicker?.destroy();
   odBudgetPicker = null;
+  // Full re-render replaces the DOM out from under any live map instance —
+  // destroy whatever was mounted on the outgoing screen before it's gone,
+  // so Leaflet doesn't hold references to detached nodes.
+  Object.keys(activeDiscoveryMaps).forEach(destroyDiscoveryMap);
   root.innerHTML = SCREEN_BUILDERS[state.step]() + toastHtml();
   if (state.step === "discovery-budget") mountBudgetDial();
+  if (state.step === "discovery-landmarks") mountLandmarkMap();
+  if (state.step === "discovery-map") {
+    mountDiscoveryMap("od-results-map", {
+      center: cityCenter(state.city),
+      pins: state.recommendedLocalities.slice(0, 5).map((l, i) => ({ label: String(i + 1), coords: l.coordinates })),
+    });
+  }
   if (state.step === "splash") mountSplashLottie();
   if (state.step === "otp") focusOtpHiddenInput();
   if (FOCUS_MANAGED_STEPS.has(state.step)) focusDiscoveryHeading(root);
