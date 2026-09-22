@@ -50,6 +50,12 @@ import {
   landmarkCoords,
   getRecommendedLocalities,
   formatLocalityBudget,
+  LANDMARKS_BY_CITY,
+  LOCALITY_POOL,
+  RECENT_LOCALITY_SEARCHES,
+  LOCALITY_HOTSPOTS,
+  TRENDING_PROJECTS,
+  formatPricePerSqft,
 } from "./data/onboardingLocalityDiscovery.mock.js";
 
 document.documentElement.classList.remove("no-fouc");
@@ -152,6 +158,7 @@ function after(ms, fn) {
  * through to the page that linked here. */
 const DISCOVERY_STEPS = [
   "locality-check",
+  "locality-search",
   "discovery-budget",
   "discovery-bhk",
   "discovery-landmarks",
@@ -209,6 +216,9 @@ function handleHardwareBack() {
       break;
     case "locality-check":
       goTo("locality");
+      break;
+    case "locality-search":
+      goTo("locality-check");
       break;
     case "discovery-budget":
       goTo("locality-check");
@@ -968,6 +978,9 @@ const OD_ICON = {
   hospital: BRICKS_ICONS.hospital,
   metro: BRICKS_ICONS.subway,
   mall: BRICKS_ICONS.storefront,
+  clock: BRICKS_ICONS.clockCounterClockwise,
+  caretUp: BRICKS_ICONS.caretUp,
+  navigationArrow: BRICKS_ICONS.navigationArrow,
 };
 
 const LANDMARK_CATEGORY_ICON = {
@@ -1089,6 +1102,133 @@ function localityCheckScreen() {
       ${odChoiceCardHtml({ action: "locality-check-yes", icon: OD_ICON.pin, label: "Yes, I know it", trailing: "chevron" })}
       ${odChoiceCardHtml({ action: "locality-check-not-sure", icon: OD_ICON.compass, label: "Not sure, help me find one", trailing: "chevron" })}
     </div>
+  </div>`;
+}
+
+// -- Step 0b: locality/area search (Figma "Imagine / Search / m-web", 6538:9768) ---
+// Destination of "Yes, I know it" — pick a locality/landmark or type one in,
+// then hand off to SRP pre-filtered exactly like the old direct jump did.
+
+let odLocalitySearchQuery = "";
+
+function odServiceLabel() {
+  return state.service === "rent" ? "Rent" : "Buy";
+}
+
+function odLocalityCardWrapHtml(name, innerHtml) {
+  return `<button type="button" class="od-ls-card" data-action="locality-search-pick" data-locality-name="${escapeHtml(name)}">${innerHtml}</button>`;
+}
+
+function odRecentSearchCardHtml(item) {
+  return odLocalityCardWrapHtml(
+    item.name,
+    `<span class="od-ls-card__icon od-ls-card__icon--lavender">${OD_ICON.clock}</span>
+    <span class="od-ls-card__name">${escapeHtml(item.name)}</span>
+    <span class="od-ls-card__note">${escapeHtml(item.note)}</span>
+    ${item.tag ? `<span class="od-ls-tag">${escapeHtml(item.tag)}</span>` : ""}`
+  );
+}
+
+function odHotspotCardHtml(item) {
+  const isUp = item.yoyPercent >= 0;
+  return odLocalityCardWrapHtml(
+    item.name,
+    `<span class="od-ls-card__name">${escapeHtml(item.name)}</span>
+    <span class="od-ls-card__note">${escapeHtml(item.note)}</span>
+    <span class="od-ls-pill ${isUp ? "od-ls-pill--up" : "od-ls-pill--down"}">
+      <span class="od-ls-pill__caret ${isUp ? "" : "od-ls-pill__caret--down"}">${OD_ICON.caretUp}</span>
+      ${Math.abs(item.yoyPercent)}% YoY
+    </span>`
+  );
+}
+
+function odPopularLocalityCardHtml(loc) {
+  const pricePerSqft = Math.round(loc.price_index * 18000);
+  return odLocalityCardWrapHtml(
+    loc.name,
+    `<span class="od-ls-card__name">${escapeHtml(loc.name)}</span>
+    <span class="od-ls-card__note">${escapeHtml(formatPricePerSqft(pricePerSqft))}</span>`
+  );
+}
+
+function odLandmarkChipHtml(landmark) {
+  return `<button type="button" class="od-ls-landmark-chip" data-action="locality-search-pick" data-locality-name="${escapeHtml(landmark.name)}">
+    <span class="od-ls-landmark-chip__icon">${LANDMARK_CATEGORY_ICON[landmark.category] || OD_ICON.pin}</span>
+    ${escapeHtml(landmark.name)}
+  </button>`;
+}
+
+function odTrendingProjectCardHtml(item) {
+  return odLocalityCardWrapHtml(
+    item.locality,
+    `<span class="od-ls-card__name">${escapeHtml(item.name)}</span>
+    <span class="od-ls-card__note">${escapeHtml(item.locality)}</span>
+    <span class="od-ls-card__divider"></span>
+    <span class="od-ls-card__price">${escapeHtml(formatPricePerSqft(item.pricePerSqft))}</span>`
+  );
+}
+
+/** One section: label + horizontally-scrolling card row. Hidden entirely
+ * once a search query filters it down to nothing. */
+function odLocalitySection(label, items, cardFn) {
+  if (!items.length) return "";
+  return `<div class="od-ls-section">
+    <p class="od-ls-section__label">${escapeHtml(label)}</p>
+    <div class="od-ls-scroller">${items.map(cardFn).join("")}</div>
+  </div>`;
+}
+
+function odLocalitySearchSectionsHtml(query) {
+  const q = query.trim().toLowerCase();
+  const matches = (name) => !q || name.toLowerCase().includes(q);
+
+  const recent = RECENT_LOCALITY_SEARCHES.filter((i) => matches(i.name));
+  const hotspots = LOCALITY_HOTSPOTS.filter((i) => matches(i.name));
+  const popular = LOCALITY_POOL.slice(0, 3).filter((i) => matches(i.name));
+  const landmarks = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai).filter((l) => matches(l.name));
+  const projects = TRENDING_PROJECTS.filter((i) => matches(i.name) || matches(i.locality));
+
+  return `${odLocalitySection("Recent searches", recent, odRecentSearchCardHtml)}
+    ${odLocalitySection("Hotspots", hotspots, odHotspotCardHtml)}
+    ${odLocalitySection("Popular localities", popular, odPopularLocalityCardHtml)}
+    ${
+      landmarks.length
+        ? `<div class="od-ls-section">
+      <p class="od-ls-section__label">Popular landmarks</p>
+      <div class="od-ls-landmark-wrap">${landmarks.map(odLandmarkChipHtml).join("")}</div>
+    </div>`
+        : ""
+    }
+    ${odLocalitySection("Trending projects", projects, odTrendingProjectCardHtml)}
+    <button type="button" class="od-ls-explore-row" data-action="locality-search-explore-nearby">
+      <span class="od-ls-card__icon od-ls-card__icon--lavender">${OD_ICON.navigationArrow}</span>
+      <span class="od-ls-explore-row__label">Explore nearby properties</span>
+      <span class="od-ls-explore-row__chevron">${OD_ICON.chevronRight}</span>
+    </button>`;
+}
+
+function localitySearchScreen() {
+  return `<div class="ol-screen od-ls-screen od-flow">
+    <div class="od-ls-header">
+      ${odTopBar("locality-search-back")}
+      <div class="od-ls-breadcrumb">
+        <span class="od-ls-breadcrumb__service">${escapeHtml(odServiceLabel())}</span>
+        <span class="od-ls-breadcrumb__chevron">${OD_ICON.chevronRight}</span>
+        <span class="od-ls-breadcrumb__city">${OD_ICON.pin}${escapeHtml(state.city || "")}</span>
+      </div>
+      <div class="od-search-field od-ls-search-field">
+        <input
+          type="text"
+          class="od-search-field__input"
+          id="od-locality-search-input"
+          placeholder="Search for locality, project, landmark..."
+          value="${escapeHtml(odLocalitySearchQuery)}"
+          autocomplete="off"
+        />
+        <span class="od-search-field__icon od-search-field__icon--left">${OD_ICON.search}</span>
+      </div>
+    </div>
+    <div id="od-locality-search-sections" class="od-ls-body">${odLocalitySearchSectionsHtml(odLocalitySearchQuery)}</div>
   </div>`;
 }
 
@@ -1494,6 +1634,7 @@ const SCREEN_BUILDERS = {
   locality: localityScreen,
   done: doneScreen,
   "locality-check": localityCheckScreen,
+  "locality-search": localitySearchScreen,
   "discovery-budget": discoveryBudgetScreen,
   "discovery-bhk": discoveryBhkScreen,
   "discovery-landmarks": discoveryLandmarksScreen,
@@ -1576,9 +1717,22 @@ function wireEvents(root) {
         goTo("locality");
         break;
       case "locality-check-yes":
-        // Confirmed fix: "I know it" must never touch budget/BHK/landmarks —
-        // it goes straight to a pre-filtered search results page.
+        // "I know it" must never touch budget/BHK/landmarks — it goes to the
+        // locality/area search screen, which then hands off to SRP itself
+        // once a locality is picked (or "explore nearby" is tapped).
         state.discoveryMode = "know_locality";
+        odLocalitySearchQuery = "";
+        goTo("locality-search");
+        break;
+      case "locality-search-back":
+        goTo("locality-check");
+        break;
+      case "locality-search-pick": {
+        const name = btn.getAttribute("data-locality-name");
+        exploreLocality(null, name);
+        break;
+      }
+      case "locality-search-explore-nearby":
         handoffToSearchPreFiltered();
         break;
       case "locality-check-not-sure":
@@ -1741,6 +1895,7 @@ function wireEvents(root) {
         splashIntroFinished = false;
         splashQuote = "";
         odLandmarkQuery = "";
+        odLocalitySearchQuery = "";
         render();
         break;
       default:
@@ -1777,6 +1932,12 @@ function wireEvents(root) {
       odLandmarkQuery = event.target.value;
       const results = root.querySelector("#od-landmark-results-wrap");
       if (results) results.innerHTML = landmarkResultsHtml();
+    } else if (event.target.id === "od-locality-search-input") {
+      // Same pattern: patch the sections below in place, leave the input
+      // (and focus) alone. Plain client-side substring filter, no backend.
+      odLocalitySearchQuery = event.target.value;
+      const sections = root.querySelector("#od-locality-search-sections");
+      if (sections) sections.innerHTML = odLocalitySearchSectionsHtml(odLocalitySearchQuery);
     }
   });
 
@@ -1814,6 +1975,10 @@ function wireEvents(root) {
   root.addEventListener("keydown", (event) => {
     if (event.target.id === "ol-phone-input" && event.key === "Enter" && isValidPhone(state.phone)) {
       submitPhone();
+    }
+    if (event.target.id === "od-locality-search-input" && event.key === "Enter") {
+      const typed = odLocalitySearchQuery.trim();
+      if (typed) exploreLocality(null, typed);
     }
   });
 }

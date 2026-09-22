@@ -146,7 +146,7 @@ export function cityCenter(city) {
 
 /** Mock locality pool. Coordinates are jittered around a city center below,
  * not real geocoding. lifestyle_tags used only for matched_signals text. */
-const LOCALITY_POOL = [
+export const LOCALITY_POOL = [
   { name: "Sector 21", offset: [0.03, -0.04], demand_tier: "high", trending_score: 0.86, lifestyle_tags: ["transit", "social_infra"], price_index: 0.62, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
   { name: "Green Meadows", offset: [-0.05, 0.02], demand_tier: "medium", trending_score: 0.52, lifestyle_tags: ["green", "low_traffic"], price_index: 0.48, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
   { name: "Central Heights", offset: [0.015, 0.06], demand_tier: "high", trending_score: 0.91, lifestyle_tags: ["transit", "new_dev"], price_index: 0.74, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
@@ -156,6 +156,34 @@ const LOCALITY_POOL = [
   { name: "Tech Park North", offset: [0.02, -0.02], demand_tier: "high", trending_score: 0.78, lifestyle_tags: ["transit", "new_dev"], price_index: 0.7, bhk_availability: ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"] },
   { name: "Silver Oaks", offset: [-0.06, -0.03], demand_tier: "low", trending_score: 0.3, lifestyle_tags: ["low_traffic"], price_index: 0.4, bhk_availability: ["1 RK", "1 BHK"] },
 ];
+
+/** Small, deliberately simple mock content for the locality/area search screen
+ * (Figma "Imagine / Search / m-web", node 6538:9768) — reuses LOCALITY_POOL /
+ * LANDMARKS_BY_CITY names instead of inventing a new dataset. Not city-aware
+ * (LOCALITY_POOL itself isn't), same simplification the recommendations
+ * screen above already makes. */
+export const RECENT_LOCALITY_SEARCHES = [
+  { name: "Sector 21", note: "Buy 2 BHK under 3 Cr", tag: "3 new" },
+  { name: "Central Heights", note: "Buy 3 BHK under 4 Cr" },
+  { name: "Tech Park North", note: "Rent 2 BHK under 60k" },
+];
+
+export const LOCALITY_HOTSPOTS = [
+  { name: "Tech Park North", note: "High demand, new launches", yoyPercent: 12 },
+  { name: "Old Town", note: "Cooling off this quarter", yoyPercent: -4 },
+];
+
+export const TRENDING_PROJECTS = [
+  { name: "Central Heights Residences", locality: "Central Heights", pricePerSqft: 14500 },
+  { name: "Lakeview Towers", locality: "Lakeview Residency", pricePerSqft: 9800 },
+  { name: "Tech Park Vista", locality: "Tech Park North", pricePerSqft: 12200 },
+];
+
+/** ₹/sqft, formatted for the "Popular localities" and "Trending projects"
+ * cards — simple Indian-digit-group formatting, no new pricing feed. */
+export function formatPricePerSqft(value) {
+  return `₹${Math.round(value).toLocaleString("en-IN")}/sqft`;
+}
 
 function haversineKm([lat1, lon1], [lat2, lon2]) {
   const R = 6371;

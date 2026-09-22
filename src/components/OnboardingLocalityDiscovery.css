@@ -765,3 +765,266 @@
   padding: var(--ds-space-m) var(--ds-space-m) calc(var(--ds-space-m) + env(safe-area-inset-bottom));
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--ds-surface-white) 32%);
 }
+
+/* Locality/area search screen (Figma "Imagine / Search / m-web", 6538:9768) —
+   destination of "Yes, I know it". Lavender-tinted header (breadcrumb +
+   search field) over a white, section-scrolling body. */
+
+.od-ls-screen {
+  padding: 0 0 var(--ds-space-xl);
+}
+
+.od-ls-header {
+  margin: 0 calc(-1 * var(--ds-space-m));
+  padding: var(--ds-space-xs) var(--ds-space-m) var(--ds-space-m);
+  background-color: var(--ds-color-lavender-mist-50);
+}
+
+.od-ls-header .ol-topbar {
+  margin-bottom: var(--ds-space-s);
+}
+
+.od-ls-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  margin-bottom: var(--ds-space-m);
+  font-size: var(--ds-font-size-s);
+  color: var(--ds-text-primary);
+}
+
+.od-ls-breadcrumb__service {
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.od-ls-breadcrumb__chevron {
+  display: inline-flex;
+  color: var(--ds-text-muted);
+}
+
+.od-ls-breadcrumb__chevron svg {
+  width: 14px;
+  height: 14px;
+}
+
+.od-ls-breadcrumb__city {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-3xs, 2px);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.od-ls-breadcrumb__city svg {
+  width: 14px;
+  height: 14px;
+  color: var(--ds-color-lavender-mist-500);
+}
+
+.od-ls-search-field {
+  margin-bottom: 0;
+}
+
+/* Magnifying glass on the LEFT for this screen — the landmark search field's
+   icon sits on the right, but this one matches the Figma layout. */
+.od-search-field__icon--left {
+  left: var(--ds-space-m);
+  right: auto;
+}
+
+.od-ls-search-field .od-search-field__input {
+  padding: 0 var(--ds-space-m) 0 var(--ds-space-4xl);
+  border-color: var(--ds-color-warm-neutral-300);
+}
+
+.od-ls-body {
+  padding: var(--ds-space-l) 0 0;
+}
+
+.od-ls-section {
+  margin-bottom: var(--ds-space-l);
+}
+
+.od-ls-section__label {
+  margin: 0 0 var(--ds-space-s);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-grey-neutral-700);
+}
+
+/* Horizontally-scrolling card row — same hide-scrollbar convention as the
+   flow's city letter strip (.ol-letter-strip). */
+.od-ls-scroller {
+  display: flex;
+  gap: var(--ds-space-m);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.od-ls-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.od-ls-card {
+  flex: 0 0 auto;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ds-space-2xs);
+  padding: var(--ds-space-m);
+  border: 1px solid var(--ds-color-warm-neutral-300);
+  border-radius: var(--ds-radius-m);
+  background-color: var(--ds-surface-white);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+
+.od-ls-card:active {
+  transform: scale(0.98);
+}
+
+.od-ls-card__icon {
+  display: inline-flex;
+  margin-bottom: var(--ds-space-2xs);
+}
+
+.od-ls-card__icon--lavender {
+  color: var(--ds-color-lavender-mist-500);
+}
+
+.od-ls-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.od-ls-card__name {
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-text-primary);
+}
+
+.od-ls-card__note {
+  font-size: var(--ds-font-size-s);
+  color: var(--ds-text-muted);
+}
+
+.od-ls-card__divider {
+  width: 100%;
+  height: 1px;
+  margin: var(--ds-space-2xs) 0;
+  background-color: var(--ds-border-subtle);
+}
+
+.od-ls-card__price {
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-text-primary);
+}
+
+.od-ls-tag {
+  position: absolute;
+  top: var(--ds-space-m);
+  right: var(--ds-space-m);
+  padding: 2px var(--ds-space-2xs);
+  border-radius: var(--ds-radius-xs);
+  background-color: var(--ds-color-pink-500);
+  color: var(--ds-text-inverse);
+  font-size: 11px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.od-ls-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: var(--ds-space-2xs);
+  padding: 2px var(--ds-space-2xs);
+  border-radius: var(--ds-radius-xs);
+  font-size: var(--ds-font-size-xs, 11px);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.od-ls-pill--up {
+  background-color: var(--ds-color-green-50);
+  color: var(--ds-color-green-800);
+}
+
+.od-ls-pill--down {
+  background-color: var(--ds-color-red-50);
+  color: var(--ds-color-red-600);
+}
+
+.od-ls-pill__caret svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+.od-ls-pill__caret--down {
+  transform: rotate(180deg);
+}
+
+.od-ls-landmark-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s);
+}
+
+.od-ls-landmark-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  padding: var(--ds-space-xs) var(--ds-space-m);
+  border: none;
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-color-lavender-mist-50);
+  color: var(--ds-text-primary);
+  font-family: inherit;
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  cursor: pointer;
+}
+
+.od-ls-landmark-chip__icon {
+  display: inline-flex;
+  color: var(--ds-color-lavender-mist-500);
+}
+
+.od-ls-landmark-chip__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.od-ls-explore-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s);
+  width: 100%;
+  padding: var(--ds-space-m);
+  border: 1px solid var(--ds-color-warm-neutral-300);
+  border-radius: var(--ds-radius-m);
+  background-color: var(--ds-surface-white);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.od-ls-explore-row__label {
+  flex: 1;
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-text-primary);
+  text-align: left;
+}
+
+.od-ls-explore-row__chevron {
+  display: inline-flex;
+  color: var(--ds-text-muted);
+}
+
+.od-ls-explore-row__chevron svg {
+  width: 16px;
+  height: 16px;
+}
