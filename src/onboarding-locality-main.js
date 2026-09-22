@@ -1477,6 +1477,7 @@ function mountBudgetDial() {
     onChange: (index) => {
       state.budgetIndex = index;
       syncBudgetStepperButtons();
+      patchNode("od-value-map-wrap", discoveryValueMapHtml());
     },
   });
 }
@@ -1489,6 +1490,7 @@ function discoveryBudgetScreen() {
     <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your budget?"}</h1>
     <p class="od-subtitle">${isRent ? "Your max monthly rent" : "Your max budget"}</p>
     ${budgetDialHtml()}
+    ${discoveryValueMapHtml()}
     ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-budget">${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
@@ -1529,6 +1531,7 @@ function discoveryBhkScreen() {
           `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}">${opt}</button>`
       ).join("")}
     </div>
+    ${discoveryValueMapHtml()}
     ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk">${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
@@ -1564,8 +1567,10 @@ function landmarkChipsHtml() {
     .join("")}</div>`;
 }
 
+/** Shown from the moment the screen mounts (not just once a landmark is
+ * picked) — same "coming into focus" device as the budget/BHK screens, so
+ * this step doesn't read as an empty page while the search field is idle. */
 function landmarkPreviewMapHtml() {
-  if (!state.landmarks.length) return "";
   return mapIllustrationHtml(state.landmarks.map((l, i) => ({ label: String(i + 1) })));
 }
 
@@ -1638,6 +1643,7 @@ function discoveryCommuteScreen() {
         })
       ).join("")}
     </div>
+    ${discoveryValueMapHtml()}
   </div>`;
 }
 
@@ -1660,6 +1666,7 @@ function discoveryIntentScreen() {
         })
       ).join("")}
     </div>
+    ${discoveryValueMapHtml()}
     ${odPageCta(odSecondaryCta("discovery-skip-intent", STRINGS["common.skip"]))}
   </div>`;
 }
@@ -1679,6 +1686,7 @@ function discoveryLifestyleScreen() {
         return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}">${tag.label}</button>`;
       }).join("")}
     </div>
+    ${discoveryValueMapHtml()}
     ${odPageCta(
       `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-lifestyle">See recommended localities</button>`,
       odSecondaryCta("discovery-skip-lifestyle", STRINGS["common.skip"])
@@ -1988,6 +1996,7 @@ function wireEvents(root) {
         if (idx > 0) state.bhk = BHK_OPTIONS[idx - 1];
         haptic(8);
         patchNode("od-bhk-stepper", bhkStepperHtml("fall"));
+        patchNode("od-value-map-wrap", discoveryValueMapHtml());
         break;
       }
       case "bhk-step-plus": {
@@ -1995,6 +2004,7 @@ function wireEvents(root) {
         state.bhk = BHK_OPTIONS[Math.min(BHK_OPTIONS.length - 1, idx + 1)];
         haptic(8);
         patchNode("od-bhk-stepper", bhkStepperHtml("rise"));
+        patchNode("od-value-map-wrap", discoveryValueMapHtml());
         break;
       }
       case "pick-property-type":
