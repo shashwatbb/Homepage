@@ -1153,13 +1153,32 @@ function discoverySummaryHtml() {
   return parts.length ? `<p class="od-summary-strip">${escapeHtml(parts.join(" · "))}</p>` : "";
 }
 
+/** Last-rendered progress % — each screen transition is a full innerHTML
+ * replace, so the fill bar is a brand-new element every time with no
+ * "before" state of its own to transition from. Render it starting at the
+ * *previous* screen's value, then animateProgressFill() nudges it to the
+ * real value on the next frame so the existing CSS transition actually has
+ * something to animate, instead of jumping straight to its final width. */
+let lastProgressPct = 0;
+
 function odProgressHtml(stepId) {
   const steps = activeDiscoverySteps();
   const idx = steps.indexOf(stepId);
   const pct = Math.round(((idx + 1) / steps.length) * 100);
-  return `<div class="od-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}">
-    <span class="od-progress__fill" style="transform:scaleX(${pct / 100})"></span>
+  return `<div class="od-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" data-target-pct="${pct}">
+    <span class="od-progress__fill" style="transform:scaleX(${lastProgressPct / 100})"></span>
   </div>`;
+}
+
+function animateProgressFill(root) {
+  const bar = root.querySelector(".od-progress");
+  if (!bar) return;
+  const pct = Number(bar.getAttribute("data-target-pct"));
+  const fill = bar.querySelector(".od-progress__fill");
+  requestAnimationFrame(() => {
+    if (fill) fill.style.transform = `scaleX(${pct / 100})`;
+  });
+  lastProgressPct = pct;
 }
 
 // -- Step 0: locality check --------------------------------------------------
@@ -2394,6 +2413,7 @@ function render() {
   if (state.step === "splash") mountSplashLottie();
   if (state.step === "otp") focusOtpHiddenInput();
   if (FOCUS_MANAGED_STEPS.has(state.step)) focusDiscoveryHeading(root);
+  animateProgressFill(root);
 }
 
 function init() {
