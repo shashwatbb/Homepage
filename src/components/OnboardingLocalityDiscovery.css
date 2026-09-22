@@ -973,15 +973,12 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-/* Wikimedia's own style is already lighter than stock OSM carto, so this
-   only needs a light desaturating touch now — the old, much stronger
-   contrast/brightness reduction was making the whole map read hazy/soft on
-   top of the separate 1x-tiles-on-retina blur (fixed by switching tile
-   source; see mountDiscoveryMap). */
-.od-map-illustration .leaflet-tile-pane,
-.od-map-full__canvas .leaflet-tile-pane {
-  filter: grayscale(0.5) saturate(0.7);
-}
+/* CARTO's "Positron" light style is already clean/desaturated by design —
+   no correcting filter needed here at all now (the old, much stronger
+   contrast/brightness/saturation reduction existed to compensate for the
+   busy default OSM carto style, and was itself part of why the map read
+   hazy/soft on top of the separate 1x-tiles-on-retina blur, fixed by
+   switching tile source; see mountDiscoveryMap). */
 
 .od-leaflet-div-icon {
   background: transparent !important;

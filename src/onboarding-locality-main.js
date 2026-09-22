@@ -1855,19 +1855,20 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     scrollWheelZoom: false,
   }).setView(center, 13);
 
-  // CARTO's basemap CDN (the source of the "Positron" style the user
-  // linked) now gates its free tier behind an API key — confirmed live,
-  // it served an "API key required" watermark instead of tiles. Wikimedia's
-  // OSM-intl tiles are free, keyless, and — unlike the plain openstreetmap.org
-  // tile server — actually serve @2x tiles, which is what was reading as
-  // "blurry": standard OSM tiles are 1x/256px, so on any retina phone
-  // screen they were being upscaled 2-3x by the browser. `{r}` lets
-  // Leaflet request the sharp @2x variant automatically on high-DPI
-  // screens (detectRetina) and falls back to 1x elsewhere.
-  L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png", {
-    maxZoom: 19,
+  // Went through two other tile sources before this one, both dead ends —
+  // recording why so nobody re-tries them: CARTO's *own* basemap gateway
+  // domain now needs a key, and Wikimedia's tile server (maps.wikimedia.org)
+  // returns a flat 403 to any non-Wikimedia origin (verified live). This is
+  // CARTO's *CDN* domain (basemaps.cartocdn.com, not the gated gateway one)
+  // serving their "Positron" light style — free, keyless, CORS-open, and
+  // `{r}` actually resolves to real @2x tiles (detectRetina), unlike plain
+  // openstreetmap.org's 1x-only tiles that were the original "blurry" cause.
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+    subdomains: "abcd",
+    maxZoom: 20,
     detectRetina: true,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   }).addTo(map);
 
   const bounds = [];
