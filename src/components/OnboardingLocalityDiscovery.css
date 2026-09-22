@@ -973,12 +973,15 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-/* CARTO's "Positron" light style is already clean/desaturated by design —
-   no correcting filter needed here at all now (the old, much stronger
-   contrast/brightness/saturation reduction existed to compensate for the
-   busy default OSM carto style, and was itself part of why the map read
-   hazy/soft on top of the separate 1x-tiles-on-retina blur, fixed by
-   switching tile source; see mountDiscoveryMap). */
+/* Back on stock OSM's busier default style (see mountDiscoveryMap — every
+   "cleaner" retina CDN alternative silently stopped working in real
+   browser use), so this needs its desaturating touch back — lighter than
+   the original pass, since heavy contrast/brightness reduction was itself
+   partly why the map used to read hazy/soft. */
+.od-map-illustration .leaflet-tile-pane,
+.od-map-full__canvas .leaflet-tile-pane {
+  filter: grayscale(0.7) saturate(0.5);
+}
 
 .od-leaflet-div-icon {
   background: transparent !important;

@@ -1855,20 +1855,20 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     scrollWheelZoom: false,
   }).setView(center, 13);
 
-  // Went through two other tile sources before this one, both dead ends —
-  // recording why so nobody re-tries them: CARTO's *own* basemap gateway
-  // domain now needs a key, and Wikimedia's tile server (maps.wikimedia.org)
-  // returns a flat 403 to any non-Wikimedia origin (verified live). This is
-  // CARTO's *CDN* domain (basemaps.cartocdn.com, not the gated gateway one)
-  // serving their "Positron" light style — free, keyless, CORS-open, and
-  // `{r}` actually resolves to real @2x tiles (detectRetina), unlike plain
-  // openstreetmap.org's 1x-only tiles that were the original "blurry" cause.
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    subdomains: "abcd",
-    maxZoom: 20,
-    detectRetina: true,
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  // Every "sharper" alternative tried here has failed in real browser use
+  // despite passing a plain curl check — CARTO's basemap gateway domain
+  // needs a key, Wikimedia's tile server 403s non-Wikimedia origins, and
+  // CARTO's CDN domain (basemaps.cartocdn.com) also started demanding a key
+  // once real map traffic (repeated tile requests with a Referer header)
+  // hit it, even though a single referrer-less curl request passed clean.
+  // Stop chasing free retina tile CDNs — plain openstreetmap.org has been
+  // the one genuinely reliable, key-free, no-referrer-check source this
+  // whole project. Standard 1x/256px tiles (not sharp on retina, but
+  // actually loads) beat a sharper source that silently stops working.
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    subdomains: "abc",
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
   const bounds = [];
