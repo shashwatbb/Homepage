@@ -737,6 +737,8 @@
 }
 
 .od-drawer {
+  /* Fixed at its expanded height; peek vs. expanded is a transform, not a
+     height animation, so this only ever costs compositing, never layout. */
   position: absolute;
   left: 0;
   right: 0;
@@ -744,16 +746,16 @@
   z-index: 10;
   display: flex;
   flex-direction: column;
-  height: 132px;
-  max-height: 82dvh;
+  height: 82dvh;
   border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
   background-color: var(--ds-surface-white);
   box-shadow: 0 -4px 24px rgba(26, 26, 26, 0.12);
-  transition: height 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  transform: translateY(calc(82dvh - 132px));
+  transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .od-drawer--expanded {
-  height: 82dvh;
+  transform: translateY(0);
 }
 
 .od-drawer__handle-row {
