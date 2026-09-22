@@ -112,9 +112,9 @@ export function landmarkCoords(city, landmark) {
 // mockCommuteMinutes rate used for the map's travel-radius circle, not a
 // separate model. "Flexible" has no upper bound so no distance to show.
 export const COMMUTE_OPTIONS = [
-  { id: "15", label: "Under 15 min", maxMinutes: 15, distanceLabel: "~1-4 km" },
-  { id: "30", label: "15 to 30 min", maxMinutes: 30, distanceLabel: "~4-10 km" },
-  { id: "45", label: "30 to 45 min", maxMinutes: 45, distanceLabel: "~10-16 km" },
+  { id: "15", label: "Under 15 min", maxMinutes: 15, distanceLabel: "1-4 km" },
+  { id: "30", label: "15 to 30 min", maxMinutes: 30, distanceLabel: "4-10 km" },
+  { id: "45", label: "30 to 45 min", maxMinutes: 45, distanceLabel: "10-16 km" },
   { id: "flexible", label: "Flexible", maxMinutes: Infinity, distanceLabel: null },
 ];
 

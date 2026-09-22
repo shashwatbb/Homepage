@@ -213,7 +213,7 @@
 }
 
 .od-choice-card__trailing--text {
-  font-size: var(--ds-font-size-xs);
+  font-size: var(--ds-font-size-s);
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-text-muted);
   white-space: nowrap;
