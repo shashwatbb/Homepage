@@ -686,32 +686,183 @@
    static map illustration sits above the list with numbered pins for the
    top results; the list itself is the only interactive surface. */
 
+/* Anchors & Commute Coverage panel above the map (Discovery Map screen only) */
+.od-anchors-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-xs);
+  padding: 10px 12px;
+  margin-bottom: var(--ds-space-s);
+  border-radius: var(--ds-radius-lg);
+  background-color: var(--ds-color-purple-50);
+  border: 1px solid var(--ds-color-purple-100);
+}
+
+.od-anchors-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-xs);
+}
+
+.od-anchors-panel__title {
+  font-size: var(--ds-font-size-xs);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-purple-800);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.od-anchors-panel__badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-purple-700);
+  background-color: var(--ds-surface-white);
+  padding: 2px 8px;
+  border-radius: var(--ds-radius-full);
+  border: 1px solid var(--ds-color-purple-200);
+}
+
+.od-anchors-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.od-anchor-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background-color: var(--ds-surface-white);
+  border: 1px solid var(--ds-color-purple-200);
+  border-radius: var(--ds-radius-m);
+  box-shadow: 0 1px 2px rgba(109, 40, 217, 0.06);
+}
+
+.od-anchor-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-purple-100);
+  border-radius: var(--ds-radius-s);
+  flex-shrink: 0;
+}
+
+.od-anchor-card__icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.od-anchor-card__info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.od-anchor-card__name {
+  font-size: var(--ds-font-size-xs);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-warm-neutral-800);
+}
+
+.od-anchor-card__cat {
+  font-size: 10px;
+  color: var(--ds-text-secondary);
+}
+
+/* Map wrap & legend */
+.od-map-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: var(--ds-space-s);
+}
+
 .od-map-illustration {
   position: relative;
   width: 100%;
-  height: 220px;
-  margin: 0 0 var(--ds-space-m);
+  height: 230px;
+  margin: 0;
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
   background-color: var(--ds-color-purple-50);
   box-shadow: var(--od-shadow-sm);
+  border: 1px solid var(--ds-color-grey-neutral-100);
 }
 
-/* Real Leaflet map (OpenStreetMap raster tiles — CARTO's free Positron
-   tier now requires an API key, see mountDiscoveryMap) lives inside; only
-   style the parts that are ours. Leaflet already positions
-   .leaflet-marker-icon — the pin badge is just its inner content. */
+.od-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 6px 10px;
+  background-color: var(--ds-surface-white);
+  border-radius: var(--ds-radius-m);
+  border: 1px solid var(--ds-color-grey-neutral-200);
+  font-size: 11px;
+  color: var(--ds-text-secondary);
+}
+
+.od-map-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.od-map-legend__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.od-map-legend__indicator--anchor {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: rgba(139, 92, 246, 0.18);
+  border: 1.5px dashed var(--ds-color-purple-600);
+}
+
+.od-map-legend__indicator--locality {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--ds-radius-s);
+  background-color: var(--ds-color-warm-neutral-800);
+  color: var(--ds-text-inverse);
+  font-size: 9px;
+  font-weight: var(--ds-font-weight-bold);
+}
+
+/* Real Leaflet map (OpenStreetMap raster tiles) */
 .od-map-illustration .leaflet-control-attribution {
   font-size: 9px;
   background: rgba(255, 255, 255, 0.75);
 }
 
-/* Standard OSM tiles are busy/colorful — every road labeled, saturated
-   land-use fills. Desaturating + flattening contrast on the tile layer
-   only (never the pin markers) gets closer to a clean, minimal basemap
-   without a paid/key-gated tile provider. */
 .od-map-illustration .leaflet-tile-pane {
   filter: grayscale(0.9) brightness(1.12) contrast(0.85) saturate(0.4);
+}
+
+.od-leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.od-map-pin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .od-map-pin-badge {
@@ -725,13 +876,52 @@
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
-  box-shadow: 0 1px 3px rgba(33, 29, 25, 0.25);
+  box-shadow: 0 2px 5px rgba(33, 29, 25, 0.3);
 }
 
 .od-map-pin-badge--anchor {
   background-color: var(--ds-surface-white);
-  color: var(--ds-color-warm-neutral-800);
-  border: 2px solid var(--ds-color-warm-neutral-800);
+  color: var(--ds-color-purple-700);
+  border: 2px solid var(--ds-color-purple-600);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.od-map-pin-badge--anchor svg {
+  width: 16px;
+  height: 16px;
+}
+
+.od-map-pin-label {
+  position: absolute;
+  top: 100%;
+  margin-top: 3px;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-purple-800);
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 1px 6px;
+  border-radius: var(--ds-radius-full);
+  border: 1px solid var(--ds-color-purple-200);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.od-map-pin-tooltip,
+.od-map-circle-tooltip {
+  background-color: var(--ds-surface-white) !important;
+  color: var(--ds-color-warm-neutral-800) !important;
+  border: 1px solid var(--ds-color-grey-neutral-200) !important;
+  border-radius: var(--ds-radius-m) !important;
+  font-size: 11px !important;
+  box-shadow: var(--od-shadow-md) !important;
+  padding: 4px 8px !important;
+}
+
+.od-map-note {
+  margin: calc(-1 * var(--ds-space-s)) 0 var(--ds-space-m);
+  color: var(--ds-text-secondary);
+  font-size: var(--ds-font-size-xs);
 }
 
 .od-locality-list {

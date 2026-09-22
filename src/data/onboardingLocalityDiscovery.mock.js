@@ -212,6 +212,13 @@ function mockCommuteMinutes(km) {
   return Math.round(km * 2.6 + 4);
 }
 
+/** Inverse of mockCommuteMinutes — how far (km) the user's chosen commute
+ * tolerance reaches, for drawing the "close enough" radius around a landmark
+ * on the recommendations map. Same mock rate, no separate model. */
+export function commuteMinutesToKm(minutes) {
+  return Math.max(0, (minutes - 4) / 2.6);
+}
+
 function priceBandMatch(priceIndex, budgetMin, budgetMax, budgetCeilingIndex) {
   // budgetMin/Max are in the user's chosen unit; budgetCeilingIndex normalizes
   // the mock price_index (0..1) against the top of the visible range so the

@@ -52,6 +52,7 @@ import {
   searchLandmarks,
   landmarkCoords,
   getRecommendedLocalities,
+  commuteMinutesToKm,
   formatLocalityBudget,
   LANDMARKS_BY_CITY,
   LOCALITY_POOL,
@@ -1754,7 +1755,7 @@ function destroyDiscoveryMap(id) {
   delete activeDiscoveryMaps[id];
 }
 
-function mountDiscoveryMap(id, { center, pins }) {
+function mountDiscoveryMap(id, { center, pins, circles }) {
   const el = document.getElementById(id);
   if (!el) return;
   destroyDiscoveryMap(id);
@@ -1778,15 +1779,58 @@ function mountDiscoveryMap(id, { center, pins }) {
   }).addTo(map);
 
   const bounds = [];
+
+  // Recommendations screen only: a soft, mild circumference ring around each
+  // anchor landmark/metro station, sized to the user's chosen commute tolerance travel distance.
+  // Drawn and included in bounds fitting so the full reachable area is cleanly framed.
+  (circles || []).forEach((c) => {
+    if (!c.coords || !c.radiusMeters) return;
+    const circle = L.circle(c.coords, {
+      radius: c.radiusMeters,
+      color: "var(--ds-color-purple-600, #7c3aed)",
+      weight: 1.5,
+      dashArray: "5, 5",
+      opacity: 0.75,
+      fillColor: "var(--ds-color-purple-500, #8b5cf6)",
+      fillOpacity: 0.08,
+    }).addTo(map);
+
+    if (c.label) {
+      circle.bindTooltip(c.label, {
+        permanent: false,
+        direction: "top",
+        className: "od-map-circle-tooltip",
+      });
+    }
+
+    const circleBounds = circle.getBounds();
+    bounds.push(circleBounds.getSouthWest());
+    bounds.push(circleBounds.getNorthEast());
+  });
+
   pins.forEach((p) => {
     if (!p.coords) return;
+    const isAnchor = p.variant === "anchor";
     const icon = L.divIcon({
-      className: "",
-      html: `<span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}">${p.label}</span>`,
-      iconSize: [28, 28],
-      iconAnchor: [14, 14],
+      className: "od-leaflet-div-icon",
+      html: `<div class="od-map-pin-container ${isAnchor ? "od-map-pin-container--anchor" : ""}">
+        <span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}">
+          ${p.icon || p.label}
+        </span>
+        ${p.title && isAnchor ? `<span class="od-map-pin-label">${escapeHtml(p.title)}</span>` : ""}
+      </div>`,
+      iconSize: isAnchor ? [120, 48] : [28, 28],
+      iconAnchor: isAnchor ? [60, 24] : [14, 14],
     });
-    L.marker(p.coords, { icon }).addTo(map);
+
+    const marker = L.marker(p.coords, { icon }).addTo(map);
+    if (p.tooltip) {
+      marker.bindTooltip(p.tooltip, {
+        direction: "top",
+        offset: [0, -14],
+        className: "od-map-pin-tooltip",
+      });
+    }
     bounds.push(p.coords);
   });
 
@@ -1831,8 +1875,8 @@ function localityCardHtml(loc, rank) {
   // same primary button, which flattened the one actual recommendation
   // to look identical to five other options.
   const isTopPick = rank === 1;
-  const distanceLine = loc.distance_from_landmarks.length
-    ? `${loc.distance_from_landmarks[0].minutes} min from ${loc.distance_from_landmarks[0].landmark_name}`
+  const distanceLine = loc.distance_from_landmarks && loc.distance_from_landmarks.length
+    ? loc.distance_from_landmarks.map((d) => `${d.minutes} min (~${d.km} km) from ${d.landmark_name}`).join(" • ")
     : loc.matched_signals[0] || "Good match for your search";
   return `<div class="od-locality-card ${isPrimary ? "" : "od-locality-card--secondary"}">
     <span class="od-locality-card__rank">${isPrimary ? rank : ""}</span>
@@ -1852,17 +1896,63 @@ function discoveryMapScreen() {
   const ranked = state.recommendedLocalities;
   const primary = ranked.slice(0, 5);
   const secondary = ranked.slice(5);
+  const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
+  const commuteMinutes = commuteOpt?.maxMinutes && Number.isFinite(commuteOpt.maxMinutes) ? commuteOpt.maxMinutes : 30;
+  const radiusKm = Math.round(commuteMinutesToKm(commuteMinutes) * 10) / 10;
+  const hasAnchors = state.landmarks.length > 0;
+  const commuteLabel = commuteOpt?.label || "Within 30 min";
 
-  return `<div class="ol-screen od-flow">
+  return `<div class="ol-screen od-flow od-flow--results">
     ${odTopBar("discovery-map-back")}
     ${discoverySummaryHtml()}
     <h1 class="od-heading">Recommended localities</h1>
     ${
+      hasAnchors
+        ? `<div class="od-anchors-panel">
+            <div class="od-anchors-panel__header">
+              <span class="od-anchors-panel__title">Stay closer to</span>
+              <span class="od-anchors-panel__badge">${escapeHtml(commuteLabel)} (~${radiusKm} km radius)</span>
+            </div>
+            <div class="od-anchors-panel__chips">
+              ${state.landmarks
+                .map((l) => {
+                  const icon = LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin;
+                  const catLabel = l.category ? l.category.charAt(0).toUpperCase() + l.category.slice(1) : "Landmark";
+                  return `<div class="od-anchor-card">
+                    <span class="od-anchor-card__icon">${icon}</span>
+                    <div class="od-anchor-card__info">
+                      <span class="od-anchor-card__name">${escapeHtml(l.name)}</span>
+                      <span class="od-anchor-card__cat">${escapeHtml(catLabel)}</span>
+                    </div>
+                  </div>`;
+                })
+                .join("")}
+            </div>
+          </div>`
+        : ""
+    }
+    ${
       primary.length
-        ? mapIllustrationHtml(
-            primary.map((l, i) => ({ label: String(i + 1), coords: l.coordinates })),
-            { id: "od-results-map" }
-          )
+        ? `<div class="od-map-wrap">
+            ${mapIllustrationHtml(
+              primary.map((l, i) => ({ label: String(i + 1), coords: l.coordinates })),
+              { id: "od-results-map" }
+            )}
+            ${
+              hasAnchors
+                ? `<div class="od-map-legend">
+                    <div class="od-map-legend__item">
+                      <span class="od-map-legend__indicator od-map-legend__indicator--anchor"></span>
+                      <span>Marked area & travel circumference (~${radiusKm} km)</span>
+                    </div>
+                    <div class="od-map-legend__item">
+                      <span class="od-map-legend__indicator od-map-legend__indicator--locality">1-5</span>
+                      <span>Recommended localities in & around area</span>
+                    </div>
+                  </div>`
+                : ""
+            }
+          </div>`
         : ""
     }
     <div class="od-locality-list">
@@ -2405,9 +2495,36 @@ function render() {
   if (state.step === "discovery-budget") mountBudgetDial();
   if (state.step === "discovery-landmarks") mountLandmarkMap();
   if (state.step === "discovery-map") {
+    const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
+    const commuteMinutes = commuteOpt?.maxMinutes && Number.isFinite(commuteOpt.maxMinutes) ? commuteOpt.maxMinutes : 30;
+    const radiusKm = commuteMinutesToKm(commuteMinutes);
+    const radiusMeters = Math.max(radiusKm * 1000, 2500);
+
     mountDiscoveryMap("od-results-map", {
       center: cityCenter(state.city),
-      pins: state.recommendedLocalities.slice(0, 5).map((l, i) => ({ label: String(i + 1), coords: l.coordinates })),
+      pins: [
+        ...state.recommendedLocalities.slice(0, 5).map((l, i) => ({
+          label: String(i + 1),
+          coords: l.coordinates,
+          title: l.name,
+          tooltip: `<b>${escapeHtml(l.name)}</b><br><span style="color:#6b7280">${escapeHtml(localityBudgetLine(l))}</span>`,
+        })),
+        ...state.landmarks.map((l) => {
+          const categoryIcon = LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin;
+          return {
+            icon: categoryIcon,
+            variant: "anchor",
+            coords: l.coords,
+            title: l.name,
+            tooltip: `<b>${escapeHtml(l.name)}</b><br><span style="color:#6d28d9">Travel radius: ~${Math.round(radiusKm * 10) / 10} km (${commuteOpt?.label || "Within 30 min"})</span>`,
+          };
+        }),
+      ],
+      circles: state.landmarks.map((l) => ({
+        coords: l.coords,
+        radiusMeters,
+        label: `${l.name} · ~${Math.round(radiusKm * 10) / 10} km travel radius`,
+      })),
     });
   }
   if (state.step === "splash") mountSplashLottie();
