@@ -114,7 +114,7 @@ function waitForInitialPageSkeleton() {
   });
 }
 
-function createBudgetDialPicker(
+export function createBudgetDialPicker(
   container,
   options,
   { initialIndex = 0, floorIndex = 0, hardFloor = false, onChange } = {}

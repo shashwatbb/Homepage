@@ -35,6 +35,7 @@ import {
 import { ICON as BRICKS_ICON } from "./data/onboardingLocalityIcons.js";
 import { BRICKS_ICONS } from "./data/bricksIcons.js";
 import { ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID } from "./experiments.js";
+import { createBudgetDialPicker } from "./srp-bhk-budget-bottom-sheet.js";
 import "./components/OnboardingLocalityDiscovery.css";
 import {
   BHK_OPTIONS,
@@ -1090,7 +1091,10 @@ function discoverySummaryHtml() {
 function odProgressHtml(stepId) {
   const steps = activeDiscoverySteps();
   const idx = steps.indexOf(stepId);
-  return `<div class="od-progress">${steps.map((_, i) => `<span class="od-progress__dot ${i <= idx ? "is-done" : ""}"></span>`).join("")}</div>`;
+  const pct = Math.round(((idx + 1) / steps.length) * 100);
+  return `<div class="od-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}">
+    <span class="od-progress__fill" style="transform:scaleX(${pct / 100})"></span>
+  </div>`;
 }
 
 // -- Step 0: locality check --------------------------------------------------
@@ -1252,32 +1256,52 @@ function odStepperHtml({ wrapId, value, label, minusAction, plusAction, minusDis
   </div>`;
 }
 
-function budgetStepperHtml() {
+/** Scroll-dial budget picker, reusing the SRP bottom sheet's wheel (markup +
+ * CSS + physics) rather than a second implementation — the sheet's classes
+ * come along with `createBudgetDialPicker`'s own CSS import. */
+function budgetDialHtml() {
   const steps = currentBudgetSteps();
-  return odStepperHtml({
-    wrapId: "od-topbar-stepper",
-    label: steps[state.budgetIndex].label,
-    minusAction: "budget-step-minus",
-    plusAction: "budget-step-plus",
-    minusDisabled: state.budgetIndex === 0,
-    plusDisabled: state.budgetIndex === steps.length - 1,
-    compact: true,
+  return `<div class="od-budget-dial">
+    <div class="srp-budget-stepper" role="group" aria-label="Max budget">
+      <button type="button" class="srp-budget-stepper__btn" data-action="budget-step-minus" aria-label="Decrease budget" ${state.budgetIndex === 0 ? "disabled" : ""}>${OD_ICON.minus}</button>
+      <div class="srp-budget-stepper__picker">
+        <div class="srp-ios-picker srp-ios-picker--dial srp-ios-picker--single srp-ios-picker--odometer" id="od-budget-picker"></div>
+      </div>
+      <button type="button" class="srp-budget-stepper__btn" data-action="budget-step-plus" aria-label="Increase budget" ${state.budgetIndex === steps.length - 1 ? "disabled" : ""}>${OD_ICON.plus}</button>
+    </div>
+  </div>`;
+}
+
+let odBudgetPicker = null;
+
+function syncBudgetStepperButtons() {
+  const last = currentBudgetSteps().length - 1;
+  const minus = document.querySelector('[data-action="budget-step-minus"]');
+  const plus = document.querySelector('[data-action="budget-step-plus"]');
+  if (minus) minus.disabled = state.budgetIndex === 0;
+  if (plus) plus.disabled = state.budgetIndex === last;
+}
+
+function mountBudgetDial() {
+  const el = document.getElementById("od-budget-picker");
+  if (!el) return;
+  odBudgetPicker = createBudgetDialPicker(el, currentBudgetSteps(), {
+    initialIndex: state.budgetIndex,
+    onChange: (index) => {
+      state.budgetIndex = index;
+      syncBudgetStepperButtons();
+    },
   });
 }
 
 function discoveryBudgetScreen() {
   const isRent = state.service === "rent";
-  return `<div class="ol-screen ol-screen--has-cta od-flow">
-    <div class="ol-topbar ol-topbar--with-stepper">
-      <div class="ol-topbar__lead">
-        <button type="button" class="ol-icon-btn" data-action="discovery-budget-back" aria-label="Back">${ICON.arrowLeft}</button>
-      </div>
-      ${budgetStepperHtml()}
-    </div>
+  return `<div class="ol-screen ol-screen--has-cta od-flow od-budget-screen">
+    ${odTopBar("discovery-budget-back")}
     ${odProgressHtml("discovery-budget")}
-    ${discoveryValueMapHtml()}
     <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your budget?"}</h1>
     <p class="od-subtitle">${isRent ? "Your max monthly rent" : "Your max budget"}</p>
+    ${budgetDialHtml()}
     ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-budget">${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
@@ -1738,14 +1762,10 @@ function wireEvents(root) {
         goTo("locality-check");
         break;
       case "budget-step-minus":
-        state.budgetIndex = Math.max(0, state.budgetIndex - 1);
-        patchNode("od-topbar-stepper", budgetStepperHtml());
-        patchNode("od-value-map-wrap", discoveryValueMapHtml());
+        odBudgetPicker?.setIndex(Math.max(0, state.budgetIndex - 1));
         break;
       case "budget-step-plus":
-        state.budgetIndex = Math.min(currentBudgetSteps().length - 1, state.budgetIndex + 1);
-        patchNode("od-topbar-stepper", budgetStepperHtml());
-        patchNode("od-value-map-wrap", discoveryValueMapHtml());
+        odBudgetPicker?.setIndex(Math.min(currentBudgetSteps().length - 1, state.budgetIndex + 1));
         break;
       case "discovery-bhk-back":
         goTo("discovery-budget");
@@ -1994,7 +2014,10 @@ function patchNode(id, html) {
 function render() {
   const root = document.getElementById("onboarding-locality");
   if (!root) return;
+  odBudgetPicker?.destroy();
+  odBudgetPicker = null;
   root.innerHTML = SCREEN_BUILDERS[state.step]() + toastHtml();
+  if (state.step === "discovery-budget") mountBudgetDial();
   if (state.step === "splash") mountSplashLottie();
   if (state.step === "otp") focusOtpHiddenInput();
 }

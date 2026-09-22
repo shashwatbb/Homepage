@@ -9,21 +9,21 @@
    (Continue / Explore this locality / Save address). */
 
 .od-progress {
-  display: flex;
-  gap: var(--ds-space-2xs);
-  margin: 0 0 var(--ds-space-l);
-}
-
-.od-progress__dot {
-  flex: 1;
   height: 4px;
+  margin: 0 0 var(--ds-space-l);
+  overflow: hidden;
   border-radius: var(--ds-radius-full);
   background-color: var(--ds-border-subtle);
-  transition: background-color 0.25s ease;
 }
 
-.od-progress__dot.is-done {
+.od-progress__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--ds-radius-full);
   background-color: var(--ds-color-grey-neutral-900);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
 }
 
 .od-skip-row {
@@ -312,6 +312,29 @@
 .od-stepper--compact .od-stepper__value {
   font-size: var(--ds-font-size-m);
   font-weight: var(--ds-font-weight-semibold);
+}
+
+/* Budget screen — dial sits centred in everything left between the heading
+   and the fixed CTA. Odometer fade masks are re-tinted to the flow's beige
+   (the SRP sheet they come from fades to white). */
+.od-budget-screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.od-budget-dial {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.od-budget-dial .srp-ios-picker--odometer::before {
+  background: linear-gradient(to bottom, #faf9f5 20%, rgba(250, 249, 245, 0));
+}
+
+.od-budget-dial .srp-ios-picker--odometer::after {
+  background: linear-gradient(to top, #faf9f5 20%, rgba(250, 249, 245, 0));
 }
 
 .ol-topbar--with-stepper {
