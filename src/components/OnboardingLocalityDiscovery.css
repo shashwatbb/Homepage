@@ -689,13 +689,26 @@
 /* Full-screen map + bottom drawer (Discovery Map / recommendations screen
    only — every other screen keeps the normal padded .ol-screen flow). The
    old separate "stay closer to" panel + map legend block collapsed into
-   one note line over the map (see od-map-full__note); the drawer replaces
-   the plain in-flow list so the map is the primary surface. */
+   one note line over the map (see od-map-full__note).
+   Deliberately plain: a flex column with the map zone and the drawer as two
+   normal-flow siblings, each with a fixed share of the screen. No absolute
+   positioning, no transform/dvh peek-collapse animation, no JS-driven
+   expand state — an earlier version tried that and kept silently ending up
+   with an invisible drawer that also ate all map interaction. This can't:
+   the drawer is always laid out, always painted, always scrollable. */
 .od-map-full {
   padding: 0;
-  min-height: 100dvh;
-  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+}
+
+.od-map-full__map-zone {
+  position: relative;
+  flex: 0 0 54%;
+  min-height: 0;
 }
 
 .od-map-full__canvas {
@@ -737,29 +750,13 @@
 }
 
 .od-drawer {
-  /* Fixed at its expanded height; peek vs. expanded is a transform, not a
-     height animation, so this only ever costs compositing, never layout.
-     Peek (default) still shows several cards, not just the handle — a
-     132px sliver read as "the list isn't there" even though it was just
-     collapsed. Both values share one unit (dvh) so the offset is a plain
-     literal, no calc() mixing dvh with px. */
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  height: 88dvh;
   border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
   background-color: var(--ds-surface-white);
   box-shadow: 0 -4px 24px rgba(26, 26, 26, 0.12);
-  transform: translateY(42dvh); /* 88dvh - 46dvh peek */
-  transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.od-drawer--expanded {
-  transform: translateY(0);
 }
 
 .od-drawer__handle-row {
@@ -770,9 +767,6 @@
   gap: 6px;
   width: 100%;
   padding: 10px var(--ds-space-m) var(--ds-space-xs);
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 .od-drawer__handle {

@@ -295,12 +295,6 @@ function toastHtml() {
 // Splash (SplashScreen.tsx)
 // ---------------------------------------------------------------------------
 
-/** Recommendations screen's bottom drawer — peek by default (map takes the
- * screen), tap the handle/header to expand over the list. Module-level so
- * it survives the drawer's own DOM toggle without a full re-render (which
- * would remount the Leaflet map underneath it). */
-let resultsDrawerExpanded = false;
-
 let splashIntroFinished = false;
 let splashQuote = "";
 let splashLottieInstance = null;
@@ -1919,21 +1913,28 @@ function discoveryMapScreen() {
     ? `Within ~${radiusKm} km of ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
     : "";
 
+  // Plain flex column, top-to-bottom, both zones always in normal flow — no
+  // position:absolute drawer, no transform/dvh peek-collapse animation. That
+  // mechanic (see git history) kept silently failing in ways that made the
+  // whole drawer invisible and ate map interaction with it. This can't do
+  // that: the drawer's list is always laid out and always paintable.
   return `<div class="ol-screen od-flow od-map-full">
-    <div class="od-map-full__canvas" id="od-results-map"></div>
-    <div class="od-map-full__topbar">
-      <button type="button" class="ol-icon-btn od-map-full__back" data-action="discovery-map-back" aria-label="Back">${ICON.arrowLeft}</button>
-      ${anchorNote ? `<span class="od-map-full__note">${anchorNote}</span>` : ""}
+    <div class="od-map-full__map-zone">
+      <div class="od-map-full__canvas" id="od-results-map"></div>
+      <div class="od-map-full__topbar">
+        <button type="button" class="ol-icon-btn od-map-full__back" data-action="discovery-map-back" aria-label="Back">${ICON.arrowLeft}</button>
+        ${anchorNote ? `<span class="od-map-full__note">${anchorNote}</span>` : ""}
+      </div>
     </div>
-    <div class="od-drawer ${resultsDrawerExpanded ? "od-drawer--expanded" : ""}" id="od-results-drawer">
-      <button type="button" class="od-drawer__handle-row" data-action="toggle-results-drawer" aria-expanded="${resultsDrawerExpanded}" aria-controls="od-drawer-body">
+    <div class="od-drawer">
+      <div class="od-drawer__handle-row">
         <span class="od-drawer__handle"></span>
         <span class="od-drawer__header">
           <span class="od-drawer__title">Recommended localities</span>
           <span class="od-drawer__count">${ranked.length}</span>
         </span>
-      </button>
-      <div class="od-drawer__body" id="od-drawer-body">
+      </div>
+      <div class="od-drawer__body">
         <div class="od-locality-list">
           ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
           ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
@@ -1966,7 +1967,6 @@ function beginLocalityMatch() {
   state.budgetMin = state.budgetMax * 0.6;
   const { ranked } = getRecommendedLocalities(state);
   state.recommendedLocalities = ranked;
-  resultsDrawerExpanded = false;
   goTo("discovery-map");
 }
 
@@ -2283,12 +2283,6 @@ function wireEvents(root) {
       case "discovery-map-back":
         goTo("discovery-lifestyle");
         break;
-      case "toggle-results-drawer": {
-        resultsDrawerExpanded = !resultsDrawerExpanded;
-        const drawer = document.getElementById("od-results-drawer");
-        if (drawer) drawer.classList.toggle("od-drawer--expanded", resultsDrawerExpanded);
-        break;
-      }
       case "explore-locality":
         exploreLocality(btn.getAttribute("data-locality-id"), btn.getAttribute("data-locality-name"));
         break;
