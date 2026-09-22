@@ -1084,7 +1084,13 @@ function odChoiceCardHtml({ action, value, icon, label, selected, trailing }) {
   }>
     <span class="od-choice-card__icon">${icon}</span>
     <span class="od-choice-card__label">${label}</span>
-    ${trailing === "chevron" ? `<span class="od-choice-card__trailing">${OD_ICON.chevronRight}</span>` : ""}
+    ${
+      trailing === "chevron"
+        ? `<span class="od-choice-card__trailing">${OD_ICON.chevronRight}</span>`
+        : trailing
+          ? `<span class="od-choice-card__trailing od-choice-card__trailing--text">${escapeHtml(trailing)}</span>`
+          : ""
+    }
   </button>`;
 }
 
@@ -1560,13 +1566,39 @@ function discoveryBhkScreen() {
           `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}" aria-pressed="${state.propertyType === opt}">${opt}</button>`
       ).join("")}
     </div>
-    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk">${STRINGS["common.continue"]}</button>`)}
+    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk" ${state.propertyType ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
 
 // -- Step 3: landmark search ---------------------------------------------------
 
 let odLandmarkQuery = "";
+
+/** Quick-pick chips for a handful of obviously-known landmarks in the
+ * user's city (metro stations, big offices/malls) — shown before the user
+ * types anything, so this step doesn't read as an empty search box. Hidden
+ * once search is in progress (own results take over) or the 2-landmark cap
+ * is hit. Reuses LANDMARKS_BY_CITY, same pool the search itself queries. */
+function recommendedLandmarksHtml() {
+  if (state.landmarks.length >= 2 || odLandmarkQuery.trim()) return "";
+  const already = new Set(state.landmarks.map((l) => l.id));
+  const list = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon).filter((l) => !already.has(l.id)).slice(0, 4);
+  if (!list.length) return "";
+  return `<div class="od-landmark-suggestions">
+    <p class="od-landmark-suggestions__label">Popular nearby</p>
+    <div class="od-landmark-suggestions__chips">
+      ${list
+        .map(
+          (l) =>
+            `<button type="button" class="od-landmark-suggestion" data-action="pick-landmark" data-landmark-id="${l.id}">
+              <span class="od-landmark-suggestion__icon">${LANDMARK_CATEGORY_ICON[l.category] || OD_ICON.pin}</span>
+              ${escapeHtml(l.name)}
+            </button>`
+        )
+        .join("")}
+    </div>
+  </div>`;
+}
 
 function landmarkResultsHtml() {
   if (state.landmarks.length >= 2) return "";
@@ -1615,6 +1647,8 @@ function mountLandmarkMap() {
 function renderLandmarkPicker() {
   const results = document.getElementById("od-landmark-results-wrap");
   if (results) results.innerHTML = landmarkResultsHtml();
+  const suggestions = document.getElementById("od-landmark-suggestions-wrap");
+  if (suggestions) suggestions.innerHTML = recommendedLandmarksHtml();
   const chips = document.getElementById("od-landmark-chips-wrap");
   if (chips) chips.innerHTML = landmarkChipsHtml();
   const input = document.getElementById("od-landmark-input");
@@ -1666,6 +1700,7 @@ function discoveryLandmarksScreen() {
       <span class="od-search-field__icon">${OD_ICON.search}</span>
       <div id="od-landmark-results-wrap" class="od-landmark-results-wrap">${landmarkResultsHtml()}</div>
     </div>
+    <div id="od-landmark-suggestions-wrap">${recommendedLandmarksHtml()}</div>
     ${capped ? `<p class="od-landmark-cap-note">2 of 2 added, remove one to search again.</p>` : ""}
     <div id="od-landmark-chips-wrap">${landmarkChipsHtml()}</div>
     <div id="od-landmark-map-wrap">${landmarkPreviewMapHtml()}</div>
@@ -1692,10 +1727,11 @@ function discoveryCommuteScreen() {
           icon: commuteBarsHtml(opt.id),
           label: opt.label,
           selected: state.commuteTolerance === opt.id,
+          trailing: opt.distanceLabel,
         })
       ).join("")}
     </div>
-    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-commute">${STRINGS["common.continue"]}</button>`)}
+    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-commute" ${state.commuteTolerance ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
 
@@ -1871,6 +1907,7 @@ function wireResultsDrawerScroll() {
   const container = document.getElementById("od-map-full");
   if (!body || !container) return;
   let open = false;
+  let transitioning = false;
   let rafId = null;
 
   // The visible "jerk" wasn't the flex-basis transition itself — it was
@@ -1888,17 +1925,99 @@ function wireResultsDrawerScroll() {
     }
   };
 
+  // Two separate gestures, not one blended motion: the first scroll/swipe
+  // only opens the drawer (list stays locked, can't scroll underneath the
+  // panel animation); a second, later gesture is what actually scrolls the
+  // list. Enforced by keeping the body non-scrollable (overflow hidden)
+  // until the open/close transition has fully settled.
+  const setOpen = (next) => {
+    if (open === next || transitioning) return;
+    open = next;
+    transitioning = true;
+    container.classList.toggle("od-map-full--drawer-open", open);
+    body.style.overflowY = "hidden";
+    if (rafId) cancelAnimationFrame(rafId);
+    syncMapSize(performance.now() + DRAWER_MAP_TRANSITION_MS);
+    window.setTimeout(() => {
+      transitioning = false;
+      if (open) {
+        body.style.overflowY = "auto";
+      } else {
+        body.scrollTop = 0;
+      }
+    }, DRAWER_MAP_TRANSITION_MS);
+  };
+
+  body.style.overflowY = "hidden";
+
+  let touchStartY = null;
+  let openedThisTouch = false;
+
   body.addEventListener(
-    "scroll",
-    () => {
-      const shouldOpen = body.scrollTop > 4;
-      if (shouldOpen === open) return;
-      open = shouldOpen;
-      container.classList.toggle("od-map-full--drawer-open", open);
-      if (rafId) cancelAnimationFrame(rafId);
-      syncMapSize(performance.now() + DRAWER_MAP_TRANSITION_MS);
+    "touchstart",
+    (e) => {
+      touchStartY = e.touches[0].clientY;
+      openedThisTouch = false;
     },
     { passive: true }
+  );
+
+  body.addEventListener(
+    "touchmove",
+    (e) => {
+      if (touchStartY === null || transitioning) {
+        e.preventDefault();
+        return;
+      }
+      const draggedUp = touchStartY - e.touches[0].clientY; // >0 = finger moving up
+      if (!open) {
+        if (draggedUp > 10) {
+          e.preventDefault();
+          openedThisTouch = true;
+          setOpen(true);
+        }
+        return;
+      }
+      if (openedThisTouch) {
+        // Same continuous touch that just opened the drawer — don't also
+        // let it scroll the list; wait for the next, separate gesture.
+        e.preventDefault();
+        return;
+      }
+      if (body.scrollTop <= 0 && draggedUp < -10) {
+        setOpen(false);
+      }
+    },
+    { passive: false }
+  );
+
+  body.addEventListener(
+    "touchend",
+    () => {
+      touchStartY = null;
+      openedThisTouch = false;
+    },
+    { passive: true }
+  );
+
+  // Desktop convenience — same gating for wheel/trackpad scrolling.
+  body.addEventListener(
+    "wheel",
+    (e) => {
+      if (transitioning) {
+        e.preventDefault();
+        return;
+      }
+      if (!open && e.deltaY > 0) {
+        e.preventDefault();
+        setOpen(true);
+        return;
+      }
+      if (open && body.scrollTop <= 0 && e.deltaY < 0) {
+        setOpen(false);
+      }
+    },
+    { passive: false }
   );
 }
 
@@ -1935,7 +2054,7 @@ function localityCardHtml(loc, rank) {
     <div class="od-locality-card__body">
       <div class="od-locality-card__head">
         <h2 class="od-locality-card__name">${escapeHtml(loc.name)}</h2>
-        <span class="od-signal-badge od-signal-badge--rank">${localityBadgeLabel(loc, rank)}</span>
+        <span class="od-signal-badge od-signal-badge--rank ${isTopPick ? "od-signal-badge--recommended" : ""}">${localityBadgeLabel(loc, rank)}</span>
       </div>
       <p class="od-locality-card__budget">${escapeHtml(localityBudgetLine(loc))}</p>
       <p class="od-locality-card__distance">${escapeHtml(distanceLine)}</p>
@@ -2221,6 +2340,7 @@ function wireEvents(root) {
           el.classList.toggle("is-active", isActive);
           el.setAttribute("aria-pressed", String(isActive));
         });
+        root.querySelector('[data-action="discovery-continue"][data-from="discovery-bhk"]')?.removeAttribute("disabled");
         haptic(10);
         break;
       case "discovery-landmarks-back":
@@ -2228,8 +2348,11 @@ function wireEvents(root) {
         break;
       case "pick-landmark": {
         const landmarkId = btn.getAttribute("data-landmark-id");
-        const results = searchLandmarks(state.city, odLandmarkQuery);
-        const found = results.find((l) => l.id === landmarkId);
+        // Full city pool, not just the current search results — the "Popular
+        // nearby" quick-pick chips (shown with no query typed) come from the
+        // same pool but aren't part of any active search.
+        const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
+        const found = pool.find((l) => l.id === landmarkId);
         if (!found || state.landmarks.length >= 2) break;
         state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
         odLandmarkQuery = "";
@@ -2257,6 +2380,7 @@ function wireEvents(root) {
           el.classList.toggle("is-selected", isSelected);
           el.setAttribute("aria-pressed", String(isSelected));
         });
+        root.querySelector('[data-action="discovery-continue"][data-from="discovery-commute"]')?.removeAttribute("disabled");
         haptic(10);
         break;
       case "discovery-intent-back":
@@ -2294,28 +2418,12 @@ function wireEvents(root) {
       }
       case "discovery-continue": {
         const from = btn.getAttribute("data-from");
-        if (from === "discovery-bhk" && !state.propertyType) {
-          haptic([15, 40, 15]);
-          showToast("Pick a property type to continue");
-          const grid = document.getElementById("od-property-type-grid");
-          if (grid) {
-            grid.classList.remove("is-shaking");
-            void grid.offsetWidth; // restart the animation on repeated taps
-            grid.classList.add("is-shaking");
-          }
-          break;
-        }
-        if (from === "discovery-commute" && !state.commuteTolerance) {
-          haptic([15, 40, 15]);
-          showToast("Pick a commute tolerance to continue");
-          const list = document.getElementById("od-commute-list");
-          if (list) {
-            list.classList.remove("is-shaking");
-            void list.offsetWidth;
-            list.classList.add("is-shaking");
-          }
-          break;
-        }
+        // The CTA is disabled until its required selection is made (see
+        // discoveryBhkScreen/discoveryCommuteScreen), so a disabled button
+        // never dispatches click — this is just a defensive backstop, no
+        // toast/shake needed anymore.
+        if (from === "discovery-bhk" && !state.propertyType) break;
+        if (from === "discovery-commute" && !state.commuteTolerance) break;
         if (from === "discovery-lifestyle") {
           haptic(10);
           beginLocalityMatch();
@@ -2416,6 +2524,8 @@ function wireEvents(root) {
       odLandmarkQuery = event.target.value;
       const results = root.querySelector("#od-landmark-results-wrap");
       if (results) results.innerHTML = landmarkResultsHtml();
+      const suggestions = root.querySelector("#od-landmark-suggestions-wrap");
+      if (suggestions) suggestions.innerHTML = recommendedLandmarksHtml();
     } else if (event.target.id === "od-locality-search-input") {
       // Same pattern: patch the sections below in place, leave the input
       // (and focus) alone. Plain client-side substring filter, no backend.

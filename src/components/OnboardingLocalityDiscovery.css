@@ -85,10 +85,6 @@
   margin-top: var(--ds-space-l);
 }
 
-.od-choice-list.is-shaking {
-  animation: ol-shake 0.18s linear;
-}
-
 .od-flow {
   background-color: #faf9f5;
   /* Elevation scale — kept deliberately quiet: neutral warm-brown tint
@@ -196,6 +192,13 @@
 .od-choice-card__trailing svg {
   width: 18px;
   height: 18px;
+}
+
+.od-choice-card__trailing--text {
+  font-size: var(--ds-font-size-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-text-muted);
+  white-space: nowrap;
 }
 
 /* Commute proximity indicator ------------------------------------------- */
@@ -377,13 +380,21 @@
 /* Budget/BHK +/- steppers — shared markup from SrpBhkBudgetBottomSheet.css
    (reused for SRP's own bottom sheet). Budget shipped a plain flat button
    there while BHK already had a premium gradient+shadow treatment right
-   next to it in the same flow — re-skinned both to the one shared look
-   here, scoped to `.od-flow` so SRP keeps its own plainer sheet chrome. */
-.od-flow .srp-budget-stepper__btn,
-.od-flow .srp-bhk-stepper__btn {
+   next to it in the same flow — re-skinned both to a shared look here,
+   scoped to `.od-flow` so SRP keeps its own plainer sheet chrome. BHK gets
+   a warm beige gradient instead of budget's purple, so the two steppers
+   read as distinct steps rather than one repeated treatment. */
+.od-flow .srp-budget-stepper__btn {
   border: 1px solid var(--ds-color-purple-100);
   background: linear-gradient(180deg, var(--ds-surface-white) 0%, var(--ds-color-purple-50) 100%);
   color: var(--ds-color-purple-700);
+  box-shadow: var(--od-shadow-sm);
+}
+
+.od-flow .srp-bhk-stepper__btn {
+  border: 1px solid var(--ds-color-warm-neutral-200);
+  background: linear-gradient(180deg, var(--ds-surface-white) 0%, var(--ds-color-warm-neutral-100) 100%);
+  color: var(--ds-color-warm-neutral-800);
   box-shadow: var(--od-shadow-sm);
 }
 
@@ -396,10 +407,15 @@
   height: 16px;
 }
 
-.od-flow .srp-budget-stepper__btn:hover:not(:disabled),
-.od-flow .srp-bhk-stepper__btn:hover:not(:disabled) {
+.od-flow .srp-budget-stepper__btn:hover:not(:disabled) {
   border-color: var(--ds-color-purple-300);
   background: var(--ds-color-purple-100);
+  box-shadow: var(--od-shadow-md);
+}
+
+.od-flow .srp-bhk-stepper__btn:hover:not(:disabled) {
+  border-color: var(--ds-color-warm-neutral-300);
+  background: var(--ds-color-warm-neutral-200);
   box-shadow: var(--od-shadow-md);
 }
 
@@ -421,10 +437,6 @@
   flex-wrap: wrap;
   gap: var(--ds-space-s);
   margin-top: var(--ds-space-m);
-}
-
-.od-chip-grid.is-shaking {
-  animation: ol-shake 0.18s linear;
 }
 
 .od-chip {
@@ -486,11 +498,6 @@
   .od-chip {
     opacity: 1;
     transform: none;
-    animation: none;
-  }
-
-  .od-chip-grid.is-shaking,
-  .od-choice-list.is-shaking {
     animation: none;
   }
 }
@@ -615,11 +622,58 @@
   color: var(--ds-text-muted);
 }
 
+/* "Popular nearby" quick-pick chips, shown before any search query. */
+.od-landmark-suggestions {
+  margin-top: var(--ds-space-m);
+}
+
+.od-landmark-suggestions__label {
+  margin: 0 0 var(--ds-space-xs);
+  font-size: var(--ds-font-size-xs);
+  color: var(--ds-text-muted);
+}
+
+.od-landmark-suggestions__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-xs);
+}
+
+.od-landmark-suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  padding: var(--ds-space-xs) var(--ds-space-s) var(--ds-space-xs) var(--ds-space-xs);
+  border: 1px solid var(--ds-color-grey-neutral-200);
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-surface-white);
+  color: var(--ds-text-primary);
+  font-size: var(--ds-font-size-s);
+  cursor: pointer;
+}
+
+.od-landmark-suggestion__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--ds-color-purple-50);
+  color: var(--ds-color-purple-700);
+  flex-shrink: 0;
+}
+
+.od-landmark-suggestion__icon svg {
+  width: 13px;
+  height: 13px;
+}
+
 .od-anchor-chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-space-xs);
-  margin-top: var(--ds-space-m);
+  margin: var(--ds-space-m) 0;
 }
 
 /* Numbered so a chip and its matching map pin (Screen 3 preview, and the
@@ -1026,6 +1080,12 @@
   background-color: var(--ds-surface-white);
   color: var(--ds-text-primary);
   font-weight: var(--ds-font-weight-medium);
+}
+
+.od-signal-badge--recommended {
+  border-color: var(--ds-color-green-600);
+  background-color: var(--ds-color-green-50);
+  color: var(--ds-color-green-800);
 }
 
 .od-locality-card--secondary .od-signal-badge {
