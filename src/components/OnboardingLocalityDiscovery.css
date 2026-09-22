@@ -771,7 +771,7 @@
    search field) over a white, section-scrolling body. */
 
 .od-ls-screen {
-  padding: 0 0 var(--ds-space-xl);
+  padding: 0 var(--ds-space-m) var(--ds-space-xl);
 }
 
 .od-ls-header {
@@ -801,7 +801,7 @@
 }
 
 .od-ls-body {
-  padding: var(--ds-space-l) var(--ds-space-m) 0;
+  padding: var(--ds-space-l) 0 0;
 }
 
 .od-ls-section {
