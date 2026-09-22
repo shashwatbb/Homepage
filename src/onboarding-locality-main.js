@@ -1862,11 +1862,32 @@ function mapIllustrationHtml(pins, { id } = {}) {
  * "opened" — mirrors the scroll-to-expand feel of a map+list app. Re-wired
  * fresh on every render() since the drawer body is a brand-new element each
  * time (full innerHTML replace), so there's no listener to leak. */
+// Must match the flex-basis transition duration on .od-map-full__map-zone —
+// how long the rAF loop below keeps Leaflet's canvas in sync with it.
+const DRAWER_MAP_TRANSITION_MS = 380;
+
 function wireResultsDrawerScroll() {
   const body = document.getElementById("od-drawer-body");
   const container = document.getElementById("od-map-full");
   if (!body || !container) return;
   let open = false;
+  let rafId = null;
+
+  // The visible "jerk" wasn't the flex-basis transition itself — it was
+  // Leaflet's canvas staying the old size for the whole animation and then
+  // popping to the right size in one frame once invalidateSize() finally
+  // fired. Calling it every frame for the transition's duration keeps the
+  // map's own resize in step with the CSS animation instead of lagging
+  // behind it, so it reads as one smooth motion.
+  const syncMapSize = (deadline) => {
+    activeDiscoveryMaps["od-results-map"]?.invalidateSize({ animate: false, pan: false });
+    if (performance.now() < deadline) {
+      rafId = requestAnimationFrame(() => syncMapSize(deadline));
+    } else {
+      rafId = null;
+    }
+  };
+
   body.addEventListener(
     "scroll",
     () => {
@@ -1874,8 +1895,8 @@ function wireResultsDrawerScroll() {
       if (shouldOpen === open) return;
       open = shouldOpen;
       container.classList.toggle("od-map-full--drawer-open", open);
-      const map = activeDiscoveryMaps["od-results-map"];
-      window.setTimeout(() => map?.invalidateSize(), 300);
+      if (rafId) cancelAnimationFrame(rafId);
+      syncMapSize(performance.now() + DRAWER_MAP_TRANSITION_MS);
     },
     { passive: true }
   );

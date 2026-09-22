@@ -714,8 +714,13 @@
      flex-basis change on a normal-flow sibling — no absolute positioning,
      no transform, so it can't repeat the old invisible-drawer bug. It's a
      real layout property, but it only fires on the rare scroll-direction
-     change, not continuously, so the cost is negligible. */
-  transition: flex-basis 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+     change, not continuously, so the reflow cost itself is negligible —
+     the visible "jerk" was Leaflet's canvas not resizing until a single
+     invalidateSize() fired after the transition already finished (a pop
+     at the end, not the transition itself). Fixed by syncing invalidateSize
+     every frame for the transition's duration — see wireResultsDrawerScroll.
+     Slower + gentler ease-out reads as smoother for a panel this size. */
+  transition: flex-basis 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .od-map-full--drawer-open .od-map-full__map-zone {
