@@ -102,21 +102,26 @@
   justify-content: space-between;
 }
 
-.od-screen--split__top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .od-screen--split__question {
   text-align: center;
   margin-top: var(--ds-space-l);
 }
 
+/* Fills the space between the question and the choice cards below (this
+   screen's existing top/bottom space-between layout) and centers the pin
+   inside it, so the pin reads as the visual center of the screen rather
+   than sitting flush under the heading. */
+.od-screen--split__pin-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
 .od-screen--split__pin {
-  width: 72px;
-  height: 72px;
-  margin-top: var(--ds-space-xl);
+  width: 160px;
+  height: 160px;
   object-fit: contain;
 }
 
@@ -463,7 +468,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-space-s);
-  margin-top: var(--ds-space-m);
+  margin-top: var(--ds-space-2xs);
 }
 
 .od-chip {
