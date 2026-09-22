@@ -1,19 +1,22 @@
 /* Locality Discovery flow — gated behind `onboarding_locality_discovery_flow`.
    Reuses OnboardingLocality.css tokens/classes (.ol-screen, .ol-title,
    .ol-btn, .ol-text-field, .ol-icon-btn, --ds-*); od- prefix is only for
-   markup this flow adds that has no existing equivalent.
+   markup this flow adds that has no existing equivalent. Shared components
+   from SrpBhkBudgetBottomSheet.css (the budget/BHK steppers) are re-skinned
+   here via `.od-flow` overrides rather than edited at the source, so the
+   SRP surface that also uses them is untouched.
 
-   Visual language: square-rounded cards on soft shadow elevation (not
-   borders-as-decoration), near-black neutral for every selected/active/
-   focus state, and purple reserved for the one primary CTA per screen
-   (Continue / Explore this locality / Save address). */
+   Visual language: soft shadow elevation (--od-shadow-*, see .od-flow)
+   instead of flat 1px borders everywhere, and one committed purple accent
+   (--ds-color-purple-700) carrying every selected/active/focus state, the
+   progress fill, and the primary CTA — not just the CTA button alone. */
 
 .od-progress {
-  height: 4px;
+  height: 6px;
   margin: 0 0 var(--ds-space-l);
   overflow: hidden;
   border-radius: var(--ds-radius-full);
-  background-color: var(--ds-border-subtle);
+  background-color: var(--ds-color-purple-100);
 }
 
 .od-progress__fill {
@@ -21,7 +24,7 @@
   width: 100%;
   height: 100%;
   border-radius: var(--ds-radius-full);
-  background-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-700);
   transform-origin: left center;
   transition: transform 0.3s ease;
 }
@@ -82,6 +85,15 @@
 
 .od-flow {
   background-color: #faf9f5;
+  /* Elevation scale — this flow had no shadow system at all before; every
+     card/chip/button below draws from these three steps instead of a flat
+     1px border, so depth reads consistently across the whole flow. Tinted
+     off the brand purple (not plain black) at low opacity, per this
+     design system's existing shadow-less baseline — there is no
+     --ds-shadow-* token to inherit from. */
+  --od-shadow-sm: 0 1px 2px rgba(42, 12, 127, 0.05), 0 2px 8px -2px rgba(42, 12, 127, 0.08);
+  --od-shadow-md: 0 2px 4px rgba(42, 12, 127, 0.04), 0 14px 28px -12px rgba(42, 12, 127, 0.18);
+  --od-shadow-selected: 0 6px 16px -4px rgba(74, 22, 217, 0.32), 0 1px 2px rgba(42, 12, 127, 0.06);
 }
 
 .od-screen--split {
@@ -101,9 +113,10 @@
   gap: var(--ds-space-m);
   width: 100%;
   padding: var(--ds-space-m);
-  border: 1px solid var(--ds-color-grey-neutral-200);
+  border: 1px solid transparent;
   border-radius: var(--ds-radius-l);
   background-color: var(--ds-surface-white);
+  box-shadow: var(--od-shadow-sm);
   font-family: inherit;
   font-size: var(--ds-font-size-m);
   font-weight: var(--ds-font-weight-medium);
@@ -113,7 +126,7 @@
   opacity: 0;
   transform: translateY(16px);
   animation: ol-card-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
 .od-choice-card:nth-child(1) { animation-delay: 40ms; }
@@ -121,19 +134,28 @@
 .od-choice-card:nth-child(3) { animation-delay: 160ms; }
 .od-choice-card:nth-child(4) { animation-delay: 220ms; }
 
+.od-choice-card:hover {
+  box-shadow: var(--od-shadow-md);
+}
+
 .od-choice-card:active {
   transform: scale(0.98);
 }
 
 .od-choice-card.is-selected {
-  border: 2px solid var(--ds-color-grey-neutral-900);
-  padding: calc(var(--ds-space-m) - 1px);
-  background-color: var(--ds-surface-subtle);
+  border-color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-purple-50);
   color: var(--ds-text-primary);
+  box-shadow: var(--od-shadow-selected);
+}
+
+.od-choice-card.is-selected .od-choice-card__icon {
+  background-color: var(--ds-surface-white);
+  color: var(--ds-color-purple-700);
 }
 
 .od-choice-card:focus-visible {
-  outline: 2px solid var(--ds-color-grey-neutral-900);
+  outline: 2px solid var(--ds-color-purple-700);
   outline-offset: 2px;
 }
 
@@ -145,8 +167,9 @@
   width: 48px;
   height: 48px;
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-color-lavender-mist-50);
-  color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-50);
+  color: var(--ds-color-purple-700);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .od-choice-card__icon svg {
@@ -161,7 +184,7 @@
 .od-choice-card__trailing {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--ds-color-grey-neutral-900);
+  color: var(--ds-color-purple-700);
 }
 
 .od-choice-card__trailing svg {
@@ -194,11 +217,11 @@
 .od-commute-bars.is-filled-3 span:nth-child(1),
 .od-commute-bars.is-filled-3 span:nth-child(2),
 .od-commute-bars.is-filled-3 span:nth-child(3) {
-  background-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-700);
 }
 
 .od-choice-card.is-selected .od-commute-bars span {
-  background-color: var(--ds-color-grey-neutral-300);
+  background-color: var(--ds-color-purple-200);
 }
 
 .od-choice-card.is-selected .od-commute-bars.is-filled-1 span:nth-child(1),
@@ -207,7 +230,7 @@
 .od-choice-card.is-selected .od-commute-bars.is-filled-3 span:nth-child(1),
 .od-choice-card.is-selected .od-commute-bars.is-filled-3 span:nth-child(2),
 .od-choice-card.is-selected .od-commute-bars.is-filled-3 span:nth-child(3) {
-  background-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-700);
 }
 
 /* Budget + BHK stepper (plus/minus, not a slider) --------------------------- */
@@ -343,9 +366,38 @@
   justify-content: space-between;
 }
 
+/* Budget/BHK +/- steppers — shared markup from SrpBhkBudgetBottomSheet.css
+   (reused for SRP's own bottom sheet). Budget shipped a plain flat button
+   there while BHK already had a premium gradient+shadow treatment right
+   next to it in the same flow — re-skinned both to the one shared look
+   here, scoped to `.od-flow` so SRP keeps its own plainer sheet chrome. */
+.od-flow .srp-budget-stepper__btn,
+.od-flow .srp-bhk-stepper__btn {
+  border: 1px solid var(--ds-color-purple-100);
+  background: linear-gradient(180deg, var(--ds-surface-white) 0%, var(--ds-color-purple-50) 100%);
+  color: var(--ds-color-purple-700);
+  box-shadow: var(--od-shadow-sm);
+}
+
+.od-flow .srp-budget-stepper__btn:hover:not(:disabled),
+.od-flow .srp-bhk-stepper__btn:hover:not(:disabled) {
+  border-color: var(--ds-color-purple-300);
+  background: var(--ds-color-purple-100);
+  box-shadow: var(--od-shadow-md);
+}
+
+.od-flow .srp-budget-stepper__btn:disabled,
+.od-flow .srp-bhk-stepper__btn:disabled {
+  color: var(--ds-color-grey-neutral-400);
+  border-color: var(--ds-color-grey-neutral-200);
+  background: var(--ds-surface-white);
+  box-shadow: none;
+}
+
 /* Chip grids (BHK, property type, lifestyle) ------------------------------- */
-/* Square-rounded, stroke-only pills — bigger tap targets, no tick, no black
-   fill anywhere. Selected = solid black stroke + a subtle tint. */
+/* Square-rounded pills on the same shadow elevation as the choice cards.
+   Selected = purple-700 stroke + purple-50 tint, matching every other
+   selected state in the flow. */
 
 .od-chip-grid {
   display: flex;
@@ -364,9 +416,10 @@
   justify-content: center;
   gap: var(--ds-space-2xs);
   padding: var(--ds-space-s) var(--ds-space-l);
-  border: 1px solid var(--ds-color-grey-neutral-200);
+  border: 1px solid transparent;
   border-radius: var(--ds-radius-m);
   background-color: var(--ds-surface-white);
+  box-shadow: var(--od-shadow-sm);
   font-family: inherit;
   font-size: var(--ds-font-size-m);
   font-weight: var(--ds-font-weight-medium);
@@ -375,7 +428,7 @@
   opacity: 0;
   transform: translateY(10px);
   animation: ol-card-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
 .od-chip:nth-child(1) { animation-delay: 20ms; }
@@ -386,7 +439,7 @@
 .od-chip:nth-child(6) { animation-delay: 220ms; }
 
 .od-chip:hover {
-  border-color: var(--ds-color-grey-neutral-900);
+  box-shadow: var(--od-shadow-md);
 }
 
 .od-chip:active {
@@ -394,14 +447,14 @@
 }
 
 .od-chip.is-active {
-  border: 2px solid var(--ds-color-grey-neutral-900);
-  padding: calc(var(--ds-space-s) - 1px) calc(var(--ds-space-l) - 1px);
-  background-color: var(--ds-surface-subtle);
-  color: var(--ds-text-primary);
+  border-color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-purple-50);
+  color: var(--ds-color-purple-800);
+  box-shadow: var(--od-shadow-selected);
 }
 
 .od-chip:focus-visible {
-  outline: 2px solid var(--ds-color-grey-neutral-900);
+  outline: 2px solid var(--ds-color-purple-700);
   outline-offset: 2px;
 }
 
@@ -427,6 +480,12 @@
   font-family: inherit;
   font-size: var(--ds-font-size-m);
   color: var(--ds-text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.od-search-field__input:focus {
+  border-color: var(--ds-color-purple-700);
+  box-shadow: 0 0 0 3px var(--ds-color-purple-100);
 }
 
 .od-search-field__input::placeholder {
@@ -495,14 +554,14 @@
 }
 
 .od-landmark-result:focus-visible {
-  outline: 2px solid var(--ds-color-grey-neutral-900);
+  outline: 2px solid var(--ds-color-purple-700);
   outline-offset: 2px;
 }
 
 .od-landmark-result__icon {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--ds-icon-grey-1);
+  color: var(--ds-color-purple-700);
 }
 
 .od-landmark-result__icon svg {
@@ -530,22 +589,23 @@
   align-items: center;
   gap: var(--ds-space-2xs);
   padding: var(--ds-space-xs) var(--ds-space-s) var(--ds-space-xs) var(--ds-space-xs);
-  border: 2px solid var(--ds-color-grey-neutral-900);
+  border: 1px solid var(--ds-color-purple-200);
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-surface-subtle);
-  color: var(--ds-text-primary);
+  background-color: var(--ds-color-purple-50);
+  color: var(--ds-color-purple-800);
   font-size: var(--ds-font-size-s);
   font-weight: var(--ds-font-weight-medium);
+  box-shadow: var(--od-shadow-sm);
 }
 
 .od-anchor-chip__num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: var(--ds-radius-s);
-  background-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-700);
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
@@ -564,8 +624,12 @@
   cursor: pointer;
 }
 
+.od-anchor-chip__remove:hover {
+  background: var(--ds-color-purple-100);
+}
+
 .od-anchor-chip__remove:focus-visible {
-  outline: 2px solid var(--ds-color-grey-neutral-900);
+  outline: 2px solid var(--ds-color-purple-700);
   outline-offset: 2px;
 }
 
@@ -579,10 +643,13 @@
   width: 100%;
   max-height: 260px;
   margin: 0 0 var(--ds-space-m);
-  border: 1px solid var(--ds-color-grey-neutral-200);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
-  background-color: var(--ds-surface-subtle);
+  /* Was --ds-surface-subtle — the exact same warm-neutral-50 as the page
+     background, which is why this card read as an empty gray void instead
+     of a distinct surface. Tinted purple so it reads as its own card. */
+  background-color: var(--ds-color-purple-50);
+  box-shadow: var(--od-shadow-sm);
 }
 
 .od-map-illustration__bg {
@@ -619,17 +686,17 @@
   width: 28px;
   height: 28px;
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-700);
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 6px rgba(42, 12, 127, 0.35);
 }
 
 .od-map-pin-badge--anchor {
   background-color: var(--ds-surface-white);
-  color: var(--ds-text-primary);
-  border: 2px solid var(--ds-color-grey-neutral-900);
+  color: var(--ds-color-purple-700);
+  border: 2px solid var(--ds-color-purple-700);
 }
 
 .od-locality-list {
@@ -654,11 +721,12 @@
   padding: var(--ds-space-m);
   border-radius: var(--ds-radius-xl);
   background-color: var(--ds-surface-white);
+  box-shadow: var(--od-shadow-md);
 }
 
 .od-locality-card--secondary {
-  background-color: var(--ds-surface-subtle);
-  box-shadow: none;
+  background-color: var(--ds-surface-white);
+  box-shadow: var(--od-shadow-sm);
 }
 
 .od-locality-card--secondary .od-locality-card__name {
@@ -674,7 +742,7 @@
   height: 28px;
   margin-top: 2px;
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-purple-700);
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
@@ -728,9 +796,9 @@
 
 .od-signal-badge--rank {
   flex-shrink: 0;
-  border: 1px solid var(--ds-color-grey-neutral-900);
-  background-color: var(--ds-surface-white);
-  color: var(--ds-text-primary);
+  border: 1px solid var(--ds-color-purple-200);
+  background-color: var(--ds-color-purple-50);
+  color: var(--ds-color-purple-800);
   font-weight: var(--ds-font-weight-medium);
 }
 
@@ -750,7 +818,12 @@
   font-size: var(--ds-font-size-s);
   font-weight: var(--ds-font-weight-medium);
   cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 2px 8px -2px rgba(74, 22, 217, 0.35);
+  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.od-locality-card__cta:hover {
+  box-shadow: 0 4px 12px -2px rgba(74, 22, 217, 0.4);
 }
 
 .od-locality-card__cta:active {
@@ -791,6 +864,41 @@
   gap: var(--ds-space-s);
   padding: var(--ds-space-m) var(--ds-space-m) calc(var(--ds-space-m) + env(safe-area-inset-bottom));
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--ds-surface-white) 32%);
+}
+
+/* Give the primary CTA and back button real tactility here — scoped to
+   `.od-flow` rather than the shared .ol-btn/.ol-icon-btn base rules in
+   OnboardingLocality.css, so login/service/locality screens that reuse
+   those same classes keep their current flat look untouched. */
+.od-flow .ol-btn--primary {
+  box-shadow: 0 4px 14px -4px rgba(74, 22, 217, 0.45);
+  transition: background-color 0.1s ease, transform 0.1s ease, opacity 0.1s ease, box-shadow 0.15s ease;
+}
+
+.od-flow .ol-btn--primary:hover:not(:disabled) {
+  box-shadow: 0 6px 18px -4px rgba(74, 22, 217, 0.5);
+}
+
+.od-flow .ol-btn--outline {
+  box-shadow: var(--od-shadow-sm);
+}
+
+.od-flow .ol-btn--outline:hover {
+  box-shadow: var(--od-shadow-md);
+}
+
+.od-flow .ol-icon-btn {
+  border-radius: var(--ds-radius-full);
+  transition: background-color 0.15s ease;
+}
+
+.od-flow .ol-icon-btn:hover {
+  background-color: var(--ds-color-purple-50);
+}
+
+.od-flow .ol-icon-btn:focus-visible {
+  outline: 2px solid var(--ds-color-purple-700);
+  outline-offset: 2px;
 }
 
 /* Locality search — ported from the RN prototype (LocalitySearchScreen).
