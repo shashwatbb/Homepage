@@ -85,15 +85,13 @@
 
 .od-flow {
   background-color: #faf9f5;
-  /* Elevation scale — this flow had no shadow system at all before; every
-     card/chip/button below draws from these three steps instead of a flat
-     1px border, so depth reads consistently across the whole flow. Tinted
-     off the brand purple (not plain black) at low opacity, per this
-     design system's existing shadow-less baseline — there is no
-     --ds-shadow-* token to inherit from. */
-  --od-shadow-sm: 0 1px 2px rgba(42, 12, 127, 0.05), 0 2px 8px -2px rgba(42, 12, 127, 0.08);
-  --od-shadow-md: 0 2px 4px rgba(42, 12, 127, 0.04), 0 14px 28px -12px rgba(42, 12, 127, 0.18);
-  --od-shadow-selected: 0 6px 16px -4px rgba(74, 22, 217, 0.32), 0 1px 2px rgba(42, 12, 127, 0.06);
+  /* Elevation scale — kept deliberately quiet: neutral warm-brown tint
+     (not purple) at low opacity, so cards read as lifted paper, not a
+     colored glow. --od-shadow-selected carries a faint purple trace only
+     because it sits under a purple border, not as its own effect. */
+  --od-shadow-sm: 0 1px 2px rgba(60, 54, 48, 0.05), 0 1px 4px -1px rgba(60, 54, 48, 0.06);
+  --od-shadow-md: 0 1px 2px rgba(60, 54, 48, 0.04), 0 4px 10px -4px rgba(60, 54, 48, 0.1);
+  --od-shadow-selected: 0 2px 6px -2px rgba(74, 22, 217, 0.14), 0 1px 2px rgba(60, 54, 48, 0.05);
 }
 
 .od-screen--split {
@@ -379,6 +377,15 @@
   box-shadow: var(--od-shadow-sm);
 }
 
+/* These buttons render the shared minus/plus glyph at its raw 24x24
+   viewBox with no size constraint from the source component — oversized
+   against a 44-56px circle. Pin it to a sane icon scale here. */
+.od-flow .srp-budget-stepper__btn svg,
+.od-flow .srp-bhk-stepper__btn svg {
+  width: 16px;
+  height: 16px;
+}
+
 .od-flow .srp-budget-stepper__btn:hover:not(:disabled),
 .od-flow .srp-bhk-stepper__btn:hover:not(:disabled) {
   border-color: var(--ds-color-purple-300);
@@ -605,7 +612,7 @@
   width: 22px;
   height: 22px;
   border-radius: var(--ds-radius-s);
-  background-color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-warm-neutral-800);
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
@@ -686,17 +693,17 @@
   width: 28px;
   height: 28px;
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-warm-neutral-800);
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
-  box-shadow: 0 2px 6px rgba(42, 12, 127, 0.35);
+  box-shadow: 0 1px 3px rgba(33, 29, 25, 0.25);
 }
 
 .od-map-pin-badge--anchor {
   background-color: var(--ds-surface-white);
-  color: var(--ds-color-purple-700);
-  border: 2px solid var(--ds-color-purple-700);
+  color: var(--ds-color-warm-neutral-800);
+  border: 2px solid var(--ds-color-warm-neutral-800);
 }
 
 .od-locality-list {
@@ -742,7 +749,7 @@
   height: 28px;
   margin-top: 2px;
   border-radius: var(--ds-radius-m);
-  background-color: var(--ds-color-purple-700);
+  background-color: var(--ds-color-warm-neutral-800);
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
@@ -796,9 +803,9 @@
 
 .od-signal-badge--rank {
   flex-shrink: 0;
-  border: 1px solid var(--ds-color-purple-200);
-  background-color: var(--ds-color-purple-50);
-  color: var(--ds-color-purple-800);
+  border: 1px solid var(--ds-color-warm-neutral-300);
+  background-color: var(--ds-surface-white);
+  color: var(--ds-text-primary);
   font-weight: var(--ds-font-weight-medium);
 }
 
@@ -818,12 +825,7 @@
   font-size: var(--ds-font-size-s);
   font-weight: var(--ds-font-weight-medium);
   cursor: pointer;
-  box-shadow: 0 2px 8px -2px rgba(74, 22, 217, 0.35);
-  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
-}
-
-.od-locality-card__cta:hover {
-  box-shadow: 0 4px 12px -2px rgba(74, 22, 217, 0.4);
+  transition: opacity 0.15s ease, transform 0.1s ease;
 }
 
 .od-locality-card__cta:active {
@@ -866,19 +868,10 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--ds-surface-white) 32%);
 }
 
-/* Give the primary CTA and back button real tactility here — scoped to
-   `.od-flow` rather than the shared .ol-btn/.ol-icon-btn base rules in
-   OnboardingLocality.css, so login/service/locality screens that reuse
-   those same classes keep their current flat look untouched. */
-.od-flow .ol-btn--primary {
-  box-shadow: 0 4px 14px -4px rgba(74, 22, 217, 0.45);
-  transition: background-color 0.1s ease, transform 0.1s ease, opacity 0.1s ease, box-shadow 0.15s ease;
-}
-
-.od-flow .ol-btn--primary:hover:not(:disabled) {
-  box-shadow: 0 6px 18px -4px rgba(74, 22, 217, 0.5);
-}
-
+/* Give the back button real tactility here — scoped to `.od-flow` rather
+   than the shared .ol-btn/.ol-icon-btn base rules in OnboardingLocality.css,
+   so login/service/locality screens that reuse those same classes keep
+   their current flat look untouched. Primary CTA stays flat, no glow. */
 .od-flow .ol-btn--outline {
   box-shadow: var(--od-shadow-sm);
 }
