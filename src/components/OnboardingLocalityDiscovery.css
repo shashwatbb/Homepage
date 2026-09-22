@@ -662,6 +662,40 @@
   color: var(--ds-text-muted);
 }
 
+/* Plain icon+text link, not a card — sits right under the search field and
+   shouldn't compete with the "Popular nearby" row below it. */
+.od-detect-location {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  margin-bottom: var(--ds-space-m);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ds-color-purple-700);
+  font-family: inherit;
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+  cursor: pointer;
+}
+
+.od-detect-location:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.od-detect-location__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.od-detect-location__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* "Popular nearby" quick-pick chips, shown before any search query. */
 .od-landmark-suggestions {
   margin: var(--ds-space-m) 0 var(--ds-space-l);

@@ -1061,6 +1061,7 @@ const LANDMARK_CATEGORY_ICON = {
   school: OD_ICON.school,
   metro: OD_ICON.metro,
   mall: OD_ICON.mall,
+  current: OD_ICON.navigationArrow,
 };
 
 const INTENT_ICON = { live_in: OD_ICON.home, investment: OD_ICON.trendingUp };
@@ -1677,6 +1678,8 @@ function renderLandmarkPicker() {
   if (results) results.innerHTML = landmarkResultsHtml();
   const suggestions = document.getElementById("od-landmark-suggestions-wrap");
   if (suggestions) suggestions.innerHTML = landmarkPillsHtml();
+  const detect = document.getElementById("od-landmark-detect-wrap");
+  if (detect) detect.innerHTML = detectLocationButtonHtml();
   const ghost = document.getElementById("od-landmark-ghost");
   if (ghost) ghost.style.display = odLandmarkQuery ? "none" : "";
   const input = document.getElementById("od-landmark-input");
@@ -1708,6 +1711,16 @@ function landmarkPrimaryCtaHtml() {
   return `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>`;
 }
 
+/** Hidden once the 2-landmark cap is hit — same reasoning as the search
+ * field itself being disabled at that point, nothing left to add. */
+function detectLocationButtonHtml() {
+  if (state.landmarks.length >= 2) return "";
+  return `<button type="button" class="od-detect-location" data-action="detect-location">
+    <span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span>
+    Detect current location
+  </button>`;
+}
+
 function discoveryLandmarksScreen() {
   const capped = state.landmarks.length >= 2;
   return `<div class="ol-screen ol-screen--has-cta od-flow">
@@ -1729,6 +1742,7 @@ function discoveryLandmarksScreen() {
       <span class="od-search-field__icon">${OD_ICON.search}</span>
       <div id="od-landmark-results-wrap" class="od-landmark-results-wrap">${landmarkResultsHtml()}</div>
     </div>
+    <div id="od-landmark-detect-wrap">${detectLocationButtonHtml()}</div>
     <div id="od-landmark-suggestions-wrap">${landmarkPillsHtml()}</div>
     ${capped ? `<p class="od-landmark-cap-note">2 of 2 added, remove one to search again.</p>` : ""}
     <div id="od-landmark-map-wrap">${landmarkPreviewMapHtml()}</div>
@@ -2420,6 +2434,39 @@ function wireEvents(root) {
         }
         haptic(10);
         renderLandmarkPicker();
+        break;
+      }
+      case "detect-location": {
+        if (!navigator.geolocation) {
+          showToast("Location isn't available on this device");
+          break;
+        }
+        if (state.landmarks.length >= 2) break;
+        btn.disabled = true;
+        btn.textContent = "Detecting…";
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            btn.disabled = false;
+            if (state.landmarks.length >= 2 || state.landmarks.some((l) => l.id === "current-location")) {
+              renderLandmarkPicker();
+              return;
+            }
+            state.landmarks.push({
+              id: "current-location",
+              name: "Current location",
+              category: "current",
+              coords: [position.coords.latitude, position.coords.longitude],
+            });
+            haptic(10);
+            renderLandmarkPicker();
+          },
+          () => {
+            btn.disabled = false;
+            btn.innerHTML = `<span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span> Detect current location`;
+            showToast("Couldn't get your location — check permissions");
+          },
+          { enableHighAccuracy: true, timeout: 10000 }
+        );
         break;
       }
       case "no-landmark-preference":
