@@ -1261,7 +1261,7 @@ function odStepperHtml({ wrapId, value, label, minusAction, plusAction, minusDis
  * come along with `createBudgetDialPicker`'s own CSS import. */
 function budgetDialHtml() {
   const steps = currentBudgetSteps();
-  return `<div class="od-budget-dial">
+  return `<div class="od-step-centre">
     <div class="srp-budget-stepper" role="group" aria-label="Max budget">
       <button type="button" class="srp-budget-stepper__btn" data-action="budget-step-minus" aria-label="Decrease budget" ${state.budgetIndex === 0 ? "disabled" : ""}>${OD_ICON.minus}</button>
       <div class="srp-budget-stepper__picker">
@@ -1296,7 +1296,7 @@ function mountBudgetDial() {
 
 function discoveryBudgetScreen() {
   const isRent = state.service === "rent";
-  return `<div class="ol-screen ol-screen--has-cta od-flow od-budget-screen">
+  return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
     ${odTopBar("discovery-budget-back")}
     ${odProgressHtml("discovery-budget")}
     <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your budget?"}</h1>
@@ -1313,30 +1313,28 @@ function bhkIndex() {
   return idx === -1 ? 2 : idx;
 }
 
-function bhkStepperHtml() {
+/** Big centred BHK stepper, reusing the SRP bottom sheet's display (value +
+ * suffix + rise/fall count animation) exactly as the budget dial does.
+ * `direction` picks which way the number animates on a step. */
+function bhkStepperHtml(direction = "settle") {
   const idx = bhkIndex();
-  return odStepperHtml({
-    wrapId: "od-topbar-stepper",
-    label: BHK_OPTIONS[idx],
-    minusAction: "bhk-step-minus",
-    plusAction: "bhk-step-plus",
-    minusDisabled: idx <= 0,
-    plusDisabled: idx === BHK_OPTIONS.length - 1,
-    compact: true,
-  });
+  const [value, suffix] = BHK_OPTIONS[idx].split(" ");
+  return `<div class="srp-bhk-stepper" id="od-bhk-stepper" role="group" aria-label="BHK type">
+    <button type="button" class="srp-bhk-stepper__btn" data-action="bhk-step-minus" aria-label="Decrease BHK" ${idx <= 0 ? "disabled" : ""}>${OD_ICON.minus}</button>
+    <div class="srp-bhk-stepper__display" aria-live="polite" aria-atomic="true">
+      <span class="srp-bhk-stepper__value srp-bhk-stepper__value--${direction}">${value}</span>
+      <span class="srp-bhk-stepper__suffix">${suffix}</span>
+    </div>
+    <button type="button" class="srp-bhk-stepper__btn" data-action="bhk-step-plus" aria-label="Increase BHK" ${idx === BHK_OPTIONS.length - 1 ? "disabled" : ""}>${OD_ICON.plus}</button>
+  </div>`;
 }
 
 function discoveryBhkScreen() {
-  return `<div class="ol-screen ol-screen--has-cta od-flow">
-    <div class="ol-topbar ol-topbar--with-stepper">
-      <div class="ol-topbar__lead">
-        <button type="button" class="ol-icon-btn" data-action="discovery-bhk-back" aria-label="Back">${ICON.arrowLeft}</button>
-      </div>
-      ${bhkStepperHtml()}
-    </div>
+  return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
+    ${odTopBar("discovery-bhk-back")}
     ${odProgressHtml("discovery-bhk")}
-    ${discoveryValueMapHtml()}
     <h1 class="od-heading">Which configuration?</h1>
+    <div class="od-step-centre">${bhkStepperHtml()}</div>
     <p class="ol-section-label">Property type</p>
     <div class="od-chip-grid">
       ${PROPERTY_TYPE_OPTIONS.map(
@@ -1773,15 +1771,13 @@ function wireEvents(root) {
       case "bhk-step-minus": {
         const idx = bhkIndex();
         if (idx > 0) state.bhk = BHK_OPTIONS[idx - 1];
-        patchNode("od-topbar-stepper", bhkStepperHtml());
-        patchNode("od-value-map-wrap", discoveryValueMapHtml());
+        patchNode("od-bhk-stepper", bhkStepperHtml("fall"));
         break;
       }
       case "bhk-step-plus": {
         const idx = bhkIndex();
         state.bhk = BHK_OPTIONS[Math.min(BHK_OPTIONS.length - 1, idx + 1)];
-        patchNode("od-topbar-stepper", bhkStepperHtml());
-        patchNode("od-value-map-wrap", discoveryValueMapHtml());
+        patchNode("od-bhk-stepper", bhkStepperHtml("rise"));
         break;
       }
       case "pick-property-type":
