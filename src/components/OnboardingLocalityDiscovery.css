@@ -80,6 +80,10 @@
   margin-top: var(--ds-space-l);
 }
 
+.od-flow {
+  background-color: #faf9f5;
+}
+
 .od-screen--split {
   display: flex;
   flex-direction: column;

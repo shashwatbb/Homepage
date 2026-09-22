@@ -121,7 +121,6 @@ body:has(.onboarding-locality) {
 .ol-screen {
   min-height: 100dvh;
   padding: var(--ds-space-xl) var(--ds-space-m) var(--ds-space-2xl);
-  background-color: var(--ds-color-warm-neutral-200);
   animation: ol-fade-in 0.22s ease both;
 }
 

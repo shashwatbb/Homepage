@@ -1083,7 +1083,7 @@ function odProgressHtml(stepId) {
 // -- Step 0: locality check --------------------------------------------------
 
 function localityCheckScreen() {
-  return `<div class="ol-screen od-screen--split">
+  return `<div class="ol-screen od-screen--split od-flow">
     <h1 class="od-heading od-heading--lg od-screen--split__question">Do you know the area you want to move to?</h1>
     <div class="od-choice-list">
       ${odChoiceCardHtml({ action: "locality-check-yes", icon: OD_ICON.pin, label: "Yes, I know it", trailing: "chevron" })}
@@ -1132,7 +1132,7 @@ function budgetStepperHtml() {
 
 function discoveryBudgetScreen() {
   const isRent = state.service === "rent";
-  return `<div class="ol-screen ol-screen--has-cta">
+  return `<div class="ol-screen ol-screen--has-cta od-flow">
     <div class="ol-topbar ol-topbar--with-stepper">
       <div class="ol-topbar__lead">
         <button type="button" class="ol-icon-btn" data-action="discovery-budget-back" aria-label="Back">${ICON.arrowLeft}</button>
@@ -1168,7 +1168,7 @@ function bhkStepperHtml() {
 }
 
 function discoveryBhkScreen() {
-  return `<div class="ol-screen ol-screen--has-cta">
+  return `<div class="ol-screen ol-screen--has-cta od-flow">
     <div class="ol-topbar ol-topbar--with-stepper">
       <div class="ol-topbar__lead">
         <button type="button" class="ol-icon-btn" data-action="discovery-bhk-back" aria-label="Back">${ICON.arrowLeft}</button>
@@ -1247,7 +1247,7 @@ function landmarkSecondaryCtaHtml() {
 
 function discoveryLandmarksScreen() {
   const capped = state.landmarks.length >= 2;
-  return `<div class="ol-screen ol-screen--has-cta">
+  return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-landmarks-back")}
     ${odProgressHtml("discovery-landmarks")}
     <h1 class="od-heading">Anything you'd like to stay close to?</h1>
@@ -1278,7 +1278,7 @@ function discoveryLandmarksScreen() {
 // -- Step 4: commute tolerance (only if anchors picked) ------------------------
 
 function discoveryCommuteScreen() {
-  return `<div class="ol-screen">
+  return `<div class="ol-screen od-flow">
     ${odTopBar("discovery-commute-back")}
     ${odProgressHtml("discovery-commute")}
     ${discoverySummaryHtml()}
@@ -1300,7 +1300,7 @@ function discoveryCommuteScreen() {
 // -- Step 5: intent (buy only, optional) ---------------------------------------
 
 function discoveryIntentScreen() {
-  return `<div class="ol-screen ol-screen--has-cta">
+  return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-intent-back")}
     ${odProgressHtml("discovery-intent")}
     ${discoverySummaryHtml()}
@@ -1323,7 +1323,7 @@ function discoveryIntentScreen() {
 // -- Step 6: lifestyle tags (optional, multi-select) ---------------------------
 
 function discoveryLifestyleScreen() {
-  return `<div class="ol-screen ol-screen--has-cta">
+  return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-lifestyle-back")}
     ${odProgressHtml("discovery-lifestyle")}
     ${discoverySummaryHtml()}
@@ -1418,7 +1418,7 @@ function discoveryMapScreen() {
   const primary = ranked.slice(0, 5);
   const secondary = ranked.slice(5);
 
-  return `<div class="ol-screen">
+  return `<div class="ol-screen od-flow">
     ${odTopBar("discovery-map-back")}
     ${discoverySummaryHtml()}
     <h1 class="od-heading">Recommended localities</h1>
