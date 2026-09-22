@@ -1211,11 +1211,6 @@ function localitySearchScreen() {
   return `<div class="ol-screen od-ls-screen od-flow">
     <div class="od-ls-header">
       ${odTopBar("locality-search-back")}
-      <div class="od-ls-breadcrumb">
-        <span class="od-ls-breadcrumb__service">${escapeHtml(odServiceLabel())}</span>
-        <span class="od-ls-breadcrumb__chevron">${OD_ICON.chevronRight}</span>
-        <span class="od-ls-breadcrumb__city">${OD_ICON.pin}${escapeHtml(state.city || "")}</span>
-      </div>
       <div class="od-search-field od-ls-search-field">
         <input
           type="text"
