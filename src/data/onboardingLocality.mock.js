@@ -122,29 +122,31 @@ export const SERVICE_OPTIONS = [
   },
 ];
 
-export const POPULAR_CITIES = ["Delhi", "Mumbai", "Bengaluru", "Noida", "Gurgaon", "Hyderabad"];
+/** Order matters — the chip scroller splits this list in half, first
+ * ceil(n/2) into the top row and the rest into the bottom one. */
+export const POPULAR_CITIES = [
+  "Mumbai", "Bengaluru", "Pune", "Chennai", "Kolkata", "Ahmedabad",
+  "New Delhi", "Noida", "Gurgaon", "Hyderabad", "Thane", "Navi Mumbai",
+];
 
-/** Alphabetically sorted city index for the A–Z browser (subset — not the full 330+ list). */
+/** Tier-2 cities behind the A–Z strip (the "330+ other cities" browser). */
 export const CITY_INDEX = [
-  "Abohar", "Adilabad", "Agartala", "Agra", "Ahmedabad", "Aizawl", "Ajmer", "Akola", "Alappuzha", "Aligarh",
-  "Allahabad", "Amritsar", "Anand", "Asansol", "Aurangabad",
-  "Bengaluru", "Bhopal", "Bhubaneswar", "Bikaner", "Bilaspur",
-  "Chandigarh", "Chennai", "Coimbatore", "Cuttack",
-  "Dehradun", "Delhi", "Dhanbad", "Durgapur",
-  "Erode",
-  "Faridabad", "Firozabad",
-  "Gandhinagar", "Ghaziabad", "Goa", "Gorakhpur", "Gurgaon", "Guwahati", "Gwalior",
-  "Hubli", "Hyderabad",
-  "Imphal", "Indore",
-  "Jabalpur", "Jaipur", "Jalandhar", "Jammu", "Jamshedpur", "Jhansi", "Jodhpur",
-  "Kanpur", "Kochi", "Kolhapur", "Kolkata", "Kota", "Kozhikode",
+  "Agra", "Ajmer", "Aligarh", "Amritsar", "Aurangabad",
+  "Bhopal", "Bhubaneswar",
+  "Chandigarh", "Coimbatore",
+  "Dehradun",
+  "Faridabad",
+  "Ghaziabad", "Goa", "Guwahati",
+  "Indore",
+  "Jaipur", "Jalandhar", "Jodhpur",
+  "Kanpur", "Kochi", "Kota",
   "Lucknow", "Ludhiana",
-  "Madurai", "Mangalore", "Meerut", "Moradabad", "Mumbai", "Mysore",
-  "Nagpur", "Nashik", "Noida",
-  "Panaji", "Patiala", "Patna", "Prayagraj", "Pune",
-  "Raipur", "Rajkot", "Ranchi", "Rourkela",
-  "Salem", "Shimla", "Siliguri", "Solapur", "Srinagar", "Surat",
-  "Thane", "Thiruvananthapuram", "Thrissur", "Tiruchirappalli", "Tirupati",
-  "Udaipur", "Ujjain", "Vadodara", "Varanasi", "Vijayawada", "Visakhapatnam",
-  "Warangal",
+  "Madurai", "Mangalore", "Mysore",
+  "Nagpur", "Nashik",
+  "Patna",
+  "Raipur", "Rajkot", "Ranchi",
+  "Surat",
+  "Thiruvananthapuram",
+  "Udaipur",
+  "Vadodara", "Varanasi", "Vijayawada", "Visakhapatnam",
 ];

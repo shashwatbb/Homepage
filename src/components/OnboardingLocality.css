@@ -1199,175 +1199,405 @@ body:has(.onboarding-locality) {
 
 /* Locality --------------------------------------------------------------------- */
 
+/* City selection screen shell: full-bleed, warm page bg, its own padding
+   (the generic .ol-screen inset would fight the 24px spec). */
+
+.ol-locality {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background-color: #f6f4ed;
+}
+
+.ol-locality__header {
+  padding: 32px 24px 16px;
+}
+
+.ol-locality__title-row {
+  display: flex;
+  align-items: center;
+}
+
+.ol-locality__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #0f0e0d;
+  cursor: pointer;
+}
+
+.ol-locality__back svg {
+  width: 24px;
+  height: 24px;
+}
+
+.ol-locality__title {
+  flex: 1;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 26px;
+  color: #0f0e0d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ol-locality__subtitle {
+  margin: 4px 0 0 32px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #666666;
+}
+
+.ol-city-search {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  margin: 0 24px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.ol-city-search__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0f0e0d;
+  caret-color: #4a16d9;
+}
+
+.ol-city-search__input::placeholder {
+  color: #9e9e9e;
+}
+
+.ol-city-search__input::selection {
+  background-color: rgba(74, 22, 217, 0.2);
+}
+
+.ol-city-search__clear {
+  margin: 0 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 18px;
+  line-height: 22px;
+  color: #9e9e9e;
+  cursor: pointer;
+}
+
+/* The clear affordance only exists while there is a query. */
+.ol-city-search__input:placeholder-shown ~ .ol-city-search__clear {
+  display: none;
+}
+
+.ol-city-search__mic {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.ol-city-search__mic img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.ol-city-results {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+/* City selection — ported from the RN prototype (CitySelectionScreen).
+   Literal px: the prototype's scale() is identity at its 360px base. */
+
 .ol-locate-row {
   display: flex;
   align-items: center;
-  gap: var(--ds-space-s);
   width: 100%;
-  padding: var(--ds-space-s) 0;
-  margin-bottom: var(--ds-space-xl);
+  padding: 0 24px;
+  margin: 12px 0 24px;
   border: none;
-  background: transparent;
-  text-align: left;
+  background: none;
   cursor: pointer;
 }
 
 .ol-locate-row__icon {
-  display: inline-flex;
-  color: var(--ds-text-brand);
-}
-
-.ol-locate-row__icon svg {
   width: 20px;
   height: 20px;
+  margin-right: 8px;
+  object-fit: contain;
 }
 
 .ol-locate-row__label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #4a16d9;
+}
+
+.ol-city-scroll {
   flex: 1;
-  font-size: var(--ds-font-size-lg);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--ds-text-primary);
-}
-
-.ol-locate-row__chevron {
-  display: inline-flex;
-  color: var(--ds-text-muted);
-}
-
-.ol-locate-row__chevron svg {
-  width: 16px;
-  height: 16px;
-}
-
-.ol-city-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ds-space-xs);
-  margin-bottom: var(--ds-space-xl);
-}
-
-.ol-city-tile {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2xs);
-  min-width: 0;
-  padding: var(--ds-space-xs) var(--ds-space-2xs);
-  border: 1px solid var(--ds-border-subtle);
-  border-radius: var(--ds-radius-m);
-  background-color: var(--ds-surface-white);
-  cursor: pointer;
-}
-
-.ol-city-tile__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-.ol-city-tile__icon svg {
-  width: 14px;
-  height: 14px;
-}
-
-.ol-city-tile__icon--purple {
-  color: var(--ds-text-brand);
-}
-
-.ol-city-tile__icon--yellow {
-  color: var(--ds-color-yellow-600);
-}
-
-.ol-city-tile__label {
-  font-size: var(--ds-font-size-s);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ol-city-browser {
-  padding: var(--ds-space-m);
-  border-radius: var(--ds-radius-m);
-  background-color: var(--ds-surface-white);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.ol-letter-strip {
-  display: flex;
-  gap: var(--ds-space-2xs);
-  margin-bottom: var(--ds-space-m);
-  padding-bottom: var(--ds-space-s);
-  overflow-x: auto;
-  border-bottom: 1px solid var(--ds-border-subtle);
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 24px;
   scrollbar-width: none;
 }
 
-.ol-letter-strip::-webkit-scrollbar {
+.ol-city-scroll::-webkit-scrollbar {
   display: none;
 }
 
-.ol-letter {
-  flex-shrink: 0;
+/* Popular cities — one horizontal scroller holding two rows of chips ------ */
+
+.ol-popular-label {
+  margin: 0 0 12px;
+  padding: 0 24px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #666666;
+}
+
+.ol-city-scroller {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ol-city-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.ol-city-scroller__inner {
   display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 24px;
+}
+
+.ol-city-scroller__row {
+  display: flex;
+  gap: 8px;
+}
+
+.ol-city-chip {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 8px;
   border: none;
-  border-radius: var(--ds-radius-s);
-  background: transparent;
-  font-size: var(--ds-font-size-m);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-text-muted);
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.ol-city-chip:active {
+  transform: scale(0.9);
+}
+
+.ol-city-chip__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.ol-city-chip__label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0f0e0d;
+  white-space: nowrap;
+}
+
+/* Tier-2 cities — A–Z strip above a two-column grid, in one white card ----- */
+
+.ol-tier2 {
+  padding: 24px 24px 0;
+}
+
+.ol-tier2__label {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #666666;
+}
+
+.ol-tier2__card {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.ol-initial-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background-color: #f5f1fe;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ol-initial-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* Size and weight are the only selected affordance — the color never moves. */
+.ol-initial {
+  flex-shrink: 0;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #4a16d9;
   cursor: pointer;
 }
 
-.ol-letter.is-active {
-  background-color: var(--ds-surface-brand-subtle);
-  color: var(--ds-text-brand);
+.ol-initial.is-active {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 26px;
 }
 
-.ol-letter.is-disabled {
-  color: var(--ds-color-grey-neutral-300);
-  cursor: default;
+.ol-tier2__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 0 8px;
 }
 
-.ol-city-list {
+.ol-tier2__city {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #7d7d7d;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* Search suggestions + no-results ---------------------------------------- */
+
+.ol-suggest-list {
+  flex: 1;
+  min-height: 0;
   margin: 0;
   padding: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--ds-space-2xs) var(--ds-space-m);
-  max-height: 15.5rem;
   overflow-y: auto;
+  list-style: none;
 }
 
-.ol-city-list__item {
-  display: block;
+.ol-suggest + .ol-suggest .ol-suggest__btn {
+  border-top: 1px solid #e0e0e0;
+}
+
+.ol-suggest__btn {
+  display: flex;
+  align-items: center;
   width: 100%;
-  padding: var(--ds-space-xs) 0;
+  padding: 12px 24px;
   border: none;
-  background: transparent;
+  background: none;
   text-align: left;
-  font-size: var(--ds-font-size-lg);
-  color: var(--ds-text-secondary);
   cursor: pointer;
 }
 
-.ol-city-list__empty {
-  grid-column: 1 / -1;
-  padding: var(--ds-space-m) 0;
-  color: var(--ds-text-muted);
-  font-size: var(--ds-font-size-m);
-  text-align: center;
+.ol-suggest__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
-/* Done ---------------------------------------------------------------------------- */
+.ol-suggest__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ol-suggest__name {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #0f0e0d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ol-suggest__match {
+  font-weight: 500;
+}
+
+.ol-suggest__type {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0.27px;
+  color: #666666;
+}
+
+.ol-no-results {
+  padding: 32px 24px 0;
+}
+
+.ol-no-results__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #0f0e0d;
+}
+
+.ol-no-results__query {
+  font-weight: 500;
+}
+
+.ol-no-results__hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #666666;
+}
+
 
 .ol-done {
   display: flex;

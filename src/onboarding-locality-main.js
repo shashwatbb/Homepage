@@ -54,6 +54,7 @@ import {
   LANDMARKS_BY_CITY,
   LOCALITY_POOL,
   RECENT_LOCALITY_SEARCHES,
+  TOP_DEVELOPERS,
   LOCALITY_HOTSPOTS,
   TRENDING_PROJECTS,
   formatPricePerSqft,
@@ -847,54 +848,110 @@ function blockedScreen() {
 // Locality + Done — our own continuation past the dev package's scope.
 // ---------------------------------------------------------------------------
 
-function cityTileHtml(city, i) {
-  const accent = CITY_TILE_ACCENTS[i % CITY_TILE_ACCENTS.length];
-  return `<button type="button" class="ol-city-tile" data-action="pick-city" data-city="${city}">
-    <span class="ol-city-tile__icon ol-city-tile__icon--${accent}">${ICON.buildings}</span>
-    <span class="ol-city-tile__label">${city}</span>
+/** Cities with their own illustration; everything else gets the generic one. */
+const CITY_ICON_SLUGS = new Set([
+  "mumbai", "bengaluru", "pune", "chennai", "kolkata", "hyderabad", "noida", "gurgaon",
+]);
+
+function cityIconSrc(city) {
+  const slug = city.toLowerCase() === "new delhi" ? "delhi" : city.toLowerCase().replace(/\s+/g, "-");
+  return `/onboarding-assets/icons/city-${CITY_ICON_SLUGS.has(slug) || slug === "delhi" ? slug : "default"}.svg`;
+}
+
+function cityChipHtml(city) {
+  return `<button type="button" class="ol-city-chip" data-action="pick-city" data-city="${escapeHtml(city)}">
+    <img class="ol-city-chip__icon" src="${cityIconSrc(city)}" alt="" aria-hidden="true" />
+    <span class="ol-city-chip__label">${escapeHtml(city)}</span>
   </button>`;
 }
 
-function cityResultsHtml() {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  const lettersWithCities = new Set(CITY_INDEX.map((c) => c[0].toUpperCase()));
-  const query = citySearchQuery.trim().toLowerCase();
-  const filtered = query ? CITY_INDEX.filter((c) => c.toLowerCase().includes(query)) : null;
-  const byLetter = filtered || CITY_INDEX.filter((c) => c[0].toUpperCase() === activeLetter);
+/** Chips run in two rows inside one horizontal scroller — first half on top. */
+function popularCityListHtml() {
+  const half = Math.ceil(POPULAR_CITIES.length / 2);
+  const rows = [POPULAR_CITIES.slice(0, half), POPULAR_CITIES.slice(half)];
+  return `<p class="ol-popular-label">Popular Cities</p>
+    <div class="ol-city-scroller">
+      <div class="ol-city-scroller__inner">
+        ${rows.map((row) => `<div class="ol-city-scroller__row">${row.map(cityChipHtml).join("")}</div>`).join("")}
+      </div>
+    </div>`;
+}
 
-  return `${
-    !filtered
-      ? `<p class="ol-section-label">Popular Cities</p>
-    <div class="ol-city-grid">
-      ${POPULAR_CITIES.map(cityTileHtml).join("")}
-    </div>`
-      : ""
-  }
-
-    <p class="ol-section-label">${filtered ? `${filtered.length} matching cities` : "Search in 330+ other cities"}</p>
-    <div class="ol-city-browser">
-      ${
-        !filtered
-          ? `<div class="ol-letter-strip" role="tablist">
-        ${letters
+function tier2CityListHtml() {
+  const initials = [...new Set(CITY_INDEX.map((c) => c[0].toUpperCase()))].sort();
+  const cities = CITY_INDEX.filter((c) => c[0].toUpperCase() === activeLetter).sort();
+  return `<div class="ol-tier2">
+    <p class="ol-tier2__label">Search in 330+ other cities</p>
+    <div class="ol-tier2__card">
+      <div class="ol-initial-strip" role="tablist">
+        ${initials
           .map(
             (l) =>
-              `<button type="button" role="tab" class="ol-letter ${l === activeLetter ? "is-active" : ""} ${
-                lettersWithCities.has(l) ? "" : "is-disabled"
-              }" data-action="pick-letter" data-letter="${l}" ${lettersWithCities.has(l) ? "" : "disabled"}>${l}</button>`
+              `<button type="button" role="tab" class="ol-initial ${l === activeLetter ? "is-active" : ""}" data-action="pick-letter" data-letter="${l}">${l}</button>`
           )
           .join("")}
-      </div>`
-          : ""
-      }
-      <ul class="ol-city-list">
-        ${byLetter
+      </div>
+      <div class="ol-tier2__grid">
+        ${cities
           .map(
             (c) =>
-              `<li><button type="button" class="ol-city-list__item" data-action="pick-city" data-city="${c}">${c}</button></li>`
+              `<button type="button" class="ol-tier2__city" data-action="pick-city" data-city="${escapeHtml(c)}">${escapeHtml(c)}</button>`
           )
-          .join("") || `<li class="ol-city-list__empty">No cities found</li>`}
-      </ul>
+          .join("")}
+        ${cities.length % 2 ? `<span class="ol-tier2__city ol-tier2__city--spacer" aria-hidden="true"></span>` : ""}
+      </div>
+    </div>
+  </div>`;
+}
+
+/** Matched substring is re-weighted, not recolored — matches the prototype. */
+function highlightMatch(text, query) {
+  const at = text.toLowerCase().indexOf(query.toLowerCase());
+  if (!query || at === -1) return escapeHtml(text);
+  return `${escapeHtml(text.slice(0, at))}<span class="ol-suggest__match">${escapeHtml(
+    text.slice(at, at + query.length)
+  )}</span>${escapeHtml(text.slice(at + query.length))}`;
+}
+
+function citySuggestionsHtml(query) {
+  const matches = [...POPULAR_CITIES, ...CITY_INDEX]
+    .filter((c) => c.toLowerCase().includes(query.toLowerCase()))
+    .slice(0, 10);
+
+  if (!matches.length) {
+    return `<div class="ol-no-results">
+      <p class="ol-no-results__title">We could not find <span class="ol-no-results__query">${escapeHtml(query)}</span></p>
+      <p class="ol-no-results__hint">Try checking the spelling and search</p>
+    </div>`;
+  }
+
+  return `<ul class="ol-suggest-list">
+    ${matches
+      .map(
+        (c) => `<li class="ol-suggest">
+        <button type="button" class="ol-suggest__btn" data-action="pick-city" data-city="${escapeHtml(c)}">
+          <img class="ol-suggest__icon" src="/onboarding-assets/icons/suggest-locality.svg" alt="" aria-hidden="true" />
+          <span class="ol-suggest__text">
+            <span class="ol-suggest__name">${highlightMatch(c, query)}</span>
+            <span class="ol-suggest__type">CITY</span>
+          </span>
+        </button>
+      </li>`
+      )
+      .join("")}
+  </ul>`;
+}
+
+function cityResultsHtml() {
+  const query = citySearchQuery.trim();
+  if (query) return citySuggestionsHtml(query);
+  return `<button type="button" class="ol-locate-row" data-action="use-current-location">
+      <img class="ol-locate-row__icon" src="/onboarding-assets/icons/locate.webp" alt="" aria-hidden="true" />
+      <span class="ol-locate-row__label">Use my current location</span>
+    </button>
+    <div class="ol-city-scroll">
+      ${popularCityListHtml()}
+      ${tier2CityListHtml()}
     </div>`;
 }
 
@@ -902,33 +959,32 @@ function localityScreen() {
   const verb = state.service === "rent" ? "Rent" : state.service === "sell" ? "list" : "Buy";
 
   return `<div class="ol-screen ol-locality">
-    <div class="ol-topbar">
-      <div class="ol-topbar__lead">
-        <button type="button" class="ol-icon-btn" data-action="back-to-service" aria-label="Back">${ICON.arrowLeft}</button>
+    <div class="ol-locality__header">
+      <div class="ol-locality__title-row">
+        <button type="button" class="ol-locality__back" data-action="back-to-service" aria-label="Back">${ICON.arrowLeft}</button>
+        <h1 class="ol-locality__title">Where do you want to ${verb}?</h1>
       </div>
+      <p class="ol-locality__subtitle">Choose a city which can be changed later</p>
     </div>
-    <h1 class="ol-title" style="font-size:var(--ds-font-size-3xl);font-weight:var(--ds-font-weight-bold);line-height:var(--ds-line-height-3xl);">Where do you want to ${verb}?</h1>
-    <p class="ol-login__sub">Choose a city which can be changed later</p>
 
-    <label class="ol-search-field">
+    <div class="ol-city-search">
       <input
         type="text"
-        class="ol-search-field__input"
-        placeholder="Type city here..."
+        class="ol-city-search__input"
+        placeholder="Type city here…"
         id="ol-city-search"
         value="${escapeHtml(citySearchQuery)}"
         autocomplete="off"
+        autocorrect="off"
+        enterkeyhint="search"
       />
-      <span class="ol-search-field__mic">${ICON.mic}</span>
-    </label>
+      <button type="button" class="ol-city-search__clear" data-action="clear-city-search" aria-label="Clear">&times;</button>
+      <button type="button" class="ol-city-search__mic" data-action="city-voice-search" aria-label="Voice search">
+        <img src="/onboarding-assets/icons/voice_search.webp" alt="" aria-hidden="true" />
+      </button>
+    </div>
 
-    <button type="button" class="ol-locate-row" data-action="use-current-location">
-      <span class="ol-locate-row__icon">${ICON.locate}</span>
-      <span class="ol-locate-row__label">Use my current location</span>
-      <span class="ol-locate-row__chevron">${ICON.chevronRight}</span>
-    </button>
-
-    <div id="ol-city-results">${cityResultsHtml()}</div>
+    <div id="ol-city-results" class="ol-city-results">${cityResultsHtml()}</div>
   </div>`;
 }
 
@@ -1119,112 +1175,238 @@ function odServiceLabel() {
   return state.service === "rent" ? "Rent" : "Buy";
 }
 
-function odLocalityCardWrapHtml(name, innerHtml) {
-  return `<button type="button" class="od-ls-card" data-action="locality-search-pick" data-locality-name="${escapeHtml(name)}">${innerHtml}</button>`;
+function odIsBuy() {
+  return state.service !== "rent";
+}
+
+/** Section shell — title over a horizontally scrolling rail. Sections with
+ * nothing to show render nothing at all, exactly as the prototype does. */
+function odSection(label, items, cardFn, railClass = "") {
+  if (!items.length) return "";
+  return `<section class="od-ls-section">
+    <p class="od-ls-section__title">${escapeHtml(label)}</p>
+    <div class="od-ls-rail ${railClass}">${items.map(cardFn).join("")}</div>
+  </section>`;
 }
 
 function odRecentSearchCardHtml(item) {
-  return odLocalityCardWrapHtml(
-    item.name,
-    `<span class="od-ls-card__icon od-ls-card__icon--lavender">${OD_ICON.clock}</span>
-    <span class="od-ls-card__name">${escapeHtml(item.name)}</span>
-    <span class="od-ls-card__note">${escapeHtml(item.note)}</span>
-    ${item.tag ? `<span class="od-ls-tag">${escapeHtml(item.tag)}</span>` : ""}`
-  );
-}
-
-function odHotspotCardHtml(item) {
-  const isUp = item.yoyPercent >= 0;
-  return odLocalityCardWrapHtml(
-    item.name,
-    `<span class="od-ls-card__name">${escapeHtml(item.name)}</span>
-    <span class="od-ls-card__note">${escapeHtml(item.note)}</span>
-    <span class="od-ls-pill ${isUp ? "od-ls-pill--up" : "od-ls-pill--down"}">
-      <span class="od-ls-pill__caret ${isUp ? "" : "od-ls-pill__caret--down"}">${OD_ICON.caretUp}</span>
-      ${Math.abs(item.yoyPercent)}% YoY
-    </span>`
-  );
-}
-
-function odPopularLocalityCardHtml(loc) {
-  const pricePerSqft = Math.round(loc.price_index * 18000);
-  return odLocalityCardWrapHtml(
-    loc.name,
-    `<span class="od-ls-card__name">${escapeHtml(loc.name)}</span>
-    <span class="od-ls-card__note">${escapeHtml(formatPricePerSqft(pricePerSqft))}</span>`
-  );
-}
-
-function odLandmarkChipHtml(landmark) {
-  return `<button type="button" class="od-ls-landmark-chip" data-action="locality-search-pick" data-locality-name="${escapeHtml(landmark.name)}">
-    <span class="od-ls-landmark-chip__icon">${LANDMARK_CATEGORY_ICON[landmark.category] || OD_ICON.pin}</span>
-    ${escapeHtml(landmark.name)}
+  return `<button type="button" class="od-ls-recent" data-action="locality-search-pick" data-locality-name="${escapeHtml(item.name)}">
+    <span class="od-ls-recent__icon">${OD_ICON.clock}</span>
+    <span class="od-ls-recent__body">
+      <span class="od-ls-recent__meta">
+        <span class="od-ls-recent__locality">${escapeHtml(item.name)}</span>
+      </span>
+      <span class="od-ls-recent__query">${escapeHtml(item.note)}</span>
+    </span>
   </button>`;
 }
 
-function odTrendingProjectCardHtml(item) {
-  return odLocalityCardWrapHtml(
-    item.locality,
-    `<span class="od-ls-card__name">${escapeHtml(item.name)}</span>
-    <span class="od-ls-card__note">${escapeHtml(item.locality)}</span>
-    <span class="od-ls-card__divider"></span>
-    <span class="od-ls-card__price">${escapeHtml(formatPricePerSqft(item.pricePerSqft))}</span>`
-  );
+/** Fixed hotspot detail lines, in rank order — the prototype hard-codes these
+ * against the first three popular localities rather than deriving them. */
+const OD_HOTSPOT_DETAILS = [
+  { subtitle: "Rapid growth", yoy: "18.4% YoY", down: false },
+  { subtitle: "Upcoming metro line", yoy: "11.2% YoY", down: false },
+  { subtitle: "New launches", yoy: "2.3% YoY", down: true },
+];
+
+function odHotspotCardHtml(loc, i) {
+  const detail = OD_HOTSPOT_DETAILS[i] || OD_HOTSPOT_DETAILS[0];
+  return `<button type="button" class="od-ls-hotspot" data-action="locality-search-pick" data-locality-name="${escapeHtml(loc.name)}">
+    <span class="od-ls-hotspot__name">${escapeHtml(loc.name)}</span>
+    <span class="od-ls-hotspot__subtitle">${escapeHtml(detail.subtitle)}</span>
+    <span class="od-ls-yoy ${detail.down ? "od-ls-yoy--down" : ""}">
+      <span class="od-ls-yoy__icon">${OD_ICON.trendingUp}</span>
+      ${escapeHtml(detail.yoy)}
+    </span>
+  </button>`;
 }
 
-/** One section: label + horizontally-scrolling card row. Hidden entirely
- * once a search query filters it down to nothing. */
-function odLocalitySection(label, items, cardFn) {
-  if (!items.length) return "";
-  return `<div class="od-ls-section">
-    <p class="od-ls-section__label">${escapeHtml(label)}</p>
-    <div class="od-ls-scroller">${items.map(cardFn).join("")}</div>
-  </div>`;
+function odPopularLocalityCardHtml(loc) {
+  return `<button type="button" class="od-ls-locality" data-action="locality-search-pick" data-locality-name="${escapeHtml(loc.name)}">
+    <span class="od-ls-locality__name">${escapeHtml(loc.name)}</span>
+    <span class="od-ls-locality__price">${escapeHtml(odIsBuy() ? formatLocalityBudget(loc.price_index * 3.4, "buy") : formatLocalityBudget(loc.price_index * 100, "rent"))}</span>
+  </button>`;
+}
+
+function odExploreMoreLocalityCardHtml() {
+  return `<button type="button" class="od-ls-locality" data-action="locality-search-explore-nearby">
+    <span class="od-ls-locality__head">
+      <span class="od-ls-locality__name">Not sure</span>
+      <span class="od-ls-locality__caret">${OD_ICON.chevronRight}</span>
+    </span>
+    <span class="od-ls-locality__price">Explore more</span>
+  </button>`;
+}
+
+function odLandmarkChipHtml(landmark) {
+  return `<button type="button" class="od-ls-landmark" data-action="locality-search-pick" data-locality-name="${escapeHtml(landmark.name)}">
+    <span class="od-ls-landmark__icon">${LANDMARK_CATEGORY_ICON[landmark.category] || OD_ICON.pin}</span>
+    <span class="od-ls-landmark__label">${escapeHtml(landmark.name)}</span>
+  </button>`;
+}
+
+/** Landmarks run as a two-row grid inside one horizontal scroller. */
+function odLandmarkSectionHtml(landmarks) {
+  if (!landmarks.length) return "";
+  const half = Math.ceil(landmarks.length / 2);
+  const rows = [landmarks.slice(0, half), landmarks.slice(half)];
+  return `<section class="od-ls-section">
+    <p class="od-ls-section__title">Popular landmarks</p>
+    <div class="od-ls-rail">
+      <div class="od-ls-landmark-rows">
+        ${rows
+          .map((row) => `<div class="od-ls-landmark-row">${row.map(odLandmarkChipHtml).join("")}</div>`)
+          .join("")}
+      </div>
+    </div>
+  </section>`;
+}
+
+function odTrendingProjectCardHtml(item) {
+  return `<button type="button" class="od-ls-project" data-action="locality-search-pick" data-locality-name="${escapeHtml(item.locality)}">
+    <span class="od-ls-project__head">
+      <span class="od-ls-project__name">${escapeHtml(item.name)}</span>
+      <span class="od-ls-project__address">${escapeHtml(item.locality)}, ${escapeHtml(state.city || "Mumbai")}</span>
+    </span>
+    <span class="od-ls-project__divider"></span>
+    <span class="od-ls-project__info">${escapeHtml(formatPricePerSqft(item.pricePerSqft))}</span>
+  </button>`;
+}
+
+function odDeveloperCardHtml(dev) {
+  return `<button type="button" class="od-ls-dev" data-action="locality-search-explore-nearby">
+    <span class="od-ls-dev__logo">${ICON.buildings}</span>
+    <span class="od-ls-dev__body">
+      <span class="od-ls-dev__name">${escapeHtml(dev.name)}</span>
+      <span class="od-ls-dev__count">${dev.projects} projects</span>
+    </span>
+  </button>`;
+}
+
+/** The empty-query state: every discovery rail, in the prototype's order.
+ * Hotspots, trending projects and developers are Buy-only. */
+function odDiscoveryPanelHtml() {
+  const isBuy = odIsBuy();
+  const popular = LOCALITY_POOL.slice(0, 6);
+  const landmarks = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai;
+
+  return `${odSection("Recent searches", RECENT_LOCALITY_SEARCHES, odRecentSearchCardHtml)}
+    ${isBuy ? odSection("Hotspots", popular.slice(0, 3), odHotspotCardHtml) : ""}
+    ${
+      popular.length
+        ? `<section class="od-ls-section">
+      <p class="od-ls-section__title">Popular localities</p>
+      <div class="od-ls-rail">${popular.map(odPopularLocalityCardHtml).join("")}${odExploreMoreLocalityCardHtml()}</div>
+    </section>`
+        : ""
+    }
+    ${odLandmarkSectionHtml(landmarks)}
+    ${isBuy ? odSection("Trending projects", TRENDING_PROJECTS, odTrendingProjectCardHtml) : ""}
+    ${isBuy ? odSection("Top developers", TOP_DEVELOPERS, odDeveloperCardHtml) : ""}
+    <div class="od-ls-nearby-wrap">
+      <button type="button" class="od-ls-nearby" data-action="locality-search-explore-nearby">
+        <span class="od-ls-nearby__lead">
+          <span class="od-ls-nearby__icon">${OD_ICON.navigationArrow}</span>
+          <span class="od-ls-nearby__label">Explore nearby properties</span>
+        </span>
+        <span class="od-ls-nearby__caret">${OD_ICON.chevronRight}</span>
+      </button>
+    </div>`;
+}
+
+/** Matched tokens render regular, everything else semibold — the prototype
+ * emphasises the part you did NOT type, which reads as the match standing out
+ * against bolder context. */
+function odSuggestionName(name, query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return `<span class="od-ls-suggest__strong">${escapeHtml(name)}</span>`;
+  const at = name.toLowerCase().indexOf(q);
+  if (at === -1) return `<span class="od-ls-suggest__strong">${escapeHtml(name)}</span>`;
+  return `<span class="od-ls-suggest__strong">${escapeHtml(name.slice(0, at))}</span>${escapeHtml(
+    name.slice(at, at + q.length)
+  )}<span class="od-ls-suggest__strong">${escapeHtml(name.slice(at + q.length))}</span>`;
+}
+
+function odSuggestionRowHtml(item, query) {
+  return `<li class="od-ls-suggest">
+    <button type="button" class="od-ls-suggest__btn" data-action="locality-search-pick" data-locality-name="${escapeHtml(item.name)}">
+      <span class="od-ls-suggest__tile">${item.icon}</span>
+      <span class="od-ls-suggest__body">
+        <span class="od-ls-suggest__name">${odSuggestionName(item.name, query)}</span>
+        <span class="od-ls-suggest__caption">${escapeHtml(item.caption)}</span>
+      </span>
+    </button>
+  </li>`;
+}
+
+function odSearchResultsHtml(query) {
+  const q = query.trim().toLowerCase();
+  const localities = LOCALITY_POOL.filter((l) => l.name.toLowerCase().includes(q)).map((l) => ({
+    name: `${l.name}, ${state.city || "Mumbai"}`,
+    caption: "Locality",
+    icon: OD_ICON.pin,
+  }));
+  const projects = TRENDING_PROJECTS.filter((p) => p.name.toLowerCase().includes(q)).map((p) => ({
+    name: p.name,
+    caption: "Project",
+    icon: ICON.buildings,
+  }));
+  const landmarks = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai)
+    .filter((l) => l.name.toLowerCase().includes(q))
+    .map((l) => ({ name: `${l.name}, ${state.city || "Mumbai"}`, caption: "Landmark", icon: OD_ICON.pin }));
+  const results = [...localities, ...projects, ...landmarks].slice(0, 10);
+
+  const queryRow = `<button type="button" class="od-ls-queryrow" data-action="locality-search-submit">
+    <span class="od-ls-queryrow__icon">${ICON.arrowLeft}</span>
+    <span class="od-ls-queryrow__text">Search for &ldquo;${escapeHtml(query.trim())}&rdquo;</span>
+  </button>`;
+
+  if (!results.length) {
+    return `${queryRow}
+      <div class="od-ls-empty">
+        <div class="od-ls-empty__row">
+          <span class="od-ls-alert">!</span>
+          <p class="od-ls-empty__text">Oops, no results found!</p>
+        </div>
+        <button type="button" class="od-ls-empty__cta" data-action="locality-search-explore-nearby">Explore all of ${escapeHtml(state.city || "Mumbai")}</button>
+      </div>`;
+  }
+
+  return `${queryRow}
+    <ul class="od-ls-suggest-list">${results.map((r) => odSuggestionRowHtml(r, query)).join("")}</ul>`;
 }
 
 function odLocalitySearchSectionsHtml(query) {
-  const q = query.trim().toLowerCase();
-  const matches = (name) => !q || name.toLowerCase().includes(q);
-
-  const recent = RECENT_LOCALITY_SEARCHES.filter((i) => matches(i.name));
-  const hotspots = LOCALITY_HOTSPOTS.filter((i) => matches(i.name));
-  const popular = LOCALITY_POOL.slice(0, 3).filter((i) => matches(i.name));
-  const landmarks = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai).filter((l) => matches(l.name));
-  const projects = TRENDING_PROJECTS.filter((i) => matches(i.name) || matches(i.locality));
-
-  return `${odLocalitySection("Recent searches", recent, odRecentSearchCardHtml)}
-    ${odLocalitySection("Hotspots", hotspots, odHotspotCardHtml)}
-    ${odLocalitySection("Popular localities", popular, odPopularLocalityCardHtml)}
-    ${
-      landmarks.length
-        ? `<div class="od-ls-section">
-      <p class="od-ls-section__label">Popular landmarks</p>
-      <div class="od-ls-landmark-wrap">${landmarks.map(odLandmarkChipHtml).join("")}</div>
-    </div>`
-        : ""
-    }
-    ${odLocalitySection("Trending projects", projects, odTrendingProjectCardHtml)}
-    <button type="button" class="od-ls-explore-row" data-action="locality-search-explore-nearby">
-      <span class="od-ls-card__icon od-ls-card__icon--lavender">${OD_ICON.navigationArrow}</span>
-      <span class="od-ls-explore-row__label">Explore nearby properties</span>
-      <span class="od-ls-explore-row__chevron">${OD_ICON.chevronRight}</span>
-    </button>`;
+  return query.trim() ? odSearchResultsHtml(query) : odDiscoveryPanelHtml();
 }
 
 function localitySearchScreen() {
-  return `<div class="ol-screen od-ls-screen od-flow">
+  return `<div class="ol-screen od-ls-screen">
     <div class="od-ls-header">
-      ${odTopBar("locality-search-back")}
-      <div class="od-search-field od-ls-search-field">
+      <div class="od-ls-topbar">
+        <button type="button" class="od-ls-topbar__back" data-action="locality-search-back">
+          <span class="od-ls-topbar__arrow">${ICON.arrowLeft}</span>
+          <span class="od-ls-topbar__service">${odServiceLabel()}</span>
+        </button>
+        <button type="button" class="od-ls-topbar__city" data-action="locality-search-change-city">
+          <span class="od-ls-topbar__pin">${OD_ICON.pin}</span>
+          <span class="od-ls-topbar__cityname">${escapeHtml(state.city || "Mumbai")}</span>
+          <span class="od-ls-topbar__caret">${OD_ICON.chevronRight}</span>
+        </button>
+      </div>
+      <div class="od-ls-input">
+        <span class="od-ls-input__search">${OD_ICON.search}</span>
         <input
           type="text"
-          class="od-search-field__input"
+          class="od-ls-input__field"
           id="od-locality-search-input"
-          placeholder="Search for locality, project, landmark..."
+          placeholder="Search by locality, landmark or project"
           value="${escapeHtml(odLocalitySearchQuery)}"
           autocomplete="off"
+          enterkeyhint="search"
         />
-        <span class="od-search-field__icon od-search-field__icon--left">${OD_ICON.search}</span>
+        <span class="od-ls-input__divider"></span>
+        <button type="button" class="od-ls-input__clear" data-action="locality-search-clear" aria-label="Clear">${OD_ICON.close}</button>
       </div>
     </div>
     <div id="od-locality-search-sections" class="od-ls-body">${odLocalitySearchSectionsHtml(odLocalitySearchQuery)}</div>
@@ -1728,8 +1910,16 @@ function wireEvents(root) {
         break;
       case "pick-letter":
         activeLetter = btn.getAttribute("data-letter");
-        render();
+        patchNode("ol-city-results", `<div id="ol-city-results" class="ol-city-results">${cityResultsHtml()}</div>`);
         break;
+      case "clear-city-search":
+      case "city-voice-search": {
+        citySearchQuery = action === "city-voice-search" ? "Pune" : "";
+        const input = root.querySelector("#ol-city-search");
+        if (input) input.value = citySearchQuery;
+        patchNode("ol-city-results", `<div id="ol-city-results" class="ol-city-results">${cityResultsHtml()}</div>`);
+        break;
+      }
       case "locality-check-back":
         goTo("locality");
         break;
@@ -1752,6 +1942,24 @@ function wireEvents(root) {
       case "locality-search-explore-nearby":
         handoffToSearchPreFiltered();
         break;
+      case "locality-search-change-city":
+        goTo("locality");
+        break;
+      case "locality-search-submit": {
+        const typed = odLocalitySearchQuery.trim();
+        if (typed) exploreLocality(null, typed);
+        break;
+      }
+      case "locality-search-clear": {
+        odLocalitySearchQuery = "";
+        const field = root.querySelector("#od-locality-search-input");
+        if (field) field.value = "";
+        patchNode(
+          "od-locality-search-sections",
+          `<div id="od-locality-search-sections" class="od-ls-body">${odLocalitySearchSectionsHtml("")}</div>`
+        );
+        break;
+      }
       case "locality-check-not-sure":
         state.discoveryMode = "discover";
         goTo("discovery-budget");

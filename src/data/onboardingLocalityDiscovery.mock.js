@@ -173,6 +173,14 @@ export const LOCALITY_HOTSPOTS = [
   { name: "Old Town", note: "Cooling off this quarter", yoyPercent: -4 },
 ];
 
+/** Fixed developer roster for the "Top developers" rail (Buy only). */
+export const TOP_DEVELOPERS = [
+  { name: "Skyline Developers", projects: 42 },
+  { name: "Greenfield Homes", projects: 28 },
+  { name: "Urban Nest Builders", projects: 19 },
+  { name: "Horizon Realty", projects: 11 },
+];
+
 export const TRENDING_PROJECTS = [
   { name: "Central Heights Residences", locality: "Central Heights", pricePerSqft: 14500 },
   { name: "Lakeview Towers", locality: "Lakeview Residency", pricePerSqft: 9800 },
