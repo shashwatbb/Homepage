@@ -709,6 +709,17 @@
   position: relative;
   flex: 0 0 54%;
   min-height: 0;
+  /* Shrinks to a sliver while the results list is mid-scroll (see
+     wireResultsDrawerScroll) so the drawer reads as "expanded". A plain
+     flex-basis change on a normal-flow sibling — no absolute positioning,
+     no transform, so it can't repeat the old invisible-drawer bug. It's a
+     real layout property, but it only fires on the rare scroll-direction
+     change, not continuously, so the cost is negligible. */
+  transition: flex-basis 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.od-map-full--drawer-open .od-map-full__map-zone {
+  flex-basis: 16%;
 }
 
 .od-map-full__canvas {
@@ -777,9 +788,10 @@
 }
 
 .od-drawer__header {
+  align-self: stretch;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--ds-space-2xs);
 }
 

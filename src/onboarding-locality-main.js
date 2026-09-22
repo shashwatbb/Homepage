@@ -1857,6 +1857,30 @@ function mapIllustrationHtml(pins, { id } = {}) {
   return `<div class="od-map-illustration" id="${mapId}"></div>`;
 }
 
+/** Recommendations screen only: scrolling the locality list shrinks the map
+ * zone to a sliver (see .od-map-full--drawer-open) so the drawer reads as
+ * "opened" — mirrors the scroll-to-expand feel of a map+list app. Re-wired
+ * fresh on every render() since the drawer body is a brand-new element each
+ * time (full innerHTML replace), so there's no listener to leak. */
+function wireResultsDrawerScroll() {
+  const body = document.getElementById("od-drawer-body");
+  const container = document.getElementById("od-map-full");
+  if (!body || !container) return;
+  let open = false;
+  body.addEventListener(
+    "scroll",
+    () => {
+      const shouldOpen = body.scrollTop > 4;
+      if (shouldOpen === open) return;
+      open = shouldOpen;
+      container.classList.toggle("od-map-full--drawer-open", open);
+      const map = activeDiscoveryMaps["od-results-map"];
+      window.setTimeout(() => map?.invalidateSize(), 300);
+    },
+    { passive: true }
+  );
+}
+
 /** Budget line derives from the same price-band signal the mock ranking
  * already computes (`estimated_price` — see getRecommendedLocalities) — no
  * new scoring, just a display range around that number. */
@@ -1918,7 +1942,7 @@ function discoveryMapScreen() {
   // mechanic (see git history) kept silently failing in ways that made the
   // whole drawer invisible and ate map interaction with it. This can't do
   // that: the drawer's list is always laid out and always paintable.
-  return `<div class="ol-screen od-flow od-map-full">
+  return `<div class="ol-screen od-flow od-map-full" id="od-map-full">
     <div class="od-map-full__map-zone">
       <div class="od-map-full__canvas" id="od-results-map"></div>
       <div class="od-map-full__topbar">
@@ -1934,7 +1958,7 @@ function discoveryMapScreen() {
           <span class="od-drawer__count">${ranked.length}</span>
         </span>
       </div>
-      <div class="od-drawer__body">
+      <div class="od-drawer__body" id="od-drawer-body">
         <div class="od-locality-list">
           ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
           ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
@@ -2508,6 +2532,7 @@ function render() {
         label: `${l.name} · ~${Math.round(radiusKm * 10) / 10} km travel radius`,
       })),
     });
+    wireResultsDrawerScroll();
   }
   if (state.step === "splash") mountSplashLottie();
   if (state.step === "otp") focusOtpHiddenInput();
