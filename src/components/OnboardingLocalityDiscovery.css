@@ -738,7 +738,11 @@
 
 .od-drawer {
   /* Fixed at its expanded height; peek vs. expanded is a transform, not a
-     height animation, so this only ever costs compositing, never layout. */
+     height animation, so this only ever costs compositing, never layout.
+     Peek (default) still shows several cards, not just the handle — a
+     132px sliver read as "the list isn't there" even though it was just
+     collapsed. Both values share one unit (dvh) so the offset is a plain
+     literal, no calc() mixing dvh with px. */
   position: absolute;
   left: 0;
   right: 0;
@@ -746,11 +750,11 @@
   z-index: 10;
   display: flex;
   flex-direction: column;
-  height: 82dvh;
+  height: 88dvh;
   border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
   background-color: var(--ds-surface-white);
   box-shadow: 0 -4px 24px rgba(26, 26, 26, 0.12);
-  transform: translateY(calc(82dvh - 132px));
+  transform: translateY(42dvh); /* 88dvh - 46dvh peek */
   transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
