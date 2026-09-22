@@ -1927,8 +1927,14 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     bounds.push(p.coords);
   });
 
+  // A single pin (e.g. just "Current location", picked with nothing else
+  // selected yet) never hit this — the map stayed at its initial setView on
+  // the mock city center, so a real GPS fix miles from that fake center
+  // was added correctly but sat off-screen, invisible without panning.
   if (bounds.length > 1) {
     map.fitBounds(bounds, { padding: [32, 32], maxZoom: 15 });
+  } else if (bounds.length === 1) {
+    map.setView(bounds[0], 15);
   }
 
   activeDiscoveryMaps[id] = map;
