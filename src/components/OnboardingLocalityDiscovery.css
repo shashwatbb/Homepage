@@ -1198,7 +1198,7 @@
 
 .od-locality-card__name {
   margin: 0;
-  font-size: var(--ds-font-size-lg);
+  font-size: var(--ds-font-size-xl);
   font-weight: var(--ds-font-weight-semibold);
   color: var(--ds-text-primary);
 }

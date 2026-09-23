@@ -1882,6 +1882,10 @@ const DISCOVERY_MAP_KEEP_LAYERS = new Set([
   "road-secondary-tertiary",
   "settlement-major-label",
   "settlement-minor-label",
+  // Neighbourhood/locality names within a city — this map is specifically
+  // about picking a locality, so this label layer stays even though the
+  // rest of the label set (POI, transit, airport, admin, ...) is cut.
+  "settlement-subdivision-label",
 ]);
 
 function declutterBaseStyle(map) {
@@ -1964,6 +1968,7 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   let ready = false;
   let pendingUpdate = null;
   let lastData = { pins, circles };
+  let hasFitOnce = false;
 
   function clearOverlays() {
     markers.forEach((m) => m.remove());
@@ -2050,6 +2055,7 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     // the layout settles.
     map.resize();
     fitDiscoveryBounds(map, bounds, animate);
+    hasFitOnce = true;
   }
 
   map.on("load", () => {
@@ -2062,10 +2068,16 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   // selected yet) used to sit off-screen at the plain city-center view — and
   // separately, the whole map used to need a manual pinch-to-zoom-out to see
   // the full commute radius, because the one-shot resize() above could still
-  // race a CSS transition (the screen fade-in, the drawer's flex-basis
-  // animation) and fit against a container size that hadn't settled yet.
-  // Re-fitting on every observed resize, not just once at load, is what
-  // makes the auto-zoom actually reliable.
+  // race a CSS transition (the screen fade-in) and fit against a container
+  // size that hadn't settled yet. Re-fitting on every observed resize until
+  // that first real fit lands is what makes the initial auto-zoom reliable
+  // regardless of when the layout settles.
+  //
+  // Past that first fit, resize only redraws the canvas — it does NOT
+  // re-run fitBounds. The drawer's own flex-basis animation (see
+  // wireResultsDrawerScroll) resizes this same container on every open/
+  // close, and re-fitting there zoomed the map out/in to match the drawer
+  // instead of leaving the view exactly where the user left it.
   let resizeRaf = null;
   const resizeObserver = new ResizeObserver(() => {
     if (!ready) return;
@@ -2073,7 +2085,9 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     resizeRaf = requestAnimationFrame(() => {
       resizeRaf = null;
       map.resize();
-      fitDiscoveryBounds(map, computeDiscoveryBounds(lastData.pins, lastData.circles), false);
+      if (!hasFitOnce) {
+        fitDiscoveryBounds(map, computeDiscoveryBounds(lastData.pins, lastData.circles), false);
+      }
     });
   });
   resizeObserver.observe(el);
@@ -2289,7 +2303,7 @@ function localityCardHtml(loc, rank) {
   // to look identical to five other options.
   const isTopPick = rank === 1;
   const distanceLine = loc.distance_from_landmarks && loc.distance_from_landmarks.length
-    ? loc.distance_from_landmarks.map((d) => `${d.minutes} min (~${d.km} km) from ${d.landmark_name}`).join(" • ")
+    ? loc.distance_from_landmarks.map((d) => `${d.minutes} min (${d.km} km) from ${d.landmark_name}`).join(" • ")
     : loc.matched_signals[0] || "Good match for your search";
   // "More options" cards only — the #1-5 primary picks already carry the
   // rank badge and don't need a thumbnail to be scannable; a flat, fixed
@@ -2327,16 +2341,7 @@ function discoveryMapScreen() {
   const ranked = state.recommendedLocalities;
   const primary = ranked.slice(0, 5);
   const secondary = ranked.slice(5);
-  const hasAnchors = state.landmarks.length > 0;
   const radiusKm = selectedCommuteRadiusKm();
-  // One clean line instead of the old separate "stay closer to" panel +
-  // map legend block — same info (which anchors, what radius), said once.
-  // No invented distance when the user didn't pick a commute tolerance.
-  const anchorNote = hasAnchors
-    ? radiusKm !== null
-      ? `Within ~${Math.round(radiusKm * 10) / 10} km of ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
-      : `Near ${state.landmarks.map((l) => escapeHtml(l.name)).join(" & ")}`
-    : "";
 
   // Plain flex column, top-to-bottom, both zones always in normal flow — no
   // position:absolute drawer, no transform/dvh peek-collapse animation. That
@@ -2348,7 +2353,6 @@ function discoveryMapScreen() {
       <div class="od-map-full__canvas" id="od-results-map"></div>
       <div class="od-map-full__topbar">
         <button type="button" class="ol-icon-btn od-map-full__back" data-action="discovery-map-back" aria-label="Back">${ICON.arrowLeft}</button>
-        ${anchorNote ? `<span class="od-map-full__note">${anchorNote}</span>` : ""}
       </div>
     </div>
     <div class="od-drawer">
@@ -2987,7 +2991,7 @@ function render() {
             title: l.name,
             tooltip:
               radiusKm !== null
-                ? `<b>${escapeHtml(l.name)}</b><br><span style="color:#6d28d9">Travel radius: ~${Math.round(radiusKm * 10) / 10} km (${commuteOpt?.label})</span>`
+                ? `<b>${escapeHtml(l.name)}</b><br><span style="color:#6d28d9">Travel radius: ${Math.round(radiusKm * 10) / 10} km (${commuteOpt?.label})</span>`
                 : `<b>${escapeHtml(l.name)}</b>`,
           };
         }),
@@ -3000,7 +3004,7 @@ function render() {
           ? state.landmarks.map((l) => ({
               coords: l.coords,
               radiusMeters,
-              label: `${l.name} · ~${Math.round(radiusKm * 10) / 10} km travel radius`,
+              label: `${l.name} · ${Math.round(radiusKm * 10) / 10} km travel radius`,
             }))
           : [],
     });
