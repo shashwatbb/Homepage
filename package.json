@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@lottiefiles/dotlottie-web": "^0.80.0",
-    "leaflet": "^1.9.4",
+    "maplibre-gl": "^6.11.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
