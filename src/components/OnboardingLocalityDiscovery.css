@@ -1334,6 +1334,7 @@
 }
 
 .od-flow .ol-btn--outline {
+  border-width: 1.5px;
   box-shadow: var(--od-shadow-sm);
 }
 
