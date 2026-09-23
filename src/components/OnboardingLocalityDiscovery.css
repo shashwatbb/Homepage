@@ -998,25 +998,28 @@
   border: 1px solid var(--ds-color-grey-neutral-100);
 }
 
-/* MapLibre GL vector map (OpenFreeMap's key-free "positron" style — see
-   mountDiscoveryMap for why: every raster CDN tried before this ended up
-   demanding a key or 403ing under real traffic). Vector tiles render sharp
-   at any pixel density on their own, so no retina hack or color filter is
-   needed here — shared by the fixed-height landmark-picker preview and the
-   full-screen recommendations map. */
-.od-map-illustration .maplibregl-ctrl-attrib,
-.od-map-full__canvas .maplibregl-ctrl-attrib {
+/* Real Leaflet map (Wikimedia's retina-capable OSM-intl tiles) — shared by
+   the fixed-height landmark-picker preview and the full-screen
+   recommendations map. */
+.od-map-illustration .leaflet-control-attribution,
+.od-map-full__canvas .leaflet-control-attribution {
   font-size: 9px;
   background: rgba(255, 255, 255, 0.75);
 }
 
-.od-map-illustration .maplibregl-ctrl-bottom-left,
-.od-map-full__canvas .maplibregl-ctrl-bottom-left {
-  bottom: 0;
+/* Back on stock OSM's busier default style (see mountDiscoveryMap — every
+   "cleaner" retina CDN alternative silently stopped working in real
+   browser use), so this needs its desaturating touch back — lighter than
+   the original pass, since heavy contrast/brightness reduction was itself
+   partly why the map used to read hazy/soft. */
+.od-map-illustration .leaflet-tile-pane,
+.od-map-full__canvas .leaflet-tile-pane {
+  filter: grayscale(0.7) saturate(0.5) contrast(1.08) brightness(1.02);
 }
 
-.od-map-illustration .maplibregl-ctrl-logo {
-  display: none;
+.od-leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
 }
 
 .od-map-pin-container {
