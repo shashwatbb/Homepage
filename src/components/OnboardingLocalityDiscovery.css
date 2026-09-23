@@ -1012,12 +1012,22 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
+/* This is always a Mapbox marker's root element (mapboxgl.Marker({element}))
+   — Mapbox positions it purely via an inline transform on a `position:
+   absolute` base (relative to the map canvas). `position: relative` here
+   overrode that (equal specificity to Mapbox's own .mapboxgl-marker rule,
+   later in the cascade), which put the marker back into normal document
+   flow — transform then applied on TOP of its flow position instead of
+   being the only positioning, landing it tens/hundreds of px off its real
+   coordinate, an offset that shifted whenever sibling markers were added or
+   removed. `position: absolute` here is still a valid containing block for
+   the pin label below, which is all `relative` was ever needed for. */
 .od-map-pin-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: absolute;
 }
 
 .od-map-pin-badge {
