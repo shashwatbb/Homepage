@@ -173,7 +173,6 @@ const DISCOVERY_STEPS = [
   "discovery-bhk",
   "discovery-landmarks",
   "discovery-commute",
-  "discovery-intent",
   "discovery-lifestyle",
   "discovery-map",
 ];
@@ -241,9 +240,6 @@ function handleHardwareBack() {
       break;
     case "discovery-commute":
       goTo("discovery-landmarks");
-      break;
-    case "discovery-intent":
-      goTo(state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks");
       break;
     case "discovery-lifestyle":
       goTo(previousDiscoveryStep("discovery-lifestyle"));
@@ -1118,10 +1114,8 @@ function nextDiscoveryStep(current) {
       return "discovery-landmarks";
     case "discovery-landmarks":
       if (state.landmarks.length > 0) return "discovery-commute";
-      return state.service === "buy" ? "discovery-intent" : "discovery-lifestyle";
+      return "discovery-lifestyle";
     case "discovery-commute":
-      return state.service === "buy" ? "discovery-intent" : "discovery-lifestyle";
-    case "discovery-intent":
       return "discovery-lifestyle";
     case "discovery-lifestyle":
       return "discovery-map";
@@ -1132,7 +1126,6 @@ function nextDiscoveryStep(current) {
 
 function previousDiscoveryStep(current) {
   if (current === "discovery-lifestyle") {
-    if (state.service === "buy") return "discovery-intent";
     return state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks";
   }
   return "discovery-landmarks";
@@ -1155,7 +1148,6 @@ function activeDiscoverySteps() {
   }
   const steps = ["locality-check", "discovery-budget", "discovery-bhk", "discovery-landmarks"];
   if (state.landmarks.length > 0) steps.push("discovery-commute");
-  if (state.service === "buy") steps.push("discovery-intent");
   steps.push("discovery-lifestyle", "discovery-map");
   return steps;
 }
@@ -1778,13 +1770,19 @@ function discoveryCommuteScreen() {
   </div>`;
 }
 
-// -- Step 5: intent (buy only, optional) ---------------------------------------
+// -- Step 5: intent (buy only, optional) + lifestyle tags (optional, multi-select) --
+// Merged onto one screen — both are optional single-question steps with no
+// dependency on each other, so splitting them cost an extra tap for nothing.
 
-function discoveryIntentScreen() {
+function discoveryLifestyleScreen() {
+  const isBuy = state.service === "buy";
   return `<div class="ol-screen ol-screen--has-cta od-flow">
-    ${odTopBar("discovery-intent-back")}
-    ${odProgressHtml("discovery-intent")}
-    <h1 class="od-heading">Is this to live in, or an investment?</h1>
+    ${odTopBar("discovery-lifestyle-back")}
+    ${odProgressHtml("discovery-lifestyle")}
+    <h1 class="od-heading">A couple more things (optional)</h1>
+    ${
+      isBuy
+        ? `<p class="ol-section-label">Is this to live in, or an investment?</p>
     <div class="od-choice-list">
       ${INTENT_OPTIONS.map((opt) =>
         odChoiceCardHtml({
@@ -1795,21 +1793,10 @@ function discoveryIntentScreen() {
           selected: state.intent === opt.id,
         })
       ).join("")}
-    </div>
-    ${odPageCta(
-      `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-intent">${STRINGS["common.continue"]}</button>`,
-      odSecondaryCta("discovery-skip-intent", STRINGS["common.skip"])
-    )}
-  </div>`;
-}
-
-// -- Step 6: lifestyle tags (optional, multi-select) ---------------------------
-
-function discoveryLifestyleScreen() {
-  return `<div class="ol-screen ol-screen--has-cta od-flow">
-    ${odTopBar("discovery-lifestyle-back")}
-    ${odProgressHtml("discovery-lifestyle")}
-    <h1 class="od-heading">What matters most where you live?</h1>
+    </div>`
+        : ""
+    }
+    <p class="ol-section-label">What matters most where you live?</p>
     <div class="od-chip-grid">
       ${LIFESTYLE_TAGS.map((tag) => {
         const active = state.lifestyleTags.includes(tag.id);
@@ -2255,7 +2242,6 @@ const SCREEN_BUILDERS = {
   "discovery-bhk": discoveryBhkScreen,
   "discovery-landmarks": discoveryLandmarksScreen,
   "discovery-commute": discoveryCommuteScreen,
-  "discovery-intent": discoveryIntentScreen,
   "discovery-lifestyle": discoveryLifestyleScreen,
   "discovery-map": discoveryMapScreen,
 };
@@ -2536,13 +2522,6 @@ function wireEvents(root) {
         root.querySelector('[data-action="discovery-continue"][data-from="discovery-commute"]')?.removeAttribute("disabled");
         haptic(10);
         break;
-      case "discovery-intent-back":
-        goTo(state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks");
-        break;
-      case "discovery-skip-intent":
-        state.intent = null;
-        goTo(nextDiscoveryStep("discovery-intent"));
-        break;
       case "pick-intent":
         state.intent = btn.getAttribute("data-value");
         root.querySelectorAll('[data-action="pick-intent"]').forEach((el) => {
@@ -2758,7 +2737,6 @@ const FOCUS_MANAGED_STEPS = new Set([
   "discovery-bhk",
   "discovery-landmarks",
   "discovery-commute",
-  "discovery-intent",
   "discovery-lifestyle",
   "discovery-map",
 ]);
