@@ -503,7 +503,7 @@ body:has(.onboarding-locality) {
   letter-spacing: 0.1px;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: background-color 0.1s ease, transform 0.1s ease, opacity 0.1s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.1s ease, opacity 0.25s ease;
 }
 
 .ol-btn:active:not(:disabled) {

@@ -1160,14 +1160,6 @@ function activeDiscoverySteps() {
   return steps;
 }
 
-/** Compact "Mumbai · 2 BHK · ₹2 Cr" recap — carries budget/BHK choices
- * forward visually once the flow has moved past those screens, reusing the
- * already-formatted stepper label so no new formatting logic is needed. */
-function discoverySummaryHtml() {
-  const parts = [state.city, state.bhk, currentBudgetSteps()[state.budgetIndex]?.label].filter(Boolean);
-  return parts.length ? `<p class="od-summary-strip">${escapeHtml(parts.join(" · "))}</p>` : "";
-}
-
 /** Last-rendered progress % — each screen transition is a full innerHTML
  * replace, so the fill bar is a brand-new element every time with no
  * "before" state of its own to transition from. Render it starting at the
@@ -1608,8 +1600,15 @@ function landmarkPillsHtml() {
   </div>`;
 }
 
+/** The 2-item cap is on named landmarks a user actually searched/picked —
+ * "current location" is a separate, at-most-one addition and shouldn't eat
+ * into that budget. */
+function namedLandmarkCount() {
+  return state.landmarks.filter((l) => l.id !== "current-location").length;
+}
+
 function landmarkResultsHtml() {
-  if (state.landmarks.length >= 2) return "";
+  if (namedLandmarkCount() >= 2) return "";
   const results = searchLandmarks(state.city, odLandmarkQuery);
   if (!odLandmarkQuery.trim() || !results.length) return "";
   return `<ul class="od-landmark-results">${results
@@ -1686,7 +1685,7 @@ function renderLandmarkPicker() {
   const ghost = document.getElementById("od-landmark-ghost");
   if (ghost) ghost.style.display = odLandmarkQuery ? "none" : "";
   const input = document.getElementById("od-landmark-input");
-  if (input) input.disabled = state.landmarks.length >= 2;
+  if (input) input.disabled = namedLandmarkCount() >= 2;
   const mapWrap = document.getElementById("od-landmark-map-wrap");
   if (mapWrap) {
     mapWrap.innerHTML = landmarkPreviewMapHtml();
@@ -1714,18 +1713,18 @@ function landmarkPrimaryCtaHtml() {
   return `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>`;
 }
 
-/** Hidden once the 2-landmark cap is hit — same reasoning as the search
- * field itself being disabled at that point, nothing left to add. */
+/** Hidden once the 2 named-landmark cap is hit, or once current location is
+ * already added — nothing left this control can add either way. */
 function detectLocationButtonHtml() {
-  if (state.landmarks.length >= 2) return "";
+  if (namedLandmarkCount() >= 2 || state.landmarks.some((l) => l.id === "current-location")) return "";
   return `<button type="button" class="od-detect-location" data-action="detect-location">
     <span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span>
-    Detect current location
+    <span class="od-detect-location__label">Detect current location</span>
   </button>`;
 }
 
 function discoveryLandmarksScreen() {
-  const capped = state.landmarks.length >= 2;
+  const capped = namedLandmarkCount() >= 2;
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-landmarks-back")}
     ${odProgressHtml("discovery-landmarks")}
@@ -1762,7 +1761,6 @@ function discoveryCommuteScreen() {
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-commute-back")}
     ${odProgressHtml("discovery-commute")}
-    ${discoverySummaryHtml()}
     <h1 class="od-heading">How far are you willing to commute?</h1>
     <div class="od-choice-list" id="od-commute-list">
       ${COMMUTE_OPTIONS.map((opt) =>
@@ -1786,7 +1784,6 @@ function discoveryIntentScreen() {
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-intent-back")}
     ${odProgressHtml("discovery-intent")}
-    ${discoverySummaryHtml()}
     <h1 class="od-heading">Is this to live in, or an investment?</h1>
     <div class="od-choice-list">
       ${INTENT_OPTIONS.map((opt) =>
@@ -1812,9 +1809,7 @@ function discoveryLifestyleScreen() {
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-lifestyle-back")}
     ${odProgressHtml("discovery-lifestyle")}
-    ${discoverySummaryHtml()}
     <h1 class="od-heading">What matters most where you live?</h1>
-    <p class="od-subtitle">Optional, pick any that apply</p>
     <div class="od-chip-grid">
       ${LIFESTYLE_TAGS.map((tag) => {
         const active = state.lifestyleTags.includes(tag.id);
@@ -2436,7 +2431,7 @@ function wireEvents(root) {
         const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
         const found = pool.find((l) => l.id === landmarkId);
         const alreadyAdded = state.landmarks.some((l) => l.id === landmarkId);
-        if (!found || alreadyAdded || state.landmarks.length >= 2) break;
+        if (!found || alreadyAdded || namedLandmarkCount() >= 2) break;
         state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
         odLandmarkQuery = "";
         haptic(10);
@@ -2451,7 +2446,7 @@ function wireEvents(root) {
         if (existingIdx !== -1) {
           state.landmarks.splice(existingIdx, 1);
         } else {
-          if (state.landmarks.length >= 2) break;
+          if (namedLandmarkCount() >= 2) break;
           const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
           const found = pool.find((l) => l.id === landmarkId);
           if (!found) break;
@@ -2466,9 +2461,14 @@ function wireEvents(root) {
           showToast("Location isn't available on this device");
           break;
         }
-        if (state.landmarks.length >= 2) break;
+        if (namedLandmarkCount() >= 2 || state.landmarks.some((l) => l.id === "current-location")) break;
         btn.disabled = true;
-        btn.textContent = "Detecting…";
+        // Swap only the label, keep the icon in place — replacing the whole
+        // button content (was btn.textContent = "Detecting…") dropped the
+        // icon and reflowed the button's own box, which is what nudged
+        // everything below it down for a moment.
+        const label = btn.querySelector(".od-detect-location__label");
+        if (label) label.textContent = "Detecting…";
 
         // Belt-and-suspenders against getting stuck: getCurrentPosition's own
         // `timeout` option isn't reliably honored by every browser when the
@@ -2479,7 +2479,7 @@ function wireEvents(root) {
         let settled = false;
         const resetButton = () => {
           btn.disabled = false;
-          btn.innerHTML = `<span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span> Detect current location`;
+          if (label) label.textContent = "Detect current location";
         };
         const giveUp = window.setTimeout(() => {
           if (settled) return;
@@ -2493,7 +2493,7 @@ function wireEvents(root) {
             if (settled) return;
             settled = true;
             window.clearTimeout(giveUp);
-            if (state.landmarks.length >= 2 || state.landmarks.some((l) => l.id === "current-location")) {
+            if (namedLandmarkCount() >= 2 || state.landmarks.some((l) => l.id === "current-location")) {
               renderLandmarkPicker();
               return;
             }

@@ -684,6 +684,7 @@
 .od-detect-location {
   display: inline-flex;
   align-items: center;
+  min-height: 20px;
   gap: var(--ds-space-2xs);
   margin-bottom: var(--ds-space-m);
   padding: 0;
@@ -1016,14 +1017,17 @@
   color: var(--ds-text-inverse);
   font-size: var(--ds-font-size-xs);
   font-weight: var(--ds-font-weight-bold);
-  box-shadow: 0 2px 5px rgba(33, 29, 25, 0.3);
+  box-shadow: var(--od-shadow-md);
 }
 
+/* Landmark anchor pin — flat white tile, one thin stroke, the same soft
+   elevation every other card in this flow uses. No colored glow ring: that
+   read as a cheap halo effect rather than a marker. */
 .od-map-pin-badge--anchor {
   background-color: var(--ds-surface-white);
   color: var(--ds-color-purple-700);
-  border: 2px solid var(--ds-color-purple-600);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--ds-color-purple-200);
+  box-shadow: var(--od-shadow-md);
 }
 
 .od-map-pin-badge--anchor svg {
@@ -1077,13 +1081,13 @@
   margin-top: 3px;
   white-space: nowrap;
   font-size: 10px;
-  font-weight: var(--ds-font-weight-bold);
-  color: var(--ds-color-purple-800);
-  background-color: rgba(255, 255, 255, 0.95);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-purple-700);
+  background-color: var(--ds-surface-white);
   padding: 1px 6px;
   border-radius: var(--ds-radius-full);
-  border: 1px solid var(--ds-color-purple-200);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--ds-color-grey-neutral-100);
+  box-shadow: var(--od-shadow-sm);
   pointer-events: none;
 }
 
