@@ -1288,6 +1288,13 @@
    than the shared .ol-btn/.ol-icon-btn base rules in OnboardingLocality.css,
    so login/service/locality screens that reuse those same classes keep
    their current flat look untouched. Primary CTA stays flat, no glow. */
+/* Primary CTA only, scoped to this flow — rounder + slightly taller than
+   the shared .ol-btn used by login/service/otp, which stay untouched. */
+.od-flow .ol-btn--primary {
+  height: 52px;
+  border-radius: var(--ds-radius-l);
+}
+
 .od-flow .ol-btn--outline {
   box-shadow: var(--od-shadow-sm);
 }
