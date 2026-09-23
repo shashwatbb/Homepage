@@ -998,8 +998,10 @@
   border: 1px solid var(--ds-color-grey-neutral-100);
 }
 
-/* Real Mapbox GL map (hosted "light-v11" style, a personal account's free
-   public token — retina-sharp vector tiles, no key/CDN saga this time) —
+/* Real Mapbox GL map (hosted "streets-v12" default style, stock colors, no
+   tone filter — decluttered down to essential layers only, see
+   DISCOVERY_MAP_KEEP_LAYERS/declutterBaseStyle — a personal account's free
+   public token, retina-sharp vector tiles, no key/CDN saga this time) —
    shared by the fixed-height landmark-picker preview and the full-screen
    recommendations map. */
 /* Mapbox's ToS requires their wordmark logo stay visible on the free tier —
@@ -1008,16 +1010,6 @@
 .od-map-full__canvas .mapboxgl-ctrl-attrib {
   font-size: 9px;
   background: rgba(255, 255, 255, 0.75);
-}
-
-/* Warms Mapbox's stock "light-v11" (already muted/minimal by design) toward
-   a cream tone instead of flat grey-white. No saturate() here — "light-v11"
-   has almost no color to amplify, and a value below 1 is what caused the
-   earlier "washed out" complaint (it desaturates *toward* white, not away
-   from it) — contrast + a touch of sepia is what actually gives it depth. */
-.od-map-illustration .mapboxgl-canvas,
-.od-map-full__canvas .mapboxgl-canvas {
-  filter: sepia(0.2) contrast(1.08) brightness(0.96);
 }
 
 .od-map-pin-container {

@@ -1862,6 +1862,36 @@ function circlePolygon([lat, lng], radiusMeters, steps = 64) {
   return coords;
 }
 
+// "streets-v12" ships 100+ layers (tunnels, bridges, rail, POI/transit/airport
+// labels, admin boundaries, building footprints, ...) — a locality-discovery
+// map only needs enough to read as a place, not a full navigable atlas. An
+// allowlist is more robust here than hiding a long "don't want" list: any new
+// layer Mapbox adds to the style later comes in hidden by default instead of
+// silently cluttering it back up.
+const DISCOVERY_MAP_KEEP_LAYERS = new Set([
+  "land",
+  "landcover",
+  "landuse",
+  "water-shadow",
+  "water",
+  "road-motorway-trunk-case",
+  "road-motorway-trunk",
+  "road-primary-case",
+  "road-primary",
+  "road-secondary-tertiary-case",
+  "road-secondary-tertiary",
+  "settlement-major-label",
+  "settlement-minor-label",
+]);
+
+function declutterBaseStyle(map) {
+  map.getStyle()?.layers?.forEach((layer) => {
+    if (!DISCOVERY_MAP_KEEP_LAYERS.has(layer.id)) {
+      map.setLayoutProperty(layer.id, "visibility", "none");
+    }
+  });
+}
+
 // Geometry only, no DOM/markers — cheap enough to re-run on every resize so
 // the auto-zoom can re-fit against the container's *current* size instead of
 // whatever it measured once at load time.
@@ -1879,7 +1909,13 @@ function computeDiscoveryBounds(pins, circles) {
 
 function fitDiscoveryBounds(map, bounds, animate) {
   if (bounds.isEmpty()) return;
-  const isPoint = bounds.getNorthEast().equals(bounds.getSouthWest());
+  // Mapbox GL's LngLat has no .equals() (unlike MapLibre/Google's) — this
+  // threw a TypeError here on every single-pin case (the landmark-picker's
+  // normal case), which silently killed the setCenter/flyTo call below it
+  // before it ever ran. That's why the map never moved at all.
+  const ne = bounds.getNorthEast();
+  const sw = bounds.getSouthWest();
+  const isPoint = ne.lng === sw.lng && ne.lat === sw.lat;
   if (isPoint) {
     if (animate) map.flyTo({ center: bounds.getCenter(), zoom: 15 });
     else {
@@ -1910,11 +1946,10 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
 
   const map = new mapboxgl.Map({
     container: el,
-    // "light-v11" — Mapbox's own muted/minimal style. Earlier "washed out"
-    // complaint was actually the tone filter below desaturating an already
-    // pale style even further (saturate < 1 pushes toward grey/white); with
-    // that fixed to not desaturate, the muted style itself reads fine.
-    style: "mapbox://styles/mapbox/light-v11",
+    // Mapbox's actual default/classic style, left at its own stock colors —
+    // no tone filter. Decluttered down to essential layers only (below),
+    // which is what keeps it reading clean, not a color trick.
+    style: "mapbox://styles/mapbox/streets-v12",
     center: toLngLat(center),
     zoom: 13,
     scrollZoom: false,
@@ -1922,6 +1957,7 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   });
   map.dragRotate.disable();
   map.touchZoomRotate.disableRotation();
+  map.on("load", () => declutterBaseStyle(map));
 
   let markers = [];
   let overlayIds = [];
