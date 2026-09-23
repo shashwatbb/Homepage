@@ -1527,8 +1527,7 @@ function discoveryBudgetScreen() {
   return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
     ${odTopBar("discovery-budget-back")}
     ${odProgressHtml("discovery-budget")}
-    <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your budget?"}</h1>
-    <p class="od-subtitle">${isRent ? "Your max monthly rent" : "Your max budget"}</p>
+    <h1 class="od-heading">${isRent ? "What's your monthly rent budget?" : "What's your max budget?"}</h1>
     ${budgetDialHtml()}
     ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-budget">${STRINGS["common.continue"]}</button>`)}
   </div>`;
