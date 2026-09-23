@@ -1164,6 +1164,15 @@
   background-color: var(--ds-color-grey-neutral-300);
 }
 
+.od-locality-card__thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--ds-radius-m);
+  object-fit: cover;
+  background-color: var(--ds-color-warm-neutral-100);
+}
+
 .od-locality-card__body {
   flex: 1;
   min-width: 0;

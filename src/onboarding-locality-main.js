@@ -2103,8 +2103,15 @@ function localityCardHtml(loc, rank) {
   const distanceLine = loc.distance_from_landmarks && loc.distance_from_landmarks.length
     ? loc.distance_from_landmarks.map((d) => `${d.minutes} min (~${d.km} km) from ${d.landmark_name}`).join(" • ")
     : loc.matched_signals[0] || "Good match for your search";
+  // "More options" cards only — the #1-5 primary picks already carry the
+  // rank badge and don't need a thumbnail to be scannable; a flat, fixed
+  // Unsplash CDN URL (not the old source.unsplash.com random-redirect
+  // endpoint, which is deprecated and flaky) keeps this reliable.
+  const thumb = isPrimary
+    ? ""
+    : `<img class="od-locality-card__thumb" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=160&h=160&fit=crop&q=60&auto=format" width="56" height="56" loading="lazy" alt="" onerror="this.remove()" />`;
   return `<div class="od-locality-card ${isPrimary ? "" : "od-locality-card--secondary"}">
-    <span class="od-locality-card__rank">${isPrimary ? rank : ""}</span>
+    ${isPrimary ? `<span class="od-locality-card__rank">${rank}</span>` : thumb}
     <div class="od-locality-card__body">
       <div class="od-locality-card__head">
         <h2 class="od-locality-card__name">${escapeHtml(loc.name)}</h2>
