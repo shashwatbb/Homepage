@@ -1783,16 +1783,11 @@ function discoveryLifestyleScreen() {
     ${
       isBuy
         ? `<p class="ol-section-label">Is this to live in, or an investment?</p>
-    <div class="od-choice-list">
-      ${INTENT_OPTIONS.map((opt) =>
-        odChoiceCardHtml({
-          action: "pick-intent",
-          value: opt.id,
-          icon: INTENT_ICON[opt.id],
-          label: opt.label,
-          selected: state.intent === opt.id,
-        })
-      ).join("")}
+    <div class="od-chip-grid">
+      ${INTENT_OPTIONS.map((opt) => {
+        const active = state.intent === opt.id;
+        return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="pick-intent" data-value="${opt.id}" aria-pressed="${active}"><span class="od-chip__icon">${INTENT_ICON[opt.id]}</span>${opt.label}</button>`;
+      }).join("")}
     </div>`
         : ""
     }
@@ -2093,6 +2088,26 @@ function localityBadgeLabel(loc, rank) {
   return "Above budget";
 }
 
+// Fixed Unsplash CDN photo ids (not the deprecated source.unsplash.com
+// random-redirect endpoint) — all verified 200. Picked by locality id so
+// "More options" cards stop all showing the same photo, but a given
+// locality still shows the same one on every re-render.
+const LOCALITY_THUMB_PHOTO_IDS = [
+  "photo-1449824913935-59a10b8d2000",
+  "photo-1477959858617-67f85cf4f1df",
+  "photo-1560448204-e02f11c3d0e2",
+  "photo-1519501025264-65ba15a82390",
+  "photo-1486406146926-c627a92ad1ab",
+  "photo-1480714378408-67cf0d13bc1b",
+];
+
+function localityThumbPhotoId(loc) {
+  let hash = 0;
+  const key = String(loc.id ?? loc.name ?? "");
+  for (let i = 0; i < key.length; i++) hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+  return LOCALITY_THUMB_PHOTO_IDS[hash % LOCALITY_THUMB_PHOTO_IDS.length];
+}
+
 function localityCardHtml(loc, rank) {
   const isPrimary = rank !== null;
   // Only the #1 "Recommended" card gets the primary (filled purple) CTA —
@@ -2109,7 +2124,7 @@ function localityCardHtml(loc, rank) {
   // endpoint, which is deprecated and flaky) keeps this reliable.
   const thumb = isPrimary
     ? ""
-    : `<img class="od-locality-card__thumb" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=160&h=160&fit=crop&q=60&auto=format" width="56" height="56" loading="lazy" alt="" onerror="this.remove()" />`;
+    : `<img class="od-locality-card__thumb" src="https://images.unsplash.com/${localityThumbPhotoId(loc)}?w=160&h=160&fit=crop&q=60&auto=format" width="56" height="56" loading="lazy" alt="" onerror="this.remove()" />`;
   return `<div class="od-locality-card ${isPrimary ? "" : "od-locality-card--secondary"}">
     ${isPrimary ? `<span class="od-locality-card__rank">${rank}</span>` : thumb}
     <div class="od-locality-card__body">
@@ -2533,7 +2548,7 @@ function wireEvents(root) {
         state.intent = btn.getAttribute("data-value");
         root.querySelectorAll('[data-action="pick-intent"]').forEach((el) => {
           const isSelected = el.getAttribute("data-value") === state.intent;
-          el.classList.toggle("is-selected", isSelected);
+          el.classList.toggle("is-active", isSelected);
           el.setAttribute("aria-pressed", String(isSelected));
         });
         haptic(10);

@@ -537,6 +537,20 @@
   box-shadow: var(--od-shadow-selected);
 }
 
+/* Intent chips only (the other od-chip uses — property type, lifestyle
+   tags — are label-only). Icon inherits the chip's own text color so it
+   goes purple on selection along with the label, no separate state. */
+.od-chip__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.od-chip__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
 .od-chip:focus-visible {
   outline: 2px solid var(--ds-color-purple-700);
   outline-offset: 2px;
