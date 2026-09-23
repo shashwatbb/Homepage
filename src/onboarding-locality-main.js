@@ -1687,7 +1687,14 @@ function renderLandmarkPicker() {
   if (input) input.disabled = namedLandmarkCount() >= 2;
   const mapWrap = document.getElementById("od-landmark-map-wrap");
   if (mapWrap) {
-    mapWrap.innerHTML = landmarkPreviewMapHtml();
+    // Only ever create the container div once — recreating it on every
+    // landmark toggle/detect is what forced mountDiscoveryMap to also
+    // rebuild the whole map from scratch instead of flying the existing one
+    // to the new pin (see mountDiscoveryMap's reuse check, keyed on this
+    // exact DOM node).
+    if (!document.getElementById("od-landmark-map")) {
+      mapWrap.innerHTML = landmarkPreviewMapHtml();
+    }
     mountLandmarkMap();
   }
   const secondaryCta = document.getElementById("od-landmark-secondary-cta-wrap");
@@ -1858,6 +1865,18 @@ function circlePolygon([lat, lng], radiusMeters, steps = 64) {
 function mountDiscoveryMap(id, { center, pins, circles }) {
   const el = document.getElementById(id);
   if (!el) return;
+
+  // Reuse the live instance across in-screen updates (a landmark toggled or
+  // detected, not a full screen change) instead of destroying and rebuilding
+  // it — a full rebuild snaps back to the plain city-center view every time,
+  // and if the rebuilt map's own "load" hadn't finished yet, the pending
+  // re-center to the real pick/GPS fix was simply dropped along with it.
+  // That's why "detect my location" used to look like it did nothing.
+  const existing = activeDiscoveryMaps[id];
+  if (existing && existing.el === el) {
+    existing.update({ pins, circles });
+    return;
+  }
   destroyDiscoveryMap(id);
 
   const map = new mapboxgl.Map({
@@ -1871,10 +1890,25 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   map.dragRotate.disable();
   map.touchZoomRotate.disableRotation();
 
-  const markers = [];
-  const bounds = new mapboxgl.LngLatBounds();
+  let markers = [];
+  let overlayIds = [];
+  let ready = false;
+  let pendingUpdate = null;
 
-  map.on("load", () => {
+  function clearOverlays() {
+    markers.forEach((m) => m.remove());
+    markers = [];
+    overlayIds.forEach(({ sourceId, layerIds }) => {
+      layerIds.forEach((lid) => map.getLayer(lid) && map.removeLayer(lid));
+      map.getSource(sourceId) && map.removeSource(sourceId);
+    });
+    overlayIds = [];
+  }
+
+  function applyUpdate({ pins, circles }, animate) {
+    clearOverlays();
+    const bounds = new mapboxgl.LngLatBounds();
+
     // Recommendations screen only: a soft, mild circumference ring around each
     // anchor landmark/metro station, sized to the user's chosen commute
     // tolerance travel distance. Included in bounds fitting so the full
@@ -1899,25 +1933,27 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
         source: sourceId,
         paint: { "line-color": "#6b3d97", "line-width": 1.5, "line-opacity": 0.75 },
       });
+      overlayIds.push({ sourceId, layerIds: [`${sourceId}-fill`, `${sourceId}-line`] });
       ring.forEach((lngLat) => bounds.extend(lngLat));
 
       if (c.label) {
         const labelEl = document.createElement("div");
         labelEl.className = "od-map-circle-tooltip";
         labelEl.textContent = c.label;
-        new mapboxgl.Marker({ element: labelEl, anchor: "bottom" })
+        const labelMarker = new mapboxgl.Marker({ element: labelEl, anchor: "bottom" })
           .setLngLat(toLngLat([c.coords[0] + c.radiusMeters / 111320, c.coords[1]]))
           .addTo(map);
+        markers.push(labelMarker);
       }
     });
 
-    pins.forEach((p) => {
+    (pins || []).forEach((p) => {
       if (!p.coords) return;
       const isAnchor = p.variant === "anchor";
       // "You are here" — a plain pulsing dot, no icon/number glyph inside it.
       const isCurrent = p.variant === "current";
-      const el = document.createElement("div");
-      el.innerHTML = isCurrent
+      const wrap = document.createElement("div");
+      wrap.innerHTML = isCurrent
         ? `<div class="od-map-pin-container"><span class="od-map-pin-badge od-map-pin-badge--current"></span></div>`
         : `<div class="od-map-pin-container ${isAnchor ? "od-map-pin-container--anchor" : ""}">
         <span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}">
@@ -1925,7 +1961,7 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
         </span>
         ${p.title && isAnchor ? `<span class="od-map-pin-label">${escapeHtml(p.title)}</span>` : ""}
       </div>`;
-      const pinEl = el.firstElementChild;
+      const pinEl = wrap.firstElementChild;
       if (p.tooltip) pinEl.title = p.tooltip;
 
       const marker = new mapboxgl.Marker({ element: pinEl, anchor: "center" })
@@ -1935,6 +1971,14 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
       bounds.extend(toLngLat(p.coords));
     });
 
+    // Mapbox reads the container's laid-out size when it's constructed, which
+    // can race a fresh screen's fade-in (or a just-swapped flex layout) and
+    // catch it at 0×0 — nothing afterwards fixes that on its own, so every
+    // fitBounds/setCenter below quietly framed the wrong, too-tight zoom.
+    // Forcing a resize right here, against the settled DOM, is what makes
+    // the actual radius/pins the frame is fit to be trustworthy.
+    map.resize();
+
     // A single pin (e.g. just "Current location", picked with nothing else
     // selected yet) never hit this — the map stayed at its initial center on
     // the mock city center, so a real GPS fix miles from that fake center
@@ -1942,20 +1986,37 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     if (!bounds.isEmpty()) {
       const isPoint = bounds.getNorthEast().equals(bounds.getSouthWest());
       if (isPoint) {
-        map.setCenter(bounds.getCenter());
-        map.setZoom(15);
+        if (animate) map.flyTo({ center: bounds.getCenter(), zoom: 15 });
+        else {
+          map.setCenter(bounds.getCenter());
+          map.setZoom(15);
+        }
       } else {
-        map.fitBounds(bounds, { padding: 32, maxZoom: 15, animate: false });
+        map.fitBounds(bounds, { padding: 48, maxZoom: 15, animate });
       }
     }
+  }
+
+  map.on("load", () => {
+    ready = true;
+    applyUpdate(pendingUpdate || { pins, circles }, false);
+    pendingUpdate = null;
   });
 
   activeDiscoveryMaps[id] = {
+    el,
     remove: () => {
       markers.forEach((m) => m.remove());
       map.remove();
     },
     invalidateSize: () => map.resize(),
+    update: (data) => {
+      if (!ready) {
+        pendingUpdate = data;
+        return;
+      }
+      applyUpdate(data, true);
+    },
   };
   // A map mounted while its container was display:none or off-flow (a
   // fresh screen's fade-in, or the shared results/landmarks container)
