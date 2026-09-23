@@ -1779,24 +1779,31 @@ function discoveryLifestyleScreen() {
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-lifestyle-back")}
     ${odProgressHtml("discovery-lifestyle")}
-    <h1 class="od-heading">A couple more things (optional)</h1>
-    ${
-      isBuy
-        ? `<p class="ol-section-label">Is this to live in, or an investment?</p>
-    <div class="od-chip-grid">
-      ${INTENT_OPTIONS.map((opt) => {
-        const active = state.intent === opt.id;
-        return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="pick-intent" data-value="${opt.id}" aria-pressed="${active}"><span class="od-chip__icon">${INTENT_ICON[opt.id]}</span>${opt.label}</button>`;
-      }).join("")}
-    </div>`
-        : ""
-    }
-    <p class="ol-section-label">What matters most where you live?</p>
-    <div class="od-chip-grid">
-      ${LIFESTYLE_TAGS.map((tag) => {
-        const active = state.lifestyleTags.includes(tag.id);
-        return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}" aria-pressed="${active}">${tag.label}</button>`;
-      }).join("")}
+    <h1 class="od-heading">A couple more things</h1>
+    <p class="od-subtitle">Optional — helps us fine-tune your matches</p>
+    <div class="od-optional-sections">
+      ${
+        isBuy
+          ? `<div class="od-optional-section">
+        <p class="ol-section-label">Is this to live in, or an investment?</p>
+        <div class="od-chip-grid">
+          ${INTENT_OPTIONS.map((opt) => {
+            const active = state.intent === opt.id;
+            return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="pick-intent" data-value="${opt.id}" aria-pressed="${active}"><span class="od-chip__icon">${INTENT_ICON[opt.id]}</span>${opt.label}</button>`;
+          }).join("")}
+        </div>
+      </div>`
+          : ""
+      }
+      <div class="od-optional-section">
+        <p class="ol-section-label">What matters most where you live?</p>
+        <div class="od-chip-grid">
+          ${LIFESTYLE_TAGS.map((tag) => {
+            const active = state.lifestyleTags.includes(tag.id);
+            return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}" aria-pressed="${active}">${tag.label}</button>`;
+          }).join("")}
+        </div>
+      </div>
     </div>
     ${odPageCta(
       `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-lifestyle">See recommended localities</button>`,
