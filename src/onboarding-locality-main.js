@@ -1862,6 +1862,35 @@ function circlePolygon([lat, lng], radiusMeters, steps = 64) {
   return coords;
 }
 
+// Geometry only, no DOM/markers — cheap enough to re-run on every resize so
+// the auto-zoom can re-fit against the container's *current* size instead of
+// whatever it measured once at load time.
+function computeDiscoveryBounds(pins, circles) {
+  const bounds = new mapboxgl.LngLatBounds();
+  (circles || []).forEach((c) => {
+    if (!c.coords || !c.radiusMeters) return;
+    circlePolygon(c.coords, c.radiusMeters, 24).forEach((lngLat) => bounds.extend(lngLat));
+  });
+  (pins || []).forEach((p) => {
+    if (p.coords) bounds.extend(toLngLat(p.coords));
+  });
+  return bounds;
+}
+
+function fitDiscoveryBounds(map, bounds, animate) {
+  if (bounds.isEmpty()) return;
+  const isPoint = bounds.getNorthEast().equals(bounds.getSouthWest());
+  if (isPoint) {
+    if (animate) map.flyTo({ center: bounds.getCenter(), zoom: 15 });
+    else {
+      map.setCenter(bounds.getCenter());
+      map.setZoom(15);
+    }
+  } else {
+    map.fitBounds(bounds, { padding: 48, maxZoom: 15, animate });
+  }
+}
+
 function mountDiscoveryMap(id, { center, pins, circles }) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -1881,7 +1910,11 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
 
   const map = new mapboxgl.Map({
     container: el,
-    style: "mapbox://styles/mapbox/light-v11",
+    // "light-v11" was Mapbox's palest, near-monochrome style — the "washed
+    // out" complaint was the style itself, not just the tone filter below.
+    // "streets-v12" actually has color (green parks, blue water) for the
+    // filter to work with instead of fighting a blank-white base.
+    style: "mapbox://styles/mapbox/streets-v12",
     center: toLngLat(center),
     zoom: 13,
     scrollZoom: false,
@@ -1894,6 +1927,7 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   let overlayIds = [];
   let ready = false;
   let pendingUpdate = null;
+  let lastData = { pins, circles };
 
   function clearOverlays() {
     markers.forEach((m) => m.remove());
@@ -1906,6 +1940,7 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   }
 
   function applyUpdate({ pins, circles }, animate) {
+    lastData = { pins, circles };
     clearOverlays();
     const bounds = new mapboxgl.LngLatBounds();
 
@@ -1973,28 +2008,12 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
 
     // Mapbox reads the container's laid-out size when it's constructed, which
     // can race a fresh screen's fade-in (or a just-swapped flex layout) and
-    // catch it at 0×0 — nothing afterwards fixes that on its own, so every
-    // fitBounds/setCenter below quietly framed the wrong, too-tight zoom.
-    // Forcing a resize right here, against the settled DOM, is what makes
-    // the actual radius/pins the frame is fit to be trustworthy.
+    // catch it at 0×0. Forcing a resize right here helps, but isn't the real
+    // fix — the ResizeObserver below is: it re-fits every time the container
+    // actually changes size, so the auto-zoom can't go stale no matter when
+    // the layout settles.
     map.resize();
-
-    // A single pin (e.g. just "Current location", picked with nothing else
-    // selected yet) never hit this — the map stayed at its initial center on
-    // the mock city center, so a real GPS fix miles from that fake center
-    // was added correctly but sat off-screen, invisible without panning.
-    if (!bounds.isEmpty()) {
-      const isPoint = bounds.getNorthEast().equals(bounds.getSouthWest());
-      if (isPoint) {
-        if (animate) map.flyTo({ center: bounds.getCenter(), zoom: 15 });
-        else {
-          map.setCenter(bounds.getCenter());
-          map.setZoom(15);
-        }
-      } else {
-        map.fitBounds(bounds, { padding: 48, maxZoom: 15, animate });
-      }
-    }
+    fitDiscoveryBounds(map, bounds, animate);
   }
 
   map.on("load", () => {
@@ -2003,9 +2022,31 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     pendingUpdate = null;
   });
 
+  // A single pin (e.g. just "Current location", picked with nothing else
+  // selected yet) used to sit off-screen at the plain city-center view — and
+  // separately, the whole map used to need a manual pinch-to-zoom-out to see
+  // the full commute radius, because the one-shot resize() above could still
+  // race a CSS transition (the screen fade-in, the drawer's flex-basis
+  // animation) and fit against a container size that hadn't settled yet.
+  // Re-fitting on every observed resize, not just once at load, is what
+  // makes the auto-zoom actually reliable.
+  let resizeRaf = null;
+  const resizeObserver = new ResizeObserver(() => {
+    if (!ready) return;
+    if (resizeRaf) cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      resizeRaf = null;
+      map.resize();
+      fitDiscoveryBounds(map, computeDiscoveryBounds(lastData.pins, lastData.circles), false);
+    });
+  });
+  resizeObserver.observe(el);
+
   activeDiscoveryMaps[id] = {
     el,
     remove: () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeObserver.disconnect();
       markers.forEach((m) => m.remove());
       map.remove();
     },
@@ -2018,10 +2059,6 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
       applyUpdate(data, true);
     },
   };
-  // A map mounted while its container was display:none or off-flow (a
-  // fresh screen's fade-in, or the shared results/landmarks container)
-  // renders at the wrong size until Mapbox re-measures it.
-  requestAnimationFrame(() => map.resize());
 }
 
 function mapIllustrationHtml(pins, { id } = {}) {

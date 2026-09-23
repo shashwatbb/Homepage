@@ -1010,12 +1010,14 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-/* Nudges Mapbox's stock "light-v11" grey toward the warm cream/muted-green
+/* Nudges Mapbox's stock "streets-v12" toward the warm cream/muted-green
    Airbnb look (a custom Mapbox Studio style is the real way to get that
-   exactly — this is the cheap filter-only approximation, no Studio setup). */
+   exactly — this is the cheap filter-only approximation, no Studio setup).
+   Saturate must stay above 1 here — below 1 desaturates toward grey/white,
+   which is the exact "washed out" look this is fixing, not adding. */
 .od-map-illustration .mapboxgl-canvas,
 .od-map-full__canvas .mapboxgl-canvas {
-  filter: sepia(0.18) saturate(0.85) brightness(1.03);
+  filter: sepia(0.15) saturate(1.3) contrast(1.05) brightness(0.97);
 }
 
 .od-map-pin-container {
