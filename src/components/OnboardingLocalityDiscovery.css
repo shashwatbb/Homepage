@@ -1297,7 +1297,8 @@
    their current flat look untouched. Primary CTA stays flat, no glow. */
 /* Primary CTA only, scoped to this flow — rounder + slightly taller than
    the shared .ol-btn used by login/service/otp, which stay untouched. */
-.od-flow .ol-btn--primary {
+.od-flow .ol-btn--primary,
+.od-flow .ol-btn--outline {
   height: 52px;
   border-radius: var(--ds-radius-l);
 }
