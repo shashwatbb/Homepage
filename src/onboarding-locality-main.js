@@ -1606,8 +1606,17 @@ function namedLandmarkCount() {
   return state.landmarks.filter((l) => l.id !== "current-location").length;
 }
 
+/** The two anchor modes are mutually exclusive: recommendations are basis
+ * *either* the user's real GPS position *or* up to 2 named landmarks, never
+ * both mixed — a recommendation basis has to be one clear thing. So once
+ * current location is set, no named landmark can be added (and vice versa,
+ * enforced at namedLandmarkCount() >= 1 in detect-location's own gating). */
+function hasCurrentLocation() {
+  return state.landmarks.some((l) => l.id === "current-location");
+}
+
 function landmarkResultsHtml() {
-  if (namedLandmarkCount() >= 2) return "";
+  if (namedLandmarkCount() >= 2 || hasCurrentLocation()) return "";
   const results = searchLandmarks(state.city, odLandmarkQuery);
   if (!odLandmarkQuery.trim() || !results.length) return "";
   return `<ul class="od-landmark-results">${results
@@ -1684,7 +1693,7 @@ function renderLandmarkPicker() {
   const ghost = document.getElementById("od-landmark-ghost");
   if (ghost) ghost.style.display = odLandmarkQuery ? "none" : "";
   const input = document.getElementById("od-landmark-input");
-  if (input) input.disabled = namedLandmarkCount() >= 2;
+  if (input) input.disabled = namedLandmarkCount() >= 2 || hasCurrentLocation();
   const mapWrap = document.getElementById("od-landmark-map-wrap");
   if (mapWrap) {
     // Only ever create the container div once — recreating it on every
@@ -1719,10 +1728,11 @@ function landmarkPrimaryCtaHtml() {
   return `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-landmarks">${STRINGS["common.continue"]}</button>`;
 }
 
-/** Hidden once the 2 named-landmark cap is hit, or once current location is
- * already added — nothing left this control can add either way. */
+/** Hidden once any named landmark is picked (the two anchor modes are
+ * mutually exclusive — see hasCurrentLocation), the 2 named-landmark cap is
+ * hit anyway, or current location is already added. */
 function detectLocationButtonHtml() {
-  if (namedLandmarkCount() >= 2 || state.landmarks.some((l) => l.id === "current-location")) return "";
+  if (namedLandmarkCount() >= 1 || hasCurrentLocation()) return "";
   return `<button type="button" class="od-detect-location" data-action="detect-location">
     <span class="od-detect-location__icon">${OD_ICON.navigationArrow}</span>
     <span class="od-detect-location__label">Detect current location</span>
@@ -1730,7 +1740,7 @@ function detectLocationButtonHtml() {
 }
 
 function discoveryLandmarksScreen() {
-  const capped = namedLandmarkCount() >= 2;
+  const capped = namedLandmarkCount() >= 2 || hasCurrentLocation();
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-landmarks-back")}
     ${odProgressHtml("discovery-landmarks")}
@@ -2616,7 +2626,7 @@ function wireEvents(root) {
         const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
         const found = pool.find((l) => l.id === landmarkId);
         const alreadyAdded = state.landmarks.some((l) => l.id === landmarkId);
-        if (!found || alreadyAdded || namedLandmarkCount() >= 2) break;
+        if (!found || alreadyAdded || namedLandmarkCount() >= 2 || hasCurrentLocation()) break;
         state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
         odLandmarkQuery = "";
         haptic(10);
@@ -2631,7 +2641,7 @@ function wireEvents(root) {
         if (existingIdx !== -1) {
           state.landmarks.splice(existingIdx, 1);
         } else {
-          if (namedLandmarkCount() >= 2) break;
+          if (namedLandmarkCount() >= 2 || hasCurrentLocation()) break;
           const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
           const found = pool.find((l) => l.id === landmarkId);
           if (!found) break;
@@ -2646,7 +2656,7 @@ function wireEvents(root) {
           showToast("Location isn't available on this device");
           break;
         }
-        if (namedLandmarkCount() >= 2 || state.landmarks.some((l) => l.id === "current-location")) break;
+        if (namedLandmarkCount() >= 1 || hasCurrentLocation()) break;
         btn.disabled = true;
         // Swap only the label, keep the icon in place — replacing the whole
         // button content (was btn.textContent = "Detecting…") dropped the
@@ -2678,7 +2688,7 @@ function wireEvents(root) {
             if (settled) return;
             settled = true;
             window.clearTimeout(giveUp);
-            if (namedLandmarkCount() >= 2 || state.landmarks.some((l) => l.id === "current-location")) {
+            if (namedLandmarkCount() >= 1 || hasCurrentLocation()) {
               renderLandmarkPicker();
               return;
             }
