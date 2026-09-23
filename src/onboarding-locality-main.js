@@ -8,8 +8,15 @@
 import "./styles/base.css";
 import "./components/OnboardingLocality.css";
 import { DotLottie } from "@lottiefiles/dotlottie-web";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
+// Public token (meant to be embedded client-side — Mapbox's own model) — kept
+// out of source so GitHub's secret scanner doesn't flag it and so it's not
+// hardcoded per-environment. Set VITE_MAPBOX_TOKEN in .env.local (dev) and in
+// Vercel's project env vars (deploy). Scope it down to this domain in the
+// Mapbox dashboard's token settings if this prototype ever gets a fixed URL.
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 import {
   STRINGS,
   SERVICE_OPTIONS,
@@ -1814,12 +1821,14 @@ function discoveryLifestyleScreen() {
 
 // -- Final: recommendations screen (list-first, live map) --------------------
 
-/** Real Leaflet map on CARTO's free, keyless "Positron" light tiles — swaps
- * the old static SVG illustration for an actual live map centered on the
- * user's real city coordinates (see cityCenter/CITY_CENTERS), with numbered
- * pin markers at each result's real (mock-jittered, not geocoded) lat/lng.
- * One live instance per container id; re-mounting destroys the previous one
- * so patchNode-driven re-renders (landmark add/remove) don't leak instances. */
+/** Real Mapbox GL map (Mapbox's own hosted "light-v11" style — a personal
+ * account's free-tier public token, 50k loads/month, no card required) —
+ * swaps the old static SVG illustration for an actual live map centered on
+ * the user's real city coordinates (see cityCenter/CITY_CENTERS), with
+ * numbered pin markers at each result's real (mock-jittered, not geocoded)
+ * lat/lng. One live instance per container id; re-mounting destroys the
+ * previous one so patchNode-driven re-renders (landmark add/remove) don't
+ * leak instances. */
 const activeDiscoveryMaps = {};
 
 function destroyDiscoveryMap(id) {
@@ -1827,107 +1836,131 @@ function destroyDiscoveryMap(id) {
   delete activeDiscoveryMaps[id];
 }
 
+// [lat, lng] (mock data's convention) -> Mapbox's [lng, lat].
+const toLngLat = ([lat, lng]) => [lng, lat];
+
+// GeoJSON polygon approximating a real-world-meters circle (Mapbox GL's own
+// circle-radius paint prop is in screen pixels, not meters, so it wouldn't
+// stay the right size across zoom levels — a coordinate ring does).
+function circlePolygon([lat, lng], radiusMeters, steps = 64) {
+  const earthRadius = 6371000;
+  const latRad = (lat * Math.PI) / 180;
+  const coords = [];
+  for (let i = 0; i <= steps; i++) {
+    const angle = (i / steps) * 2 * Math.PI;
+    const dLat = (radiusMeters * Math.cos(angle)) / earthRadius;
+    const dLng = (radiusMeters * Math.sin(angle)) / (earthRadius * Math.cos(latRad));
+    coords.push([lng + (dLng * 180) / Math.PI, lat + (dLat * 180) / Math.PI]);
+  }
+  return coords;
+}
+
 function mountDiscoveryMap(id, { center, pins, circles }) {
   const el = document.getElementById(id);
   if (!el) return;
   destroyDiscoveryMap(id);
 
-  const map = L.map(el, {
-    zoomControl: false,
-    attributionControl: true,
-    scrollWheelZoom: false,
-  }).setView(center, 13);
-
-  // Every "sharper" alternative tried here has failed in real browser use
-  // despite passing a plain curl check — CARTO's basemap gateway domain
-  // needs a key, Wikimedia's tile server 403s non-Wikimedia origins, and
-  // CARTO's CDN domain (basemaps.cartocdn.com) also started demanding a key
-  // once real map traffic (repeated tile requests with a Referer header)
-  // hit it, even though a single referrer-less curl request passed clean.
-  // Stop chasing free retina tile CDNs — plain openstreetmap.org has been
-  // the one genuinely reliable, key-free, no-referrer-check source this
-  // whole project. Standard 1x/256px tiles (not sharp on retina, but
-  // actually loads) beat a sharper source that silently stops working.
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    subdomains: "abc",
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
-
-  const bounds = [];
-
-  // Recommendations screen only: a soft, mild circumference ring around each
-  // anchor landmark/metro station, sized to the user's chosen commute tolerance travel distance.
-  // Drawn and included in bounds fitting so the full reachable area is cleanly framed.
-  (circles || []).forEach((c) => {
-    if (!c.coords || !c.radiusMeters) return;
-    const circle = L.circle(c.coords, {
-      radius: c.radiusMeters,
-      color: "var(--ds-color-lavender-mist-500, #6b3d97)",
-      weight: 1.5,
-      opacity: 0.75,
-      fillColor: "var(--ds-color-lavender-mist-200, #d6bce4)",
-      fillOpacity: 0.12,
-    }).addTo(map);
-
-    if (c.label) {
-      circle.bindTooltip(c.label, {
-        permanent: false,
-        direction: "top",
-        className: "od-map-circle-tooltip",
-      });
-    }
-
-    const circleBounds = circle.getBounds();
-    bounds.push(circleBounds.getSouthWest());
-    bounds.push(circleBounds.getNorthEast());
+  const map = new mapboxgl.Map({
+    container: el,
+    style: "mapbox://styles/mapbox/light-v11",
+    center: toLngLat(center),
+    zoom: 13,
+    scrollZoom: false,
+    attributionControl: { compact: true },
   });
+  map.dragRotate.disable();
+  map.touchZoomRotate.disableRotation();
 
-  pins.forEach((p) => {
-    if (!p.coords) return;
-    const isAnchor = p.variant === "anchor";
-    // "You are here" — a plain pulsing dot, no icon/number glyph inside it.
-    const isCurrent = p.variant === "current";
-    const icon = L.divIcon({
-      className: "od-leaflet-div-icon",
-      html: isCurrent
+  const markers = [];
+  const bounds = new mapboxgl.LngLatBounds();
+
+  map.on("load", () => {
+    // Recommendations screen only: a soft, mild circumference ring around each
+    // anchor landmark/metro station, sized to the user's chosen commute
+    // tolerance travel distance. Included in bounds fitting so the full
+    // reachable area is cleanly framed.
+    (circles || []).forEach((c, i) => {
+      if (!c.coords || !c.radiusMeters) return;
+      const sourceId = `od-circle-${id}-${i}`;
+      const ring = circlePolygon(c.coords, c.radiusMeters);
+      map.addSource(sourceId, {
+        type: "geojson",
+        data: { type: "Feature", geometry: { type: "Polygon", coordinates: [ring] } },
+      });
+      map.addLayer({
+        id: `${sourceId}-fill`,
+        type: "fill",
+        source: sourceId,
+        paint: { "fill-color": "#d6bce4", "fill-opacity": 0.12 },
+      });
+      map.addLayer({
+        id: `${sourceId}-line`,
+        type: "line",
+        source: sourceId,
+        paint: { "line-color": "#6b3d97", "line-width": 1.5, "line-opacity": 0.75 },
+      });
+      ring.forEach((lngLat) => bounds.extend(lngLat));
+
+      if (c.label) {
+        const labelEl = document.createElement("div");
+        labelEl.className = "od-map-circle-tooltip";
+        labelEl.textContent = c.label;
+        new mapboxgl.Marker({ element: labelEl, anchor: "bottom" })
+          .setLngLat(toLngLat([c.coords[0] + c.radiusMeters / 111320, c.coords[1]]))
+          .addTo(map);
+      }
+    });
+
+    pins.forEach((p) => {
+      if (!p.coords) return;
+      const isAnchor = p.variant === "anchor";
+      // "You are here" — a plain pulsing dot, no icon/number glyph inside it.
+      const isCurrent = p.variant === "current";
+      const el = document.createElement("div");
+      el.innerHTML = isCurrent
         ? `<div class="od-map-pin-container"><span class="od-map-pin-badge od-map-pin-badge--current"></span></div>`
         : `<div class="od-map-pin-container ${isAnchor ? "od-map-pin-container--anchor" : ""}">
         <span class="od-map-pin-badge ${p.variant ? `od-map-pin-badge--${p.variant}` : ""}">
           ${p.icon || p.label}
         </span>
         ${p.title && isAnchor ? `<span class="od-map-pin-label">${escapeHtml(p.title)}</span>` : ""}
-      </div>`,
-      iconSize: isAnchor ? [120, 48] : [22, 22],
-      iconAnchor: isAnchor ? [60, 24] : [11, 11],
+      </div>`;
+      const pinEl = el.firstElementChild;
+      if (p.tooltip) pinEl.title = p.tooltip;
+
+      const marker = new mapboxgl.Marker({ element: pinEl, anchor: "center" })
+        .setLngLat(toLngLat(p.coords))
+        .addTo(map);
+      markers.push(marker);
+      bounds.extend(toLngLat(p.coords));
     });
 
-    const marker = L.marker(p.coords, { icon }).addTo(map);
-    if (p.tooltip) {
-      marker.bindTooltip(p.tooltip, {
-        direction: "top",
-        offset: [0, -14],
-        className: "od-map-pin-tooltip",
-      });
+    // A single pin (e.g. just "Current location", picked with nothing else
+    // selected yet) never hit this — the map stayed at its initial center on
+    // the mock city center, so a real GPS fix miles from that fake center
+    // was added correctly but sat off-screen, invisible without panning.
+    if (!bounds.isEmpty()) {
+      const isPoint = bounds.getNorthEast().equals(bounds.getSouthWest());
+      if (isPoint) {
+        map.setCenter(bounds.getCenter());
+        map.setZoom(15);
+      } else {
+        map.fitBounds(bounds, { padding: 32, maxZoom: 15, animate: false });
+      }
     }
-    bounds.push(p.coords);
   });
 
-  // A single pin (e.g. just "Current location", picked with nothing else
-  // selected yet) never hit this — the map stayed at its initial setView on
-  // the mock city center, so a real GPS fix miles from that fake center
-  // was added correctly but sat off-screen, invisible without panning.
-  if (bounds.length > 1) {
-    map.fitBounds(bounds, { padding: [32, 32], maxZoom: 15 });
-  } else if (bounds.length === 1) {
-    map.setView(bounds[0], 15);
-  }
-
-  activeDiscoveryMaps[id] = map;
+  activeDiscoveryMaps[id] = {
+    remove: () => {
+      markers.forEach((m) => m.remove());
+      map.remove();
+    },
+    invalidateSize: () => map.resize(),
+  };
   // A map mounted while its container was display:none or off-flow (a
   // fresh screen's fade-in, or the shared results/landmarks container)
-  // renders at the wrong size until Leaflet re-measures it.
-  requestAnimationFrame(() => map.invalidateSize());
+  // renders at the wrong size until Mapbox re-measures it.
+  requestAnimationFrame(() => map.resize());
 }
 
 function mapIllustrationHtml(pins, { id } = {}) {
