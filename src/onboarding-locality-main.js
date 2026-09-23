@@ -1412,7 +1412,7 @@ function odSearchResultsHtml(query) {
       <div class="od-ls-empty">
         <div class="od-ls-empty__row">
           <span class="od-ls-alert">!</span>
-          <p class="od-ls-empty__text">Oops, no results found!</p>
+          <p class="od-ls-empty__text">No matches yet, try a different search.</p>
         </div>
         <button type="button" class="od-ls-empty__cta" data-action="locality-search-explore-nearby">Explore all of ${escapeHtml(state.city || "Gurgaon")}</button>
       </div>`;
@@ -1964,6 +1964,7 @@ const DRAWER_MAP_TRANSITION_MS = 380;
 function wireResultsDrawerScroll() {
   const body = document.getElementById("od-drawer-body");
   const container = document.getElementById("od-map-full");
+  const handle = document.getElementById("od-drawer-handle-row");
   if (!body || !container) return;
   let open = false;
   let transitioning = false;
@@ -2008,6 +2009,13 @@ function wireResultsDrawerScroll() {
   };
 
   body.style.overflowY = "hidden";
+
+  // Keyboard/switch-access path — the gesture listeners below only fire on
+  // touch/wheel, so a keyboard-only user had no way to reach the drawer at
+  // all. The handle row is a real button: Enter/Space and click both open it.
+  if (handle) {
+    handle.addEventListener("click", () => setOpen(!open));
+  }
 
   let touchStartY = null;
   let openedThisTouch = false;
@@ -2167,12 +2175,12 @@ function discoveryMapScreen() {
       </div>
     </div>
     <div class="od-drawer">
-      <div class="od-drawer__handle-row">
+      <button type="button" class="od-drawer__handle-row" id="od-drawer-handle-row" aria-label="Toggle recommended localities list">
         <span class="od-drawer__handle"></span>
         <span class="od-drawer__header">
           <span class="od-drawer__title">Recommended localities</span>
         </span>
-      </div>
+      </button>
       <div class="od-drawer__body" id="od-drawer-body">
         <div class="od-locality-list">
           ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
@@ -2219,7 +2227,7 @@ function doneScreen() {
   return `<div class="ol-screen ol-done">
     <div class="ol-screen__body">
     <span class="ol-done__badge">${ICON.checkCircle}</span>
-    <h1 class="ol-title ol-title--center" style="font-size:var(--ds-font-size-3xl);font-weight:var(--ds-font-weight-bold);">You're all set</h1>
+    <h1 class="od-heading od-heading--lg ol-title--center">You're all set</h1>
     <p class="ol-login__sub ol-login__sub--center">Here's what we collected in this prototype run</p>
     <dl class="ol-summary">
       <div><dt>Service</dt><dd>${state.service ? state.service[0].toUpperCase() + state.service.slice(1) : "Not set"}</dd></div>

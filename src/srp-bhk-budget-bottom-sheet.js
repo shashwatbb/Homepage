@@ -493,6 +493,20 @@ export function createBudgetDialPicker(
   );
   viewport.addEventListener("scroll", onScroll, { passive: true });
 
+  // The +/- buttons next to this wheel are the primary keyboard control, but
+  // this element is itself tabindex="0" role="listbox" — that markup promises
+  // arrow-key operation, so a keyboard user focusing it directly shouldn't
+  // hit a dead end.
+  viewport.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+      e.preventDefault();
+      scrollToIndex(selectedIndex + 1, { smooth: true, emit: true, step: true });
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      scrollToIndex(selectedIndex - 1, { smooth: true, emit: true, step: true });
+    }
+  });
+
   scrollToIndex(selectedIndex, { smooth: false, emit: false });
 
   return {
