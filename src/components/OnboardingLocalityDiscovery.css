@@ -23,12 +23,15 @@
 
 .od-progress__fill {
   display: block;
-  width: 100%;
+  width: 0%;
   height: 100%;
   border-radius: var(--ds-radius-full);
   background-color: var(--ds-color-warm-neutral-800);
-  transform-origin: left center;
-  transition: transform 0.3s ease;
+  /* Width, not transform: scaleX(), so the fill's own box narrows instead
+     of a rounded-rect being squashed horizontally — scaleX distorted the
+     right (moving) end's corner into a flatter ellipse while the left
+     (pivot) end stayed circular. */
+  transition: width 0.3s ease;
 }
 
 .od-skip-row {
@@ -403,18 +406,14 @@
 /* Budget/BHK +/- steppers — shared markup from SrpBhkBudgetBottomSheet.css
    (reused for SRP's own bottom sheet). Budget shipped a plain flat button
    there while BHK already had a premium gradient+shadow treatment right
-   next to it in the same flow — re-skinned both to a shared look here,
-   scoped to `.od-flow` so SRP keeps its own plainer sheet chrome. BHK gets
-   a warm beige gradient instead of budget's purple, so the two steppers
-   read as distinct steps rather than one repeated treatment. */
-.od-flow .srp-budget-stepper__btn {
-  border: 1px solid var(--ds-color-purple-100);
-  background: linear-gradient(180deg, var(--ds-surface-white) 0%, var(--ds-color-purple-50) 100%);
-  color: var(--ds-color-purple-700);
-  box-shadow: var(--od-shadow-sm);
-}
-
+   next to it in the same flow — re-skinned both to the same look here,
+   scoped to `.od-flow` so SRP keeps its own plainer sheet chrome. Budget's
+   circle was also 2.75rem against BHK's 3.5rem base size; pinned both to
+   BHK's size so the two steps read as one consistent control. */
+.od-flow .srp-budget-stepper__btn,
 .od-flow .srp-bhk-stepper__btn {
+  width: 3.5rem;
+  height: 3.5rem;
   border: 1px solid var(--ds-color-warm-neutral-200);
   background: linear-gradient(180deg, var(--ds-surface-white) 0%, var(--ds-color-warm-neutral-100) 100%);
   color: var(--ds-color-warm-neutral-800);
@@ -430,12 +429,7 @@
   height: 16px;
 }
 
-.od-flow .srp-budget-stepper__btn:hover:not(:disabled) {
-  border-color: var(--ds-color-purple-300);
-  background: var(--ds-color-purple-100);
-  box-shadow: var(--od-shadow-md);
-}
-
+.od-flow .srp-budget-stepper__btn:hover:not(:disabled),
 .od-flow .srp-bhk-stepper__btn:hover:not(:disabled) {
   border-color: var(--ds-color-warm-neutral-300);
   background: var(--ds-color-warm-neutral-200);
@@ -540,11 +534,14 @@
   transform: scale(0.96);
 }
 
+/* Selected = subtle neutral fill + a near-black stroke, not a purple one —
+   purple stays reserved for the primary CTA only, matching the same
+   convention already used for locality-card selection elsewhere. */
 .od-chip.is-active {
-  border-color: var(--ds-color-purple-700);
-  background-color: var(--ds-color-purple-50);
-  color: var(--ds-color-purple-800);
-  box-shadow: var(--od-shadow-selected);
+  border-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-warm-neutral-100);
+  color: var(--ds-text-primary);
+  box-shadow: var(--od-shadow-md);
 }
 
 /* Intent chips only (the other od-chip uses — property type, lifestyle
@@ -805,14 +802,14 @@
    — this screen shouldn't invent its own selected treatment. Same shape,
    just filled in, so picking a pill never changes its own geometry. */
 .od-landmark-suggestion.is-selected {
-  border-color: var(--ds-color-purple-700);
-  background-color: var(--ds-color-purple-50);
-  color: var(--ds-color-purple-800);
-  box-shadow: var(--od-shadow-selected);
+  border-color: var(--ds-color-grey-neutral-900);
+  background-color: var(--ds-color-warm-neutral-100);
+  color: var(--ds-text-primary);
+  box-shadow: var(--od-shadow-md);
 }
 
 .od-landmark-suggestion.is-selected .od-landmark-suggestion__icon {
-  color: var(--ds-color-purple-700);
+  color: var(--ds-color-warm-neutral-800);
 }
 
 /* Fake, animated placeholder overlaid on the empty input — see
@@ -1231,8 +1228,8 @@
 }
 
 .od-signal-badge {
-  padding: 2px var(--ds-space-2xs);
-  border-radius: var(--ds-radius-xs);
+  padding: 2px var(--ds-space-s);
+  border-radius: var(--ds-radius-full);
   background-color: var(--ds-surface-subtle);
   font-size: var(--ds-font-size-s);
   color: var(--ds-text-secondary);

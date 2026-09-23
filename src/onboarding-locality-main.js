@@ -1165,7 +1165,7 @@ function odProgressHtml(stepId) {
   const idx = steps.indexOf(stepId);
   const pct = Math.round(((idx + 1) / steps.length) * 100);
   return `<div class="od-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" data-target-pct="${pct}">
-    <span class="od-progress__fill" style="transform:scaleX(${lastProgressPct / 100})"></span>
+    <span class="od-progress__fill" style="width:${lastProgressPct}%"></span>
   </div>`;
 }
 
@@ -1175,7 +1175,7 @@ function animateProgressFill(root) {
   const pct = Number(bar.getAttribute("data-target-pct"));
   const fill = bar.querySelector(".od-progress__fill");
   requestAnimationFrame(() => {
-    if (fill) fill.style.transform = `scaleX(${pct / 100})`;
+    if (fill) fill.style.width = `${pct}%`;
   });
   lastProgressPct = pct;
 }
