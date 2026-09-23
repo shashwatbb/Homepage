@@ -1639,7 +1639,7 @@ function mountLandmarkMap() {
  * hospital", …) since a native <input placeholder> can't animate just part
  * of itself. The real accessible hint lives in the input's aria-label; this
  * overlay is aria-hidden and disappears the moment there's a real value. */
-const LANDMARK_GHOST_WORDS = ["landmarks", "hospitals", "schools", "metros", "offices"];
+const LANDMARK_GHOST_WORDS = ["landmark", "hospital", "school", "metro", "office"];
 let landmarkGhostInterval = null;
 let landmarkGhostIndex = 0;
 
@@ -1727,7 +1727,7 @@ function discoveryLandmarksScreen() {
         class="od-search-field__input"
         id="od-landmark-input"
         placeholder=""
-        aria-label="Search landmarks, hospitals, schools, metros, offices"
+        aria-label="Search a landmark, hospital, school, metro, office"
         value="${escapeHtml(odLandmarkQuery)}"
         autocomplete="off"
         ${capped ? "disabled" : ""}
@@ -1852,30 +1852,14 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
   if (!el) return;
   destroyDiscoveryMap(id);
 
-  // OpenFreeMap's vector style got blocked on real (corporate-proxy) networks
-  // just like every other "cleaner" CDN before it (CARTO/Wikimedia — see the
-  // git history) — style request never resolves, map stays blank. Falling
-  // back to plain openstreetmap.org raster tiles, the one source this whole
-  // project has verified actually loads everywhere. Keeps MapLibre GL as the
-  // renderer (still the plan for later once a reliable vector source turns up).
+  // OpenFreeMap's "positron" style: free, key-free, no-referrer-check vector
+  // tiles (see the raster-CDN saga this replaced — CARTO/Wikimedia alternatives
+  // all started demanding a key or 403ing under real traffic). Positron is
+  // deliberately the plainest of their styles — light, low-contrast, few
+  // labels — so the map reads as a minimal backdrop, not a heavy UI element.
   const map = new maplibregl.Map({
     container: el,
-    style: {
-      version: 8,
-      sources: {
-        osm: {
-          type: "raster",
-          tiles: [
-            "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          ],
-          tileSize: 256,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        },
-      },
-      layers: [{ id: "osm", type: "raster", source: "osm" }],
-    },
+    style: "https://tiles.openfreemap.org/styles/positron",
     center: toLngLat(center),
     zoom: 13,
     scrollZoom: false,
