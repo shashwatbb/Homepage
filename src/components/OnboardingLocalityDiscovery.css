@@ -1010,14 +1010,14 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-/* Nudges Mapbox's stock "streets-v12" toward the warm cream/muted-green
-   Airbnb look (a custom Mapbox Studio style is the real way to get that
-   exactly — this is the cheap filter-only approximation, no Studio setup).
-   Saturate must stay above 1 here — below 1 desaturates toward grey/white,
-   which is the exact "washed out" look this is fixing, not adding. */
+/* Warms Mapbox's stock "light-v11" (already muted/minimal by design) toward
+   a cream tone instead of flat grey-white. No saturate() here — "light-v11"
+   has almost no color to amplify, and a value below 1 is what caused the
+   earlier "washed out" complaint (it desaturates *toward* white, not away
+   from it) — contrast + a touch of sepia is what actually gives it depth. */
 .od-map-illustration .mapboxgl-canvas,
 .od-map-full__canvas .mapboxgl-canvas {
-  filter: sepia(0.15) saturate(1.3) contrast(1.05) brightness(0.97);
+  filter: sepia(0.2) contrast(1.08) brightness(0.96);
 }
 
 .od-map-pin-container {

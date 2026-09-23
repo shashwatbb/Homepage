@@ -1910,11 +1910,11 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
 
   const map = new mapboxgl.Map({
     container: el,
-    // "light-v11" was Mapbox's palest, near-monochrome style — the "washed
-    // out" complaint was the style itself, not just the tone filter below.
-    // "streets-v12" actually has color (green parks, blue water) for the
-    // filter to work with instead of fighting a blank-white base.
-    style: "mapbox://styles/mapbox/streets-v12",
+    // "light-v11" — Mapbox's own muted/minimal style. Earlier "washed out"
+    // complaint was actually the tone filter below desaturating an already
+    // pale style even further (saturate < 1 pushes toward grey/white); with
+    // that fixed to not desaturate, the muted style itself reads fine.
+    style: "mapbox://styles/mapbox/light-v11",
     center: toLngLat(center),
     zoom: 13,
     scrollZoom: false,
