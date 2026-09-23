@@ -2110,7 +2110,6 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
       markers.forEach((m) => m.remove());
       map.remove();
     },
-    invalidateSize: () => map.resize(),
     update: (data) => {
       if (!ready) {
         pendingUpdate = data;
@@ -2131,8 +2130,6 @@ function mapIllustrationHtml(pins, { id } = {}) {
  * "opened" — mirrors the scroll-to-expand feel of a map+list app. Re-wired
  * fresh on every render() since the drawer body is a brand-new element each
  * time (full innerHTML replace), so there's no listener to leak. */
-// Must match the flex-basis transition duration on .od-map-full__map-zone —
-// how long the rAF loop below keeps Leaflet's canvas in sync with it.
 const DRAWER_MAP_TRANSITION_MS = 380;
 
 function wireResultsDrawerScroll() {
@@ -2142,36 +2139,20 @@ function wireResultsDrawerScroll() {
   if (!body || !container) return;
   let open = false;
   let transitioning = false;
-  let rafId = null;
 
-  // The visible "jerk" wasn't the flex-basis transition itself — it was
-  // Leaflet's canvas staying the old size for the whole animation and then
-  // popping to the right size in one frame once invalidateSize() finally
-  // fired. Calling it every frame for the transition's duration keeps the
-  // map's own resize in step with the CSS animation instead of lagging
-  // behind it, so it reads as one smooth motion.
-  const syncMapSize = (deadline) => {
-    activeDiscoveryMaps["od-results-map"]?.invalidateSize({ animate: false, pan: false });
-    if (performance.now() < deadline) {
-      rafId = requestAnimationFrame(() => syncMapSize(deadline));
-    } else {
-      rafId = null;
-    }
-  };
-
-  // Two separate gestures, not one blended motion: the first scroll/swipe
-  // only opens the drawer (list stays locked, can't scroll underneath the
-  // panel animation); a second, later gesture is what actually scrolls the
-  // list. Enforced by keeping the body non-scrollable (overflow hidden)
-  // until the open/close transition has fully settled.
+  // No manual per-frame resize loop here anymore — mountDiscoveryMap's own
+  // ResizeObserver already calls map.resize() on every real size change to
+  // this container. Driving a *second*, independently-timed resize loop on
+  // top of that (this used to call invalidateSize() every animation frame
+  // for the transition's duration) raced it: two uncoordinated resize calls
+  // landing in different frames is what made the map flash/blank out during
+  // the drawer's open/close animation, not the transition itself.
   const setOpen = (next) => {
     if (open === next || transitioning) return;
     open = next;
     transitioning = true;
     container.classList.toggle("od-map-full--drawer-open", open);
     body.style.overflowY = "hidden";
-    if (rafId) cancelAnimationFrame(rafId);
-    syncMapSize(performance.now() + DRAWER_MAP_TRANSITION_MS);
     window.setTimeout(() => {
       transitioning = false;
       if (open) {
@@ -3031,6 +3012,15 @@ function init() {
   if (!root) return;
   wireEvents(root);
   window.addEventListener("popstate", handleHardwareBack);
+  // The browser's back-forward cache can restore this whole page — DOM,
+  // running JS, and every module-level var (state, odLandmarkQuery, ...) —
+  // exactly as they were, without re-running any of this file. That reads
+  // as "refresh remembered my previous picks", because it isn't actually a
+  // fresh load at all. Forcing a real reload on a bfcache restore is the
+  // standard fix — nothing about the state machine itself is stale/wrong.
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) window.location.reload();
+  });
   render();
 }
 
