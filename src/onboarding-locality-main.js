@@ -1856,12 +1856,11 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
     if (!c.coords || !c.radiusMeters) return;
     const circle = L.circle(c.coords, {
       radius: c.radiusMeters,
-      color: "var(--ds-color-purple-600, #7c3aed)",
+      color: "var(--ds-color-lavender-mist-500, #6b3d97)",
       weight: 1.5,
-      dashArray: "5, 5",
       opacity: 0.75,
-      fillColor: "var(--ds-color-purple-500, #8b5cf6)",
-      fillOpacity: 0.08,
+      fillColor: "var(--ds-color-lavender-mist-200, #d6bce4)",
+      fillOpacity: 0.12,
     }).addTo(map);
 
     if (c.label) {
