@@ -2027,7 +2027,12 @@ function mountDiscoveryMap(id, { center, pins, circles }) {
         id: `${sourceId}-line`,
         type: "line",
         source: sourceId,
-        paint: { "line-color": "#6b3d97", "line-width": 1.5, "line-opacity": 0.75 },
+        paint: {
+          "line-color": "#6b3d97",
+          "line-width": 1.5,
+          "line-opacity": 0.75,
+          "line-dasharray": [3, 2],
+        },
       });
       overlayIds.push({ sourceId, layerIds: [`${sourceId}-fill`, `${sourceId}-line`] });
       ring.forEach((lngLat) => bounds.extend(lngLat));
