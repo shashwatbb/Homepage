@@ -136,14 +136,15 @@
   width: 100%;
   padding: var(--ds-space-m);
   border: 1px solid transparent;
-  border-radius: var(--ds-radius-l);
+  /* Concentric with the 12px icon tile: inner radius + padding. */
+  border-radius: calc(var(--ds-radius-m) + var(--ds-space-m));
   background-color: var(--ds-surface-white);
   box-shadow: var(--od-shadow-sm);
   font-family: inherit;
   font-size: var(--ds-font-size-m);
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-text-primary);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   opacity: 0;
   transform: translateY(16px);
@@ -161,7 +162,7 @@
 }
 
 .od-choice-card:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
 .od-choice-card.is-selected {
@@ -301,7 +302,7 @@
 }
 
 .od-stepper__btn:active:not(:disabled) {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
 .od-stepper__btn:disabled {
@@ -619,7 +620,7 @@
 
 .od-search-field__icon {
   position: absolute;
-  right: var(--ds-space-m);
+  inset-inline-end: var(--ds-space-m);
   top: 50%;
   transform: translateY(-50%);
   display: inline-flex;
@@ -667,7 +668,7 @@
   font-family: inherit;
   font-size: var(--ds-font-size-m);
   color: var(--ds-text-primary);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
@@ -815,7 +816,7 @@
    its own aria-label for the real accessible name. */
 .od-search-field__ghost {
   position: absolute;
-  left: var(--ds-space-m);
+  inset-inline-start: var(--ds-space-m);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -1150,7 +1151,8 @@
   display: flex;
   gap: var(--ds-space-m);
   padding: var(--ds-space-m);
-  border-radius: var(--ds-radius-xl);
+  /* Concentric with the 12px thumb/rank badge: inner radius + padding. */
+  border-radius: calc(var(--ds-radius-m) + var(--ds-space-m));
   background-color: var(--ds-surface-white);
   box-shadow: var(--od-shadow-md);
 }
@@ -1190,6 +1192,8 @@
   border-radius: var(--ds-radius-m);
   object-fit: cover;
   background-color: var(--ds-color-warm-neutral-100);
+  outline: 1px solid oklch(0 0 0 / 0.1);
+  outline-offset: -1px;
 }
 
 .od-locality-card__body {
@@ -1269,7 +1273,7 @@
 
 .od-locality-card__cta:active {
   opacity: 0.85;
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
 /* Every card but the #1 pick — outline instead of filled, so the one
@@ -1560,7 +1564,7 @@
   border: 1px solid var(--ds-color-warm-neutral-200);
   border-radius: 12px;
   background-color: var(--ds-surface-white);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -1603,7 +1607,7 @@
   border: 1px solid var(--ds-color-warm-neutral-200);
   border-radius: 12px;
   background-color: var(--ds-surface-white);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -1668,7 +1672,7 @@
   border: 1px solid var(--ds-color-warm-neutral-200);
   border-radius: 12px;
   background: none;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -1758,7 +1762,7 @@
   border: 1px solid var(--ds-color-warm-neutral-200);
   border-radius: 12px;
   background: none;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -1812,7 +1816,7 @@
   border: none;
   border-radius: 12px;
   background-color: #faf9f5;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -1917,7 +1921,7 @@
   border: none;
   border-bottom: 1px solid var(--ds-color-warm-neutral-200);
   background: none;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -1956,7 +1960,7 @@
   padding: 12px 16px;
   border: none;
   background: none;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -2114,4 +2118,9 @@
   .od-search-field__ghost-word.is-swapping {
     transform: none;
   }
+}
+
+/* Same tactile press depth as the chips/cards on the flow's primary buttons. */
+.od-flow .ol-btn:active:not(:disabled) {
+  transform: scale(0.96);
 }
