@@ -1559,9 +1559,9 @@ function discoveryBudgetScreen() {
 
 // -- Step 2: BHK + property type ----------------------------------------------
 
+/** -1 = unset (Buy starts with no BHK; Rent always has one). */
 function bhkIndex() {
-  const idx = BHK_OPTIONS.indexOf(state.bhk);
-  return idx === -1 ? 2 : idx;
+  return BHK_OPTIONS.indexOf(state.bhk);
 }
 
 /** Big centred BHK stepper, reusing the SRP bottom sheet's display (value +
@@ -1569,7 +1569,7 @@ function bhkIndex() {
  * `direction` picks which way the number animates on a step. */
 function bhkStepperHtml(direction = "settle") {
   const idx = bhkIndex();
-  const [value, suffix] = BHK_OPTIONS[idx].split(" ");
+  const [value, suffix] = idx === -1 ? ["–", "BHK"] : BHK_OPTIONS[idx].split(" ");
   return `<div class="srp-bhk-stepper" id="od-bhk-stepper" role="group" aria-label="BHK type">
     <button type="button" class="srp-bhk-stepper__btn" data-action="bhk-step-minus" aria-label="Decrease BHK" ${idx <= 0 ? "disabled" : ""}>${OD_ICON.minus}</button>
     <div class="srp-bhk-stepper__display" aria-live="polite" aria-atomic="true">
@@ -1599,38 +1599,21 @@ function discoveryPropertyTypeScreen() {
   </div>`;
 }
 
-/** Buy/resale BHK: nothing preselected (the old 2 BHK default didn't make
- * sense for everyone) and the whole step is skipped for Plot. */
-function discoveryBhkChipsScreen() {
-  return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
-    ${odTopBar("discovery-bhk-back")}
-    ${odProgressHtml("discovery-bhk")}
-    <h1 class="od-heading">How many bedrooms?</h1>
-    <div class="od-chip-grid" id="od-bhk-grid">
-      ${BHK_OPTIONS.map(
-        (opt) =>
-          `<button type="button" class="od-chip ${state.bhk === opt ? "is-active" : ""}" data-action="pick-bhk" data-value="${opt}" aria-pressed="${state.bhk === opt}">${opt}</button>`
-      ).join("")}
-    </div>
-    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk" ${state.bhk ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
-  </div>`;
-}
-
 function discoveryBhkScreen() {
-  if (isBuyFlow()) return discoveryBhkChipsScreen();
+  const buy = isBuyFlow();
   return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
     ${odTopBar("discovery-bhk-back")}
     ${odProgressHtml("discovery-bhk")}
     <h1 class="od-heading">Which configuration?</h1>
     <div class="od-step-centre">${bhkStepperHtml()}</div>
-    <p class="ol-section-label">Property type</p>
-    <div class="od-chip-grid" id="od-property-type-grid">
-      ${PROPERTY_TYPE_OPTIONS.map(
-        (opt) =>
-          `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}" aria-pressed="${state.propertyType === opt}">${opt}</button>`
-      ).join("")}
-    </div>
-    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk" ${state.propertyType ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
+    ${
+      // Buy already picked its property type on the first step.
+      buy
+        ? ""
+        : `<p class="ol-section-label">Property type</p>
+    <div class="od-chip-grid" id="od-property-type-grid">${propertyTypeChipsHtml()}</div>`
+    }
+    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk" ${(buy ? state.bhk : state.propertyType) ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
   </div>`;
 }
 
@@ -2713,6 +2696,8 @@ function wireEvents(root) {
         state.bhk = BHK_OPTIONS[Math.min(BHK_OPTIONS.length - 1, idx + 1)];
         haptic(8);
         patchNode("od-bhk-stepper", bhkStepperHtml("rise"));
+        // Buy starts unset — the first tap sets it, which unlocks Continue.
+        if (isBuyFlow()) root.querySelector('[data-action="discovery-continue"][data-from="discovery-bhk"]')?.removeAttribute("disabled");
         break;
       }
       case "pick-property-type":
@@ -2728,16 +2713,6 @@ function wireEvents(root) {
         if (isBuyFlow() && state.propertyType === "Plot") state.bhk = null;
         root.querySelector('[data-action="discovery-continue"][data-from="discovery-bhk"]')?.removeAttribute("disabled");
         root.querySelector('[data-action="discovery-continue"][data-from="discovery-property-type"]')?.removeAttribute("disabled");
-        haptic(10);
-        break;
-      case "pick-bhk":
-        state.bhk = btn.getAttribute("data-value");
-        root.querySelectorAll('[data-action="pick-bhk"]').forEach((el) => {
-          const isActive = el.getAttribute("data-value") === state.bhk;
-          el.classList.toggle("is-active", isActive);
-          el.setAttribute("aria-pressed", String(isActive));
-        });
-        root.querySelector('[data-action="discovery-continue"][data-from="discovery-bhk"]')?.removeAttribute("disabled");
         haptic(10);
         break;
       case "discovery-landmarks-back":
