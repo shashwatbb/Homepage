@@ -147,7 +147,7 @@
   cursor: pointer;
   opacity: 0;
   transform: translateY(16px);
-  animation: ol-card-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: ol-card-in 0.3s var(--ease-out) forwards;
   transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
@@ -515,7 +515,7 @@
   cursor: pointer;
   opacity: 0;
   transform: translateY(10px);
-  animation: ol-card-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: ol-card-in 0.25s var(--ease-out) forwards;
   transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
@@ -563,11 +563,9 @@
   outline-offset: 2px;
 }
 
-/* Choice-card/chip entrance stagger and the validation shake were the two
-   most-interacted animations in this flow but the only ones in this file
-   with no reduced-motion accommodation — everything else here already had
-   one. Show content immediately instead of animating in, and drop the
-   shake (the toast + border/tint state are the accessible signal). */
+/* Choice-card/chip entrance stagger was the most-interacted animation in this
+   flow but had no reduced-motion accommodation. Show content immediately
+   instead of animating in. */
 @media (prefers-reduced-motion: reduce) {
   .od-choice-card,
   .od-chip {
@@ -2069,4 +2067,51 @@
 
 .od-ls-empty__cta:active {
   background-color: #3a11ad;
+}
+
+/* Screen-to-screen motion (Locality check onward) ----------------------------
+   Forward steps enter from the right, hardware-back from the left, so the
+   enter/exit path is symmetric. The map screen keeps the plain fade — its
+   canvas sizing races any transform on the container. */
+.od-flow:not(.od-map-full) {
+  animation: od-screen-in-fwd 0.3s var(--ease-out) both;
+}
+
+.onboarding-locality[data-dir="back"] .od-flow:not(.od-map-full) {
+  animation-name: od-screen-in-back;
+}
+
+@keyframes od-screen-in-fwd {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes od-screen-in-back {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes od-screen-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .od-flow:not(.od-map-full),
+  .onboarding-locality[data-dir="back"] .od-flow:not(.od-map-full) {
+    animation: od-screen-fade 0.15s ease both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Toast + rotating search hint: opacity only, no movement */
+  .ol-toast {
+    animation: od-screen-fade 0.15s ease both;
+  }
+  .od-search-field__ghost-word {
+    transition: opacity 0.18s ease;
+  }
+  .od-search-field__ghost-word.is-swapping {
+    transform: none;
+  }
 }

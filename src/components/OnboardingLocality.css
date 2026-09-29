@@ -2,6 +2,12 @@
    Desktop shows a "view on mobile" notice (same convention as
    SrpDesktopNotice.css / srp-main.js). */
 
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 html:has(.onboarding-locality),
 body:has(.onboarding-locality) {
   background-color: var(--ds-color-warm-neutral-200);
@@ -1145,7 +1151,16 @@ body:has(.onboarding-locality) {
   border-radius: var(--ds-radius-m);
   background-color: var(--ds-text-primary);
   padding-left: var(--ds-space-s);
-  animation: ol-toast-in 0.25s ease both;
+  animation: ol-toast-in 0.25s var(--ease-out) both;
+}
+
+.ol-toast.is-leaving {
+  animation: ol-toast-out 0.15s var(--ease-out) both;
+}
+
+@keyframes ol-toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(8px); }
 }
 
 @keyframes ol-toast-in {

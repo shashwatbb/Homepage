@@ -43,7 +43,6 @@ import {
 } from "./data/onboardingLocality.mock.js";
 import { ICON as BRICKS_ICON } from "./data/onboardingLocalityIcons.js";
 import { BRICKS_ICONS } from "./data/bricksIcons.js";
-import { ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID } from "./experiments.js";
 import { createBudgetDialPicker } from "./srp-bhk-budget-bottom-sheet.js";
 import "./components/OnboardingLocalityDiscovery.css";
 import {
@@ -203,6 +202,11 @@ let isNavigatingBack = false;
 
 function goTo(step) {
   state.step = step;
+  // Discovery screens slide in from the side you'd expect: forward from the
+  // right, hardware-back from the left (symmetric enter/exit path).
+  document
+    .getElementById("onboarding-locality")
+    ?.setAttribute("data-dir", isNavigatingBack ? "back" : "forward");
   if (!isNavigatingBack && HISTORY_TRAPPED_STEPS.has(step)) {
     history.pushState({ olStep: step }, "", location.href);
   }
@@ -262,14 +266,33 @@ function handleHardwareBack() {
   isNavigatingBack = false;
 }
 
+// Toast is patched in/out on its own — a full render() would re-mount the
+// screen behind it and replay its entrance animation.
+function syncToast() {
+  const root = document.getElementById("onboarding-locality");
+  if (!root) return;
+  root.querySelector(".ol-toast-layer")?.remove();
+  if (toast) root.insertAdjacentHTML("beforeend", toastHtml());
+}
+
+function hideToast() {
+  window.clearTimeout(toastTimer);
+  toast = null;
+  const layer = document.querySelector("#onboarding-locality .ol-toast-layer");
+  const el = layer?.querySelector(".ol-toast");
+  if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    layer?.remove();
+    return;
+  }
+  el.classList.add("is-leaving");
+  el.addEventListener("animationend", () => layer.remove(), { once: true });
+}
+
 function showToast(message, icon) {
   window.clearTimeout(toastTimer);
   toast = { message, icon };
-  render();
-  toastTimer = window.setTimeout(() => {
-    toast = null;
-    render();
-  }, 3000);
+  syncToast();
+  toastTimer = window.setTimeout(hideToast, 3000);
 }
 
 // ---------------------------------------------------------------------------
@@ -1006,24 +1029,11 @@ function localityScreen() {
   </div>`;
 }
 
-/** This flow defaults ON (unlike other experiments) so it's visible without
- * the homepage double-tap toggle gesture; explicit OFF in the panel still wins. */
-function localityDiscoveryFlowEnabled() {
-  try {
-    const raw = localStorage.getItem("housing:experiments");
-    const parsed = raw ? JSON.parse(raw) : {};
-    return parsed[ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID] !== false;
-  } catch {
-    return true;
-  }
-}
-
+// Always continue into the discovery flow. It used to honor a localStorage
+// experiment flag, so a browser with the flag toggled off (mobile) skipped
+// straight to the "done" tick screen instead of the locality question.
 function afterCityPicked() {
-  if (localityDiscoveryFlowEnabled()) {
-    goTo("locality-check");
-    return;
-  }
-  goTo("done"); // explicitly toggled off: existing flow, untouched
+  goTo("locality-check");
 }
 
 // ---------------------------------------------------------------------------
@@ -2762,9 +2772,7 @@ function wireEvents(root) {
         exploreLocality(btn.getAttribute("data-locality-id"), btn.getAttribute("data-locality-name"));
         break;
       case "dismiss-toast":
-        window.clearTimeout(toastTimer);
-        toast = null;
-        render();
+        hideToast();
         break;
       case "restart":
         clearTimers();
@@ -3011,6 +3019,10 @@ function init() {
   const root = document.getElementById("onboarding-locality");
   if (!root) return;
   wireEvents(root);
+  // A refresh keeps the previous session's history.state (e.g. olStep:"done")
+  // even though the JS state resets to splash — clear it so every load is a
+  // clean restart of the flow.
+  history.replaceState(null, "", location.href);
   window.addEventListener("popstate", handleHardwareBack);
   // The browser's back-forward cache can restore this whole page — DOM,
   // running JS, and every module-level var (state, odLandmarkQuery, ...) —
