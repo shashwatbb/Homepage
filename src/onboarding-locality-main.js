@@ -56,6 +56,8 @@ import {
   LIFESTYLE_TAGS,
   cityCenter,
   searchLandmarks,
+  searchRentLocalities,
+  rentLocalityPool,
   landmarkCoords,
   getRecommendedLocalities,
   commuteMinutesToKm,
@@ -1578,6 +1580,30 @@ function discoveryBhkScreen() {
 
 let odLandmarkQuery = "";
 
+/** Rent resolves a landmark search to the containing locality (landmark-level
+ * data isn't reliable yet); Buy keeps precise landmarks. Both expose
+ * { id, name, category }, and a picked entry always ends up with `coords`. */
+function isRentLandmarkSearch() {
+  return state.service === "rent";
+}
+
+function landmarkPool() {
+  return isRentLandmarkSearch()
+    ? rentLocalityPool(state.city)
+    : LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
+}
+
+function resolveLandmarkPick(id) {
+  const found = landmarkPool().find((l) => l.id === id);
+  if (!found) return null;
+  return {
+    id: found.id,
+    name: found.name,
+    category: found.category,
+    coords: found.coords || landmarkCoords(state.city, found),
+  };
+}
+
 /** Single row of landmark pills: a handful of obviously-known places
  * (metro stations, big offices/malls) plus any landmark the user picked
  * via search that isn't already in that set — so a picked landmark is
@@ -1587,7 +1613,7 @@ let odLandmarkQuery = "";
  * where the results dropdown takes over instead. */
 function landmarkPillsHtml() {
   if (odLandmarkQuery.trim()) return "";
-  const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
+  const pool = landmarkPool();
   const popular = pool.slice(0, 4);
   const extraSelected = state.landmarks.filter((l) => !popular.some((p) => p.id === l.id));
   const items = [...popular, ...extraSelected];
@@ -1627,7 +1653,9 @@ function hasCurrentLocation() {
 
 function landmarkResultsHtml() {
   if (namedLandmarkCount() >= 2 || hasCurrentLocation()) return "";
-  const results = searchLandmarks(state.city, odLandmarkQuery);
+  const results = isRentLandmarkSearch()
+    ? searchRentLocalities(state.city, odLandmarkQuery)
+    : searchLandmarks(state.city, odLandmarkQuery);
   if (!odLandmarkQuery.trim() || !results.length) return "";
   return `<ul class="od-landmark-results">${results
     .map(
@@ -1658,6 +1686,13 @@ function mountLandmarkMap() {
         ? { variant: "current", icon: "", coords: l.coords, title: l.name }
         : { label: String(i + 1), coords: l.coords }
     ),
+    // Rent: a picked locality is an area, not a point — show a light
+    // boundary highlight around its centroid marker.
+    circles: isRentLandmarkSearch()
+      ? state.landmarks
+          .filter((l) => l.id !== "current-location")
+          .map((l) => ({ coords: l.coords, radiusMeters: 1200 }))
+      : [],
   });
 }
 
@@ -2619,11 +2654,10 @@ function wireEvents(root) {
         // From the typed-search results dropdown only — always adds (the
         // dropdown itself already excludes anything at the 2-landmark cap).
         const landmarkId = btn.getAttribute("data-landmark-id");
-        const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
-        const found = pool.find((l) => l.id === landmarkId);
+        const found = resolveLandmarkPick(landmarkId);
         const alreadyAdded = state.landmarks.some((l) => l.id === landmarkId);
         if (!found || alreadyAdded || namedLandmarkCount() >= 2 || hasCurrentLocation()) break;
-        state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
+        state.landmarks.push(found);
         odLandmarkQuery = "";
         haptic(10);
         renderLandmarkPicker();
@@ -2638,10 +2672,9 @@ function wireEvents(root) {
           state.landmarks.splice(existingIdx, 1);
         } else {
           if (namedLandmarkCount() >= 2 || hasCurrentLocation()) break;
-          const pool = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
-          const found = pool.find((l) => l.id === landmarkId);
+          const found = resolveLandmarkPick(landmarkId);
           if (!found) break;
-          state.landmarks.push({ id: found.id, name: found.name, category: found.category, coords: landmarkCoords(state.city, found) });
+          state.landmarks.push(found);
         }
         haptic(10);
         renderLandmarkPicker();

@@ -103,6 +103,83 @@ export function searchLandmarks(city, query) {
   return list.filter((l) => l.name.toLowerCase().includes(q) || l.category.toLowerCase().includes(q)).slice(0, 6);
 }
 
+/** Rent flow only: landmark-level data isn't reliable yet, so a landmark
+ * search resolves to the LOCALITY that contains it (e.g. "Cyber Hub" ->
+ * "DLF Cyber City"). Keyed by the LANDMARKS_BY_CITY id so the Buy dataset
+ * stays untouched; the locality's centroid is approximated by the first
+ * landmark that maps to it. */
+const RENT_LANDMARK_LOCALITY = {
+  "mum-1": { locality: "Bandra Kurla Complex" },
+  "mum-2": { locality: "Bandra West" },
+  "mum-3": { locality: "Fort" },
+  "mum-4": { locality: "Andheri East" },
+  "mum-5": { locality: "Kurla West" },
+  "mum-6": { locality: "Powai" },
+  "mum-7": { locality: "Andheri West" },
+  "mum-8": { locality: "Ghatkopar East" },
+  "del-1": { locality: "Connaught Place" },
+  "del-2": { locality: "Ansari Nagar" },
+  "del-3": { locality: "R.K. Puram" },
+  "del-4": { locality: "Connaught Place" },
+  "del-5": { locality: "Saket" },
+  "del-6": { locality: "DLF Cyber City" },
+  "blr-1": { locality: "Electronic City Phase 1" },
+  "blr-2": { locality: "Old Airport Road" },
+  "blr-3": { locality: "Indiranagar" },
+  "blr-4": { locality: "MG Road" },
+  "blr-5": { locality: "Rajajinagar" },
+  "blr-6": { locality: "Whitefield" },
+  "noi-1": { locality: "Sector 62" },
+  "noi-2": { locality: "Sector 62" },
+  "noi-3": { locality: "Sector 44" },
+  "noi-4": { locality: "Sector 38" },
+  "noi-5": { locality: "Sector 18" },
+  "gur-1": { locality: "DLF Cyber City", aliases: ["cyber hub", "cybercity"] },
+  "gur-2": { locality: "Sector 38" },
+  "gur-3": { locality: "DLF Phase 4" },
+  "gur-4": { locality: "Sector 29" },
+  "gur-5": { locality: "Nathupur" },
+  "hyd-1": { locality: "HITEC City" },
+  "hyd-2": { locality: "Jubilee Hills" },
+  "hyd-3": { locality: "Nacharam" },
+  "hyd-4": { locality: "Ameerpet" },
+  "hyd-5": { locality: "Madhapur" },
+};
+
+/** Unique localities for a city ({ id, name, category, coords, terms }),
+ * in dataset order. `terms` are the lowercase strings a search can match:
+ * the locality's own name plus every landmark name/category/alias in it. */
+export function rentLocalityPool(city) {
+  const list = LANDMARKS_BY_CITY[city] || LANDMARKS_BY_CITY.Gurgaon;
+  const byName = new Map();
+  list.forEach((l) => {
+    const meta = RENT_LANDMARK_LOCALITY[l.id];
+    if (!meta) return;
+    const terms = [l.name, l.category, ...(meta.aliases || [])].map((t) => t.toLowerCase());
+    const existing = byName.get(meta.locality);
+    if (existing) {
+      existing.terms.push(...terms);
+      return;
+    }
+    byName.set(meta.locality, {
+      id: `loc-${meta.locality.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+      name: meta.locality,
+      category: "locality",
+      coords: landmarkCoords(city, l),
+      terms: [meta.locality.toLowerCase(), ...terms],
+    });
+  });
+  return [...byName.values()];
+}
+
+export function searchRentLocalities(city, query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return rentLocalityPool(city)
+    .filter((loc) => loc.terms.some((t) => t.includes(q)))
+    .slice(0, 6);
+}
+
 export function landmarkCoords(city, landmark) {
   const center = cityCenter(city);
   return [center[0] + landmark.offset[0], center[1] + landmark.offset[1]];
