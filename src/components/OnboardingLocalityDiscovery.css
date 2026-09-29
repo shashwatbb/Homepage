@@ -1223,6 +1223,12 @@
   color: var(--ds-text-primary);
 }
 
+.od-locality-card__picks {
+  margin: 2px 0 0;
+  font-size: var(--ds-font-size-s);
+  color: var(--ds-text-secondary);
+}
+
 .od-locality-card__distance {
   margin: 2px 0 0;
   font-size: var(--ds-font-size-s);

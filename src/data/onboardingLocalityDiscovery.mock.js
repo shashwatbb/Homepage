@@ -97,7 +97,7 @@ export const LANDMARKS_BY_CITY = {
 };
 
 export function searchLandmarks(city, query) {
-  const list = LANDMARKS_BY_CITY[city] || LANDMARKS_BY_CITY.Gurgaon;
+  const list = landmarksForCity(city);
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return list.filter((l) => l.name.toLowerCase().includes(q) || l.category.toLowerCase().includes(q)).slice(0, 6);
@@ -150,7 +150,7 @@ const RENT_LANDMARK_LOCALITY = {
  * in dataset order. `terms` are the lowercase strings a search can match:
  * the locality's own name plus every landmark name/category/alias in it. */
 export function rentLocalityPool(city) {
-  const list = LANDMARKS_BY_CITY[city] || LANDMARKS_BY_CITY.Gurgaon;
+  const list = landmarksForCity(city);
   const byName = new Map();
   list.forEach((l) => {
     const meta = RENT_LANDMARK_LOCALITY[l.id];
@@ -220,8 +220,31 @@ export const CITY_CENTERS = {
 };
 const DEFAULT_CENTER = CITY_CENTERS.Gurgaon;
 
+/** The flow only runs for Gurgaon and Delhi. The city picker lists Delhi as
+ * "New Delhi" and Gurgaon as "Gurgaon"; datasets here are keyed "Delhi" /
+ * "Gurgaon", so everything data-side goes through this. */
+export function cityDataKey(city) {
+  if (city === "New Delhi" || city === "Delhi") return "Delhi";
+  if (city === "Gurgaon" || city === "Gurugram") return "Gurgaon";
+  return city;
+}
+
+export function isDiscoveryCity(city) {
+  const key = cityDataKey(city);
+  return key === "Delhi" || key === "Gurgaon";
+}
+
+/** Name used in copy ("Do you know where to explore in Delhi?"). */
+export function discoveryCityLabel(city) {
+  return cityDataKey(city) === "Delhi" ? "Delhi" : "Gurgaon";
+}
+
+export function landmarksForCity(city) {
+  return LANDMARKS_BY_CITY[cityDataKey(city)] || LANDMARKS_BY_CITY.Gurgaon;
+}
+
 export function cityCenter(city) {
-  return CITY_CENTERS[city] || DEFAULT_CENTER;
+  return CITY_CENTERS[cityDataKey(city)] || DEFAULT_CENTER;
 }
 
 /** Mock locality pool. Coordinates are jittered around a city center below,
@@ -230,7 +253,7 @@ export function cityCenter(city) {
  * rather than generic placeholder names, so results read as authentic
  * even though matching/pricing itself is mocked. Reused as-is for other
  * cities too (no real per-city dataset), same simplification as before. */
-export const LOCALITY_POOL = [
+export const GURGAON_LOCALITY_POOL = [
   { name: "Sector 29", offset: [0.03, -0.04], demand_tier: "high", trending_score: 0.86, lifestyle_tags: ["transit", "social_infra"], price_index: 0.62, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
   { name: "South City 1", offset: [-0.05, 0.02], demand_tier: "medium", trending_score: 0.52, lifestyle_tags: ["green", "low_traffic"], price_index: 0.48, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
   { name: "DLF Phase 3", offset: [0.015, 0.06], demand_tier: "high", trending_score: 0.91, lifestyle_tags: ["transit", "new_dev"], price_index: 0.74, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
@@ -240,6 +263,25 @@ export const LOCALITY_POOL = [
   { name: "Golf Course Road", offset: [0.02, -0.02], demand_tier: "high", trending_score: 0.78, lifestyle_tags: ["transit", "new_dev"], price_index: 0.7, bhk_availability: ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"] },
   { name: "Sector 56", offset: [-0.06, -0.03], demand_tier: "low", trending_score: 0.3, lifestyle_tags: ["low_traffic"], price_index: 0.4, bhk_availability: ["1 RK", "1 BHK"] },
 ];
+
+/** Delhi differs from Gurgaon: older, denser, metro-led neighbourhoods with
+ * higher entry prices and far fewer new developments (mock values). */
+export const DELHI_LOCALITY_POOL = [
+  { name: "Dwarka Sector 12", offset: [-0.06, -0.09], demand_tier: "high", trending_score: 0.84, lifestyle_tags: ["transit", "new_dev"], price_index: 0.58, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
+  { name: "Saket", offset: [-0.07, 0.03], demand_tier: "high", trending_score: 0.79, lifestyle_tags: ["social_infra", "transit"], price_index: 0.82, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
+  { name: "Vasant Kunj", offset: [-0.09, -0.02], demand_tier: "medium", trending_score: 0.61, lifestyle_tags: ["green", "safety"], price_index: 0.88, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
+  { name: "Greater Kailash 1", offset: [-0.03, 0.04], demand_tier: "medium", trending_score: 0.55, lifestyle_tags: ["social_infra", "safety"], price_index: 0.95, bhk_availability: ["3 BHK", "4+ BHK"] },
+  { name: "Rohini Sector 7", offset: [0.09, -0.03], demand_tier: "medium", trending_score: 0.48, lifestyle_tags: ["transit", "low_traffic"], price_index: 0.44, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
+  { name: "Lajpat Nagar", offset: [-0.04, 0.05], demand_tier: "high", trending_score: 0.72, lifestyle_tags: ["transit", "social_infra"], price_index: 0.66, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
+  { name: "Mayur Vihar Phase 1", offset: [0.0, 0.09], demand_tier: "medium", trending_score: 0.5, lifestyle_tags: ["transit", "low_traffic"], price_index: 0.46, bhk_availability: ["1 BHK", "2 BHK", "3 BHK"] },
+  { name: "Janakpuri", offset: [0.01, -0.07], demand_tier: "medium", trending_score: 0.57, lifestyle_tags: ["transit", "green"], price_index: 0.52, bhk_availability: ["2 BHK", "3 BHK", "4+ BHK"] },
+];
+
+/** Locality pool for the selected city. */
+export function localityPool(city) {
+  return cityDataKey(city) === "Delhi" ? DELHI_LOCALITY_POOL : GURGAON_LOCALITY_POOL;
+}
+
 
 /** Small, deliberately simple mock content for the locality/area search screen
  * (Figma "Imagine / Search / m-web", node 6538:9768) — reuses LOCALITY_POOL /
@@ -335,7 +377,7 @@ export function getRecommendedLocalities(state) {
   const budgetCeilingIndex = state.budgetMax || 1;
   const commuteLimit = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance)?.maxMinutes ?? Infinity;
 
-  const candidates = LOCALITY_POOL.map((base, i) => {
+  const candidates = localityPool(state.city).map((base, i) => {
     const coords = [center[0] + base.offset[0], center[1] + base.offset[1]];
     const distance_from_landmarks = state.landmarks.map((landmark) => {
       const km = haversineKm(coords, landmark.coords || center);
@@ -396,6 +438,7 @@ export function getRecommendedLocalities(state) {
       demand_tier: base.demand_tier,
       trending_score: base.trending_score,
       matched_signals: matched_signals.slice(0, 3),
+      matched_lifestyle_tags: state.lifestyleTags.filter((t) => base.lifestyle_tags.includes(t)),
       appreciation_signals,
       score,
     };

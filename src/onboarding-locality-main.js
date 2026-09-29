@@ -62,8 +62,10 @@ import {
   getRecommendedLocalities,
   commuteMinutesToKm,
   formatLocalityBudget,
-  LANDMARKS_BY_CITY,
-  LOCALITY_POOL,
+  landmarksForCity,
+  localityPool,
+  isDiscoveryCity,
+  discoveryCityLabel,
   RECENT_LOCALITY_SEARCHES,
   TOP_DEVELOPERS,
   LOCALITY_HOTSPOTS,
@@ -177,6 +179,7 @@ function after(ms, fn) {
 const DISCOVERY_STEPS = [
   "locality-check",
   "locality-search",
+  "discovery-property-type",
   "discovery-budget",
   "discovery-bhk",
   "discovery-landmarks",
@@ -242,23 +245,14 @@ function handleHardwareBack() {
     case "locality-search":
       goTo("locality-check");
       break;
+    case "discovery-property-type":
     case "discovery-budget":
-      goTo("locality-check");
-      break;
     case "discovery-bhk":
-      goTo("discovery-budget");
-      break;
     case "discovery-landmarks":
-      goTo("discovery-bhk");
-      break;
     case "discovery-commute":
-      goTo("discovery-landmarks");
-      break;
     case "discovery-lifestyle":
-      goTo(previousDiscoveryStep("discovery-lifestyle"));
-      break;
     case "discovery-map":
-      goTo("discovery-lifestyle");
+      goTo(previousDiscoveryStep(state.step));
       break;
     default:
       // "login" / "splash": the flow's root — let the browser continue
@@ -426,6 +420,8 @@ function serviceScreen() {
  * choice and heads straight to locality. */
 function onServicePress(serviceId) {
   state.service = serviceId;
+  // Buy/resale has no default BHK (Plot has none); Rent keeps its 2 BHK start.
+  state.bhk = serviceId === "rent" ? BHK_OPTIONS[2] : null;
   goTo("locality");
 }
 
@@ -1034,8 +1030,10 @@ function localityScreen() {
 // Always continue into the discovery flow. It used to honor a localStorage
 // experiment flag, so a browser with the flag toggled off (mobile) skipped
 // straight to the "done" tick screen instead of the locality question.
+// The discovery flow only runs for Gurgaon and Delhi (each has its own
+// locality/landmark data). Any other city keeps the original done screen.
 function afterCityPicked() {
-  goTo("locality-check");
+  goTo(isDiscoveryCity(state.city) ? "locality-check" : "done");
 }
 
 // ---------------------------------------------------------------------------
@@ -1124,30 +1122,59 @@ function odPageCta(primaryHtml, secondaryHtml) {
   return `<div class="od-page-cta">${secondaryHtml || ""}${primaryHtml}</div>`;
 }
 
+/** Buy/resale (anything but Rent) leads with property type and puts the
+ * lifestyle hooks before location — landmarks matter less to buyers. */
+function isBuyFlow() {
+  return state.service !== "rent";
+}
+
+/** The ordered steps this session will actually traverse, computed fresh
+ * from what's already known so progress, Continue and Back all agree:
+ * Commute only exists once a landmark is picked, and Plot skips BHK. */
+function discoveryStepOrder() {
+  if (state.discoveryMode === "know_locality") {
+    return ["locality-check", "discovery-budget", "discovery-bhk"];
+  }
+  const commute = state.landmarks.length > 0 ? ["discovery-commute"] : [];
+  if (isBuyFlow()) {
+    return [
+      "locality-check",
+      "discovery-property-type",
+      "discovery-budget",
+      ...(state.propertyType === "Plot" ? [] : ["discovery-bhk"]),
+      "discovery-lifestyle",
+      "discovery-landmarks",
+      ...commute,
+      "discovery-map",
+    ];
+  }
+  return [
+    "locality-check",
+    "discovery-budget",
+    "discovery-bhk",
+    "discovery-landmarks",
+    ...commute,
+    "discovery-lifestyle",
+    "discovery-map",
+  ];
+}
+
 /** Which discovery step a given step should advance to on Continue/Skip. */
 function nextDiscoveryStep(current) {
-  switch (current) {
-    case "discovery-budget":
-      return "discovery-bhk";
-    case "discovery-bhk":
-      return "discovery-landmarks";
-    case "discovery-landmarks":
-      if (state.landmarks.length > 0) return "discovery-commute";
-      return "discovery-lifestyle";
-    case "discovery-commute":
-      return "discovery-lifestyle";
-    case "discovery-lifestyle":
-      return "discovery-map";
-    default:
-      return "discovery-map";
-  }
+  const order = discoveryStepOrder();
+  return order[order.indexOf(current) + 1] || "discovery-map";
 }
 
 function previousDiscoveryStep(current) {
-  if (current === "discovery-lifestyle") {
-    return state.landmarks.length > 0 ? "discovery-commute" : "discovery-landmarks";
-  }
-  return "discovery-landmarks";
+  const order = discoveryStepOrder();
+  return order[order.indexOf(current) - 1] || "locality-check";
+}
+
+/** Continue/Skip: landing on the map needs the recommendations computed first. */
+function advanceFrom(current) {
+  const next = nextDiscoveryStep(current);
+  if (next === "discovery-map") beginLocalityMatch();
+  else goTo(next);
 }
 
 function odTopBar(backAction) {
@@ -1162,13 +1189,7 @@ function odTopBar(backAction) {
  * already known — so the progress bar never counts a screen that will be
  * skipped (Commute needs 0 landmarks decided yet, Intent needs service). */
 function activeDiscoverySteps() {
-  if (state.discoveryMode === "know_locality") {
-    return ["locality-check", "discovery-budget", "discovery-bhk"];
-  }
-  const steps = ["locality-check", "discovery-budget", "discovery-bhk", "discovery-landmarks"];
-  if (state.landmarks.length > 0) steps.push("discovery-commute");
-  steps.push("discovery-lifestyle", "discovery-map");
-  return steps;
+  return discoveryStepOrder();
 }
 
 /** Last-rendered progress % — each screen transition is a full innerHTML
@@ -1203,7 +1224,7 @@ function animateProgressFill(root) {
 
 function localityCheckScreen() {
   return `<div class="ol-screen od-screen--split od-flow">
-    <h1 class="od-heading od-heading--lg od-screen--split__question">Do you know the area you want to move to?</h1>
+    <h1 class="od-heading od-heading--lg od-screen--split__question">Do you know where to explore in ${escapeHtml(discoveryCityLabel(state.city))}?</h1>
     <div class="od-screen--split__pin-wrap">
       <img class="od-screen--split__pin" src="${ASSET}/images/locality-check-pin.png" width="240" height="240" alt="" />
     </div>
@@ -1336,8 +1357,8 @@ function odDeveloperCardHtml(dev) {
  * Hotspots, trending projects and developers are Buy-only. */
 function odDiscoveryPanelHtml() {
   const isBuy = odIsBuy();
-  const popular = LOCALITY_POOL.slice(0, 6);
-  const landmarks = LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai;
+  const popular = localityPool(state.city).slice(0, 6);
+  const landmarks = landmarksForCity(state.city);
 
   return `${odSection("Recent searches", RECENT_LOCALITY_SEARCHES, odRecentSearchCardHtml)}
     ${isBuy ? odSection("Hotspots", popular.slice(0, 3), odHotspotCardHtml) : ""}
@@ -1390,7 +1411,7 @@ function odSuggestionRowHtml(item, query) {
 
 function odSearchResultsHtml(query) {
   const q = query.trim().toLowerCase();
-  const localities = LOCALITY_POOL.filter((l) => l.name.toLowerCase().includes(q)).map((l) => ({
+  const localities = localityPool(state.city).filter((l) => l.name.toLowerCase().includes(q)).map((l) => ({
     name: `${l.name}, ${state.city || "Gurgaon"}`,
     caption: "Locality",
     icon: OD_ICON.pin,
@@ -1400,7 +1421,7 @@ function odSearchResultsHtml(query) {
     caption: "Project",
     icon: ICON.buildings,
   }));
-  const landmarks = (LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Mumbai)
+  const landmarks = landmarksForCity(state.city)
     .filter((l) => l.name.toLowerCase().includes(q))
     .map((l) => ({ name: `${l.name}, ${state.city || "Gurgaon"}`, caption: "Landmark", icon: OD_ICON.pin }));
   const results = [...localities, ...projects, ...landmarks].slice(0, 10);
@@ -1559,7 +1580,44 @@ function bhkStepperHtml(direction = "settle") {
   </div>`;
 }
 
+function propertyTypeChipsHtml() {
+  return PROPERTY_TYPE_OPTIONS.map(
+    (opt) =>
+      `<button type="button" class="od-chip ${state.propertyType === opt ? "is-active" : ""}" data-action="pick-property-type" data-value="${opt}" aria-pressed="${state.propertyType === opt}">${opt}</button>`
+  ).join("");
+}
+
+/** Buy/resale step 1 — property type leads, since Plot changes everything
+ * after it (no BHK). Nothing preselected. */
+function discoveryPropertyTypeScreen() {
+  return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
+    ${odTopBar("discovery-property-type-back")}
+    ${odProgressHtml("discovery-property-type")}
+    <h1 class="od-heading">What type of property are you looking for?</h1>
+    <div class="od-chip-grid" id="od-property-type-grid">${propertyTypeChipsHtml()}</div>
+    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-property-type" ${state.propertyType ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
+  </div>`;
+}
+
+/** Buy/resale BHK: nothing preselected (the old 2 BHK default didn't make
+ * sense for everyone) and the whole step is skipped for Plot. */
+function discoveryBhkChipsScreen() {
+  return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
+    ${odTopBar("discovery-bhk-back")}
+    ${odProgressHtml("discovery-bhk")}
+    <h1 class="od-heading">How many bedrooms?</h1>
+    <div class="od-chip-grid" id="od-bhk-grid">
+      ${BHK_OPTIONS.map(
+        (opt) =>
+          `<button type="button" class="od-chip ${state.bhk === opt ? "is-active" : ""}" data-action="pick-bhk" data-value="${opt}" aria-pressed="${state.bhk === opt}">${opt}</button>`
+      ).join("")}
+    </div>
+    ${odPageCta(`<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-bhk" ${state.bhk ? "" : "disabled"}>${STRINGS["common.continue"]}</button>`)}
+  </div>`;
+}
+
 function discoveryBhkScreen() {
+  if (isBuyFlow()) return discoveryBhkChipsScreen();
   return `<div class="ol-screen ol-screen--has-cta od-flow od-step-screen">
     ${odTopBar("discovery-bhk-back")}
     ${odProgressHtml("discovery-bhk")}
@@ -1590,7 +1648,7 @@ function isRentLandmarkSearch() {
 function landmarkPool() {
   return isRentLandmarkSearch()
     ? rentLocalityPool(state.city)
-    : LANDMARKS_BY_CITY[state.city] || LANDMARKS_BY_CITY.Gurgaon;
+    : landmarksForCity(state.city);
 }
 
 function resolveLandmarkPick(id) {
@@ -1875,7 +1933,7 @@ function discoveryLifestyleScreen() {
       </div>
     </div>
     ${odPageCta(
-      `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-lifestyle">See recommended localities</button>`,
+      `<button type="button" class="ol-btn ol-btn--primary" data-action="discovery-continue" data-from="discovery-lifestyle">${isBuyFlow() ? STRINGS["common.continue"] : "See recommended localities"}</button>`,
       odSecondaryCta("discovery-skip-lifestyle", STRINGS["common.skip"])
     )}
   </div>`;
@@ -2336,6 +2394,23 @@ function localityThumbPhotoId(loc) {
   return LOCALITY_THUMB_PHOTO_IDS[hash % LOCALITY_THUMB_PHOTO_IDS.length];
 }
 
+const LIFESTYLE_SHORT_LABEL = {
+  transit: "Near metro",
+  low_traffic: "Low traffic",
+  social_infra: "Malls & hospitals nearby",
+  green: "Green cover",
+  safety: "Safe area",
+  new_dev: "New developments",
+};
+
+/** One quiet line echoing the user's own picks: their BHK + property type,
+ * then (max 2) lifestyle picks this locality actually matches. */
+function localityPicksLine(loc) {
+  const home = state.propertyType === "Plot" ? "Plot" : [state.bhk, state.propertyType].filter(Boolean).join(" ");
+  const tags = (loc.matched_lifestyle_tags || []).slice(0, 2).map((id) => LIFESTYLE_SHORT_LABEL[id]).filter(Boolean);
+  return [home, ...tags].filter(Boolean).join(" · ");
+}
+
 function localityCardHtml(loc, rank) {
   const isPrimary = rank !== null;
   // Only the #1 "Recommended" card gets the primary (filled purple) CTA —
@@ -2361,6 +2436,7 @@ function localityCardHtml(loc, rank) {
         <span class="od-signal-badge od-signal-badge--rank ${isTopPick ? "od-signal-badge--recommended" : ""}">${localityBadgeLabel(loc, rank)}</span>
       </div>
       <p class="od-locality-card__budget">${escapeHtml(localityBudgetLine(loc))}</p>
+      ${localityPicksLine(loc) ? `<p class="od-locality-card__picks">${escapeHtml(localityPicksLine(loc))}</p>` : ""}
       <p class="od-locality-card__distance">${escapeHtml(distanceLine)}</p>
       <button type="button" class="od-locality-card__cta ${isTopPick ? "" : "od-locality-card__cta--secondary"}" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore locality</button>
     </div>
@@ -2479,6 +2555,7 @@ const SCREEN_BUILDERS = {
   "locality-check": localityCheckScreen,
   "locality-search": localitySearchScreen,
   "discovery-budget": discoveryBudgetScreen,
+  "discovery-property-type": discoveryPropertyTypeScreen,
   "discovery-bhk": discoveryBhkScreen,
   "discovery-landmarks": discoveryLandmarksScreen,
   "discovery-commute": discoveryCommuteScreen,
@@ -2605,10 +2682,13 @@ function wireEvents(root) {
       }
       case "locality-check-not-sure":
         state.discoveryMode = "discover";
-        goTo("discovery-budget");
+        goTo(nextDiscoveryStep("locality-check"));
+        break;
+      case "discovery-property-type-back":
+        goTo(previousDiscoveryStep("discovery-property-type"));
         break;
       case "discovery-budget-back":
-        goTo("locality-check");
+        goTo(previousDiscoveryStep("discovery-budget"));
         break;
       case "budget-step-minus":
         haptic(8);
@@ -2619,7 +2699,7 @@ function wireEvents(root) {
         odBudgetPicker?.setIndex(Math.min(currentBudgetSteps().length - 1, state.budgetIndex + 1));
         break;
       case "discovery-bhk-back":
-        goTo("discovery-budget");
+        goTo(previousDiscoveryStep("discovery-bhk"));
         break;
       case "bhk-step-minus": {
         const idx = bhkIndex();
@@ -2644,11 +2724,24 @@ function wireEvents(root) {
           el.classList.toggle("is-active", isActive);
           el.setAttribute("aria-pressed", String(isActive));
         });
+        // Plot has no bedrooms — never carry a BHK over to it.
+        if (isBuyFlow() && state.propertyType === "Plot") state.bhk = null;
+        root.querySelector('[data-action="discovery-continue"][data-from="discovery-bhk"]')?.removeAttribute("disabled");
+        root.querySelector('[data-action="discovery-continue"][data-from="discovery-property-type"]')?.removeAttribute("disabled");
+        haptic(10);
+        break;
+      case "pick-bhk":
+        state.bhk = btn.getAttribute("data-value");
+        root.querySelectorAll('[data-action="pick-bhk"]').forEach((el) => {
+          const isActive = el.getAttribute("data-value") === state.bhk;
+          el.classList.toggle("is-active", isActive);
+          el.setAttribute("aria-pressed", String(isActive));
+        });
         root.querySelector('[data-action="discovery-continue"][data-from="discovery-bhk"]')?.removeAttribute("disabled");
         haptic(10);
         break;
       case "discovery-landmarks-back":
-        goTo("discovery-bhk");
+        goTo(previousDiscoveryStep("discovery-landmarks"));
         break;
       case "pick-landmark": {
         // From the typed-search results dropdown only — always adds (the
@@ -2745,10 +2838,10 @@ function wireEvents(root) {
         state.landmarks = [];
         odLandmarkQuery = "";
         haptic(10);
-        goTo(nextDiscoveryStep("discovery-landmarks"));
+        advanceFrom("discovery-landmarks");
         break;
       case "discovery-commute-back":
-        goTo("discovery-landmarks");
+        goTo(previousDiscoveryStep("discovery-commute"));
         break;
       case "pick-commute":
         state.commuteTolerance = btn.getAttribute("data-value");
@@ -2773,7 +2866,7 @@ function wireEvents(root) {
         goTo(previousDiscoveryStep("discovery-lifestyle"));
         break;
       case "discovery-skip-lifestyle":
-        beginLocalityMatch();
+        advanceFrom("discovery-lifestyle");
         break;
       case "toggle-lifestyle-tag": {
         // Same in-place patch as property type — no re-render on a chip tap.
@@ -2792,19 +2885,15 @@ function wireEvents(root) {
         // discoveryBhkScreen/discoveryCommuteScreen), so a disabled button
         // never dispatches click — this is just a defensive backstop, no
         // toast/shake needed anymore.
-        if (from === "discovery-bhk" && !state.propertyType) break;
+        if (from === "discovery-property-type" && !state.propertyType) break;
+        if (from === "discovery-bhk" && (isBuyFlow() ? !state.bhk : !state.propertyType)) break;
         if (from === "discovery-commute" && !state.commuteTolerance) break;
-        if (from === "discovery-lifestyle") {
-          haptic(10);
-          beginLocalityMatch();
-          break;
-        }
         haptic(10);
-        goTo(nextDiscoveryStep(from));
+        advanceFrom(from);
         break;
       }
       case "discovery-map-back":
-        goTo("discovery-lifestyle");
+        goTo(previousDiscoveryStep("discovery-map"));
         break;
       case "explore-locality":
         exploreLocality(btn.getAttribute("data-locality-id"), btn.getAttribute("data-locality-name"));
