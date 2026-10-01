@@ -1,0 +1,21 @@
+---
+description: Use saved PDP gallery rotation images for property photo carousels — never invent stock photos
+alwaysApply: true
+---
+
+# PDP / property gallery — rotation image set
+
+**Canonical local assets:** `public/pdp-gallery/`  
+**Manifest:** `public/pdp-gallery/manifest.json`  
+**Public URLs:** `/pdp-gallery/rotation-01.png` … `/pdp-gallery/rotation-10.png`
+
+## Hard rules
+
+- For NP PDP / property **image rotation, hero gallery, thumbs, and SRP card carousels** in this project (code **and** Figma fills), use **this set only**.
+- Cycle in order `rotation-01` → `rotation-10`, then wrap (or subset nearby slides for performance — same files).
+- **Do not** replace with Unsplash, random stock, or newly generated images unless the user explicitly asks to expand/replace the set.
+- When applying in Figma via `figma-cli`, load bytes from `public/pdp-gallery/rotation-*.png` (or the paths in `manifest.json`) into `createImage` / image fills — same assets as the site.
+
+## Count
+
+10 images, lifestyle interior photography, saved 2026-08-10 as rotation v1.

@@ -1,0 +1,23 @@
+---
+description: Hard ban — only Bricks DS tokens; never create variables or text styles
+alwaysApply: true
+---
+
+# DS tokens & styles — hard bans
+
+Companion to `bricks-ds-all-tokens` + `bricks-ds-color-bible` (Bricks **v1.2.0**).
+
+## All values
+
+- Colors, **radius (rounded)**, **spacing**, **font/type**, and **text styles** must map to Bricks DS tokens / library bindings only.
+- **Never** hardcode px/hex/font stacks that bypass tokens.
+
+## Variables & text styles
+
+- **Never create** new Figma **variables** unless the user explicitly asks to extend the DS.
+- **Never create** new Figma **text styles** (or text-style variables).
+- Reuse **Bricks Design System** library variables and text styles only.
+
+## Figma CLI / canvas
+
+No raw fills/sizes/radii, no `variables.create`, no `createTextStyle`. Import/bind from Bricks library only.

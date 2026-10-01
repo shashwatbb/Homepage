@@ -1,0 +1,67 @@
+---
+description: Figma CLI direct-to-canvas UI building — use when building/editing UI in Figma via figma-cli, Plugin API scripts, RFE handoffs, mobile/web frames, or canvas verification
+alwaysApply: false
+---
+
+# Figma CLI — Direct-to-Canvas UI Building
+
+Working knowledge for building final UI in a live Figma file via `figma-cli` (CDP-patched Plugin API bridge). Exploratory product/UI work — screens, flows, RFE handoffs, client deliverables — not a DS component-library exercise. Not a checklist: prioritize iterating and matching the brief over enforcing process. Toolkit: https://github.com/silships/figma-cli
+
+## Canvas conventions
+
+- **Mobile frame:** 360px width. Height auto-hugs content (or matches a reference) — never guess a fixed height.
+- **Web frame:** 1280px width. Same height rule.
+- Confirm Mobile / Web / both before starting if unclear from the brief.
+
+## Auto-layout is the default
+
+Every frame is auto-layout (`layoutMode: "VERTICAL"` | `"HORIZONTAL"`) unless there is a concrete reason for absolute (overlap/bleed decoration, corner-pinned badge, background behind flowing content). "Easier by eye" is not justification.
+
+Use real `primaryAxisSizingMode` / `counterAxisSizingMode` (HUG/FILL/FIXED), real `itemSpacing`, real padding — not manual `x`/`y` standing in for layout.
+
+## Never invent a token or style
+
+**Hard ban (see `bricks-ds-all-tokens`):** every value — color, radius, spacing, font/type, text style — must map to **Bricks Design System** library / `design-system/tokens/` v1.2.0. Never create new variables or text styles. Never hardcode px/hex/fonts.
+
+**Icons:** only from [Iconography — Bricks](https://www.figma.com/design/Rq1j8iqvbJBYRb52tdpgFg/Iconography--Bricks-?node-id=7484-1322) (`Rq1j8iqvbJBYRb52tdpgFg`). See `bricks-iconography-source`.
+
+Query the Bricks library (or token files) before setting fills, `cornerRadius`, padding/gap, or text. If nothing matches, **ask**.
+
+## Toolkit
+
+| Command | Use for |
+|---|---|
+| `figma-cli status` | Confirm connection + active file — first, every session |
+| `figma-cli daemon start` | Fixes "fetch failed" |
+| `figma-cli run` / `eval --file` | Main tool — loops, logic, multi-node builds |
+| `figma-cli render` / `render-batch` | Simple one-off layouts only |
+| `figma-cli verify <nodeId> [--scale] [--save path]` | Screenshot constantly — don't trust geometry alone |
+| `figma-cli get <nodeId>` | Inspect live properties |
+
+Always `await figma.loadFontAsync({family, style})` before text create/edit.
+
+## Known API quirks
+
+- **Rotation:** `RegularPolygon` `.rotation` pivots on pre-rotation `(x,y)`; rotation is CCW (`90` points left). Verify rotated shapes by rendering alone.
+- **`layoutAlign` silently no-ops.** For cross-axis alignment, wrap child in a frame with `layoutSizingHorizontal`/`layoutSizingVertical: "FILL"` + `primaryAxisAlignItems` on the wrapper.
+- Auto-layout uses a rotated child's true visual footprint — don't manually compensate.
+- Fixed-size / `layoutMode: "NONE"` ancestors absorb child resize — resize inside-out. Outermost component resize *does* propagate to instances.
+- Live instance children can't set `x`/`y` — prefer real auto-layout over `detachInstance()`.
+- Padding/FILL slack: check against the *shortest* content state, not the tallest.
+- Re-assigning an unchanged property can no-op — toggle through another value to force recompute.
+- Negative `itemSpacing` is valid for intentional overlap — but media overlays must clear the shelf crown; see `figma-overlap-safe-zones` (mandatory).
+- Icon chips / CTAs: locked recipes in `figma-button-chrome`. SoT = Figma `Mobile / NP PDP / First fold` (`4678:13581`) — Back/Share/Save use **`radius/m`**, never invent `radius/full` circles. **Never** blanket-HUG horizontal frames — that collapses FIXED hit targets.
+- Fresh `COMPONENT_SET` can vanish across separate `run` calls — build set + consumers in the same script.
+- Prefer `absoluteBoundingBox` over raw `.x`/`.y` when rotated or nested.
+
+## Editing existing work
+
+Patch specific nodes/properties — don't delete-and-rebuild a tree for one wrong detail. If the user says "don't recreate, just fix" — take it literally. Ask before hard-to-reverse actions (deleting frames, restructuring shared work).
+
+## Working loop
+
+1. Scope (Mobile/Web/both, reference if any).
+2. Confirm file/page.
+3. Structure first (auto-layout), detail second (tokens as you go).
+4. Screenshot-verify at milestones, not only at the end.
+5. Report what you built, where, and what you actually verified.

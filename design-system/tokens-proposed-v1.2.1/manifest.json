@@ -1,0 +1,47 @@
+{
+  "name": "Design Tokens",
+  "version": "1.2.1-proposed",
+  "collections": {
+    "color_tokens": {
+      "modes": {
+        "Value": [
+          "color_tokens.Value.tokens.json"
+        ]
+      }
+    },
+    "color_primitives": {
+      "modes": {
+        "Value": [
+          "color_primitives.Value.tokens.json"
+        ]
+      }
+    },
+    "spacing": {
+      "modes": {
+        "Value": [
+          "spacing.Value.tokens.json"
+        ]
+      }
+    },
+    "radius": {
+      "modes": {
+        "Value": [
+          "radius.Value.tokens.json"
+        ]
+      }
+    },
+    "typography": {
+      "modes": {
+        "value": [
+          "typography.value.tokens.json"
+        ]
+      }
+    }
+  },
+  "styles": {
+    "text": [
+      "text.styles.tokens.json"
+    ]
+  },
+  "note": "Additive proposals from forensic audit; near-matches NOT auto-merged. Diff against v1.2.0."
+}

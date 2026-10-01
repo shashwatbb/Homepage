@@ -1,0 +1,207 @@
+{
+  "version": "1.2.1-proposed",
+  "base": "1.2.0",
+  "policy": "Near matches NOT merged. Only clean repeated integer Missing px proposed as audit_*. Float/layout junk listed under rejected_as_noise.",
+  "additions": {
+    "spacing": [
+      {
+        "audit_10": {
+          "$type": "dimension",
+          "$value": "10px",
+          "$description": "PROPOSED from audit (count=408). Awaiting approval. Do not treat as law until accepted."
+        }
+      },
+      {
+        "audit_60": {
+          "$type": "dimension",
+          "$value": "60px",
+          "$description": "PROPOSED from audit (count=10). Awaiting approval. Do not treat as law until accepted."
+        }
+      },
+      {
+        "audit_56": {
+          "$type": "dimension",
+          "$value": "56px",
+          "$description": "PROPOSED from audit (count=7). Awaiting approval. Do not treat as law until accepted."
+        }
+      },
+      {
+        "audit_27": {
+          "$type": "dimension",
+          "$value": "27px",
+          "$description": "PROPOSED from audit (count=6). Awaiting approval. Do not treat as law until accepted."
+        }
+      },
+      {
+        "audit_28": {
+          "$type": "dimension",
+          "$value": "28px",
+          "$description": "PROPOSED from audit (count=5). Awaiting approval. Do not treat as law until accepted."
+        }
+      },
+      {
+        "audit_6": {
+          "$type": "dimension",
+          "$value": "6px",
+          "$description": "PROPOSED from audit (count=5). Awaiting approval. Do not treat as law until accepted."
+        }
+      }
+    ],
+    "radius": [],
+    "opacity": [
+      {
+        "value": "0.2",
+        "count": 48,
+        "proposed": "opacity/20"
+      },
+      {
+        "value": "0.0",
+        "count": 18,
+        "proposed": "opacity/0"
+      },
+      {
+        "value": "0.6",
+        "count": 13,
+        "proposed": "opacity/60"
+      },
+      {
+        "value": "0.25",
+        "count": 6,
+        "proposed": "opacity/25"
+      },
+      {
+        "value": "0.8",
+        "count": 6,
+        "proposed": "opacity/80"
+      }
+    ],
+    "border_width": [
+      {
+        "value": "1.5px",
+        "count": 502
+      },
+      {
+        "value": "1.125px",
+        "count": 153
+      },
+      {
+        "value": "1.25px",
+        "count": 92
+      },
+      {
+        "value": "0.0703125px",
+        "count": 46
+      },
+      {
+        "value": "0.758712887763977px",
+        "count": 20
+      },
+      {
+        "value": "2.0px",
+        "count": 16
+      },
+      {
+        "value": "0.7349397540092468px",
+        "count": 7
+      },
+      {
+        "value": "0.9375px",
+        "count": 6
+      },
+      {
+        "value": "1.6666667461395264px",
+        "count": 6
+      },
+      {
+        "value": "8.0px",
+        "count": 6
+      },
+      {
+        "value": "1.0909090042114258px",
+        "count": 4
+      },
+      {
+        "value": "1.875px",
+        "count": 4
+      },
+      {
+        "value": "0.6954729557037354px",
+        "count": 3
+      }
+    ],
+    "elevation": [
+      {
+        "value": "DROP_SHADOW:o0,4|b4|s0|#c1bfbf40@0.25",
+        "count": 15
+      },
+      {
+        "value": "DROP_SHADOW:o6,6|b20|s0|#d0d0d04a@0.29",
+        "count": 6
+      },
+      {
+        "value": "INNER_SHADOW:o0,-18|b20|s0|#ffffffdb@0.86",
+        "count": 6
+      },
+      {
+        "value": "INNER_SHADOW:o0,2|b1|s0|#ffffff30@0.19",
+        "count": 5
+      },
+      {
+        "value": "DROP_SHADOW:o0,8|b22|s-6|#4b494114@0.08",
+        "count": 3
+      }
+    ],
+    "color_primitives": [
+      {
+        "frame_value": "#000000 @ opacity 1.0",
+        "count": 222,
+        "note": "nearest \u0394rgb\u224824.3",
+        "samples": [
+          "Web / Homepage / NP / PDP \u203a Web / Homepage / NP / PDP/Frame 2087324462/Frame 2087324464/Frame 2087324465/Frame 2147261424/Frame 2147261425/Frame 2087324469/Frame 2147261466/Frame 2147261451/Frame 2147261473/Mask group/Lines/Line 1"
+        ]
+      },
+      {
+        "frame_value": "#667085 @ opacity 1.0",
+        "count": 8,
+        "note": "nearest \u0394rgb\u224822.5",
+        "samples": [
+          "Web / Homepage / NP / PDP \u203a Web / Homepage / NP / PDP/Frame 2087324462/Frame 2087324464/Frame 2087324465/Frame 2147261424/Frame 2147261425/Frame 2087324470/Frame 2147261570/Table/Contain/Contain/Cata/Category"
+        ]
+      },
+      {
+        "frame_value": "#8a38f5 @ opacity 1.0",
+        "count": 7,
+        "note": "nearest \u0394rgb\u224831.3",
+        "samples": [
+          "Component 17 \u203a Component 17"
+        ]
+      }
+    ]
+  },
+  "rejected_as_noise": {
+    "spacing": [
+      {
+        "name": "audit_18_209110260009766",
+        "value": "18.209110260009766px",
+        "reason": "non-integer or layout-sized (>=100px) \u2014 fix frames or map to nearest token, do not tokenize"
+      },
+      {
+        "name": "audit_5_563783645629883",
+        "value": "5.563783645629883px",
+        "reason": "non-integer or layout-sized (>=100px) \u2014 fix frames or map to nearest token, do not tokenize"
+      },
+      {
+        "name": "audit_365",
+        "value": "365px",
+        "reason": "non-integer or layout-sized (>=100px) \u2014 fix frames or map to nearest token, do not tokenize"
+      }
+    ],
+    "radius": [
+      {
+        "name": "audit_100",
+        "value": "100px",
+        "reason": "non-integer or oversized"
+      }
+    ]
+  }
+}

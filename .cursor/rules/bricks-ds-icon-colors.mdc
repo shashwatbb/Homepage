@@ -1,0 +1,60 @@
+---
+description: Icon strokes/fills must always use Bricks DS icon color tokens — never text/surface/border colors
+alwaysApply: true
+---
+
+# Bricks DS — icon colors only for icons
+
+Companion to `bricks-iconography-source` (icon **shapes**) and `bricks-ds-color-bible` (allowed colors).
+
+## Hard rule
+
+**Every icon stroke and icon fill** must bind to a Bricks **`icon/*`** or **`semantic_icons/*`** color token.  
+Never paint icons with `text/*`, `surface/*`, `border/*`, primitives, or raw hex — even when the hex “matches.”
+
+## Allowed tokens (v1.2.0)
+
+From `design-system/tokens/color_tokens.Value.tokens.json` → Bricks library `color_tokens`:
+
+| Token | Role |
+|---|---|
+| `icon/grey_1` | Primary/dark icon on light surfaces |
+| `icon/grey_2` | Inverse/light icon on dark surfaces |
+| `icon/grey_3` | Muted/secondary icon |
+| `icon/grey_4` | Strong secondary icon |
+| `icon/warm_1` | Warm-neutral icon |
+| `icon/brand_1` | Brand/purple icon (Housing brand CTAs — **not** WhatsApp) |
+| `semantic_icons/info` | Informational icon |
+| `semantic_icons/success` | Success icon |
+| `semantic_icons/warning` | Warning icon |
+| `semantic_icons/danger` | Danger icon |
+
+## Defaults
+
+- Dark icon on white/light chrome → **`icon/grey_1`**
+- Light icon on dark/photo overlay → **`icon/grey_2`**
+- Brand-tinted icon → **`icon/brand_1`**
+- Status icons → matching **`semantic_icons/*`**
+- **WhatsApp** → locked green brand glyph only (`whatsapp-brand-icon`) — never `icon/brand_1`
+
+## Scope
+
+Applies to:
+
+- Bricks Iconography instances (stroke **and** fill vectors inside the instance)
+- Standalone vectors used as icons
+- Code/CSS that renders icons (`currentColor` must resolve to a `--ds-*` **icon** token)
+
+Does **not** replace button/frame borders — those stay on `border/*` / surface tokens. Icon vectors inside those buttons still use `icon/*`.
+
+## Figma / figma-cli
+
+1. Import from **Bricks Design System** → `color_tokens` via `importVariableByKeyAsync`.
+2. Bind paint with `setBoundVariableForPaint(..., "color", iconVariable)` on the **vector stroke** (and fill if the glyph is filled).
+3. Prefer instance overrides on nested vectors; do not swap to `text/primary` “because it looks the same.”
+4. Never create local icon color variables.
+
+## Related
+
+- Shapes: Iconography — Bricks only (`bricks-iconography-source`)
+- All other colors: `bricks-ds-color-bible` / `bricks-ds-all-tokens`

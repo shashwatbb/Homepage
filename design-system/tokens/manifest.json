@@ -1,5 +1,6 @@
 {
   "name": "Design Tokens",
+  "version": "1.2.0",
   "collections": {
     "color_tokens": {
       "modes": {

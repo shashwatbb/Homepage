@@ -1,0 +1,29 @@
+---
+description: WhatsApp icon is always the official green brand glyph — never Bricks stroke/purple substitutes
+alwaysApply: true
+---
+
+# WhatsApp icon — locked brand glyph
+
+**Canonical asset:** `public/brand-icons/whatsapp.png`  
+(Source upload: green speech-bubble mark, white handset, white outer stroke — official WhatsApp lockup.)
+
+## Hard rule
+
+Whenever a WhatsApp affordance appears (CTA, secondary action, share sheet, SRP/PDP contact row, Figma or code):
+
+- **Always** use this exact glyph (or a lossless export of the same lockup).
+- **Never** substitute Bricks Iconography `WhatsappLogo` / stroke icons, purple-tinted vectors, generic chat bubbles, or Iconify/Phosphor WhatsApp variants.
+- **Never** recolor it with `icon/brand_1`, `surface/brand`, or any Bricks purple — WhatsApp keeps its **brand green + white** lockup.
+- Do not redraw or “approximate” the mark. If a new size is needed, scale this asset (or export from the same master), don’t invent paths.
+
+## Usage notes
+
+- Prefer the PNG as an **image fill** / `<img>` / icon component wrapping this file.
+- Button chrome around it still uses Bricks tokens (`border/*`, `surface/*`, radius, spacing). Only the **glyph** is exempt from `icon/*` recoloring.
+- Product WhatsApp CTA chrome recipe (size/fill/stroke/radius): see `figma-button-chrome` — **`border/brand`**, not `border/default` / `surface/brand` stroke.
+- Exception to `bricks-iconography-source` and `bricks-ds-icon-colors` **for WhatsApp only**. All other icons stay on Bricks Iconography + `icon/*` / `semantic_icons/*`.
+
+## Figma / figma-cli
+
+Place via `createImage` / image fill from `public/brand-icons/whatsapp.png` (bytes → `figma.createImage`). Do not instance a Bricks WhatsApp vector for product CTAs.

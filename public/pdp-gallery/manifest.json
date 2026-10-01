@@ -1,0 +1,18 @@
+{
+  "id": "pdp-gallery-rotation-v1",
+  "purpose": "Canonical photo rotation for NP PDP / SRP gallery fills (mobile + web mocks)",
+  "count": 10,
+  "paths": [
+    "/pdp-gallery/rotation-01.png",
+    "/pdp-gallery/rotation-02.png",
+    "/pdp-gallery/rotation-03.png",
+    "/pdp-gallery/rotation-04.png",
+    "/pdp-gallery/rotation-05.png",
+    "/pdp-gallery/rotation-06.png",
+    "/pdp-gallery/rotation-07.png",
+    "/pdp-gallery/rotation-08.png",
+    "/pdp-gallery/rotation-09.png",
+    "/pdp-gallery/rotation-10.png"
+  ],
+  "absoluteDir": "/Users/shashwat/Documents/Work/Cursor:Claude/Homepage/public/pdp-gallery"
+}

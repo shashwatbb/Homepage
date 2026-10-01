@@ -202,7 +202,8 @@ body:has(.pdp-m-page) {
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: 50%;
+  /* Match NP PDP Figma first-fold SoT (4678:13581): radius/m, not circle */
+  border-radius: var(--ds-radius-m);
   background: var(--ds-surface-white);
   color: var(--ds-text-primary);
   box-shadow: 0 2px 10px rgba(15, 14, 13, 0.12);

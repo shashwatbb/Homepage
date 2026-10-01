@@ -1,0 +1,49 @@
+---
+description: Housing URL NP PDP frames — only sections from that page’s dynamicCardsList / INITIAL_STATE; never import our web NP PDP template sections
+alwaysApply: true
+---
+
+# Housing URL sections only (NP PDP Figma)
+
+When the user points at a **Housing.com project URL** (e.g. `/in/buy/projects/page/275472-…`):
+
+## Source of truth for sections
+
+1. **`window.__INITIAL_STATE__.meta.dynamicCardsList`** where `exists: true`  
+2. Content fields from the same `__INITIAL_STATE__` (`propertyDetails.details`, `meta.*`)  
+3. If live fetch is blocked (406), use a saved page HTML dump / prior paste that contains `__INITIAL_STATE__` — **not** Google SEO text alone when it conflicts with INITIAL_STATE
+
+**Do not** use as section inventory:
+
+- Our internal **NP PDP web / `pdp-mobile` mock** section list  
+- `DESIGN.md` / previous Figma “full PDP” templates  
+- SEO-only headings that are **not** in `dynamicCardsList` (e.g. Helpful Tools, Curated Solutions, Photos & Videos, Why… as a fake card, Similar news feed) unless that exact card name exists in `dynamicCardsList`
+
+## This project (275472) — allowed body cards
+
+From the live page state (order preserved):
+
+`price_and_floor_plans` → `payment_plan` → `overview` → `compare_properties` → `investment_insights` → `contact_form` → `legal_certificates` → `brochure` → `amenities` → `ratings_and_reviews` → `explore_neighbourhood` → `better_priced` → `contact_seller` → `contact_form_2` → `about_developer` → `faq` → `disclaimer` → `footer_links`
+
+Plus first-fold **`project_details`** (hero + summary). Skip chrome-only cards: `breadcrumbs`, `alliance_hook` unless the user asks.
+
+## Content must match INITIAL_STATE (examples for 275472)
+
+- Price: **`₹2.23 Cr - 3.76 Cr`** (not SEO stale `1.98–2.94`)  
+- EMI: **`₹1.11 Lacs`**  
+- Avg: **`₹1.86 Lacs - 2.1 Lacs/sq.yd`**  
+- Sizes: **`120 - 179 sq.yd.`**  
+- Developer display: **JMS Group**  
+- FAQs: **`meta.dedicatedFaqs`** verbatim  
+
+If Figma text disagrees with INITIAL_STATE → **fix Figma**, do not “average” with SEO scrape.
+
+## Hard bans
+
+- No adding Payment / Tools / Reviews / Compare / etc. because “a typical NP PDP has them” — only if that card is in **this URL’s** `dynamicCardsList`.  
+- No inventing seller names, prices, or FAQ copy.  
+- After any rebuild, list `Body` children and assert they are a subset of the allowlist above.
+
+## Related
+
+`figma-cli-canvas`, `figma-button-chrome`, `bricks-ds-color-bible`

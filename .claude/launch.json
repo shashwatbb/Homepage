@@ -6,6 +6,18 @@
       "runtimeExecutable": "./node_modules/.bin/vite",
       "runtimeArgs": [],
       "port": 5173
+    },
+    {
+      "name": "bricks",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/Bricks Design System\" && ./node_modules/.bin/vite --port 5174"],
+      "port": 5174
+    },
+    {
+      "name": "bricks-site",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/bricks-design-system/site\" && python3 -m http.server 5175"],
+      "port": 5175
     }
   ]
 }
