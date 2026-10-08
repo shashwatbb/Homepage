@@ -1,0 +1,83 @@
+---
+description: Mobile NP PDP button/icon chrome — First-fold Figma is SoT; never invent circles or bypass approved recipes
+alwaysApply: true
+---
+
+# Figma button chrome — Mobile NP PDP SoT (non-negotiable)
+
+> **Web** Share/Save is a different recipe (42×42 + `border/default`) — see `figma-np-pdp-web-ui.mdc` / `3422:4581`.  
+> **Mweb NP PLOT handcraft (`FINALL`)** gallery chrome: 40×40, `radius/m`, stroke **`border/subtle` 1.5**, Back fill `surface/subtle` — see `figma-mweb-np-plot-ui`. This file is mobile chrome baseline; FINALL wins when replicating that SoT.
+
+## Source of truth (in order — do not skip)
+
+1. **Approved Figma frame:** `Mobile / NP PDP / First fold` (`4678:13581`) on page **PDP** in Demand Component Kit  
+2. **Builder that created it:** `scratch/figma-mobile-np-pdp-first-fold.mjs` (`iconBtn` → `bindRadiusAll(..., radiusM)`)  
+3. Bricks tokens only (`radius/*`, `surface/*`, `border/*`, `icon/*`)
+
+**If (1) and a CSS file disagree → Figma first fold wins.**  
+**Never** “improve” chrome from `pdp-mobile.css`, Housing.com live, web NP PDP, or generic iOS circle habits.
+
+## Hard ban — do not bypass
+
+- **Do not** set Back / Share / Save to `radius/full` or `border-radius: 50%` / circular chips.  
+- **Do not** invent a new chrome recipe because another file looks rounder.  
+- **Do not** rewrite `figma-button-chrome` recipes from memory mid-task without re-measuring `4678:13581`.  
+- **Do not** apply a “fix” that changes radius/fill/stroke on icon chrome unless the user asked **and** you re-diff against the first-fold SoT.
+
+Bypassing this (e.g. switching `radius/m` → `radius/full` to match CSS) is a **regression**.
+
+## Recipe A — Media / gallery icon chrome (Back / Share / Save)
+
+User-locked mobile gallery recipe (overrides older SoT “stroke none”):
+
+| Prop | Required |
+|---|---|
+| Size | **40×40** FIXED / FIXED |
+| Fill | `surface/white` |
+| Radius | **`radius/m` (12)** — rounded square, **not** circle |
+| Stroke | **`border/default` · weight `1.5`** · align INSIDE |
+| Icon | Iconography — Bricks; color `icon/grey_1` |
+| Align | CENTER / CENTER |
+
+**Hard ban:** Do not drop gallery icon stroke to 0 / 1px — mobile gallery icons are **1.5px**.
+
+## Recipe B — WhatsApp secondary CTA
+
+| Prop | Required |
+|---|---|
+| Size | **48×48** FIXED |
+| Fill | `surface/white` |
+| Stroke | **`border/brand`** 1px (SoT first fold incorrectly used `surface/brand` as stroke — use `border/brand`; do not use `border/default`) |
+| Radius | **`radius/m`** |
+| Glyph | `public/brand-icons/whatsapp.png` only |
+
+## Recipe C — Primary Contact CTA
+
+| Prop | Required |
+|---|---|
+| Height | **48** FIXED |
+| Width | FILL / `layoutGrow: 1` |
+| Fill | `surface/brand` |
+| Label | `text/inverse`, centered; text **HUG** |
+| Radius | **`radius/m`** |
+
+## Hug collapse ban (unchanged)
+
+Never set `counterAxisSizingMode: "AUTO"` on Recipes A–C hit targets. After `resize()`, re-assert FIXED. No tree-wide hug of all horizontal frames.
+
+## Mandatory verification before shipping chrome
+
+Diff against `4678:13581` (or current selection’s twin first fold):
+
+```
+Back/Share/Save: 40×40, radius token === "m", fill === surface/white, stroke === border/default @ 1.5
+WhatsApp: 48×48, radius === "m", fill === surface/white, stroke === border/brand
+Contact: height 48, radius === "m", fill === surface/brand
+```
+
+If Back radius is `full` or `999` → **fail**. Fix to `radius/m` before any other work.  
+If gallery icon stroke ≠ **1.5** → **fail**.
+
+## Related
+
+`figma-np-pdp-web-ui` (web Share/Save), `bricks-ds-icon-colors`, `whatsapp-brand-icon`, `bricks-iconography-source`, `figma-cli-canvas`, `figma-overlap-safe-zones`

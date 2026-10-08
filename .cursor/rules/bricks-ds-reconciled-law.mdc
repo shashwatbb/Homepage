@@ -1,0 +1,47 @@
+---
+description: Reconciled Bricks DS law for UI — tokens first, auto-layout mandatory, no silent raw values
+alwaysApply: true
+---
+
+# Reconciled Design System law (post-audit)
+
+**Single source of truth:** Bricks Design Tokens **v1.2.0** in `design-system/tokens/`  
+**Audit evidence:** `design-system-audit.md` (forensic pass over selected web PDP frames)  
+**Proposed additions only (not law until approved):** `design-system/tokens-proposed-v1.2.1/`
+
+The JSON is law. Frames were evidence. Do **not** invent a parallel system from frame raw values. Do **not** silently “fix” near-matches — if audit lists Near/Missing, ask before changing tokens or UI.
+
+## Before any new UI (code or Figma)
+
+1. Find an existing token in `design-system/tokens/` (or `--ds-*` / Bricks library binding).
+2. Use / bind that token.
+3. Only if nothing fits → stop and ask. Never introduce a raw hex/px/font because it matched a frame by eye.
+
+## Auto-layout is mandatory
+
+- Build every frame/group/component with auto-layout (`VERTICAL` / `HORIZONTAL`) by default.
+- Capture real gap, per-side padding, alignment, hug/fill/fixed — never fake layout with absolute `x`/`y`.
+- Absolute / `layoutMode: NONE` stacking is an **exception** only when the existing design explicitly used it (see audit). Do not invent new absolute layouts.
+
+## Foundations to pull from JSON (not raw frame numbers)
+
+| Need | Token files |
+|---|---|
+| Color | `color_primitives.*.json`, `color_tokens.*.json` |
+| Spacing / gap / padding | `spacing.Value.tokens.json` |
+| Radius | `radius.Value.tokens.json` |
+| Type primitives | `typography.value.tokens.json` |
+| Text styles | `text.styles.tokens.json` + Bricks library text styles when available |
+
+Figma: bind **Bricks Design System** library variables/styles. Never create new variables or text styles unless the user explicitly extends the DS.
+
+**Icons:** fetch only from [Iconography — Bricks](https://www.figma.com/design/Rq1j8iqvbJBYRb52tdpgFg/Iconography--Bricks-?node-id=7484-1322) (file key `Rq1j8iqvbJBYRb52tdpgFg`). See `bricks-iconography-source`. Never invent icon vectors.
+
+## Platform
+
+- Audited surfaces are **web**. Do not invent mobile spacing/type by guessing.
+- Core identity (palette, radius scale, type family/weights, spacing steps) applies across platforms; web-specific page chrome stays web until a mobile audit exists.
+
+## Proposed v1.2.1
+
+`tokens-proposed-v1.2.1` may contain `audit_*` additive spacing/radius proposals from Missing findings. **Not approved by default.** Prefer v1.2.0 until the user accepts proposals via the audit.

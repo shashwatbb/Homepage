@@ -1,0 +1,38 @@
+---
+description: All UI values must map to Bricks DS tokens — color, radius, spacing, type, text styles
+alwaysApply: true
+---
+
+# Bricks Design System — all values must be token-mapped
+
+**Source of truth:** Bricks DS **v1.2.0** in `design-system/tokens/` (+ archive zip).  
+**Figma:** use the enabled **Bricks Design System** library only — bind existing library variables / text styles. **Never create** new variables or text styles.
+
+Every visual value on UI (code or Figma) must attach to a mapped Bricks token. Not just color — **radius, spacing, font, type size/weight/line-height/letter-spacing, and text styles** too.
+
+## Token map (look here first)
+
+| Concern | Token file | CSS bridge | Figma library collection |
+|---|---|---|---|
+| Color primitives | `color_primitives.Value.tokens.json` | `--ds-color-*` | `color_primitives` |
+| Color semantic | `color_tokens.Value.tokens.json` | `--ds-*` semantic | `color_tokens` |
+| Spacing / gap / padding | `spacing.Value.tokens.json` | `--ds-space-*` | `spacing` |
+| Corner radius (rounded) | `radius.Value.tokens.json` | `--ds-radius-*` | `radius` |
+| Type primitives | `typography.value.tokens.json` | `--ds-font-*` etc. | `typography` |
+| Text styles | `text.styles.tokens.json` | existing text style names | library text styles |
+
+Font family from DS: **Google Sans Flex** (`typography.font_family.primary`). Weights: Regular / Medium / SemiBold / Bold only as tokenized.
+
+## Hard rules
+
+- **Bind or reference the token** — do not hardcode `12px`, `8px`, `border-radius: 16px`, `font-size: 15px`, Inter/system fonts, raw hex, etc. when a Bricks token exists.
+- In **CSS/React**: only `--ds-*` (or established DS class/tokens already wired from this pack).
+- In **Figma / figma-cli**: `importVariableByKeyAsync` / bind from **Bricks Design System** library; apply existing text styles — never `variables.create`, never `createTextStyle`, never raw fills/sizes “because it’s a quick test.”
+- Prefer **semantic** tokens when they exist; otherwise primitives from the same pack.
+- If no token fits → **stop and ask**. Do not invent a one-off value or extend the DS unless the user explicitly requests it.
+
+## Before setting any property
+
+1. Identify the concern (color / radius / space / type / text style).
+2. Look up the matching token in `design-system/tokens/` or the Bricks library.
+3. Use / bind that mapped value only.

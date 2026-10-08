@@ -1,0 +1,31 @@
+---
+description: Fetch all icons from Bricks Iconography Figma file only — never invent or substitute other icon sources
+alwaysApply: true
+---
+
+# Bricks Iconography — icon source of truth
+
+**Canonical icon library (Figma):**  
+https://www.figma.com/design/Rq1j8iqvbJBYRb52tdpgFg/Iconography--Bricks-?node-id=7484-1322&t=KfagTMAwcCBrdfUs-1
+
+- **File key:** `Rq1j8iqvbJBYRb52tdpgFg`
+- **Name:** Iconography — Bricks
+- **Entry node:** `7484:1322` (`7484-1322` in URLs)
+
+## Hard rules
+
+- **Always** fetch / instance / copy icons from this Iconography — Bricks file (or that library when published into the working file).
+- **Always pick the closest existing icon by meaning** (e.g. verified/RERA → `SealCheck` / `CheckCircle`). Do not invent a nearer custom mark.
+- **Never** invent custom icon vectors, `createNodeFromSvg` of CDN/third-party SVGs, Iconify/Phosphor packs, or reuse non-Bricks icon packs when building UI in Figma or code assets meant to match Bricks.
+- In **figma-cli / Plugin API** work: locate the component in this file (or its enabled library), then `importComponentByKeyAsync` / instance it — do not draw placeholder ellipses/rects as “icons” except as a temporary blocked state, and say so if blocked.
+- If an icon is missing from Iconography — Bricks → **stop and ask**. Do not invent a substitute.
+
+## Exception
+
+**WhatsApp** is not taken from Iconography — Bricks. Always use `public/brand-icons/whatsapp.png` (see `whatsapp-brand-icon`).
+
+## Related
+
+Colors, spacing, radius, and type still come from **Bricks Design System** tokens/library. Icons come from **this** Iconography file only (except WhatsApp).
+
+**Icon stroke/fill color:** always `icon/*` or `semantic_icons/*` — see `bricks-ds-icon-colors`. Never use `text/*` / `surface/*` on icon vectors. WhatsApp lockup keeps brand green — do not recolor.
