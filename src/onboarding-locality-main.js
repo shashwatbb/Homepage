@@ -53,7 +53,7 @@ import {
   BUDGET_STEPS_DEFAULT_INDEX,
   COMMUTE_OPTIONS,
   INTENT_OPTIONS,
-  LIFESTYLE_TAGS,
+  lifestyleTagsForCity,
   cityCenter,
   searchLandmarks,
   searchRentLocalities,
@@ -136,6 +136,7 @@ const state = {
   discoveryMode: null, // "know_locality" | "discover"
   budgetIndex: BUDGET_STEPS_DEFAULT_INDEX,
   buyStatus: "ready", // "ready" | "under_construction"
+  resultsView: "localities", // "localities" | "properties"
   bhk: BHK_OPTIONS[2], // defaults to "2 BHK", not unset
   propertyType: null,
   landmarks: [], // { id, name, category, coords }, max 2
@@ -1122,8 +1123,9 @@ function odPageCta(primaryHtml, secondaryHtml) {
   return `<div class="od-page-cta">${secondaryHtml || ""}${primaryHtml}</div>`;
 }
 
-/** Buy/resale (anything but Rent) leads with property type and puts the
- * lifestyle hooks before location — landmarks matter less to buyers. */
+/** Buy/resale (anything but Rent) leads with property type and goes straight
+ * to results after 2-3 steps — landmarks are skipped (connectivity/lifestyle
+ * and intent are refined on the results screen instead). */
 function isBuyFlow() {
   return state.service !== "rent";
 }
@@ -1142,9 +1144,6 @@ function discoveryStepOrder() {
       "discovery-property-type",
       "discovery-budget",
       ...(state.propertyType === "Plot" ? [] : ["discovery-bhk"]),
-      "discovery-lifestyle",
-      "discovery-landmarks",
-      ...commute,
       "discovery-map",
     ];
   }
@@ -1830,14 +1829,14 @@ function discoveryLandmarksScreen() {
   return `<div class="ol-screen ol-screen--has-cta od-flow">
     ${odTopBar("discovery-landmarks-back")}
     ${odProgressHtml("discovery-landmarks")}
-    <h1 class="od-heading">Anything you'd like to stay close to?</h1>
+    <h1 class="od-heading">${isRentLandmarkSearch() ? "Where is your office or school located?" : "Anything you'd like to stay close to?"}</h1>
     <div class="od-search-field">
       <input
         type="text"
         class="od-search-field__input"
         id="od-landmark-input"
         placeholder=""
-        aria-label="Search a landmark, hospital, school, metro, office"
+        aria-label="${isRentLandmarkSearch() ? "Search the locality of your office or school" : "Search a landmark, hospital, school, metro, office"}"
         value="${escapeHtml(odLandmarkQuery)}"
         autocomplete="off"
         ${capped ? "disabled" : ""}
@@ -1908,9 +1907,9 @@ function discoveryLifestyleScreen() {
       <div class="od-optional-section">
         <p class="ol-section-label">What matters most where you live?</p>
         <div class="od-chip-grid">
-          ${LIFESTYLE_TAGS.map((tag) => {
+          ${lifestyleTagsForCity(state.city).map((tag) => {
             const active = state.lifestyleTags.includes(tag.id);
-            return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}" aria-pressed="${active}">${tag.label}</button>`;
+            return `<button type="button" class="od-chip ${active ? "is-active" : ""}" data-action="toggle-lifestyle-tag" data-value="${tag.id}" aria-pressed="${active}">${tag.short || tag.label}</button>`;
           }).join("")}
         </div>
       </div>
@@ -2377,21 +2376,28 @@ function localityThumbPhotoId(loc) {
   return LOCALITY_THUMB_PHOTO_IDS[hash % LOCALITY_THUMB_PHOTO_IDS.length];
 }
 
-const LIFESTYLE_SHORT_LABEL = {
-  transit: "Near metro",
-  low_traffic: "Low traffic",
-  social_infra: "Malls & hospitals nearby",
-  green: "Green cover",
-  safety: "Safe area",
-  new_dev: "New developments",
-};
 
-/** One quiet line echoing the user's own picks: their BHK + property type,
- * then (max 2) lifestyle picks this locality actually matches. */
-function localityPicksLine(loc) {
-  const home = state.propertyType === "Plot" ? "Plot" : [state.bhk, state.propertyType].filter(Boolean).join(" ");
-  const tags = (loc.matched_lifestyle_tags || []).slice(0, 2).map((id) => LIFESTYLE_SHORT_LABEL[id]).filter(Boolean);
-  return [home, ...tags].filter(Boolean).join(" · ");
+/** One quiet line echoing the user's own picks: their BHK + property type. */
+function localityPicksLine() {
+  return state.propertyType === "Plot" ? "Plot" : [state.bhk, state.propertyType].filter(Boolean).join(" ");
+}
+
+/** Pills for the refine picks this locality actually matches — connectivity
+ * leads (with a metro time), investment intent adds an appreciation pill. */
+function localityPillsHtml(loc) {
+  const labels = Object.fromEntries(lifestyleTagsForCity(state.city).map((t) => [t.id, t.short || t.label]));
+  const pills = [];
+  const matched = loc.matched_lifestyle_tags || [];
+  if (matched.includes("transit")) {
+    pills.push(`<span class="od-pill od-pill--accent">${OD_ICON.metro}${loc.metro_minutes} min to metro</span>`);
+  }
+  matched.filter((id) => id !== "transit").slice(0, 2).forEach((id) => {
+    pills.push(`<span class="od-pill">${escapeHtml(labels[id] || id)}</span>`);
+  });
+  if (state.intent === "investment" && loc.appreciation_signals?.[0]) {
+    pills.push(`<span class="od-pill od-pill--accent">${OD_ICON.trendingUp}${escapeHtml(loc.appreciation_signals[0])}</span>`);
+  }
+  return pills.length ? `<div class="od-locality-card__pills">${pills.join("")}</div>` : "";
 }
 
 function localityCardHtml(loc, rank) {
@@ -2419,7 +2425,8 @@ function localityCardHtml(loc, rank) {
         <span class="od-signal-badge od-signal-badge--rank ${isTopPick ? "od-signal-badge--recommended" : ""}">${localityBadgeLabel(loc, rank)}</span>
       </div>
       <p class="od-locality-card__budget">${escapeHtml(localityBudgetLine(loc))}</p>
-      ${localityPicksLine(loc) ? `<p class="od-locality-card__picks">${escapeHtml(localityPicksLine(loc))}</p>` : ""}
+      ${localityPicksLine() ? `<p class="od-locality-card__picks">${escapeHtml(localityPicksLine())}</p>` : ""}
+      ${localityPillsHtml(loc)}
       <p class="od-locality-card__distance">${escapeHtml(distanceLine)}</p>
       <button type="button" class="od-locality-card__cta ${isTopPick ? "" : "od-locality-card__cta--secondary"}" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">Explore locality</button>
     </div>
@@ -2437,11 +2444,73 @@ function selectedCommuteRadiusKm() {
   return commuteMinutesToKm(commuteOpt.maxMinutes);
 }
 
-function discoveryMapScreen() {
+/** Localities / Properties switch + horizontally-scrolling refine chips
+ * (connectivity first, intent for Buy) — tapping a chip re-ranks in place. */
+function refineBarHtml() {
+  const seg = (id, label) =>
+    `<button type="button" class="od-seg__btn ${state.resultsView === id ? "is-active" : ""}" data-action="results-view" data-value="${id}" aria-pressed="${state.resultsView === id}">${label}</button>`;
+  const chip = (action, value, label, active) =>
+    `<button type="button" class="od-chip od-chip--sm ${active ? "is-active" : ""}" data-action="${action}" data-value="${value}" aria-pressed="${active}">${label}</button>`;
+  const intent = state.service === "buy"
+    ? INTENT_OPTIONS.map((o) => chip("refine-intent", o.id, o.id === "live_in" ? "To live in" : "Investment", state.intent === o.id)).join("")
+    : "";
+  const tags = lifestyleTagsForCity(state.city)
+    .map((t) => chip("refine-tag", t.id, escapeHtml(t.short || t.label), state.lifestyleTags.includes(t.id)))
+    .join("");
+  return `<div class="od-seg" role="group" aria-label="Show">${seg("localities", "Localities")}${seg("properties", "Properties")}</div>
+    <div class="od-refine__chips">${intent}${tags}</div>`;
+}
+
+/** Mock property listings (flat/fake) drawn from the top localities. */
+function propertyCardHtml(loc, n) {
+  const isPlot = state.propertyType === "Plot";
+  const home = isPlot ? "Plot" : [state.bhk || "2 BHK", state.propertyType || "Apartment"].join(" ");
+  const factor = n === 0 ? 0.92 : 1.08;
+  const price = formatLocalityBudget(loc.estimated_price * factor, state.service === "rent" ? "rent" : "buy");
+  const area = (isPlot ? 180 : 900 + (parseInt(state.bhk, 10) || 2) * 350) + n * 120;
+  const unit = isPlot ? "sq yd" : "sq ft";
+  const metro = (loc.matched_lifestyle_tags || []).includes("transit") ? ` · ${loc.metro_minutes} min to metro` : "";
+  return `<div class="od-locality-card od-locality-card--secondary">
+    <img class="od-locality-card__thumb" src="https://images.unsplash.com/${localityThumbPhotoId({ id: `${loc.id}-${n}` })}?w=160&h=160&fit=crop&q=60&auto=format" width="56" height="56" loading="lazy" alt="" onerror="this.remove()" />
+    <div class="od-locality-card__body">
+      <h2 class="od-locality-card__name">${escapeHtml(home)}</h2>
+      <p class="od-locality-card__budget">${price}</p>
+      <p class="od-locality-card__picks">${area} ${unit} · ${escapeHtml(loc.name)}${metro}</p>
+      <button type="button" class="od-locality-card__cta od-locality-card__cta--secondary" data-action="explore-locality" data-locality-id="${loc.id}" data-locality-name="${escapeHtml(loc.name)}">View property</button>
+    </div>
+  </div>`;
+}
+
+function resultsListHtml() {
   const ranked = state.recommendedLocalities;
+  if (state.resultsView === "properties") {
+    return ranked.slice(0, 4).flatMap((l) => [propertyCardHtml(l, 0), propertyCardHtml(l, 1)]).join("");
+  }
   const primary = ranked.slice(0, 5);
   const secondary = ranked.slice(5);
-  const radiusKm = selectedCommuteRadiusKm();
+  return `${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
+    ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
+    ${secondary.map((l) => localityCardHtml(l, null)).join("")}`;
+}
+
+/** Re-rank after a refine tap and patch list + map in place (no screen
+ * re-render, so drawer scroll/animation don't reset). */
+function refreshResults() {
+  state.recommendedLocalities = getRecommendedLocalities(state).ranked;
+  const list = document.getElementById("od-results-list");
+  if (list) list.innerHTML = resultsListHtml();
+  const bar = document.getElementById("od-refine");
+  if (bar) {
+    const scroll = bar.querySelector(".od-refine__chips")?.scrollLeft || 0;
+    bar.innerHTML = refineBarHtml();
+    const chips = bar.querySelector(".od-refine__chips");
+    if (chips) chips.scrollLeft = scroll;
+  }
+  mountResultsMap();
+}
+
+function discoveryMapScreen() {
+  const ranked = state.recommendedLocalities;
 
   // Plain flex column, top-to-bottom, both zones always in normal flow — no
   // position:absolute drawer, no transform/dvh peek-collapse animation. That
@@ -2462,12 +2531,9 @@ function discoveryMapScreen() {
           <span class="od-drawer__title">Recommended localities</span>
         </span>
       </button>
+      <div class="od-refine" id="od-refine">${refineBarHtml()}</div>
       <div class="od-drawer__body" id="od-drawer-body">
-        <div class="od-locality-list">
-          ${primary.map((l, i) => localityCardHtml(l, i + 1)).join("")}
-          ${secondary.length ? `<p class="od-locality-list__label">More options</p>` : ""}
-          ${secondary.map((l) => localityCardHtml(l, null)).join("")}
-        </div>
+        <div class="od-locality-list" id="od-results-list">${resultsListHtml()}</div>
         ${ranked.length === 0 ? `<p class="od-empty-note">No matching localities yet, try widening your budget.</p>` : ""}
       </div>
     </div>
@@ -2870,6 +2936,26 @@ function wireEvents(root) {
       case "discovery-map-back":
         goTo(previousDiscoveryStep("discovery-map"));
         break;
+      case "results-view":
+        state.resultsView = btn.getAttribute("data-value");
+        refreshResults();
+        break;
+      case "refine-intent": {
+        const v = btn.getAttribute("data-value");
+        state.intent = state.intent === v ? null : v;
+        refreshResults();
+        haptic(8);
+        break;
+      }
+      case "refine-tag": {
+        const v = btn.getAttribute("data-value");
+        state.lifestyleTags = state.lifestyleTags.includes(v)
+          ? state.lifestyleTags.filter((t) => t !== v)
+          : [...state.lifestyleTags, v];
+        refreshResults();
+        haptic(8);
+        break;
+      }
       case "explore-locality":
         exploreLocality(btn.getAttribute("data-locality-id"), btn.getAttribute("data-locality-name"));
         break;
@@ -3052,23 +3138,8 @@ function focusDiscoveryHeading(root) {
   heading.focus({ preventScroll: false });
 }
 
-function render() {
-  const root = document.getElementById("onboarding-locality");
-  if (!root) return;
-  odBudgetPicker?.destroy();
-  odBudgetPicker = null;
-  // Full re-render replaces the DOM out from under any live map instance —
-  // destroy whatever was mounted on the outgoing screen before it's gone,
-  // so Leaflet doesn't hold references to detached nodes.
-  Object.keys(activeDiscoveryMaps).forEach(destroyDiscoveryMap);
-  stopLandmarkGhost();
-  root.innerHTML = SCREEN_BUILDERS[state.step]() + toastHtml();
-  if (state.step === "discovery-budget") mountBudgetDial();
-  if (state.step === "discovery-landmarks") {
-    mountLandmarkMap();
-    mountLandmarkGhost();
-  }
-  if (state.step === "discovery-map") {
+/** (Re)mounts the results map from current recommendations. */
+function mountResultsMap() {
     const commuteOpt = COMMUTE_OPTIONS.find((c) => c.id === state.commuteTolerance);
     const radiusKm = selectedCommuteRadiusKm();
     const radiusMeters = radiusKm !== null ? Math.max(radiusKm * 1000, 2500) : null;
@@ -3109,6 +3180,26 @@ function render() {
             }))
           : [],
     });
+}
+
+function render() {
+  const root = document.getElementById("onboarding-locality");
+  if (!root) return;
+  odBudgetPicker?.destroy();
+  odBudgetPicker = null;
+  // Full re-render replaces the DOM out from under any live map instance —
+  // destroy whatever was mounted on the outgoing screen before it's gone,
+  // so Leaflet doesn't hold references to detached nodes.
+  Object.keys(activeDiscoveryMaps).forEach(destroyDiscoveryMap);
+  stopLandmarkGhost();
+  root.innerHTML = SCREEN_BUILDERS[state.step]() + toastHtml();
+  if (state.step === "discovery-budget") mountBudgetDial();
+  if (state.step === "discovery-landmarks") {
+    mountLandmarkMap();
+    mountLandmarkGhost();
+  }
+  if (state.step === "discovery-map") {
+    mountResultsMap();
     wireResultsDrawerScroll();
   }
   if (state.step === "splash") mountSplashLottie();

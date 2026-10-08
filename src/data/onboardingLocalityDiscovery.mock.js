@@ -203,11 +203,22 @@ export const INTENT_OPTIONS = [
 export const LIFESTYLE_TAGS = [
   { id: "transit", label: "Metro / transit connectivity" },
   { id: "low_traffic", label: "Low traffic" },
-  { id: "social_infra", label: "Social infra (malls, hospitals, restaurants)" },
+  { id: "social_infra", label: "Social infra (malls, hospitals, restaurants)", short: "Malls & hospitals" },
   { id: "green", label: "Parks and green cover" },
-  { id: "safety", label: "Safety" },
+  { id: "safety", label: "Safety", short: "Safe area" },
   { id: "new_dev", label: "New developments" },
 ];
+
+/** City-specific wording for the lifestyle tags — same ids, local context. */
+const CITY_TAG_LABELS = {
+  Gurgaon: { transit: "Metro / Rapid Metro", low_traffic: "Off NH-48 traffic", green: "Aravalli greens", new_dev: "New launches" },
+  Delhi: { transit: "DMRC Metro access", low_traffic: "Quiet lanes", green: "Parks & green belt", new_dev: "Redevelopment" },
+};
+
+export function lifestyleTagsForCity(city) {
+  const labels = CITY_TAG_LABELS[cityDataKey(city)] || {};
+  return LIFESTYLE_TAGS.map((t) => ({ ...t, short: labels[t.id] || t.short || t.label }));
+}
 
 /** Rough city centers for map framing (mock — not geocoded). */
 export const CITY_CENTERS = {
@@ -425,7 +436,7 @@ export function getRecommendedLocalities(state) {
     score += price_band_match === "within_budget" ? 25 : price_band_match === "below_budget" ? 10 : -10;
     score += bhkAvailable ? 12 : -15;
     score += base.demand_tier === "high" ? 15 : base.demand_tier === "medium" ? 8 : 0;
-    score += state.lifestyleTags.filter((t) => base.lifestyle_tags.includes(t)).length * 6;
+    score += state.lifestyleTags.filter((t) => base.lifestyle_tags.includes(t)).length * 10;
 
     return {
       id: `loc-${i}`,
@@ -437,6 +448,7 @@ export function getRecommendedLocalities(state) {
       bhk_available: bhkAvailable,
       demand_tier: base.demand_tier,
       trending_score: base.trending_score,
+      metro_minutes: (base.lifestyle_tags.includes("transit") ? 4 : 11) + (base.name.length % 4),
       matched_signals: matched_signals.slice(0, 3),
       matched_lifestyle_tags: state.lifestyleTags.filter((t) => base.lifestyle_tags.includes(t)),
       appreciation_signals,
