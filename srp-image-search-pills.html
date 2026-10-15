@@ -2,12 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Buy/SRP Image based search pills — Housing</title>
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script type="module" src="/src/srp-image-search-pills-main.js"></script>
   </head>
   <body>
-    <div id="app" data-page="srp-image-search-pills"></div>
+    <div id="app" data-page="srp-image-search-pills">
+      <div class="isp-desktop-notice">
+        <div class="isp-desktop-notice__card">
+          <p class="isp-desktop-notice__title">Open in mobile</p>
+          <p class="isp-desktop-notice__shortcut"><kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>I</kbd></p>
+        </div>
+      </div>
+      <main id="isp-root" class="isp"></main>
+    </div>
   </body>
 </html>
