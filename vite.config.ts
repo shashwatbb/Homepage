@@ -23,6 +23,7 @@ export default defineConfig({
         pdpMobile: path.resolve(__dirname, "pdp-mobile.html"),
         megamenu: path.resolve(__dirname, "buyers-megamenu.html"),
         onboardingLocality: path.resolve(__dirname, "onboarding-locality.html"),
+        srpImageSearchPills: path.resolve(__dirname, "srp-image-search-pills.html"),
       },
     },
   },

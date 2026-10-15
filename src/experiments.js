@@ -99,6 +99,12 @@ const FLOW_DEFINITIONS = [
     platform: "mobile",
     href: "/onboarding-locality.html",
   },
+  {
+    id: "buy_srp_image_search_pills",
+    name: "Buy/SRP Image based search pills",
+    platform: "mobile",
+    href: "/srp-image-search-pills.html",
+  },
 ];
 
 function isExclusiveExperiment(experiment) {
