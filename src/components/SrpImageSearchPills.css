@@ -219,7 +219,7 @@ body:has(.isp) {
 
 /* ---------------- Card (Buy SERP) ---------------- */
 .isp-card {
-  margin: 0 8px 12px;
+  margin: 0 0 12px;
   border: 1px solid var(--isp-border);
   border-radius: 16px;
   background: var(--isp-white);
