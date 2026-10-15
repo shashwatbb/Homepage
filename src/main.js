@@ -1,5 +1,5 @@
 import "./styles/base.css";
-import { initExperiments } from "./experiments.js";
+import { initExperiments, isExperimentEnabled, SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID } from "./experiments.js";
 import buyAssetUrl from "./assets/buy.png?url";
 import projectsAssetUrl from "./assets/projects.png?url";
 
@@ -455,7 +455,8 @@ function navigateToBuyPage() {
 
 function navigateToSrp(query) {
   const base = import.meta.env?.BASE_URL ?? "/";
-  const url = new URL("srp.html", window.location.origin + base);
+  const page = isExperimentEnabled(SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID) ? "srp-image-search-pills.html" : "srp.html";
+  const url = new URL(page, window.location.origin + base);
   const q = (query ?? "").trim();
   if (q) url.searchParams.set("q", q);
   window.location.assign(url.href);

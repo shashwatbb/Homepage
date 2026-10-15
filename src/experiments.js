@@ -26,6 +26,7 @@ export const SRP_MWEB_BUY_EXPERIMENT_ID = "mweb_buy_srp";
 export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_strip";
 export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 export const ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID = "onboarding_locality_discovery_flow";
+export const SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID = "srp_image_search_pills";
 
 const EXPERIMENT_DEFINITIONS = [
   {
@@ -86,6 +87,27 @@ const EXPERIMENT_DEFINITIONS = [
       );
     },
   },
+  {
+    id: SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID,
+    name: "Buy/SRP Image based search pills",
+    platform: "mobile",
+    exclusive: false,
+    // Turning this on switches off every other SRP experiment (and vice versa).
+    conflictsWith: [
+      SRP_MWEB_BUY_EXPERIMENT_ID,
+      SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID,
+      SRP_BHK_BUDGET_CARD_EXPERIMENT_ID,
+    ],
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-srp-image-search-pills", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
 ];
 
 /**
@@ -99,16 +121,14 @@ const FLOW_DEFINITIONS = [
     platform: "mobile",
     href: "/onboarding-locality.html",
   },
-  {
-    id: "buy_srp_image_search_pills",
-    name: "Buy/SRP Image based search pills",
-    platform: "mobile",
-    href: "/srp-image-search-pills.html",
-  },
 ];
 
 function isExclusiveExperiment(experiment) {
   return experiment.exclusive !== false;
+}
+
+function experimentsConflict(a, b) {
+  return Boolean(a.conflictsWith?.includes(b.id) || b.conflictsWith?.includes(a.id));
 }
 
 function writeExperimentState(state) {
@@ -292,6 +312,8 @@ function initExperimentsPanel(toast) {
       if (item.id === id) {
         nextEnabled = enabled;
       } else if (enabled && isExclusiveExperiment(experiment) && isExclusiveExperiment(item)) {
+        nextEnabled = false;
+      } else if (enabled && experimentsConflict(experiment, item)) {
         nextEnabled = false;
       }
 
