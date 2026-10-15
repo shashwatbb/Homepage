@@ -1200,3 +1200,142 @@ body:has(.isp) {
   line-height: 22px;
   font-weight: 600;
 }
+
+/* ---------------- srp_image_feature_pills — "Seen in photos" ---------------- */
+/* Dual-tone icons (Plump, recoloured to Bricks purple). */
+.isp .duo-l {
+  fill: var(--duo-l, var(--ds-color-purple-200));
+}
+
+.isp .duo-d {
+  fill: var(--duo-d, var(--ds-color-purple-700));
+}
+
+.isp .duo-ds {
+  stroke: var(--duo-d, var(--ds-color-purple-700));
+}
+
+/* Pills reuse .srp-filter-dropdown; only the tap area + count are new. */
+.isp-fpill {
+  position: relative;
+  /* 6px icon ↔ label (base chip is 4px). */
+  gap: calc(var(--ds-space-2xs) + var(--ds-space-3xs)) !important;
+  transition:
+    background-color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    border-color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.isp-fpill:active {
+  transform: scale(0.96);
+}
+
+.isp-fpill.is-entering {
+  animation: isp-pill-in 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@keyframes isp-pill-in {
+  from {
+    opacity: 0.4;
+    transform: scale(0.94);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .isp-fpill,
+  .isp-fpill.is-entering {
+    transition: none;
+    animation: none;
+  }
+}
+
+.isp-fpill::after {
+  content: "";
+  position: absolute;
+  inset: -6px 0;
+}
+
+.isp-fpill__count {
+  color: var(--ds-text-muted);
+}
+
+/* One-time tip, with a caret pointing up at the feature pill row. */
+.isp-feature-hint {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  margin: var(--ds-space-s) var(--ds-space-m) 0;
+  padding: var(--ds-space-xs) var(--ds-space-xs) var(--ds-space-xs) var(--ds-space-s);
+  border-radius: var(--ds-radius-s);
+  background-color: var(--ds-surface-brand-subtle);
+  color: var(--ds-text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.isp-feature-hint::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: var(--ds-space-xl);
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: inherit;
+  transform: rotate(45deg);
+}
+
+.isp-feature-hint p {
+  flex: 1;
+}
+
+.isp .isp-feature-hint__ok {
+  flex-shrink: 0;
+  min-height: 32px;
+  padding: 0 var(--ds-space-xs);
+  color: var(--ds-text-brand);
+  font-weight: 500;
+}
+
+.isp-feature-divider {
+  margin: var(--ds-space-xs) var(--ds-space-m) var(--ds-space-m) !important;
+  padding: var(--ds-space-xs) var(--ds-space-s);
+  border-radius: var(--ds-radius-s);
+  background-color: var(--ds-surface-default);
+  color: var(--ds-text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.srp-search-input.is-rotating::placeholder {
+  opacity: 0;
+}
+
+.srp-search-input::placeholder {
+  transition: opacity 200ms ease;
+}
+
+/* Filter panel — Home features */
+.isp-f__features-note {
+  margin-bottom: var(--ds-space-2xs) !important;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ds-text-muted);
+}
+
+.isp-f__group {
+  margin-top: var(--ds-space-m) !important;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--ds-text-primary);
+}
+
+.isp-f__opt-count {
+  font-style: normal;
+  color: var(--ds-text-muted);
+}

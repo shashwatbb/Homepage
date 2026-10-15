@@ -27,6 +27,7 @@ export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_st
 export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 export const ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID = "onboarding_locality_discovery_flow";
 export const SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID = "srp_image_search_pills";
+export const SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID = "srp_image_feature_pills";
 
 const EXPERIMENT_DEFINITIONS = [
   {
@@ -103,6 +104,21 @@ const EXPERIMENT_DEFINITIONS = [
       window.dispatchEvent(
         new CustomEvent("housing:experiment-apply", {
           detail: { id: SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
+  {
+    id: SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID,
+    name: "Seen in photos feature pills (Image search pills SRP)",
+    platform: "mobile",
+    exclusive: false,
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-srp-image-feature-pills", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID, enabled },
           bubbles: true,
         })
       );

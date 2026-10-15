@@ -4,6 +4,19 @@
  * slider). Draft is edited on screen; Apply commits it to the applied store.
  */
 import { ISP_ICONS as I } from "./data/srpIspIcons.js";
+import { isExperimentEnabled, SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID } from "./experiments.js";
+import { FEATURES, FEATURE_CATEGORY_ID, FEATURE_GROUPS } from "./data/srpFeaturePills.js";
+
+// `?feature_pills=1` turns the flag on (and remembers it) for quick demo links.
+if (new URLSearchParams(window.location.search).get("feature_pills") === "1") {
+  try {
+    const KEY = "housing:experiments";
+    const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+    state[SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID] = true;
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch {}
+}
+export const FEATURE_PILLS_ON = isExperimentEnabled(SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID);
 
 const BUDGET_STEPS = [
   ...Array.from({ length: 20 }, (_, i) => i * 5e5),
@@ -49,6 +62,14 @@ const CATEGORIES = [
   { id: "12", label: "RERA", type: "switch", options: [{ value: "1", label: "RERA compliant properties" }] },
   { id: "14", label: "Verified", type: "switch", options: [{ value: "1", label: "Verified properties only" }] },
 ];
+if (FEATURE_PILLS_ON) {
+  // "Home features" — same features as the Seen in photos pills, grouped.
+  const at = CATEGORIES.findIndex((c) => c.id === "6") + 1;
+  CATEGORIES.splice(at, 0, {
+    id: FEATURE_CATEGORY_ID, label: "Home features", type: "features",
+    options: FEATURES.map((f) => ({ value: f.id, label: f.label, count: f.count, group: f.group })),
+  });
+}
 const byId = (id) => CATEGORIES.find((c) => c.id === id);
 
 export const PINNED_CHIPS = [
@@ -70,6 +91,18 @@ export const onAppliedChange = (fn) => listeners.add(fn);
 const emit = () => listeners.forEach((fn) => fn());
 export function clearApplied() {
   applied = {};
+  emit();
+}
+
+/** Applied feature ids, oldest first (the newest one leads the pill row). */
+export const getFeatureValues = () => applied[FEATURE_CATEGORY_ID]?.values ?? [];
+
+/** Pill tap — applies/removes a feature immediately (no Apply step). */
+export function toggleFeature(id) {
+  const values = getFeatureValues();
+  const next = values.includes(id) ? values.filter((v) => v !== id) : [...values, id];
+  if (next.length) applied[FEATURE_CATEGORY_ID] = { values: next, displayLabel: displayLabel(byId(FEATURE_CATEGORY_ID), { values: next }) };
+  else delete applied[FEATURE_CATEGORY_ID];
   emit();
 }
 
@@ -110,7 +143,7 @@ function displayLabel(c, sel) {
   const labels = sel.values.map((v) => c.options.find((o) => o.value === v).label);
   return labels.length > 1 ? `${labels[labels.length - 1]} (${labels.length})` : labels[0];
 }
-const badgeCount = (c, sel) => (!sel ? 0 : c.type === "multi" ? sel.values.length : 1);
+const badgeCount = (c, sel) => (!sel ? 0 : c.type === "multi" || c.type === "features" ? sel.values.length : 1);
 function roundedCount(n) {
   if (n < 10) return String(n);
   if (n < 100) return `${Math.min(Math.floor(n / 10) * 10, 50)}+`;
@@ -168,7 +201,7 @@ function positionIndicator() {
 
 function checkRow(c, o, checked, kind) {
   return `<button type="button" class="isp-f__opt" data-f="option" data-value="${o.value}">
-      <span>${o.label}</span><span class="isp-f__${kind}${checked ? " is-checked" : ""}">${kind === "check" && checked ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.4 6.2L5.1 9.9L11 2.9" stroke="#4A16D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ""}</span>
+      <span>${o.label}${o.count != null ? ` <em class="isp-f__opt-count">${o.count}</em>` : ""}</span><span class="isp-f__${kind}${checked ? " is-checked" : ""}">${kind === "check" && checked ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.4 6.2L5.1 9.9L11 2.9" stroke="#4A16D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ""}</span>
     </button>`;
 }
 
@@ -198,6 +231,12 @@ function renderContent() {
           return `<button type="button" class="isp-f__schip${on ? " is-sel" : ""}" data-f="suggest" data-i="${i}">${label}</button>`;
         }).join("")}</div>
       </div>`;
+  } else if (c.type === "features") {
+    const values = sel?.values ?? [];
+    body = `<p class="isp-f__features-note">Seen in photos</p>` + FEATURE_GROUPS.map((group) => {
+      const rows = c.options.filter((o) => o.group === group).map((o) => checkRow(c, o, values.includes(o.value), "check")).join("");
+      return `<p class="isp-f__group">${group}</p>${rows}`;
+    }).join("");
   } else {
     const values = sel?.values ?? [];
     let options = c.options;
@@ -357,7 +396,7 @@ function onClick(event) {
       const v = el.dataset.value;
       const values = draft[c.id]?.values ?? [];
       let next;
-      if (c.type === "multi") next = values.includes(v) ? values.filter((x) => x !== v) : [...values, v];
+      if (c.type === "multi" || c.type === "features") next = values.includes(v) ? values.filter((x) => x !== v) : [...values, v];
       else next = values.includes(v) ? [] : [v];
       if (next.length) draft[c.id] = { values: next };
       else delete draft[c.id];

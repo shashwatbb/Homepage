@@ -10,6 +10,8 @@ import "./components/SrpImageSearchPills.css";
 import arrowLeftUrl from "./assets/icons/arrow-left.svg";
 import aiLogoUrl from "./assets/icons/ai-logo.png";
 import { ISP_ICONS as I } from "./data/srpIspIcons.js";
+import { FEATURE_ICONS as FI } from "./data/srpFeatureIcons.js";
+import { FEATURES, SEARCH_PLACEHOLDERS, featureById, featureCover } from "./data/srpFeaturePills.js";
 import {
   PINNED_CHIPS,
   appliedCount,
@@ -17,6 +19,9 @@ import {
   getApplied,
   onAppliedChange,
   openFilterScreen,
+  FEATURE_PILLS_ON,
+  getFeatureValues,
+  toggleFeature,
 } from "./srp-isp-filters.js";
 
 const ASSET = "/srp-isp";
@@ -156,12 +161,34 @@ function discoveryChipsHtml() {
     </button>`;
 }
 
+/* srp_image_feature_pills — "Seen in photos" row replaces the hotspot row. */
+let justToggled = null;
+const PILL_TRANSITION_MS = 180;
+function featurePillsHtml() {
+  const applied = getFeatureValues();
+  const front = [...applied].reverse().map(featureById);
+  const rest = FEATURES.filter((f) => !applied.includes(f.id));
+  // Same chip as the top row (.srp-filter-dropdown) — inactive and .isp-applied states.
+  const pill = (f, on) => `<button type="button" class="srp-filter-dropdown isp-fpill${on ? " isp-applied" : ""}${f.id === justToggled ? " is-entering" : ""}" data-action="toggle-feature" data-feature="${f.id}" aria-pressed="${on}">
+      ${FI[f.icon]}<span>${f.label}</span>${on ? PH_X : `<span class="isp-fpill__count">${f.count}</span>`}
+    </button>`;
+  return `${front.map((f) => pill(f, true)).join("")}${rest.map((f) => pill(f, false)).join("")}
+    <button type="button" class="srp-filter-dropdown isp-fpill" data-action="all-features">${FI.category}<span>All features</span>${PH_CHEVRON}</button>`;
+}
+
 function renderHeader() {
   const chips = document.getElementById("isp-chips");
   const scrollX = chips.scrollLeft;
   chips.innerHTML = filterChipRowHtml();
   chips.scrollLeft = scrollX;
-  document.getElementById("isp-disc").innerHTML = discoveryChipsHtml();
+  const disc = document.getElementById("isp-disc");
+  if (FEATURE_PILLS_ON) {
+    const x = disc.scrollLeft;
+    disc.innerHTML = featurePillsHtml();
+    disc.scrollLeft = getFeatureValues().length ? 0 : x;
+  } else {
+    disc.innerHTML = discoveryChipsHtml();
+  }
 }
 
 function searchChromeHtml() {
@@ -174,7 +201,7 @@ function searchChromeHtml() {
           <span class="srp-search-icon" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="18" height="18" fill="none"><circle cx="112" cy="112" r="80" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="168.57" y1="168.57" x2="224" y2="224" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
           </span>
-          <input type="search" class="srp-search-input" name="q" value="${esc(LOCALITY)}" placeholder="What are you looking for?" autocomplete="off" enterkeyhint="search" />
+          <input type="search" class="srp-search-input" name="q" value="${FEATURE_PILLS_ON ? "" : esc(LOCALITY)}" placeholder="${FEATURE_PILLS_ON ? SEARCH_PLACEHOLDERS[0] : "What are you looking for?"}" autocomplete="off" enterkeyhint="search" />
           <span class="srp-search-divider" aria-hidden="true"></span>
           <button type="button" class="srp-search-magic" aria-label="AI search" data-action="ai-search">
             <img src="${aiLogoUrl}" alt="" width="20" height="20" decoding="async" />
@@ -232,7 +259,7 @@ function topBarHtml(t) {
     </div>`;
 }
 
-function galleryHtml(l) {
+function galleryHtml(l, coverFeature) {
   const flush = Boolean(l.topBar);
   const tags = [
     l.verified ? `<span class="isp-tag isp-tag--verified" data-action="verified"><img src="${ASSET}/card-verified-tick.webp" alt="" width="12" height="12" />Verified<img src="${ASSET}/card-info-verified.webp" alt="" width="12" height="12" /></span>` : "",
@@ -260,7 +287,9 @@ function galleryHtml(l) {
   }
 
   const cells = l.images
-    .map((src) => `<div class="isp-cell"><img src="${src}" alt="" loading="lazy" /></div>`)
+    .map((src, i) => (i === 0 && coverFeature
+      ? `<div class="isp-cell"><img src="${featureCover(l.id, coverFeature.id)}" alt="" /></div>`
+      : `<div class="isp-cell"><img src="${src}" alt="" loading="lazy" /></div>`))
     .join("");
   return `<div class="isp-gallery${flush ? " is-flush" : ""}">
       <div class="isp-strip" data-count="${l.images.length}">${cells}
@@ -274,7 +303,7 @@ function galleryHtml(l) {
     </div>`;
 }
 
-function cardHtml(l, key) {
+function cardHtml(l, key, coverFeature) {
   const possession = l.ready
     ? `<b>Ready to Move</b>`
     : `Possession by&nbsp;<b>${l.possession}</b>`;
@@ -291,7 +320,7 @@ function cardHtml(l, key) {
 
   return `<article class="isp-card" data-action="open-card" data-key="${key}">
       ${l.topBar ? topBarHtml(l.topBar) : ""}
-      ${galleryHtml(l)}
+      ${galleryHtml(l, coverFeature)}
       <div class="isp-poss">
         <div class="isp-poss__bar">${possession}<img src="${ASSET}/card-dot-divider.webp" alt="" width="16" height="16" />${rate}</div>
         <button type="button" class="isp-heart" aria-label="Shortlist" data-action="shortlist" data-key="${key}">${saved ? `<img src="${ASSET}/card-shortlist-filled.webp" alt="" width="16" height="16" />` : I.heart}</button>
@@ -328,17 +357,48 @@ function resultCount() {
 function renderFeed() {
   const feed = document.getElementById("isp-feed");
   const list = sortedListings();
+  const features = FEATURE_PILLS_ON ? getFeatureValues() : [];
+  const leadFeature = features.length ? featureById(features[features.length - 1]) : null;
   const cards = [];
   for (let p = 0; p < state.pages; p += 1) {
-    list.forEach((l) => cards.push(cardHtml(l, `${l.id}-p${p}`)));
+    list.forEach((l, i) => cards.push(cardHtml(l, `${l.id}-p${p}`, p === 0 && i < 2 ? leadFeature : null)));
   }
   const location = state.newInCity ? CITY : LOCALITY;
+  const countLine = leadFeature
+    ? `<p><b>${leadFeature.header}</b>${features.length > 1 ? ` + ${features.length - 1} more` : ""}</p>`
+    : `<p><b>${resultCount()} properties</b> in ${esc(location)}</p>`;
+  const rows = cards.map((c) => `<div class="isp-row">${c}</div>`);
+  if (leadFeature && rows.length > 3) rows.splice(3, 0, `<p class="isp-feature-divider">Homes with some of your features</p>`);
   feed.innerHTML = `
-    <div class="isp-count"><p><b>${resultCount()} properties</b> in ${esc(location)}</p></div>
-    ${cards.map((c) => `<div class="isp-row">${c}</div>`).join("")}
+    ${featureHintHtml()}
+    <div class="isp-count">${countLine}</div>
+    ${rows.join("")}
     ${state.pages < MAX_PAGES ? `<div class="isp-loader" id="isp-loader"><span></span><span></span><span></span></div>` : ""}`;
   bindGalleryIndex(feed);
   observeLoader();
+}
+
+const HINT_KEY = "housing:isp-feature-hint-dismissed";
+function featureHintHtml() {
+  if (!FEATURE_PILLS_ON) return "";
+  try {
+    if (localStorage.getItem(HINT_KEY)) return "";
+  } catch {}
+  return `<div class="isp-feature-hint" role="note">${FI.camera}<p>Filters based on what we see in listing photos</p><button type="button" class="isp-feature-hint__ok" data-action="dismiss-hint">Got it</button></div>`;
+}
+
+function initPlaceholderRotation() {
+  const input = document.querySelector(".srp-search-input");
+  let i = 0;
+  setInterval(() => {
+    if (document.activeElement === input || input.value) return;
+    i = (i + 1) % SEARCH_PLACEHOLDERS.length;
+    input.classList.add("is-rotating");
+    setTimeout(() => {
+      input.placeholder = SEARCH_PLACEHOLDERS[i];
+      input.classList.remove("is-rotating");
+    }, 200);
+  }, 3500);
 }
 
 function bindGalleryIndex(scope) {
@@ -464,6 +524,28 @@ root.addEventListener("click", (event) => {
       renderHeader();
       renderFeed();
       return;
+    case "toggle-feature": {
+      // Play the default ↔ active transition in place, then commit (re-render reorders the row).
+      if (el.dataset.pending) return;
+      el.dataset.pending = "1";
+      el.classList.toggle("isp-applied");
+      navigator.vibrate?.(8);
+      setTimeout(() => {
+        justToggled = el.dataset.feature;
+        toggleFeature(el.dataset.feature);
+        justToggled = null;
+      }, PILL_TRANSITION_MS);
+      return;
+    }
+    case "all-features":
+      openFilterScreen("hf");
+      return;
+    case "dismiss-hint":
+      try {
+        localStorage.setItem(HINT_KEY, "1");
+      } catch {}
+      el.closest(".isp-feature-hint").remove();
+      return;
     case "toggle-new-in-city":
       state.newInCity = !state.newInCity;
       if (state.newInCity) state.hotspots = false;
@@ -507,9 +589,10 @@ renderHeader();
 renderFeed();
 initBottomBarScroll();
 initStickySearchState(document.getElementById("isp-header"));
+if (FEATURE_PILLS_ON) initPlaceholderRotation();
 document.getElementById("isp-search-form").addEventListener("submit", (event) => {
   event.preventDefault();
-  const q = event.currentTarget.q.value.trim();
+  const q = event.currentTarget.q.value.trim() || (FEATURE_PILLS_ON ? event.currentTarget.q.placeholder : "");
   if (!q) return;
   const url = new URL(window.location.href);
   url.searchParams.set("q", q);
