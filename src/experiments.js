@@ -26,7 +26,6 @@ export const SRP_MWEB_BUY_EXPERIMENT_ID = "mweb_buy_srp";
 export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_strip";
 export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 export const ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID = "onboarding_locality_discovery_flow";
-export const SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID = "srp_image_search_pills";
 export const SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID = "srp_image_feature_pills";
 
 const EXPERIMENT_DEFINITIONS = [
@@ -89,31 +88,17 @@ const EXPERIMENT_DEFINITIONS = [
     },
   },
   {
-    id: SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID,
-    name: "Buy/SRP Image based search pills",
+    id: SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID,
+    name: "Buy/SRP Seen in photos feature pills",
     platform: "mobile",
     exclusive: false,
-    // Turning this on switches off every other SRP experiment (and vice versa).
+    // Homepage search lands on srp-image-search-pills.html. Turning this on
+    // switches off every other SRP experiment (and vice versa).
     conflictsWith: [
       SRP_MWEB_BUY_EXPERIMENT_ID,
       SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID,
       SRP_BHK_BUDGET_CARD_EXPERIMENT_ID,
     ],
-    apply(enabled) {
-      document.documentElement.classList.toggle("experiment-srp-image-search-pills", enabled);
-      window.dispatchEvent(
-        new CustomEvent("housing:experiment-apply", {
-          detail: { id: SRP_IMAGE_SEARCH_PILLS_EXPERIMENT_ID, enabled },
-          bubbles: true,
-        })
-      );
-    },
-  },
-  {
-    id: SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID,
-    name: "Seen in photos feature pills (Image search pills SRP)",
-    platform: "mobile",
-    exclusive: false,
     apply(enabled) {
       document.documentElement.classList.toggle("experiment-srp-image-feature-pills", enabled);
       window.dispatchEvent(

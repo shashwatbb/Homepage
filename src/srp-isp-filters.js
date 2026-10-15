@@ -6,6 +6,7 @@
 import { ISP_ICONS as I } from "./data/srpIspIcons.js";
 import { isExperimentEnabled, SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID } from "./experiments.js";
 import { FEATURES, FEATURE_CATEGORY_ID, FEATURE_GROUPS } from "./data/srpFeaturePills.js";
+import { FEATURE_ICONS as FI } from "./data/srpFeatureIcons.js";
 
 // `?feature_pills=1` turns the flag on (and remembers it) for quick demo links.
 if (new URLSearchParams(window.location.search).get("feature_pills") === "1") {
@@ -63,11 +64,11 @@ const CATEGORIES = [
   { id: "14", label: "Verified", type: "switch", options: [{ value: "1", label: "Verified properties only" }] },
 ];
 if (FEATURE_PILLS_ON) {
-  // "Home features" — same features as the Seen in photos pills, grouped.
+  // "Features" — same features as the Seen in photos pills, grouped.
   const at = CATEGORIES.findIndex((c) => c.id === "6") + 1;
   CATEGORIES.splice(at, 0, {
-    id: FEATURE_CATEGORY_ID, label: "Home features", type: "features",
-    options: FEATURES.map((f) => ({ value: f.id, label: f.label, count: f.count, group: f.group })),
+    id: FEATURE_CATEGORY_ID, label: "Features", type: "features",
+    options: FEATURES.map((f) => ({ value: f.id, label: f.label, icon: f.icon, group: f.group })),
   });
 }
 const byId = (id) => CATEGORIES.find((c) => c.id === id);
@@ -201,7 +202,7 @@ function positionIndicator() {
 
 function checkRow(c, o, checked, kind) {
   return `<button type="button" class="isp-f__opt" data-f="option" data-value="${o.value}">
-      <span>${o.label}${o.count != null ? ` <em class="isp-f__opt-count">${o.count}</em>` : ""}</span><span class="isp-f__${kind}${checked ? " is-checked" : ""}">${kind === "check" && checked ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.4 6.2L5.1 9.9L11 2.9" stroke="#4A16D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ""}</span>
+      <span>${o.label}</span><span class="isp-f__${kind}${checked ? " is-checked" : ""}">${kind === "check" && checked ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.4 6.2L5.1 9.9L11 2.9" stroke="#4A16D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ""}</span>
     </button>`;
 }
 
@@ -233,9 +234,13 @@ function renderContent() {
       </div>`;
   } else if (c.type === "features") {
     const values = sel?.values ?? [];
-    body = `<p class="isp-f__features-note">Seen in photos</p>` + FEATURE_GROUPS.map((group) => {
-      const rows = c.options.filter((o) => o.group === group).map((o) => checkRow(c, o, values.includes(o.value), "check")).join("");
-      return `<p class="isp-f__group">${group}</p>${rows}`;
+    // Same chips as the SRP feature pill row, wrapped per group.
+    body = FEATURE_GROUPS.map((group) => {
+      const chips = c.options.filter((o) => o.group === group).map((o) => {
+        const on = values.includes(o.value);
+        return `<button type="button" class="srp-filter-dropdown isp-fpill${on ? " isp-applied" : ""}" data-f="option" data-value="${o.value}" aria-pressed="${on}">${FI[o.icon]}<span>${o.label}</span></button>`;
+      }).join("");
+      return `<section class="isp-f__fgroup"><p class="isp-f__group">${group}</p><div class="isp-f__fchips">${chips}</div></section>`;
     }).join("");
   } else {
     const values = sel?.values ?? [];

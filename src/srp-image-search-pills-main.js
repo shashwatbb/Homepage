@@ -170,10 +170,10 @@ function featurePillsHtml() {
   const rest = FEATURES.filter((f) => !applied.includes(f.id));
   // Same chip as the top row (.srp-filter-dropdown) — inactive and .isp-applied states.
   const pill = (f, on) => `<button type="button" class="srp-filter-dropdown isp-fpill${on ? " isp-applied" : ""}${f.id === justToggled ? " is-entering" : ""}" data-action="toggle-feature" data-feature="${f.id}" aria-pressed="${on}">
-      ${FI[f.icon]}<span>${f.label}</span>${on ? PH_X : `<span class="isp-fpill__count">${f.count}</span>`}
+      ${FI[f.icon]}<span>${f.label}</span>${on ? PH_X : `<span class="isp-fpill__count">(${f.count})</span>`}
     </button>`;
   return `${front.map((f) => pill(f, true)).join("")}${rest.map((f) => pill(f, false)).join("")}
-    <button type="button" class="srp-filter-dropdown isp-fpill" data-action="all-features">${FI.category}<span>All features</span>${PH_CHEVRON}</button>`;
+    <button type="button" class="srp-filter-dropdown isp-fpill" data-action="all-features">${FI.category}<span>Features</span>${PH_CHEVRON}</button>`;
 }
 
 function renderHeader() {

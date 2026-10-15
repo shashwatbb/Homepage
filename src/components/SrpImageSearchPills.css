@@ -1257,7 +1257,7 @@ body:has(.isp) {
 }
 
 .isp-fpill__count {
-  color: var(--ds-text-muted);
+  color: var(--ds-color-grey-neutral-500);
 }
 
 /* One-time tip, with a caret pointing up at the feature pill row. */
@@ -1319,23 +1319,20 @@ body:has(.isp) {
   transition: opacity 200ms ease;
 }
 
-/* Filter panel — Home features */
-.isp-f__features-note {
-  margin-bottom: var(--ds-space-2xs) !important;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--ds-text-muted);
+/* Filter screen — Features: grouped chips, same as the pill row. */
+.isp-f__fgroup + .isp-f__fgroup {
+  margin-top: var(--ds-space-xl);
 }
 
 .isp-f__group {
-  margin-top: var(--ds-space-m) !important;
+  margin-bottom: var(--ds-space-s) !important;
   font-size: 12px;
   line-height: 16px;
-  font-weight: 500;
-  color: var(--ds-text-primary);
+  color: var(--ds-text-muted);
 }
 
-.isp-f__opt-count {
-  font-style: normal;
-  color: var(--ds-text-muted);
+.isp-f__fchips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-xs);
 }
