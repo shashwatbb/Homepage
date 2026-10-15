@@ -5,7 +5,10 @@
  * Front end only — fake data, CTAs raise a toast.
  */
 import "./styles/base.css";
+import "./components/SrpSearch.css";
 import "./components/SrpImageSearchPills.css";
+import arrowLeftUrl from "./assets/icons/arrow-left.svg";
+import aiLogoUrl from "./assets/icons/ai-logo.png";
 import { ISP_ICONS as I } from "./data/srpIspIcons.js";
 import {
   PINNED_CHIPS,
@@ -116,51 +119,104 @@ function sortOptions() {
   return applied["2"] || applied["3"] ? [...SORT_OPTIONS, ...SORT_PER_SQFT] : SORT_OPTIONS;
 }
 
+/* Search + filter chips reuse the Buy m-web SRP (Imagine) design verbatim —
+   markup classes and SrpSearch.css are shared with srp.html. */
+const PH_SORT = `<svg class="srp-filter-sort__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><polyline points="112 176 80 208 48 176" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="80" y1="48" x2="80" y2="208" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="144 80 176 48 208 80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="176" y1="208" x2="176" y2="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
+const PH_FILTER = `<svg class="srp-filter-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" d="M200,136a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,136Zm32-56H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16Zm-80,96H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16Z"/></svg>`;
+const PH_CHEVRON = `<svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
+const PH_X = `<svg class="srp-filter-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
+
 function filterChipRowHtml() {
   const applied = getApplied();
   const count = appliedCount();
   const sortSel = state.sort !== "relevance";
   const filtersChip = count
-    ? `<button type="button" class="isp-chip is-sel" data-action="open-filters">${I.sliders}<span>Filters (${count})</span><span class="isp-chip__clear" role="button" aria-label="Clear" data-action="clear-filters">${I.blueCross}</span></button>`
-    : `<button type="button" class="isp-chip" data-action="open-filters">${I.sliders}<span>Filters</span><span class="isp-chip__chev">${I.chevronDown}</span></button>`;
+    ? `<div class="srp-filter-chip">
+        <button type="button" class="srp-filter-active" data-action="open-filters">${PH_FILTER}<span>Filters (${count})</span></button>
+        <span class="srp-filter-chip-separator" aria-hidden="true"></span>
+        <button type="button" class="srp-filter-clear" data-action="clear-filters">Clear</button>
+      </div>`
+    : `<button type="button" class="srp-filter-dropdown" data-action="open-filters">${PH_FILTER}<span>Filters</span></button>`;
   const pinned = PINNED_CHIPS.map(({ title, categoryId }) => {
     const a = applied[categoryId];
-    return `<button type="button" class="isp-chip${a ? " is-sel" : ""}" data-action="open-filters" data-category="${categoryId}"><span>${esc(a ? a.displayLabel : title)}</span><span class="isp-chip__chev">${I.chevronDown}</span></button>`;
+    return `<button type="button" class="srp-filter-dropdown${a ? " isp-applied" : ""}" data-action="open-filters" data-category="${categoryId}"><span>${esc(a ? a.displayLabel : title)}</span>${PH_CHEVRON}</button>`;
   }).join("");
-  return `<div class="isp-fcr"><div class="isp-fcr__content">
-      <button type="button" class="isp-chip isp-chip--icon${sortSel ? " is-sel" : ""}" aria-label="Sort" data-action="open-sort">${I.sort}</button>
-      ${filtersChip}${pinned}
-    </div></div>`;
+  return `<button type="button" class="srp-filter-sort${sortSel ? " isp-applied" : ""}" aria-label="Sort" data-action="open-sort">${PH_SORT}</button>
+    ${filtersChip}${pinned}`;
 }
 
 function discoveryChipsHtml() {
   const { hotspots, newInCity } = state;
-  return `<div class="isp-disc"><div class="isp-disc__content">
-      <button type="button" class="isp-dchip isp-dchip--icon${hotspots ? " is-sel" : ""}" data-action="toggle-hotspots">
-        <span class="isp-dchip__badge" style="background:#fff8e8">${I.cityHotspots}</span><span>City hotspots</span>${hotspots ? `<span class="isp-dchip__close">${I.chipClose}</span>` : ""}
-      </button>
-      ${hotspots ? `<button type="button" class="isp-dchip is-sel" data-action="all-areas"><span>All areas</span><span class="isp-dchip__chev">${I.chevronDown}</span></button>` : ""}
-      <button type="button" class="isp-dchip isp-dchip--icon${newInCity ? " is-sel" : ""}" data-action="toggle-new-in-city">
-        <span class="isp-dchip__badge" style="background:#eef4ff">${I.newInCity}</span><span>New in ${CITY}</span>${newInCity ? `<span class="isp-dchip__close">${I.chipClose}</span>` : ""}
-      </button>
-    </div></div>`;
+  return `<button type="button" class="srp-filter-dropdown isp-dchip${hotspots ? " isp-applied" : ""}" data-action="toggle-hotspots">
+      <span class="isp-dchip__icon">${I.cityHotspots}</span><span>City hotspots</span>${hotspots ? PH_X : ""}
+    </button>
+    ${hotspots ? `<button type="button" class="srp-filter-dropdown isp-applied" data-action="all-areas"><span>All areas</span>${PH_CHEVRON}</button>` : ""}
+    <button type="button" class="srp-filter-dropdown isp-dchip${newInCity ? " isp-applied" : ""}" data-action="toggle-new-in-city">
+      <span class="isp-dchip__icon">${I.newInCity}</span><span>New in ${CITY}</span>${newInCity ? PH_X : ""}
+    </button>`;
 }
 
 function renderHeader() {
-  const header = document.getElementById("isp-header");
-  const scrollX = header.querySelector(".isp-fcr")?.scrollLeft ?? 0;
-  header.innerHTML = `
-    <div class="isp-sb">
-      <button type="button" class="isp-sb__back" aria-label="Back" data-action="back">${I.arrowLeft}</button>
-      <button type="button" class="isp-sb__field" data-action="search">
-        <span class="isp-sb__terms">${esc(LOCALITY)}</span>
-        <span class="isp-sb__go">${I.search}</span>
-      </button>
+  const chips = document.getElementById("isp-chips");
+  const scrollX = chips.scrollLeft;
+  chips.innerHTML = filterChipRowHtml();
+  chips.scrollLeft = scrollX;
+  document.getElementById("isp-disc").innerHTML = discoveryChipsHtml();
+}
+
+function searchChromeHtml() {
+  return `<div class="srp-search-container">
+      <div class="srp-search-row">
+        <button type="button" class="srp-search-back" aria-label="Back" data-action="back">
+          <img class="srp-search-back__icon" src="${arrowLeftUrl}" alt="" width="24" height="24" decoding="async" />
+        </button>
+        <form class="srp-search-field" id="isp-search-form" role="search">
+          <span class="srp-search-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="18" height="18" fill="none"><circle cx="112" cy="112" r="80" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="168.57" y1="168.57" x2="224" y2="224" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+          </span>
+          <input type="search" class="srp-search-input" name="q" value="${esc(LOCALITY)}" placeholder="What are you looking for?" autocomplete="off" enterkeyhint="search" />
+          <span class="srp-search-divider" aria-hidden="true"></span>
+          <button type="button" class="srp-search-magic" aria-label="AI search" data-action="ai-search">
+            <img src="${aiLogoUrl}" alt="" width="20" height="20" decoding="async" />
+          </button>
+        </form>
+      </div>
     </div>
-    ${filterChipRowHtml()}
-    ${discoveryChipsHtml()}
-    <div class="isp-header__shadow"></div>`;
-  header.querySelector(".isp-fcr").scrollLeft = scrollX;
+    <div class="srp-search-filters isp-filters-band"><div class="srp-search-filters__scroller" id="isp-chips"></div></div>
+    <div class="srp-search-filters isp-disc-band"><div class="srp-search-filters__scroller" id="isp-disc"></div></div>`;
+}
+
+/* Same scroll-linked first-fold → stuck fade as srp-main.js initSrpStickySearchState. */
+function initStickySearchState(chrome) {
+  const sentinel = document.createElement("div");
+  sentinel.className = "srp-search-sentinel";
+  sentinel.setAttribute("aria-hidden", "true");
+  chrome.parentNode.insertBefore(sentinel, chrome);
+  const STICK_FADE_RANGE_PX = 80;
+
+  const update = () => {
+    const sentinelTop = sentinel.getBoundingClientRect().top;
+    let progress = 0;
+    if (window.scrollY > 0 && sentinelTop < 0) {
+      const t = Math.min(1, -sentinelTop / STICK_FADE_RANGE_PX);
+      progress = t * t * (3 - 2 * t);
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) progress = progress >= 0.5 ? 1 : 0;
+    chrome.style.setProperty("--srp-chrome-stick", progress.toFixed(4));
+    chrome.classList.toggle("srp-search-chrome--stuck", progress >= 0.995);
+  };
+
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      update();
+      ticking = false;
+    });
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
 }
 
 /* ---------- cards ---------- */
@@ -362,7 +418,7 @@ function initBottomBarScroll() {
 
 /* ---------- actions ---------- */
 const NOTICES = {
-  search: "Locality search is not part of this prototype",
+  "ai-search": "AI search is not part of this prototype",
   "all-areas": "Hotspot picker is not part of this prototype",
   "open-card": "Property page is not in this prototype",
   "view-number": "Contact form is not in this prototype",
@@ -435,7 +491,7 @@ root.addEventListener("click", (event) => {
 
 /* ---------- mount ---------- */
 root.innerHTML = `
-  <header class="isp-header" id="isp-header"></header>
+  <header class="srp-search-chrome isp-chrome" id="isp-header">${searchChromeHtml()}</header>
   <section class="isp-feed" id="isp-feed"></section>
   <nav class="isp-nav" id="isp-nav">${bottomBarHtml()}</nav>
   <div class="isp-sheet" id="isp-sort" hidden>
@@ -450,6 +506,15 @@ root.innerHTML = `
 renderHeader();
 renderFeed();
 initBottomBarScroll();
+initStickySearchState(document.getElementById("isp-header"));
+document.getElementById("isp-search-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const q = event.currentTarget.q.value.trim();
+  if (!q) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set("q", q);
+  window.location.assign(url.href);
+});
 onAppliedChange(() => {
   state.pages = 1;
   renderHeader();

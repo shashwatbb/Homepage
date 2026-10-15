@@ -36,7 +36,7 @@ body:has(.isp) {
   margin: 0;
 }
 
-.isp button {
+:where(.isp) button {
   font: inherit;
   color: inherit;
   background: none;
@@ -108,191 +108,63 @@ body:has(.isp) {
 }
 
 /* Hide scrollbars on horizontal rails. */
-.isp-fcr,
-.isp-disc,
 .isp-strip,
 .isp-poss__bar,
 .isp-plans {
   scrollbar-width: none;
 }
 
-.isp-fcr::-webkit-scrollbar,
-.isp-disc::-webkit-scrollbar,
 .isp-strip::-webkit-scrollbar,
 .isp-poss__bar::-webkit-scrollbar,
 .isp-plans::-webkit-scrollbar {
   display: none;
 }
 
-/* ---------------- Header (NP SERP) ---------------- */
-.isp-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--isp-white);
-  padding-top: 4px;
-  border-bottom: 0.5px solid var(--isp-border-subtle);
+/* ---------------- Header — Buy m-web SRP (Imagine) via SrpSearch.css ---------------- */
+/* Two chip bands: only the last one carries the stuck border/shadow. */
+.srp-search-filters.isp-filters-band {
+  border-bottom: none;
+  box-shadow: none;
 }
 
-.isp-header__shadow {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 6px;
-  pointer-events: none;
-  background: linear-gradient(to bottom, #0f0e0d1a, #0f0e0d00);
+.srp-search-filters.isp-disc-band {
+  height: 44px;
+  min-height: 44px;
 }
 
-.isp-sb {
-  height: 72px;
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
+.isp-disc-band .srp-search-filters__scroller {
+  padding-top: 0;
 }
 
-.isp-sb__back {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--isp-text);
+/* Applied state — same fill/stroke as the m-web active Filters chip. */
+.srp-filter-sort.isp-applied,
+.srp-filter-dropdown.isp-applied {
+  border-color: #5e23dc;
+  background-color: var(--ds-color-lavender-mist-50);
+  color: var(--ds-color-purple-700);
 }
 
-.isp .isp-sb__field {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid var(--isp-border);
-  border-radius: 12px;
-  background: var(--isp-white);
-  padding: 8px 8px 8px 16px;
-  text-align: left;
+.srp-filter-dropdown.isp-applied svg,
+.srp-filter-sort.isp-applied svg {
+  color: var(--ds-color-purple-700);
 }
 
-.isp-sb__terms {
-  flex: 1;
-  min-width: 0;
-  margin-right: 12px;
-  font-size: 14px;
-  line-height: 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.srp-filter-dropdown .srp-filter-icon {
+  color: var(--ds-color-grey-neutral-800);
 }
 
-.isp-sb__go {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: var(--isp-brand);
-  color: #fff;
+/* Hotspot / New-in-city — m-web dropdown chip with a leading 16px glyph. */
+.isp-dchip__icon {
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.isp-fcr {
-  overflow-x: auto;
-  padding: 12px 0;
-}
-
-.isp-fcr__content,
-.isp-disc__content {
-  display: flex;
-  gap: 8px;
-  padding: 0 16px;
-  width: max-content;
-}
-
-.isp-disc {
-  overflow-x: auto;
-}
-
-.isp-disc__content {
-  padding-bottom: 16px;
-}
-
-.isp .isp-chip {
-  height: 32px;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0 8px;
-  border: 1px solid var(--isp-border);
-  border-radius: 8px;
-  background: var(--isp-white);
-  color: var(--isp-text);
-  font-size: 12px;
-  line-height: 16px;
-  white-space: nowrap;
-}
-
-.isp .isp-chip.is-sel {
-  border-color: var(--isp-brand);
-  background: var(--isp-brand-subtle);
-  color: var(--isp-brand);
-}
-
-.isp .isp-chip--icon {
-  width: 32px;
-  padding: 0;
-  justify-content: center;
-}
-
-.isp-chip__chev {
-  margin-left: 2px;
-}
-
-.isp-chip__clear {
-  padding-left: 4px;
-  display: flex;
-}
-
-.isp .isp-dchip {
-  height: 32px;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 8px;
-  border: 1px solid var(--isp-border);
-  border-radius: 8px;
-  background: var(--isp-white);
-  color: var(--isp-text-2);
-  font-size: 12px;
-  line-height: 16px;
-  white-space: nowrap;
-}
-
-.isp .isp-dchip--icon {
-  padding-left: 5px;
-}
-
-.isp .isp-dchip.is-sel {
-  border-color: var(--isp-brand);
-  background: var(--isp-brand-subtle);
-  color: var(--isp-brand);
-}
-
-.isp-dchip__badge {
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  margin-right: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.isp-dchip__close,
-.isp-dchip__chev {
-  margin-left: 4px;
-  display: flex;
+.isp-dchip__icon svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* ---------------- Feed ---------------- */
