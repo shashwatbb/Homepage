@@ -1,11 +1,18 @@
 # New Bricks Design System (internal)
 
+**Color bible (non-negotiable):** Bricks Design Tokens **v1.2.0** in `tokens/`  
+Archive: `archives/bricks_design_system_tokens_v1_2_0.zip`  
+Never use UI colors outside `tokens/color_primitives.Value.tokens.json` + `tokens/color_tokens.Value.tokens.json`.
+
 Figma: [New Bricks Design System](https://www.figma.com/design/ZGl9LhEtqlE9JiMKBuYrdT/New-Bricks-Design-System?node-id=123-3)
 
 | File | Purpose |
 |------|---------|
+| `tokens/` | **Canonical Bricks DS v1.2.0** (DTCG JSON) — color primitives, semantic colors, spacing, radius, typography, text styles |
+| `tokens.css` | `:root` bridge — consumers use `--ds-*` only (no raw hex in app CSS) |
+| `archives/bricks_design_system_tokens_v1_2_0.zip` | Frozen source pack for v1.2.0 |
 | `new-bricks.meta.json` | Stable IDs, URLs, file key, TalkToFigma channel (`omsn9jta`) |
-| `new-bricks.tokens.json` | **Canonical dump** — includes `figma.getStyles` snapshot from MCP / REST |
+| `new-bricks.tokens.json` | Figma dump snapshot (MCP / REST) — secondary to `tokens/` for color law |
 | `new-bricks.generated.css` | `:root` bridge — text styles as `--nb-text-*` (from `get_styles` text) |
 | `figma-pdp-topfold-reference.json` | PDP first-fold layout tokens from [Demand Component Kit](https://www.figma.com/design/xYC0W1LzOyf0ll2LF5iCZq/Demand%E2%80%A8Component-Kit?node-id=3677-12987) (`3677:12987`, channel `w8ufphpq`) |
 
@@ -34,3 +41,5 @@ Import the generated bridge from global styles if you want CSS variables driven 
 ```
 
 (Adjust path if you wire it into `src/styles/base.css`.)
+
+Prefer `tokens.css` (`--ds-*`) for product UI colors — must stay aligned with Bricks v1.2.0 `tokens/`.

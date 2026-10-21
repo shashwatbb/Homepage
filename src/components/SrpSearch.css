@@ -90,18 +90,15 @@
   padding-bottom: 12px;
 }
 
-/* Filters: white → surface-default via scroll-linked overlay.
-   Hide: slide under search via transform + negative margin (avoids sticky height thrash). */
+/* Filters: white → surface-default via scroll-linked overlay */
 .srp-search-filters {
-  --srp-filters-h: 52px;
   position: relative;
   z-index: 0;
   box-sizing: border-box;
-  height: var(--srp-filters-h);
-  min-height: var(--srp-filters-h);
+  height: 52px;
+  min-height: 52px;
   padding: 0;
   margin-top: 0;
-  margin-bottom: 0;
   overflow: hidden;
   background-color: var(--ds-color-warm-neutral-0);
   border-bottom: 1px solid
@@ -114,27 +111,6 @@
     0 4px 10px -4px rgba(15, 14, 13, calc(0.12 * var(--srp-chrome-stick, 0))),
     0 2px 4px -2px rgba(15, 14, 13, calc(0.05 * var(--srp-chrome-stick, 0)));
   isolation: isolate;
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition:
-    transform 0.24s cubic-bezier(0.25, 0.1, 0.25, 1),
-    margin-bottom 0.24s cubic-bezier(0.25, 0.1, 0.25, 1),
-    opacity 0.16s linear;
-}
-
-.srp-search-chrome--filters-hidden .srp-search-filters {
-  transform: translate3d(0, -100%, 0);
-  margin-bottom: calc(-1 * var(--srp-filters-h));
-  opacity: 0;
-  border-bottom-color: transparent;
-  box-shadow: none;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .srp-search-filters {
-    transition: none;
-  }
 }
 
 .srp-search-filters::before {

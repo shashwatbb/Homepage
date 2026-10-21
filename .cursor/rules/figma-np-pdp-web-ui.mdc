@@ -1,0 +1,129 @@
+---
+description: Web NP PDP UI SoT — measured shell, section cards, Share/Save, type, chips, CTAs; never invent or mix mobile chrome
+alwaysApply: true
+---
+
+# Figma Web NP PDP — UI law (non-negotiable)
+
+UI-learning SoT for **web** NP PDP. Full forensic dump: `design-system/np-pdp-web-ui-learning.md`.
+
+## Sources of truth (re-measure; do not invent)
+
+1. Page: `Web / Homepage / NP / PDP` (`3414:11591`)
+2. Left stack: `3399:12459` (23 section cards)
+3. Share/Save: `3422:4581`
+4. First fold set: `3767:5699`
+5. Sister components on page **PDP** (Tabs, Chips, Amenities, Rating, Floor plan cards, Cards, etc.)
+
+If CSS / Housing live / mobile frame disagree with these IDs → **web Figma wins for web work**.
+
+## Hard bans
+
+- **Do not** make Share/Save/Back **circles** (`radius/full`, 50%, pill-as-circle).
+- **Do not** copy **mobile** chrome (`4678:13581` = 40×40, **no** stroke) onto **web** Share/Save.
+- **Do not** set outer **section cards** to radius **16** or pad **16** — outer is always radius **24** (**web only**).
+- **Do not** invent colors/radii/type outside Bricks + measured Google Sans Flex roles.
+- **Do not** treat the web template’s 23-section list as Housing URL content authority (`figma-housing-url-sections-only`).
+- **Do not** apply this web rounded-section recipe to **mobile** frames — mobile outer sections are **flat** (`figma-np-pdp-mobile-ui`).
+
+## Page shell (locked)
+
+| Layer | Recipe |
+|---|---|
+| Page | 1512 wide, VERTICAL, gap **40**, fill `surface/default` |
+| Header | 1512×**64**, HORIZONTAL, gap **48**, pad **[8,24,8,24]**, fill `surface/subtle` |
+| Content | **1200** wide host |
+| Body row | HORIZONTAL gap **24** → left **792** + rail **384** |
+| Footer | fill `warm_neutral/800` |
+
+## First fold (web)
+
+| Prop | Required |
+|---|---|
+| Size | **1200 × 566** (Full view) |
+| Layout | HORIZONTAL gap **40** |
+| Pad | **24** all |
+| Radius | **24** all (`radius/2xl`) |
+| Fill | `surface/white` |
+
+## Share / Save — WEB Recipe W (only for web)
+
+Measured `3422:4581`:
+
+| Prop | Required |
+|---|---|
+| Hit target | **42×42** |
+| Pad | **12** all |
+| Radius | **`radius/m` (12)** — rounded square |
+| Fill | `surface/white` |
+| Stroke | **`border/default` 1px** |
+| Row gap | **16** |
+| Glyph | ~18×18; Iconography — Bricks |
+
+Mobile Recipe A stays in `figma-button-chrome.mdc` (40×40, no stroke). **Never merge.**
+
+## Section cards (left 792 column)
+
+| Prop | Required |
+|---|---|
+| Fill | `surface/white` |
+| Radius | **24** all |
+| Gap | **24** |
+| Pad A | **[24,24,24,24]** (default) |
+| Pad B | **[24,0,24,0]** (edge-bleed carousel/table only) |
+| Title | Google Sans Flex **SemiBold 18** / h**26** / `text/primary` |
+
+Inner nested cards (floor plan / property cards) may use radius **16** — **outer section shell may not**.
+
+## Dividers
+
+LINE, stroke `border/subtle`, weight **1**, align CENTER.
+
+## Chips
+
+| State | Fill | Stroke |
+|---|---|---|
+| Off | `surface/white` | `border/subtle` 1 |
+| On | `surface/subtle` | `warm_neutral/500` **1.5** |
+
+Pad **[12,16,12,16]**, radius **12**, label Regular **14** / `text/primary`, chip-row gap **16**.
+
+## Tabs
+
+Width **792**, height **40**, fill `surface/white`, radius **[24,24,0,0]** only, horizontal pad **24**.
+
+## Primary CTA
+
+| Context | Pad | Height | Radius | Fill | Label |
+|---|---|---|---|---|---|
+| Rail Contact seller | **[12,24,12,24]** | **48** | **12** | `surface/brand` | Medium 14 / `text/inverse` |
+| In-section brand | **[12,20,12,20]** | **48** | **12** | `surface/brand` | Medium 14 / `text/inverse` |
+
+## Type roles (do not freestyle)
+
+- Section H1 (in-page): SemiBold **18**
+- Modal/panel header: Medium **16**
+- Body: Medium/Regular **14** (primary), captions **12**
+- CTA: Medium **14**
+- Family: **Google Sans Flex** only on this surface
+
+## Nested card widths (when using kit components)
+
+- Floor plan card: **320**
+- Property card: **280**, outer radius **16**, image top radius 16
+- Rating inner block: radius **16**, `surface/subtle`
+
+## Mandatory verify before shipping web UI
+
+```
+Share/Save: 42×42, radius===12 (token m), fill surface/white, stroke border/default
+Section outer: radius===24, fill surface/white, gap===24, title SemiBold 18
+First fold: pad 24, radius 24, gap 40, surface/white
+No radius/full on icon chrome
+```
+
+Fail → fix against SoT IDs before other work.
+
+## Related
+
+`design-system/np-pdp-web-ui-learning.md`, `figma-button-chrome` (mobile), `figma-np-pdp-mobile-ui` (mobile flat sections / type / FAQ), `bricks-ds-color-bible`, `bricks-ds-icon-colors`, `figma-housing-url-sections-only`

@@ -1,0 +1,162 @@
+---
+description: Mobile NP PDP UI — flat sections, 16px L/R pad + 16px content gap, FAQ carets, type ≤20 / body ≤14
+alwaysApply: true
+---
+
+# Figma Mobile NP PDP — UI law (legacy / earlier JMS frame)
+
+> **If replicating the handcrafted mweb NP PLOT (`FINALL` / `46:9766`), use `figma-mweb-np-plot-ui` instead — that SoT wins.**  
+> This file remains for older 360 JMS experiments only when the user explicitly points at that frame.
+
+## 1. Section cards — NOT rounded
+
+| Prop | Required (mobile) |
+|---|---|
+| Outer section radius | **`radius/none` (0)** — flat edges |
+| Fill | `surface/white` |
+| Left / right padding | **16px** = `spacing/m` |
+| Top / bottom padding | **16px** = `spacing/m` (match L/R unless a measured SoT says otherwise) |
+| Gap between content inside section | **16px** = `spacing/m` |
+| Body stack gap (between sections) | **8px** = `spacing/xs` |
+
+**Hard ban:** Do not apply `radius/2xl` / 24 on **outer** mobile section shells (web-only).  
+**Hard ban:** Do not use **24** L/R pad inside mobile sections — always **16**.  
+**Hard ban:** Do not use **16/24** gap *between* mobile sections — always **8**.
+
+Nested chips / list panels / EMI pills may still use small radii (`radius/xs`–`radius/l`). First-fold summary shelf may keep **top-only** radius for hero overlap — body sections must stay flat. Summary L/R pad and internal gap also **16**.
+
+## 1b. Summary badges (above project title)
+
+Place **above** the project heading in the **summary shelf — never on the hero**.
+
+### Zero brokerage — soft web `badge/base` SoT
+
+Selected web First fold `badge/base`:
+
+| Prop | Required |
+|---|---|
+| Fill | **`surface/default`** — soft; **never** black / `warm_neutral/800` / inverse |
+| Label | Google Sans Flex **Regular 14** / **`text/secondary`** |
+| Pad | **[4, 8, 4, 8]** |
+| Radius | **`radius/xs` (4)** |
+| Stroke | none |
+
+### RERA — success verified pill (do not soften to badge/base)
+
+| Prop | Required |
+|---|---|
+| Fill | **`semantic_surface/success`** |
+| Label | Medium **12** / **`semantic_text/success`** |
+| Leading icon | Bricks Iconography **`SealCheck`** 16 Fill, tint **`semantic_icons/success`** — never custom/CDN SVG |
+| Pad | **[4, 8, 4, 8]** |
+| Gap | **4** |
+| Radius | **`radius/xs` (4)** |
+
+### Row
+
+| Prop | Required |
+|---|---|
+| Name | `Summary tags` |
+| Layout | HORIZONTAL, gap **12** (`spacing/s`) |
+| Order | before Title row |
+
+### Hard bans
+
+- Do **not** use black / inverse pills for Zero brokerage
+- Do **not** restyle RERA into soft `badge/base` / `surface/default`
+- Do **not** put these badges on the hero gallery
+
+## 1c. Payment plan section (mobile)
+
+Replace list-of-stages with a **scannable EMI card + CTA** (Housing PDP pattern):
+
+| Layer | Recipe |
+|---|---|
+| Section shell | Flat, pad **16**, gap **16**, `surface/white` |
+| Title | SemiBold **16** / `text/primary` |
+| Card | `surface/subtle`, radius **`radius/l` (16)**, pad **16**, gap **12** |
+| EMI line | Regular **14** / `text/primary`; amount span **SemiBold** (e.g. `₹1.11L`) |
+| Meta | `Duration:` / `Interest:` labels Regular **12** `text/muted`; values Medium **12** `text/primary`; separator · |
+| Breakup link | Medium **14** / `text/brand` + Bricks **chevron right** tinted `icon/brand_1` |
+| CTA | Full-width **48**h, `surface/brand`, Medium **14** / `text/inverse`, radius **`radius/m`** |
+
+**Hard ban:** Do not leave Payment plan as a raw stage amount list as the primary UI.
+
+Every FAQ **question** row must show a trailing arrow so users know items expand/collapse.
+
+| Prop | Required |
+|---|---|
+| Layout | HORIZONTAL, SPACE_BETWEEN / CENTER |
+| Question | Medium **14** / `text/primary` (FILL) |
+| Arrow | Iconography — Bricks **`CaretDown`** (prefer Size=16, key `a074229f2dfb5224e13da2152007a2f384739b97`) |
+| Icon color | `icon/grey_1` |
+| Collapsed | answer hidden; caret points down |
+| Expanded | answer visible; caret may rotate to up (`CaretUp` / Chevron Up) if showing state |
+
+**Hard ban:** FAQ questions as bare TEXT with no arrow.
+
+## 3. Typography — mobile scale
+
+| Role | Max / target | Token |
+|---|---|---|
+| Absolute max any text | **20px** | `font_size/2xl` |
+| Section titles | **16** max — **never 18** | `font_size/lg` |
+| Body / paragraphs | **14** — **not 16** | `font_size/m` |
+| Meta / captions | **12** | `font_size/s` |
+| CTA labels | **14** Medium | `font_size/m` |
+| Price hero | ≤ **20** SemiBold | `font_size/2xl` |
+
+Family: **Google Sans Flex** only.
+
+**Hard bans:**
+- Any text **> 20px** on mobile NP PDP
+- Section headings at **18px** (`font_size/xl`) — too large; use **16**
+- Body copy at **16px** (`font_size/lg`) — too large for body; use **14** (headings may use 16)
+
+## 4. Hero gallery
+
+| Prop | Required (mobile) |
+|---|---|
+| Hero / gallery image height | **430px** FIXED |
+| Width | **360** (full bleed) |
+| Overlays allowed | **Icons only** — Back / Share / Save (`figma-button-chrome` Recipe A) |
+| Gallery icon stroke | **`border/default` · 1.5px** · INSIDE |
+| Scroll cue | **Centre-aligned pagination dots** in the **media safe zone** (above summary overlap — see `figma-overlap-safe-zones`) |
+
+**Hard bans on hero:**
+- Do **not** put status **chips/pills** (RERA, Under construction, etc.) on the hero image
+- Do **not** put **thumbnail strips** / “more images” previews on the hero
+- Do **not** shrink hero below **430** without updating this rule
+- Do **not** pin dots in the summary overlap band (they will be invisible / clipped)
+- Do **not** use gallery icon stroke other than **1.5px** `border/default`
+
+**Dots placement math:**
+```
+overlapDepth = abs(firstFold.itemSpacing) when negative  // e.g. 28
+dots.bottom ≤ heroHeight - overlapDepth - spacing/m(16)
+dots centred horizontally on 360
+```
+
+## 5. Chrome (unchanged)
+
+Back / Share / Save / WhatsApp / Contact → `figma-button-chrome` (mobile recipes). Never circles.
+
+## Verify before shipping mobile UI
+
+```
+Outer sections: radius === 0 (token none)
+Section pad L/R === 16 (spacing/m); gap between content === 16
+Body gap between sections === 8 (spacing/xs)
+Hero gallery height === 430
+Hero: no pills/thumbs; has centre Gallery dots; icons only
+Gallery icons: strokeWeight === 1.5, stroke === border/default
+Summary badges: Zero brokerage = soft badge/base; RERA = success + SealCheck (do not soften RERA)
+No TEXT fontSize > 20
+Section headings ≤ 16 (never 18)
+No body paragraph at 16
+Each FAQ question row has CaretDown (or Up when expanded)
+```
+
+## Related
+
+`figma-np-pdp-web-ui` (web rounded cards), `figma-button-chrome`, `bricks-iconography-source`, `bricks-ds-icon-colors`, `bricks-ds-all-tokens`

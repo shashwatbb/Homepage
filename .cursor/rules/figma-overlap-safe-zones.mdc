@@ -1,0 +1,77 @@
+---
+description: Strict rules for overlapping shelves vs media overlays — never clip pills/thumbs/badges under a description shelf
+alwaysApply: true
+---
+
+# Overlap safe zones — media + floating shelf
+
+Applies whenever a **content shelf / summary card** intentionally overlaps a **media hero** (negative `itemSpacing`, absolute pull-up, or shared z-stack). Classic fail: pills, thumbs, chips, or pagination sit in the overlap band and get **half-eaten by the shelf** (including under rounded top corners).
+
+## Hard rule
+
+**No interactive or informational overlay on the media plane may intersect the shelf’s opaque footprint** — including the shelf’s top corner radius curves.
+
+If it lives on the photo, it must sit entirely in the **media safe zone**. If it cannot, **move it off the photo** (onto the shelf / chrome), do not leave it clipped.
+
+## Definitions
+
+| Term | Meaning |
+|---|---|
+| **Overlap depth** | Absolute value of the pull-up (`abs(itemSpacing)` when negative, or y-delta of the shelf onto the hero) |
+| **Shelf crown** | Top edge of the shelf **plus** its top corner radii (`radius/2xl` = 24px in Bricks, etc.) |
+| **Media safe zone** | Hero rectangle minus the shelf crown band and minus edge insets |
+| **Media overlays** | Pills, chips, thumbs, pagination dots, badges, floating CTAs pinned to the hero |
+
+## Required math (do this before placing bottom overlays)
+
+```
+safeBottomInset = overlapDepth + breathingGap
+```
+
+- `overlapDepth` = measured pull-up (e.g. 28)
+- `breathingGap` = at least Bricks **`spacing/s` (12px)** — prefer **`spacing/m` (16px)** when overlays sit near left/right corners (radius bite)
+- Overlay bottom edge ≤ `heroHeight - safeBottomInset`
+- Overlay left/right ≥ Bricks **`spacing/s` (12px)** from hero edges (or the token already used for chrome padding)
+
+Also account for **corner bite**: overlays in the bottom-left / bottom-right corners need the larger inset (`overlapDepth + spacing/m` minimum) because `topLeftRadius` / `topRightRadius` of the shelf eat diagonally into the hero.
+
+## Allowed layouts (pick one — never a hybrid that clips)
+
+1. **Safe-zone pin (preferred for photo chips/thumbs)**  
+   Keep overlays as hero children (`layoutMode: NONE` exception), but position them **above** `safeBottomInset`. Screenshot-verify.
+
+2. **Shelf-owned chrome**  
+   Put pills / meta chips in the **summary** header row (first content inside the shelf), not on the photo.
+
+3. **Raised z-sibling (rare)**  
+   Only if product requires overlays to float *over* the shelf: make them a sibling drawn **after** the shelf (or explicit higher stack), still with clear hit targets — never “under” the shelf paint.
+
+## Hard bans
+
+- **No** placing pills/thumbs/dots in the bottom `overlapDepth` band “because the mock looked close.”
+- **No** relying on `clipsContent` luck — clipped ≠ intentional.
+- **No** fixing clip by lowering shelf opacity or removing shelf radius.
+- **No** increasing overlap without **recomputing** `safeBottomInset` and moving overlays.
+- **No** shipping without a screenshot check of the hero–shelf junction (left pills + right thumbs both visible, fully opaque, not under the curve).
+- **No** stretched overlay chips — pills/badges must **HUG** content (`primaryAxisSizingMode` / `counterAxisSizingMode: AUTO`). Never leave a chip at an accidental tall height that then gets parked into the overlap band.
+
+## Verification checklist (mandatory)
+
+Before calling the fold done:
+
+1. Export/verify the frame at 1x.
+2. Confirm every hero overlay’s bounding box is fully above the shelf’s top opaque edge **and** clear of the corner curves.
+3. Confirm title / first shelf content is not colliding with those overlays.
+4. If overlap depth changes later → re-run the inset math; do not leave stale positions.
+
+## Figma / figma-cli notes
+
+- Negative `itemSpacing` is valid for intentional overlap (`figma-cli-canvas`) — it does **not** grant permission to park chrome in that band.
+- Hero media overlays remain a valid `layoutMode: "NONE"` exception; safe-zone math still applies.
+- Prefer spacing/radius tokens for insets (`spacing/*`, `radius/*`) — never invent a magic px outside Bricks when a token exists. Overlap depth itself may be a composed layout value; document it in the script comment and derive safe inset from it + a spacing token.
+
+## Related
+
+- `figma-cli-canvas` — auto-layout defaults, NONE exceptions, verify loop  
+- `bricks-ds-all-tokens` / `bricks-ds-color-bible` — token law  
+- `pdp-gallery-rotation` — gallery image source

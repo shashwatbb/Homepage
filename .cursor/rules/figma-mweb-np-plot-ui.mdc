@@ -1,0 +1,105 @@
+---
+description: Mweb NP PLOT SoT — FINALL frame 46:9766; 412 wide; anti-slop guardrails for faithful replication
+alwaysApply: true
+---
+
+# Figma Mweb NP PLOT — UI law (non-negotiable)
+
+**SoT frame:** `FINALL` (`46:9766`) — user handcrafted mweb NP PLOT.  
+**Full forensic bible:** `design-system/mweb-np-plot-ui-learning.md`
+
+When the user asks to replicate / extend **this** design language, **this rule wins** over older mobile NP PDP rules (`figma-np-pdp-mobile-ui`, prior 360 JMS frame).
+
+## Before any build
+
+1. Re-open / re-measure `46:9766` (or current selection if user says it superseded FINALL).  
+2. Do **not** invent from the old AI `Mobile / NP PDP / JMS The Nation` frame.  
+3. Bricks tokens + Iconography only — no custom SVGs / CDN icons.
+
+## Anti-slop bans
+
+- **No 360 width** — page is **412**.  
+- **No section title 16px** — section H1 is **SemiBold 18**.  
+- **No pad-all-16** on sections — use **`[20, 16, 20, 16]`**.  
+- **No radius-24 on every section** — only first shelf top **`[24,24,0,0]`**; body sections **flat (0)**.  
+- **No black Zero brokerage** — soft `surface/default` + Regular 12 `text/secondary`, radius **8**.  
+- **No inventing circles** for Back/Share/Save — **40×40**, `radius/m`, stroke **`border/subtle` 1.5**.  
+- **No invented icons** — closest Bricks Iconography match only.  
+- **No raw stage-list as Payment plan primary** — EMI summary + CTA per SoT.  
+- **No web-1512 recipes** on this surface.
+
+## Page shell (locked)
+
+| Prop | Required |
+|---|---|
+| Width | **412** |
+| Layout | VERTICAL |
+| Gap | **-24** (gallery overlaps tray) |
+| Fill | `surface/default` |
+| Children | **`Gallery`** then **`Sections tray`** |
+
+## Gallery (locked)
+
+| Prop | Required |
+|---|---|
+| Size | **412 × 400** |
+| Pad | bottom **32** |
+| Back | 40×40, fill `surface/subtle`, stroke `border/subtle` **1.5**, radius 12 |
+| Share/Save | 40×40, fill `surface/white`, stroke `border/subtle` **1.5**, radius 12 |
+| Tools gap | **8** |
+| Dots | 6×6, gap 8; active `surface/subtle`; inactive `icon/grey_2` |
+| Index chip | `1 / N` Regular 12 inverse, radius 8 |
+
+## Sections tray (locked)
+
+| Prop | Required |
+|---|---|
+| Gap between sections | **8** |
+| Section pad | **`[20, 16, 20, 16]`** |
+| Section gap | **20** (early) or **24** (most body) |
+| Body section radius | **0** |
+| First shelf radius | **`[24, 24, 0, 0]`** |
+| Section fill | white |
+| Section H1 | SemiBold **18** / `text/primary` |
+| Project name | SemiBold **20** / `text/primary` |
+
+## Badges (above project name)
+
+| Tag | Fill | Text | Icon | Radius |
+|---|---|---|---|---|
+| Zero brokerage | `surface/default` | Regular 12 / `text/secondary` | — | **8** |
+| RERA | `pistachio_sand/2` | Regular 12 / `semantic_text/success` | **SealCheck** + `semantic_icons/success` | **8** |
+
+Pad both `[4, 8, 4, 8]`.
+
+## CTAs (locked)
+
+| Kind | H | Pad | Radius | Fill | Label |
+|---|---|---|---|---|---|
+| Primary | **48** | `[12, 20, 12, 20]` | **12** | `surface/brand` | Medium 14 / `text/inverse` |
+| Compact agent | **40** | `[12, 24, 12, 24]` | **12** | `surface/brand` | Medium 14 / `text/inverse` |
+| Ghost | **48** | `[12, 20, …]` | **12** | none | Medium 14 / `text/brand` |
+
+## Type caps (this SoT)
+
+- Section titles: **18** SemiBold (not 16).  
+- Project name: **20** SemiBold max.  
+- Body: **14**; meta/badges: **12**.  
+- Family: Google Sans Flex.
+
+## Verify before shipping a replica
+
+```
+412 wide; root gap -24
+Gallery 400h; icons 40×40; stroke border/subtle 1.5
+Tray gap 8; section pad [20,16,20,16]; body radius 0
+First shelf top radius 24; title SemiBold 18 / name 20
+Zero brokerage soft; RERA pistachio_sand/2 + SealCheck
+Primary CTA h48 pad [12,20] surface/brand
+```
+
+Fail any check → fix against `46:9766` before other work.
+
+## Related
+
+`design-system/mweb-np-plot-ui-learning.md`, `bricks-iconography-source`, `bricks-ds-icon-colors`, `figma-overlap-safe-zones`, `figma-button-chrome` (gallery stroke/radius align with this SoT’s 1.5 subtle)

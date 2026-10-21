@@ -1,0 +1,36 @@
+---
+description: Bricks DS v1.2.0 is the color bible — never use any color outside these tokens
+alwaysApply: true
+---
+
+# Bricks Design System — color bible (non-negotiable)
+
+Companion to `bricks-ds-all-tokens` (radius, spacing, type, text styles — same law).
+
+**Source of truth (v1.2.0):** `design-system/tokens/`  
+**Archive:** `design-system/archives/bricks_design_system_tokens_v1_2_0.zip`  
+**CSS bridge (consumers only):** `design-system/tokens.css` (`--ds-*` vars)
+
+These tokens are the bible. **Never ever** introduce, invent, approximate, or hardcode any UI color outside this set — not in CSS, React, Figma canvas/`figma-cli`, mocks, or one-off “just for this screen” fills.
+
+## Allowed colors only
+
+Primitives live in `design-system/tokens/color_primitives.Value.tokens.json` (families: `purple`, `warm_neutral`, `grey_neutral`, `pink`, `blue`, `yellow`, `green`, `red`, `pistachio_sand`, `lavender_mist`, `soft_butter`).
+
+Semantic/alias tokens live in `design-system/tokens/color_tokens.Value.tokens.json` — prefer these for UI roles when they exist.
+
+In code/CSS: use existing `--ds-*` variables from `tokens.css` only.  
+In Figma: bind to **Bricks Design System** library variables only (no new local variables).
+
+## Hard bans
+
+- **No new hex/rgb/hsl** — if it isn’t in the v1.2.0 token files, it does not ship.
+- **No “close enough”** palette picks, gradients made from off-token stops, or opacity hacks meant to fake a missing color (opacity on a DS color is fine when the base token is DS).
+- **No creating** new color variables, new text styles, or text-style variables to work around gaps.
+- If nothing in the bible fits → **stop and ask**. Do not extend the DS unless the user explicitly requests a token update.
+
+## Before painting anything
+
+1. Look up the token in `design-system/tokens/` (or `--ds-*` in `tokens.css`).
+2. Use / bind that token.
+3. Never invent an ID, name, or hex from memory.
