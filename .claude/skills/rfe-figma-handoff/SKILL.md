@@ -72,7 +72,7 @@ Scratch inspection scripts go in the session scratchpad, not the repo.
 3. **Build variants** token-bound (`lib.js`): every fill/stroke a Bricks colour token, padding/gap/radius spacing+radius tokens, every text a Bricks text style (`Mobile/*`, `CTA/*`), icons Bricks Iconography instances, CTAs Bricks Button. Mirror the sibling variants' shell (clone a sibling, e.g. BHK filter pane, then replace content).
 4. **Kit hygiene** (hard rule): new variants go below existing rows on the set's grid; never edit existing variants; if a set grows, shift items below it down and grow the section; verify zero overlaps at set, section and page level and nothing sticking out of its section (3 pre-existing stick-outs on the kit SRP page are not ours: SRP /Bottom sheets: Hotspots / Amenities, SRP / Desktop / Buy: Hotspots card, Hotspots card / Properties).
 5. **Publish only ours**: `node figma-rfe/publish.mjs "Component Kit" <setIds…>`. The kit has ~200 pending team changes (incl. removals, variables, styles): never "Publish changes to library". If a set nests another changed set, publish both. Iconography: same script with `"Iconography"`.
-6. **Accept updates in the product file for the RFE page only**: `node figma-rfe/accept-updates.mjs "Search Results Page" "SRP" "SRP / Filters"`. Never "Show updates for all pages" / update other pages (others' work, e.g. PDP / d-web). Updates can take ~10-60s to arrive; the script retries.
+6. **Accept updates in the product file for the RFE page only**: `node figma-rfe/accept-updates.mjs "Search Results Page" --page <RFE section id> "SRP" "SRP / Filters"`. Run it straight after publish in the same turn: it switches Figma back to the product tab and to the RFE page itself (after publishing, the kit tab is in front; never wait for the user to switch). Never "Show updates for all pages" / update other pages (others' work, e.g. PDP / d-web). Updates can take ~10-60s to arrive; the script retries.
 7. **Build the RFE page**: `node figma-rfe/run.mjs "Search Results Page" figma-rfe/lib.js figma-rfe/build-isp.js` (copy and adapt for a new feature). Then notes: `… figma-rfe/notes-isp.js`.
 8. **Verify** with scripts (sizes, bindings, which variant each screen uses, annotations count). One export/screenshot only for real visual judgement (`node.exportAsync` → base64 through `run.mjs`; it writes stdout fully).
 9. **Report** plainly what changed, what was published, what was not verified.
@@ -122,7 +122,8 @@ Scratch inspection scripts go in the session scratchpad, not the repo.
 - `importComponentSetByKeyAsync` works through `run.mjs` (~7s); unpublished sets can't be imported → reach them through a published set that nests them (`getMainComponentAsync().parent`).
 - Bound paints with a black placeholder can render black → `paint()` sets the resolved token value as base colour.
 - Plugin API can't publish libraries or accept updates → `publish.mjs` / `accept-updates.mjs`.
-- `getPublishStatusAsync` lags a few seconds after publishing; poll.
+- `getPublishStatusAsync` lags a few seconds after publishing; poll. `publish.mjs` polls only ticked sets: nested sets that never publish alone (Filters chip) stay UNPUBLISHED and used to hang it ~2 min.
+- Pinned Figma tabs show no text: `tabs.mjs` matches the tab `aria-label` ("Pinned tab: <file>") too.
 - Instances in product files don't change until the update is accepted; published-but-not-accepted looks like "nothing happened".
 - Strokes count in hug layout unless `strokesIncludedInLayout = false`.
 - Text in fixed slots: measure natural width with a clone (`textAutoResize WIDTH_AND_HEIGHT`) before trusting a fit.

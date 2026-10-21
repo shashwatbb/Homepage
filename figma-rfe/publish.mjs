@@ -71,7 +71,8 @@ ui("click", "Publish");
 ws.close();
 for (let i = 0; i < 15; i++) {
   await sleep(8000);
-  const st = runPlugin(`const r = []; for (const id of ${JSON.stringify(ids)}) { const n = await figma.getNodeByIdAsync(id); r.push(n.name + ':' + await n.getPublishStatusAsync()); } return r.join(' | ');`);
+  // poll only sets that were ticked: nested sets that never publish alone (e.g. Filters chip) stay UNPUBLISHED forever
+  const st = runPlugin(`const r = []; for (const id of ${JSON.stringify(ids)}) { const n = await figma.getNodeByIdAsync(id); if (${JSON.stringify(tickedNames)}.includes(n.name)) r.push(n.name + ':' + await n.getPublishStatusAsync()); } return r.join(' | ');`);
   if (!/CHANGED|UNPUBLISHED/.test(st)) { console.log("published: " + st); process.exit(0); }
   if (i === 14) { console.log("status: " + st); process.exit(3); }
 }

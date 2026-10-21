@@ -1,16 +1,33 @@
 // Accept library updates in a product file for the CURRENT PAGE ONLY (the RFE page).
-// usage: node figma-rfe/accept-updates.mjs "<tab title part>" "<expected component name>" [...]
+// usage: node figma-rfe/accept-updates.mjs "<tab title part>" [--page <nodeId>] "<expected component name>" [...]
+// --page: any node on the RFE page (e.g. the RFE section id); switches the file to that page first.
+// Always makes the product file the visible tab first (after publishing, the kit tab is in front).
 // Opens Assets > library icon > Manage libraries > Updates (page-scoped list), checks every listed row is
 // one of the expected components (ours), then clicks "Update all" for this page. Never uses
 // "Show updates for all pages": other pages hold other people's published changes (e.g. PDP / d-web).
 import { execFileSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileSync, mkdtempSync } from "fs";
+import { tmpdir } from "os";
+import { switchTab } from "./tabs.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const [title, ...expected] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const title = args.shift();
+let pageNode = null;
+const pi = args.indexOf("--page");
+if (pi >= 0) { pageNode = args[pi + 1]; args.splice(pi, 2); }
+const expected = args;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const ui = (...a) => { try { return execFileSync("node", [join(here, "figma-ui.mjs"), title, ...a], { encoding: "utf8" }); } catch (e) { return String(e.stdout || ""); } };
+
+await switchTab(title);
+if (pageNode) {
+  const f = join(mkdtempSync(join(tmpdir(), "figma-accept-")), "p.js");
+  writeFileSync(f, `let p = await figma.getNodeByIdAsync(${JSON.stringify(pageNode)}); while (p && p.type !== 'PAGE') p = p.parent; await figma.setCurrentPageAsync(p); return p.name;`);
+  console.log("page: " + execFileSync("node", [join(here, "run.mjs"), title, f], { encoding: "utf8" }).trim().split("\n").pop());
+}
 
 const page = (await (await fetch("http://localhost:9222/json")).json()).find((p) => p.title.includes(title) && /figma\.com\/(design|file)\//.test(p.url));
 const ws = new WebSocket(page.webSocketDebuggerUrl); let seq = 0; const wait = {};

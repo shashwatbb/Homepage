@@ -33,7 +33,7 @@ async function shellEval(expr, mouseAt) {
 }
 
 const tabExpr = (title, wantRect) => `(() => {
-  const t = [...document.querySelectorAll('button[role=tab]')].find(b => b.innerText.replace(/\\s+/g, ' ').includes(${JSON.stringify(title)}));
+  const t = [...document.querySelectorAll('button[role=tab]')].find(b => (b.innerText + ' ' + (b.getAttribute('aria-label') || '')).replace(/\\s+/g, ' ').includes(${JSON.stringify(title)}));
   if (!t) return null;
   ${wantRect ? "const r = t.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };" : "return t.getAttribute('aria-selected') === 'true';"}
 })()`;
