@@ -1,5 +1,8 @@
 # Repo rules
 
+## RFE / Figma dev handoff
+Any request to put a feature on Figma for devs (RFE, "ready for engineering", handoff frames, editing an RFE page): load the project skill `rfe-figma-handoff` first. Pipeline scripts live in `figma-rfe/`.
+
 ## Icons
 Source: Bricks Iconography Figma lib — https://www.figma.com/design/Rq1j8iqvbJBYRb52tdpgFg/Iconography--Bricks-
 Never hand-draw SVG glyph. Add/replace:

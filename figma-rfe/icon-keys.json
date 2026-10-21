@@ -1,0 +1,201 @@
+{
+ "ArrowLeft": {
+  "24": "7a1beb8dbfef7b28274006b9735b149d5384c389",
+  "16": "2f54ecce0d0f7922850440a9bb63310c1cf3542c"
+ },
+ "MagnifyingGlass": {
+  "24": "a8415b57fd1265c951d3fa86a4143ceb8a5f2af4",
+  "16": "b267f079e4f72b47f452a540d60ce8765031d372",
+  "duo16": "571d7e9a6ac4163668dc506372f56a12b3a7d73c",
+  "18": "64bd2ac113ff87a60d3830866f6e770791b18006"
+ },
+ "Sparkle": {
+  "24": "6c0f83b1f1b8a065c88082fc3f64a39c7c985562",
+  "16": "de2ad372f21d77b394e59f0e49837a85f434d6a4"
+ },
+ "ArrowsDownUp": {
+  "24": "1a6cdff1de81ed73b224bee36b211852646b8fe4",
+  "16": "e80f29b75ed3dc4bfeb4de3728d7097e4e8952ce"
+ },
+ "SlidersHorizontal": {
+  "24": "f912cd277f733184b6d37d9b5c9ed7e3a0454f81",
+  "16": "298055814115e4fe53816835be3e1d00170a7204"
+ },
+ "Funnel": {
+  "24": "e8b99cccb19858352baaf556ef09b9dd9fbfed84",
+  "16": "e83ca42257eb7f60c482582550e5c72e9c4b2a87"
+ },
+ "FunnelSimple": {
+  "24": "08440d63c9134e096d0984996ad8a688cc91ed1d",
+  "16": "e78aa486a3d63cf3a624ee51037ec53f29d8da9b"
+ },
+ "CaretDown": {
+  "24": "0dbeb69e0806476bf522b986c96ec81795da9bba",
+  "16": "a074229f2dfb5224e13da2152007a2f384739b97"
+ },
+ "CaretRight": {
+  "24": "31963ea81ec7740719fb5571ffbf2beea91003b9",
+  "16": "be99360324c3c8ee541fa05f60584f2287289d1a"
+ },
+ "X": {
+  "24": "7385ac6e6e16d5050cf8d51431dc2309739170b4",
+  "16": "a01a7de4495065a0fb86e96ab37f00f5faa5416b"
+ },
+ "Camera": {
+  "24": "cdcc69d25064c0a4c37c09aa0c5a798b1260f69f",
+  "16": "1168e82b45f16cdfd7e53cfba65f7180311de630",
+  "duo16": "40ba05e64f73a28f6dcfff894304864ec7cb2d7f",
+  "18": "6094edab1622d87d4a7714925ef286cb7734f12f"
+ },
+ "Sun": {
+  "24": "0214297e8c54add03f4103d0e4266c2eb3990c01",
+  "16": "9ecdb1af4744d2c5d83d262bcb3804f05749a2b7",
+  "duo16": "4fab318e46a2140868915f98f2080483b8737281",
+  "18": "9c1774475d3f6b8e91bf5c486697f632ba1a7dd4"
+ },
+ "CookingPot": {
+  "24": "2410c27403e3de603fa2408c7f699f9c4015fb17",
+  "16": "f55bb435dbaf7f7604eca01d59b929226f5ec6d0",
+  "duo16": "f14fb3b5f182fa9db61c9f94b3aef1adb77df555",
+  "18": "0b8eda9d4449ee76e0fbd11b182f642036655834"
+ },
+ "Plant": {
+  "24": "92c83e164c57d315783b42f97107416193bee19b",
+  "16": "5351d226a3b687d67b61aa5ab71c7b7c10316f54",
+  "duo16": "617e5045c06cdb5c5fbf8af330e03fa79cc010ba",
+  "18": "b0d0bd21302274d8b07759318af7b6beeed6c300"
+ },
+ "Wind": {
+  "24": "2972a420c86bbf23a5877477b756a872dbc298a6",
+  "16": "e2eeb2fe85a952d90ac048a3dd4e7c6eda297444",
+  "duo16": "e2b43923368e763e7179bdd60f2d6dd500513468",
+  "18": "092516c06985ffa91d8b72e3c348821e9efa310e"
+ },
+ "Waves": {
+  "24": "1ec7ed05ae013bce9aa48f77bf1a1f24c23af4b4",
+  "16": "813884811e701257434b2d698df400c5544c8096",
+  "duo16": "a1f2d01f3fbeea6709a4a99171c42c8584a772d7",
+  "18": "a5df2d7a7b430352c98217348a9c8857e564e2a3"
+ },
+ "ArrowsOut": {
+  "24": "8aad93b8bc1038b7775c684f7be7d0c9c31aaff7",
+  "16": "846ced57e7db39a998c8f360110e61546c0622bb",
+  "duo16": "52c08131df3d4584a5a2e7989522c85117563d20",
+  "18": "51a15d8ede3e47d1885199451db9d30b78b9de3c"
+ },
+ "Tree": {
+  "24": "8ac15141c32d279d83c1dff74560db5e25d528c6",
+  "16": "2e0ad82257bfcedb52e5040d4101e02bf7591f07",
+  "duo16": "393a3a4e006dd0963a44529d5f7df7d5b6a11c50",
+  "18": "2efc2de2cf1f19a1bfe6ec8483f631a8e1829a69"
+ },
+ "SquaresFour": {
+  "24": "6bc77ed34fabe922f6a749742972d87781780239",
+  "16": "fc5b1570c36b630adc52e5753b3499cf26ae099b",
+  "duo16": "3e24d4df50d7a702250c786dcad5adbf3fe2651e",
+  "18": "605ee3a850170c7ce7177ad73805f425ce2f04c7"
+ },
+ "Heart": {
+  "24": "3ed36e93f09ac994f4b1638d8c32907deeba3e91",
+  "16": "73079b718c42aff013ab5a72f56921c7cf1dc56a"
+ },
+ "Phone": {
+  "24": "96fc573c1b501a8e0f593a8f7789191cf55dff00",
+  "16": "391ad44b44cf30b25ec85145a44ba2b573528b02"
+ },
+ "WhatsappLogo": {
+  "24": "31b7682ebfefd76b945fab1af70599eefc3d2627",
+  "16": "53d11da5e45fa1170e89ce7c0830fdd83a6cbfb9"
+ },
+ "SealCheck": {
+  "24": "bb5ae64bc6142ef4331861a8d54d69d35ffe175e",
+  "16": "a4c22435f7cb19d19c2b05c1e14a267ae8d4154a"
+ },
+ "Cube": {
+  "24": "36e77f8ce8e22f7debc0f6d7a61f87c505a7b02d",
+  "16": "afe9d92190fd4d44c7088d0239699a4a75164b8b"
+ },
+ "House": {
+  "24": "2fbb3feb72759851aafce3985163efff493d8403",
+  "16": "ed213f083ff98b9004a7f1ccd589ba565119db5d"
+ },
+ "Buildings": {
+  "24": "5246842ef39f95113908745941c90a66345705cb",
+  "16": "bb06f7efacbfa71eb0465210e7f7a668ddbf7ce8"
+ },
+ "MapPin": {
+  "24": "94a99fbaa699f4835c4a5951b2840d37e25d7782",
+  "16": "b3c9fbc8c44f7f44086fa500a23c99b955b64c89"
+ },
+ "Play": {
+  "24": "1d17e5a1a6f17525fd217a84c4acbe173be088e6",
+  "16": "957464361e02fa8dc3c2562aa00ee6090f8c0903"
+ },
+ "Info": {
+  "24": "cbcd8aef7b353c674d127bf4e86f66dc3298a116",
+  "16": "7f45386c9cb68dfadfe2eb072616f58d5f97fed6"
+ },
+ "Check": {
+  "24": "6b3fa002c3f1d44692e3f123662074f1353746ff",
+  "16": "758a2dd4463aaf78ef42ebbd960b72b9812e362d"
+ },
+ "Mountains": {
+  "24": "fffe22495f50cc44425a9c03a051ece1ef52815c",
+  "16": "d942e6324dc9a051fb0208b2c21fcdd540dbe4f3"
+ },
+ "Armchair": {
+  "24": "3a0db4d73784fdc95e9e773c31dfb98e2ad4f10a",
+  "16": "45ee948304f37cc3a70ed2bea87d752067a97921"
+ },
+ "Flower": {
+  "24": "0e3034f720e12fcab54903d0fd702f46bffc7410",
+  "16": "3b83d95145109d318819e2eeeeb242a0ff7c38e1"
+ },
+ "Image": {
+  "24": "5ec78f7fae29ee48f01011bf549f974aa1c93aae",
+  "16": "36a30a5fc3939e1517610273b5cd5193ef9f59d9"
+ },
+ "Images": {
+  "24": "369cb255b20ebf41e4b33a89810ec8d9a06042ea",
+  "16": "6a418a36746db0a5960c2d0cba5aa871f9c8e792"
+ },
+ "Compass": {
+  "24": "aed0fa3d4bbee60035e385873e7e1f18eaa7fae9",
+  "16": "5978ef6dde95db0ed282a695a8f9d8eded26364c"
+ },
+ "Bed": {
+  "24": "4feb8c444ffce97fe137c9d313ebb49e92c0e511",
+  "16": "3ddb707916cc247610ac1cc2c91b8006e00c7c52"
+ },
+ "Star": {
+  "24": "2ed2d206d30788451da69319a7cae028ae7804c5",
+  "16": "69833b56d55020a55aea8522fc6bb2962917d2be"
+ },
+ "Fire": {
+  "24": "de638d536c3d6af66a9df850dc2773c518975e95",
+  "16": "25ae2a64935382baa57cc31370941b9d6aabed3a"
+ },
+ "PlayCircle": {
+  "24": "de13e5f9f3ab943253b374d7d8fe7e851a053f64",
+  "16": "55aac71d5d30ab1cf61d86b811badfef64aec5ee"
+ },
+ "UserCircle": {
+  "24": "28f9e05065f11b00645735faa3afdf95ef6bc96f",
+  "16": "5aa8fa8b6259d5d77e82bd9e5a03ea0b0026316e"
+ },
+ "Binoculars": {
+  "24": "6df44f125d2c57e51a9b749a763e77eb4babb32e",
+  "16": "a1db0f98f790f2998ac5b6f0fcd3a196f312cbd1"
+ },
+ "BuildingApartment": {
+  "duo16": "141d719f401db045f4a2995efe892e56d914452a",
+  "18": "335c1866f8f7a4b3ca61887d2fd1cffe74bb60ae"
+ },
+ "SunHorizon": {
+  "duo16": "570452d90e7c34caa1105c6baa10a2aff82bc903",
+  "18": "8971f5996aa74279ea4a44803e1be5d9ac7237fb"
+ },
+ "Lightbulb": {
+  "24": "0942cac9cdbbc2f12b0fe8816783e453f4c7e55a"
+ }
+}
