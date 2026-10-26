@@ -119,10 +119,8 @@ function nextTeaserHtml(index) {
     </section>`;
   }
   const next = srpListings[nextIndex];
-  return `<section class="ipdp-next" aria-label="Next property">
-    <span class="ipdp-next__chev" aria-hidden="true">${ISP_ICONS.chevronDown}</span>
-    <p class="ipdp-next__caption">Keep scrolling for the next property</p>
-  </section>`;
+  // Invisible end-of-page sentinel: when it scrolls in, the Next toast shows.
+  return `<div class="ipdp-next" aria-hidden="true"></div>`;
 }
 
 /** Slim toast above the contact bar while the next PDP is queued up. */

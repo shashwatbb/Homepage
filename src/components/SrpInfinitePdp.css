@@ -294,32 +294,20 @@ html.ipdp-lock body {
   background: var(--ds-color-warm-neutral-200);
 }
 
-/* End-of-PDP nudge (in the scroll flow) */
+/* End-of-PDP sentinel; the end-of-results variant shows copy */
 .ipdp-next {
+  height: var(--ds-space-2xl);
+}
+
+.ipdp-next--end {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--ds-space-3xs);
+  height: auto;
   padding: var(--ds-space-l) var(--ds-space-m) var(--ds-space-2xl);
   color: var(--ds-text-muted);
   text-align: center;
-}
-
-.ipdp-next__chev {
-  display: inline-flex;
-  rotate: 180deg;
-  animation: ipdp-bob 1.4s ease-in-out infinite;
-}
-
-.ipdp-next__chev svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-@keyframes ipdp-bob {
-  50% {
-    translate: 0 -0.25rem;
-  }
 }
 
 .ipdp-next__eyebrow {
@@ -361,16 +349,16 @@ html.ipdp-lock body {
   align-items: center;
   gap: var(--ds-space-xs);
   max-width: calc(100% - 2 * var(--ds-space-m));
-  padding: var(--ds-space-xs) var(--ds-space-m);
+  padding: var(--ds-space-s) var(--ds-space-m);
   overflow: hidden;
-  border: none;
-  border-radius: var(--ds-radius-full);
-  background: var(--ds-color-grey-neutral-900);
-  color: var(--ds-text-inverse);
+  border: 1px solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-m);
+  background: var(--ds-surface-white);
+  color: var(--ds-text-primary);
   font-family: inherit;
   font-size: var(--ds-font-size-m);
   white-space: nowrap;
-  box-shadow: 0 0.5rem 1.5rem rgba(15, 14, 13, 0.25);
+  box-shadow: 0 0.5rem 1.5rem rgba(15, 14, 13, 0.12);
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
@@ -389,7 +377,7 @@ html.ipdp-lock body {
 .ipdp-toast__fill {
   position: absolute;
   inset: 0;
-  background: var(--ds-surface-brand);
+  background: var(--ds-color-purple-100);
   transform: scaleX(var(--ipdp-push));
   transform-origin: left;
 }
@@ -415,7 +403,7 @@ html.ipdp-lock body {
 }
 
 .ipdp-toast__label {
-  opacity: 0.72;
+  color: var(--ds-text-muted);
 }
 
 .ipdp-toast__title {
@@ -428,6 +416,7 @@ html.ipdp-lock body {
 .ipdp-toast__chev {
   display: inline-flex;
   rotate: 180deg;
+  color: var(--ds-text-brand);
 }
 
 .ipdp-toast__chev svg {
