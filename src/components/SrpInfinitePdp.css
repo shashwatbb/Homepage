@@ -1,0 +1,554 @@
+/* SRP Infinite PDP — recents-style PDP deck over the SRP (mobile only).
+   Only mounted when experiment srp_infinite_pdp is on. */
+
+html.ipdp-lock,
+html.ipdp-lock body {
+  overflow: hidden;
+}
+
+.ipdp {
+  --ipdp-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ipdp-dur: 0.42s;
+  --ipdp-gap: var(--ds-space-s);
+  --ipdp-w: min(100vw - 3rem, 26rem);
+  --ipdp-top: calc(env(safe-area-inset-top, 0px) + 3.75rem);
+  --ipdp-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--ds-space-l));
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  font-family: var(--ds-font-family-primary);
+  color: var(--ds-text-primary);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ipdp[hidden] {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .ipdp {
+    display: none;
+  }
+}
+
+/* Same scrim as the SRP contact sheet */
+.ipdp__scrim {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(26, 24, 22, 0.45);
+  opacity: 0;
+  transition: opacity var(--ipdp-dur) var(--ipdp-ease);
+}
+
+.ipdp.is-open .ipdp__scrim {
+  opacity: calc(1 - var(--ipdp-scrim-fade, 0));
+}
+
+.ipdp.is-immersive .ipdp__scrim {
+  opacity: 1;
+}
+
+/* Deck top bar: close + position */
+.ipdp__topbar {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + var(--ds-space-s));
+  left: var(--ds-space-m);
+  right: var(--ds-space-m);
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s);
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity 0.28s ease,
+    transform var(--ipdp-dur) var(--ipdp-ease);
+}
+
+.ipdp.is-open:not(.is-immersive) .ipdp__topbar {
+  opacity: 1;
+  transform: none;
+}
+
+.ipdp.is-immersive .ipdp__topbar {
+  pointer-events: none;
+}
+
+.ipdp__counter {
+  margin: 0;
+  padding: var(--ds-space-2xs) var(--ds-space-s);
+  border-radius: var(--ds-radius-full);
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--ds-text-inverse);
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.ipdp__hint {
+  margin: 0 0 0 auto;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--ds-font-size-s);
+}
+
+/* Icon buttons (white chip on imagery/scrim, plain in bars) */
+.ipdp-icon-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--ds-radius-full);
+  background: var(--ds-surface-white);
+  color: var(--ds-text-primary);
+  cursor: pointer;
+}
+
+.ipdp-icon-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.ipdp-icon-btn--plain {
+  background: transparent;
+}
+
+/* Stage + cards */
+.ipdp__stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ipdp-card {
+  position: absolute;
+  top: var(--ipdp-top);
+  bottom: var(--ipdp-bottom);
+  left: calc(50% - var(--ipdp-w) / 2);
+  width: var(--ipdp-w);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--ds-radius-xl);
+  background: var(--ds-color-warm-neutral-200);
+  box-shadow: 0 1.5rem 3rem -1rem rgba(15, 14, 13, 0.35);
+  pointer-events: auto;
+  transform: translate3d(calc(var(--o, 0) * (var(--ipdp-w) + var(--ipdp-gap)) + var(--ipdp-drag, 0px)), 0, 0);
+  translate: 0 var(--ipdp-pull, 0px);
+  scale: var(--ipdp-pull-scale, 1);
+  transition:
+    transform var(--ipdp-dur) var(--ipdp-ease),
+    translate var(--ipdp-dur) var(--ipdp-ease),
+    scale var(--ipdp-dur) var(--ipdp-ease),
+    top var(--ipdp-dur) var(--ipdp-ease),
+    bottom var(--ipdp-dur) var(--ipdp-ease),
+    left var(--ipdp-dur) var(--ipdp-ease),
+    width var(--ipdp-dur) var(--ipdp-ease),
+    border-radius var(--ipdp-dur) var(--ipdp-ease),
+    opacity 0.3s ease;
+}
+
+.ipdp-card:not(.is-active) {
+  opacity: 0;
+}
+
+.ipdp.is-open .ipdp-card:not(.is-active):not(.is-far) {
+  opacity: 1;
+}
+
+.ipdp-card.is-far {
+  visibility: hidden;
+}
+
+/* Immersive: active card takes the full screen, neighbours fade away */
+.ipdp.is-immersive .ipdp-card.is-active,
+.ipdp-card.is-stack-over {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+  transform: none;
+}
+
+.ipdp.is-immersive .ipdp-card:not(.is-active):not(.is-stack-under):not(.is-stack-over) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ipdp.is-dragging .ipdp-card,
+.ipdp.is-snap .ipdp-card,
+.ipdp.is-snap .ipdp__scrim,
+.ipdp.is-snap .ipdp__topbar {
+  transition: none;
+}
+
+/* Next PDP stacks up over the current one */
+.ipdp-card.is-stack-under {
+  z-index: 1;
+  opacity: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform: none;
+  scale: 0.92;
+  border-radius: var(--ds-radius-xl);
+  transition:
+    scale 0.56s var(--ipdp-ease),
+    border-radius 0.56s var(--ipdp-ease);
+}
+
+.ipdp-card.is-stack-under::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 24, 22, 0.45);
+  animation: ipdp-dim 0.56s var(--ipdp-ease) both;
+}
+
+@keyframes ipdp-dim {
+  from {
+    opacity: 0;
+  }
+}
+
+.ipdp-card.is-stack-over {
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+  translate: 0 100%;
+  border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
+  transition:
+    translate 0.56s var(--ipdp-ease),
+    border-radius 0.56s var(--ipdp-ease);
+}
+
+.ipdp-card.is-stack-over.is-stack-in {
+  translate: 0 0;
+  border-radius: 0;
+}
+
+/* Immersive header bar */
+.ipdp-card__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  padding: calc(env(safe-area-inset-top, 0px) + var(--ds-space-2xs)) var(--ds-space-xs) var(--ds-space-2xs);
+  background: var(--ds-surface-white);
+  border-bottom: 1px solid var(--ds-border-subtle);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition:
+    opacity 0.24s ease,
+    transform var(--ipdp-dur) var(--ipdp-ease);
+}
+
+.ipdp.is-immersive .ipdp-card.is-active .ipdp-card__bar,
+.ipdp-card.is-stack-over .ipdp-card__bar {
+  opacity: 1;
+  transform: none;
+}
+
+.ipdp-card__bar-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--ds-font-size-lg);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.ipdp-card__scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ipdp-card:not(.is-active) .ipdp-card__scroller {
+  overflow-y: hidden;
+}
+
+/* Hero gallery: static in deck (swipes move the deck), swipeable when immersive */
+.ipdp-hero {
+  position: relative;
+  height: 17.5rem;
+  background: var(--ds-color-warm-neutral-300);
+}
+
+.ipdp-hero__track {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.ipdp-hero__track::-webkit-scrollbar {
+  display: none;
+}
+
+.ipdp.is-immersive .ipdp-card.is-active .ipdp-hero__track {
+  overflow-x: auto;
+}
+
+.ipdp-hero__img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scroll-snap-align: start;
+}
+
+.ipdp-hero__tools {
+  position: absolute;
+  top: var(--ds-space-s);
+  right: var(--ds-space-s);
+  display: flex;
+  gap: var(--ds-space-xs);
+}
+
+.ipdp.is-immersive .ipdp-card.is-active .ipdp-hero__tools {
+  display: none;
+}
+
+.ipdp-hero__pills {
+  position: absolute;
+  left: var(--ds-space-s);
+  right: var(--ds-space-s);
+  bottom: calc(2.75rem + var(--ds-space-s));
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.ipdp-pill {
+  padding: var(--ds-space-3xs) var(--ds-space-xs);
+  border-radius: var(--ds-radius-full);
+  background: rgba(26, 24, 22, 0.6);
+  color: var(--ds-text-inverse);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.ipdp-card__body {
+  min-height: 20rem;
+  background: var(--ds-color-warm-neutral-200);
+}
+
+/* Up next teaser (end of PDP) */
+.ipdp-next {
+  --ipdp-push: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-xs);
+  margin-top: var(--ds-space-xs);
+  padding: var(--ds-space-l) var(--ds-space-m) var(--ds-space-2xl);
+  background: var(--ds-surface-white);
+}
+
+.ipdp-next__eyebrow {
+  margin: 0;
+  color: var(--ds-text-brand);
+  font-size: var(--ds-font-size-s);
+  font-weight: var(--ds-font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ipdp-next__caption {
+  margin: 0;
+  color: var(--ds-text-muted);
+  font-size: var(--ds-font-size-m);
+}
+
+.ipdp-next__card {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s);
+  width: 100%;
+  margin-top: var(--ds-space-xs);
+  padding: var(--ds-space-s);
+  border: 1px solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-l);
+  background: var(--ds-surface-white);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transform: translateY(calc(var(--ipdp-push) * -0.75rem));
+  transition: transform 0.2s ease;
+}
+
+.ipdp-next.is-pushing .ipdp-next__card {
+  transition: none;
+}
+
+.ipdp-next__thumb {
+  flex: 0 0 auto;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--ds-radius-m);
+  object-fit: cover;
+}
+
+.ipdp-next__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3xs);
+}
+
+.ipdp-next__title,
+.ipdp-next__address {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ipdp-next__title {
+  font-size: var(--ds-font-size-lg);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.ipdp-next__address {
+  color: var(--ds-text-muted);
+  font-size: var(--ds-font-size-s);
+}
+
+.ipdp-next__price {
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.ipdp-next__chev {
+  display: inline-flex;
+  color: var(--ds-text-brand);
+}
+
+.ipdp-next__chev svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ipdp-next__progress {
+  height: 0.25rem;
+  margin-top: var(--ds-space-xs);
+  overflow: hidden;
+  border-radius: var(--ds-radius-full);
+  background: var(--ds-surface-brand-subtle);
+}
+
+.ipdp-next__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ds-surface-brand);
+  transform: scaleX(var(--ipdp-push));
+  transform-origin: left;
+}
+
+.ipdp-next.is-counting .ipdp-next__fill {
+  animation: ipdp-fill 1.6s linear forwards;
+}
+
+@keyframes ipdp-fill {
+  from {
+    transform: scaleX(var(--ipdp-push));
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.ipdp-next--end {
+  align-items: center;
+  text-align: center;
+}
+
+.ipdp-next__back {
+  margin-top: var(--ds-space-s);
+  padding: var(--ds-space-s) var(--ds-space-l);
+  border: 1px solid var(--ds-border-brand);
+  border-radius: var(--ds-radius-m);
+  background: var(--ds-surface-white);
+  color: var(--ds-text-brand);
+  font: inherit;
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  cursor: pointer;
+}
+
+/* Contact bar, docked to the card */
+.ipdp-card__cta {
+  flex: 0 0 auto;
+  display: flex;
+  gap: var(--ds-space-xs);
+  padding: var(--ds-space-s);
+  background: var(--ds-surface-white);
+  border-top: 1px solid var(--ds-border-subtle);
+}
+
+.ipdp.is-immersive .ipdp-card.is-active .ipdp-card__cta {
+  padding-bottom: calc(var(--ds-space-s) + env(safe-area-inset-bottom, 0px));
+}
+
+.ipdp-cta {
+  min-height: 3rem;
+  padding: 0 var(--ds-space-m);
+  border-radius: var(--ds-radius-m);
+  font-family: inherit;
+  font-size: var(--ds-font-size-m);
+  font-weight: var(--ds-font-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ipdp-cta--wa {
+  flex: 0 0 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--ds-border-default);
+  background: var(--ds-surface-white);
+}
+
+.ipdp-cta--secondary {
+  flex: 1;
+  border: 1px solid var(--ds-border-brand);
+  background: var(--ds-surface-white);
+  color: var(--ds-text-brand);
+}
+
+.ipdp-cta--primary {
+  flex: 1.3;
+  border: none;
+  background: var(--ds-surface-brand);
+  color: var(--ds-text-inverse);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ipdp {
+    --ipdp-dur: 0.01s;
+  }
+
+  .ipdp-next.is-counting .ipdp-next__fill {
+    animation-duration: 0.01s;
+  }
+}

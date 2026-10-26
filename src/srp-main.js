@@ -13,6 +13,7 @@ import {
   isExperimentEnabled,
   SRP_MWEB_BUY_EXPERIMENT_ID,
 } from "./experiments.js";
+import { initSrpInfinitePdp, openInfinitePdp, isInfinitePdpActive } from "./srp-infinite-pdp.js";
 import { initSrpBudgetBhkGuidance } from "./srp-budget-bhk-guidance.js";
 import { initSrpBhkBudgetBottomSheet } from "./srp-bhk-budget-bottom-sheet.js";
 import "./main.js";
@@ -733,6 +734,7 @@ function renderSrpResults() {
   initSrpCardImageCarousels();
   initSrpOptionIndicator();
   initSrpCardNavigation();
+  initSrpInfinitePdp({ listings: SRP_LISTING_VARIANTS, imageSrc: srpImageSrc });
 }
 
 function initSrpCardNavigation() {
@@ -742,6 +744,10 @@ function initSrpCardNavigation() {
   const navigateFromCard = (card) => {
     const id = card.dataset.listingId;
     if (id == null) return;
+    if (isInfinitePdpActive()) {
+      openInfinitePdp(Number(id));
+      return;
+    }
     try {
       sessionStorage.setItem("pdp-m-from-srp", "1");
     } catch (_) {}
@@ -1101,6 +1107,9 @@ function initSrpContactSheet() {
     };
     document.addEventListener("keydown", escHandler);
   };
+
+  /* Infinite PDP overlay CTAs reuse this sheet. */
+  window.addEventListener("srp:open-contact", openSheet);
 
   resultsRoot.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-srp-contact-cta]");

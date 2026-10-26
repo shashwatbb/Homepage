@@ -27,6 +27,7 @@ export const SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID = "srp_budget_bhk_guidance_st
 export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 export const ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID = "onboarding_locality_discovery_flow";
 export const SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID = "srp_image_feature_pills";
+export const SRP_INFINITE_PDP_EXPERIMENT_ID = "srp_infinite_pdp";
 
 const EXPERIMENT_DEFINITIONS = [
   {
@@ -104,6 +105,25 @@ const EXPERIMENT_DEFINITIONS = [
       window.dispatchEvent(
         new CustomEvent("housing:experiment-apply", {
           detail: { id: SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
+  {
+    id: SRP_INFINITE_PDP_EXPERIMENT_ID,
+    name: "Infinite PDP (SRP quick view)",
+    platform: "mobile",
+    exclusive: false,
+    // Lives on srp.html, so it needs the m-web Buy SRP gate on and the
+    // image-pills SRP (separate page) off.
+    requires: [SRP_MWEB_BUY_EXPERIMENT_ID],
+    conflictsWith: [SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID],
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-srp-infinite-pdp", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: SRP_INFINITE_PDP_EXPERIMENT_ID, enabled },
           bubbles: true,
         })
       );
@@ -315,6 +335,10 @@ function initExperimentsPanel(toast) {
       } else if (enabled && isExclusiveExperiment(experiment) && isExclusiveExperiment(item)) {
         nextEnabled = false;
       } else if (enabled && experimentsConflict(experiment, item)) {
+        nextEnabled = false;
+      } else if (enabled && experiment.requires?.includes(item.id)) {
+        nextEnabled = true;
+      } else if (!enabled && item.requires?.includes(id)) {
         nextEnabled = false;
       }
 

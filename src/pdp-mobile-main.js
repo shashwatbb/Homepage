@@ -5,7 +5,7 @@ import { getPdpMobileListing, pdpMobileImageSrc } from "./data/pdpMobile.mock.js
 
 const ICON_BACK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
 
-const ICON_SHARE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z" fill="currentColor"/></svg>`;
+export const ICON_SHARE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z" fill="currentColor"/></svg>`;
 
 const ICON_HEART = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z" fill="currentColor"/></svg>`;
 
@@ -15,7 +15,7 @@ const ICON_MAP_PIN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 2
 
 const ICON_PHONE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,1-10.73-10.73,16,16,0,0,0,1.35-15.18l.07-.14L97.54,33.64a8,8,0,0,0-10.94-2.59A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,48.91-54.6A8,8,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,42.86L125.93,89.52l-1,1.83a32,32,0,0,0,42.45,42.45l1.83-1L213.14,173.12A40.18,40.18,0,0,1,176,208Z" fill="currentColor"/></svg>`;
 
-function pdpWhatsappIconHtml(gradientId) {
+export function pdpWhatsappIconHtml(gradientId) {
   return `<svg class="pdp-m-bar__wa-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.1335 3.79311C14.4956 2.15412 12.3178 1.251 9.99739 1.25C5.21591 1.25 1.32474 5.13992 1.32283 9.92119C1.32227 11.4495 1.72161 12.9414 2.48064 14.2565L1.25 18.75L5.84848 17.5442C7.11545 18.2352 8.54198 18.5993 9.99366 18.5999H9.99734H9.99739C14.7781 18.5999 18.6698 14.7093 18.6719 9.92822C18.6727 7.61099 17.7711 5.43222 16.1335 3.79311ZM9.99739 17.1353H9.99457C8.70062 17.1346 7.43172 16.7872 6.32493 16.1304L6.06154 15.9743L3.3327 16.6898L4.06126 14.0301L3.88965 13.7575C3.16787 12.6098 2.78684 11.2836 2.78738 9.92174C2.78897 5.94771 6.02315 2.71465 10.0001 2.71465C11.926 2.71545 13.7361 3.46613 15.0974 4.82841C16.4586 6.19068 17.2078 8.00163 17.2072 9.9276C17.2055 13.9018 13.9712 17.1353 9.99739 17.1353Z" fill="#E0E0E0"/><path d="M1.64819 18.2514L2.82262 13.9632C2.09807 12.7081 1.71705 11.2843 1.71751 9.82604C1.71941 5.26327 5.43286 1.55115 9.99553 1.55115C12.21 1.55215 14.2884 2.41396 15.8511 3.97813C17.4142 5.54228 18.2744 7.62138 18.2735 9.83251C18.2716 14.3954 14.558 18.1078 9.99585 18.1078C9.99608 18.1078 9.99553 18.1078 9.99585 18.1078H9.99217C8.6068 18.1074 7.24555 17.7596 6.03654 17.1007L1.64819 18.2514Z" fill="url(#${gradientId})"/><path fill-rule="evenodd" clip-rule="evenodd" d="M7.85392 6.23985C7.69344 5.88304 7.52447 5.8759 7.37178 5.86966C7.2469 5.8643 7.10393 5.86463 6.96119 5.86463C6.81833 5.86463 6.58619 5.91831 6.38988 6.13271C6.19346 6.34711 5.63989 6.8654 5.63989 7.91951C5.63989 8.97374 6.40774 9.99237 6.51477 10.1354C6.62191 10.2783 7.997 12.5106 10.1748 13.3694C11.9847 14.0832 12.353 13.9412 12.7458 13.9055C13.1387 13.8698 14.0134 13.3873 14.192 12.887C14.3706 12.3867 14.3706 11.958 14.317 11.8683C14.2634 11.779 14.1206 11.7255 13.9063 11.6183C13.692 11.5112 12.6387 10.9928 12.4423 10.9214C12.2458 10.8499 12.103 10.8142 11.9601 11.0287C11.8173 11.243 11.4069 11.7255 11.2819 11.8683C11.1569 12.0115 11.0319 12.0294 10.8176 11.9222C10.6033 11.8148 9.91327 11.5888 9.09465 10.8588C8.45771 10.291 8.02769 9.58966 7.90269 9.37517C7.77769 9.16088 7.88929 9.04481 7.99678 8.938C8.09297 8.84202 8.21106 8.68789 8.3182 8.56278C8.42511 8.43767 8.46083 8.34838 8.53225 8.20553C8.60368 8.06244 8.56797 7.93734 8.5144 7.8302C8.46083 7.72306 8.04443 6.6635 7.85392 6.23985Z" fill="white"/><path d="M16.0627 3.76557C14.4437 2.14539 12.2908 1.25266 9.99708 1.25165C5.27048 1.25165 1.42398 5.09691 1.42208 9.82329C1.42153 11.3341 1.81628 12.8089 2.5666 14.1089L1.3501 18.5508L5.8958 17.3588C7.14824 18.0418 8.55837 18.4018 9.9934 18.4023H9.99704H9.99708C14.7229 18.4023 18.57 14.5564 18.572 9.83021C18.5728 7.53962 17.6816 5.38587 16.0627 3.76557ZM9.99708 16.9546H9.9943C8.71519 16.9539 7.46085 16.6105 6.36677 15.9613L6.10639 15.8069L3.40888 16.5142L4.12908 13.8851L3.95943 13.6156C3.24594 12.4811 2.86928 11.17 2.86983 9.82386C2.87139 5.89546 6.06845 2.69951 9.99977 2.69951C11.9035 2.7003 13.6928 3.44236 15.0385 4.789C16.3842 6.13564 17.1247 7.92579 17.1241 9.82968C17.1224 13.7582 13.9253 16.9546 9.99708 16.9546Z" fill="white"/><defs><linearGradient id="${gradientId}" x1="9.96087" y1="18.2514" x2="9.96087" y2="1.55118" gradientUnits="userSpaceOnUse"><stop stop-color="#20B038"/><stop offset="1" stop-color="#60D66A"/></linearGradient></defs></svg>`;
 }
 
@@ -441,6 +441,21 @@ function renderPage(listing, imgStart) {
     ${renderBottomBar()}`;
 }
 
+/** PDP sections below the hero — reused by the SRP Infinite PDP overlay. */
+export function renderPdpMobileBody(listing, imgStart) {
+  return `${renderSummary(listing)}
+      ${renderSeller(listing)}
+      ${renderFloorPlans(listing, imgStart)}
+      ${renderPaymentPlan(listing)}
+      ${renderOverview(listing, imgStart)}
+      ${renderInvestment(listing)}
+      ${renderPropertyCarousel("Similar properties", "See all", listing.similar, imgStart + 4, "pdp-m-similar")}
+      ${renderNeighbourhood()}
+      ${renderAmenities(listing)}
+      ${renderDeveloper(listing, imgStart + 5)}
+      ${renderDisclaimer(listing)}`;
+}
+
 const PDP_M_SLIDE_MS = 340;
 
 function pdpMobilePrefersReducedMotion() {
@@ -527,8 +542,8 @@ function initStickyHeader() {
   window.addEventListener("resize", update, { passive: true });
 }
 
-function initFloorPlanTabs() {
-  const section = document.querySelector(".pdp-m-floorplans");
+export function initFloorPlanTabs(root = document) {
+  const section = root.querySelector(".pdp-m-floorplans");
   if (!section) return;
 
   const tabs = section.querySelectorAll(".pdp-m-tabs__btn");
