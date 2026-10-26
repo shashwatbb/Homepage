@@ -335,97 +335,9 @@ html.ipdp-lock body {
   cursor: pointer;
 }
 
-/* "Next" toast: slides up above the contact bar, fills, then the next PDP opens */
-.ipdp-card {
-  --ipdp-push: 0;
-}
-
-.ipdp-toast {
-  position: absolute;
-  left: 50%;
-  bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-xs);
-  max-width: calc(100% - 2 * var(--ds-space-m));
-  padding: var(--ds-space-s) var(--ds-space-m);
-  overflow: hidden;
-  border: 1px solid var(--ds-border-subtle);
-  border-radius: var(--ds-radius-m);
-  background: var(--ds-surface-white);
-  color: var(--ds-text-primary);
-  font-family: inherit;
-  font-size: var(--ds-font-size-m);
-  white-space: nowrap;
-  box-shadow: 0 0.5rem 1.5rem rgba(15, 14, 13, 0.12);
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 1rem);
-  transition:
-    opacity 0.24s ease,
-    transform 0.32s var(--ipdp-ease);
-}
-
-.ipdp-card.is-nudge .ipdp-toast {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
-}
-
-.ipdp-toast__fill {
-  position: absolute;
-  inset: 0;
-  background: var(--ds-color-purple-100);
-  transform: scaleX(var(--ipdp-push));
-  transform-origin: left;
-}
-
-.ipdp-card.is-counting .ipdp-toast__fill {
-  animation: ipdp-fill 1.6s linear forwards;
-}
-
-@keyframes ipdp-fill {
-  from {
-    transform: scaleX(var(--ipdp-push));
-  }
-
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.ipdp-toast__label,
-.ipdp-toast__title,
-.ipdp-toast__chev {
-  position: relative;
-}
-
-.ipdp-toast__label {
-  color: var(--ds-text-muted);
-}
-
-.ipdp-toast__title {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: var(--ds-font-weight-medium);
-}
-
-.ipdp-toast__chev {
-  display: inline-flex;
-  rotate: 180deg;
-  color: var(--ds-text-brand);
-}
-
-.ipdp-toast__chev svg {
-  width: 1rem;
-  height: 1rem;
-}
-
 /* Contact bar, docked to the card */
 .ipdp-card__cta {
+  position: relative;
   flex: 0 0 auto;
   display: flex;
   gap: var(--ds-space-xs);
@@ -473,12 +385,71 @@ html.ipdp-lock body {
   color: var(--ds-text-inverse);
 }
 
+/* End of PDP: contact CTAs fade out, "Moving to next property" fills in their place */
+.ipdp-card {
+  --ipdp-push: 0;
+}
+
+.ipdp-card__cta > .ipdp-cta:not(.ipdp-cta--next) {
+  transition: opacity 0.2s ease;
+}
+
+.ipdp-card.is-nudge .ipdp-card__cta > .ipdp-cta:not(.ipdp-cta--next) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ipdp-cta--next {
+  position: absolute;
+  inset: var(--ds-space-s);
+  bottom: auto;
+  min-height: 3rem;
+  overflow: hidden;
+  border: 1px solid var(--ds-border-brand);
+  background: var(--ds-surface-white);
+  color: var(--ds-text-brand);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.ipdp-card.is-nudge .ipdp-cta--next {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ipdp-cta__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ds-color-purple-100);
+  transform: scaleX(var(--ipdp-push));
+  transform-origin: left;
+}
+
+.ipdp-card.is-counting .ipdp-cta__fill {
+  animation: ipdp-fill 1.6s linear forwards;
+}
+
+@keyframes ipdp-fill {
+  from {
+    transform: scaleX(var(--ipdp-push));
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.ipdp-cta__label {
+  position: relative;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ipdp {
     --ipdp-dur: 0.01s;
   }
 
-  .ipdp-card.is-counting .ipdp-toast__fill {
+  .ipdp-card.is-counting .ipdp-cta__fill {
     animation-duration: 0.01s;
   }
 }

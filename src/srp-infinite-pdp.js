@@ -17,7 +17,7 @@ import {
  * - scroll a card down → it grows into a full-screen PDP, tracking the
  *   scroll; scrolling back to the top shrinks it into the deck again
  * - pull down at the top → dismiss
- * - reach the end of a PDP → a "Next" toast fills, then the next PDP
+ * - reach the end of a PDP → the CTA bar becomes "Moving to next property" and fills, then the next PDP
  *   slides up from the bottom, pushing the current one off the top
  * ------------------------------------------------------------------ */
 
@@ -119,19 +119,17 @@ function nextTeaserHtml(index) {
     </section>`;
   }
   const next = srpListings[nextIndex];
-  // Invisible end-of-page sentinel: when it scrolls in, the Next toast shows.
+  // Invisible end-of-page sentinel: when it scrolls in, the Next CTA takes over.
   return `<div class="ipdp-next" aria-hidden="true"></div>`;
 }
 
-/** Slim toast above the contact bar while the next PDP is queued up. */
-function nextToastHtml(index) {
-  const next = srpListings[index + 1];
-  if (!next) return "";
-  return `<button type="button" class="ipdp-toast" data-action="ipdp-next" tabindex="-1">
-    <span class="ipdp-toast__fill" aria-hidden="true"></span>
-    <span class="ipdp-toast__title">Next property</span>
-    <span class="ipdp-toast__chev" aria-hidden="true">${ISP_ICONS.chevronDown}</span>
-  </button>`;
+/** At the end of a PDP the contact CTAs give way to this, which fills before the next PDP opens. */
+function nextCtaHtml(index) {
+  if (!srpListings[index + 1]) return "";
+  return `<button type="button" class="ipdp-cta ipdp-cta--next" data-action="ipdp-next" tabindex="-1">
+      <span class="ipdp-cta__fill" aria-hidden="true"></span>
+      <span class="ipdp-cta__label">Moving to next property</span>
+    </button>`;
 }
 
 function cardShellHtml(index) {
@@ -148,11 +146,11 @@ function cardShellHtml(index) {
       <div class="ipdp-card__body" data-ipdp-body></div>
       ${nextTeaserHtml(index)}
     </div>
-    ${nextToastHtml(index)}
     <div class="ipdp-card__cta" role="group" aria-label="Contact seller">
       <button type="button" class="ipdp-cta ipdp-cta--wa" data-action="ipdp-contact" aria-label="WhatsApp">${pdpWhatsappIconHtml(`ipdp-wa-${index}`)}</button>
       <button type="button" class="ipdp-cta ipdp-cta--secondary" data-action="ipdp-contact">View phone</button>
       <button type="button" class="ipdp-cta ipdp-cta--primary" data-action="ipdp-contact">Contact</button>
+      ${nextCtaHtml(index)}
     </div>
   </article>`;
 }
