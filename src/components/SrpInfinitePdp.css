@@ -127,7 +127,7 @@ html.ipdp-lock body {
   opacity: 0;
 }
 
-.ipdp.is-open .ipdp-card:not(.is-active):not(.is-far) {
+.ipdp.is-open .ipdp-card:not(.is-active):not(.is-far):not(.is-stack-over) {
   opacity: calc(1 - var(--p, 0));
 }
 
