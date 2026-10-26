@@ -27,7 +27,7 @@ const EXPAND_RANGE = 180;
 const SWIPE_RATIO = 0.22;
 const PULL_COMMIT = 96;
 const PUSH_COMMIT = 110;
-const AUTO_NEXT_MS = 1600;
+const AUTO_NEXT_MS = 3000;
 const ANIM_MS = 420;
 const STACK_MS = 560;
 

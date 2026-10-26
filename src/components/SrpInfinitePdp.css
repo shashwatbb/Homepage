@@ -427,7 +427,7 @@ html.ipdp-lock body {
 }
 
 .ipdp-card.is-counting .ipdp-cta__fill {
-  animation: ipdp-fill 1.6s linear forwards;
+  animation: ipdp-fill 3s linear forwards;
 }
 
 @keyframes ipdp-fill {
