@@ -129,8 +129,7 @@ function nextToastHtml(index) {
   if (!next) return "";
   return `<button type="button" class="ipdp-toast" data-action="ipdp-next" tabindex="-1">
     <span class="ipdp-toast__fill" aria-hidden="true"></span>
-    <span class="ipdp-toast__label">Next</span>
-    <span class="ipdp-toast__title">${esc(next.title)}</span>
+    <span class="ipdp-toast__title">Next property</span>
     <span class="ipdp-toast__chev" aria-hidden="true">${ISP_ICONS.chevronDown}</span>
   </button>`;
 }
