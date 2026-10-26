@@ -17,8 +17,8 @@ import {
  * - scroll a card down → it grows into a full-screen PDP, tracking the
  *   scroll; scrolling back to the top shrinks it into the deck again
  * - pull down at the top → dismiss
- * - reach the end of a PDP → "Up next" fills, then the next PDP stacks
- *   up over the current one
+ * - reach the end of a PDP → a "Next" toast fills, then the next PDP
+ *   slides up from the bottom, pushing the current one off the top
  * ------------------------------------------------------------------ */
 
 const MOBILE_MQ = "(max-width: 47.99rem)";
@@ -42,7 +42,7 @@ let cards = [];
 let active = 0;
 let immersive = false;
 let progress = 0;
-// After "Up next" stacks a PDP in full screen it stays expanded at scrollTop 0,
+// After the next PDP slides in in full screen it stays expanded at scrollTop 0,
 // until the user scrolls past EXPAND_RANGE (then scroll drives it again).
 let pinned = false;
 let busy = false;
@@ -86,10 +86,6 @@ function pdpFor(index) {
   };
 }
 
-function priceLine(index) {
-  return pdpFor(index).price;
-}
-
 function heroHtml(index) {
   const srp = srpListings[index];
   const imgStart = index * 8;
@@ -123,20 +119,22 @@ function nextTeaserHtml(index) {
     </section>`;
   }
   const next = srpListings[nextIndex];
-  return `<section class="ipdp-next" aria-label="Up next">
-    <p class="ipdp-next__eyebrow">Up next</p>
-    <p class="ipdp-next__caption" data-ipdp-next-caption>Keep scrolling to open</p>
-    <button type="button" class="ipdp-next__card" data-action="ipdp-next">
-      <img class="ipdp-next__thumb" src="${srpImageSrc(nextIndex * 8)}" alt="" loading="lazy" />
-      <span class="ipdp-next__info">
-        <span class="ipdp-next__title">${esc(next.title)}</span>
-        <span class="ipdp-next__address">${esc(next.address)}</span>
-        <span class="ipdp-next__price">${esc(priceLine(nextIndex))}</span>
-      </span>
-      <span class="ipdp-next__chev" aria-hidden="true">${ISP_ICONS.caretRight}</span>
-    </button>
-    <span class="ipdp-next__progress" aria-hidden="true"><span class="ipdp-next__fill"></span></span>
+  return `<section class="ipdp-next" aria-label="Next property">
+    <span class="ipdp-next__chev" aria-hidden="true">${ISP_ICONS.chevronDown}</span>
+    <p class="ipdp-next__caption">Keep scrolling for the next property</p>
   </section>`;
+}
+
+/** Slim toast above the contact bar while the next PDP is queued up. */
+function nextToastHtml(index) {
+  const next = srpListings[index + 1];
+  if (!next) return "";
+  return `<button type="button" class="ipdp-toast" data-action="ipdp-next" tabindex="-1">
+    <span class="ipdp-toast__fill" aria-hidden="true"></span>
+    <span class="ipdp-toast__label">Next</span>
+    <span class="ipdp-toast__title">${esc(next.title)}</span>
+    <span class="ipdp-toast__chev" aria-hidden="true">${ISP_ICONS.chevronDown}</span>
+  </button>`;
 }
 
 function cardShellHtml(index) {
@@ -153,6 +151,7 @@ function cardShellHtml(index) {
       <div class="ipdp-card__body" data-ipdp-body></div>
       ${nextTeaserHtml(index)}
     </div>
+    ${nextToastHtml(index)}
     <div class="ipdp-card__cta" role="group" aria-label="Contact seller">
       <button type="button" class="ipdp-cta ipdp-cta--wa" data-action="ipdp-contact" aria-label="WhatsApp">${pdpWhatsappIconHtml(`ipdp-wa-${index}`)}</button>
       <button type="button" class="ipdp-cta ipdp-cta--secondary" data-action="ipdp-contact">View phone</button>
@@ -261,22 +260,17 @@ function goTo(index) {
   if (prevScroller) setTimeout(() => (prevScroller.scrollTop = 0), ANIM_MS);
 }
 
-/* ---------- End of PDP → next PDP stacks on top ---------- */
+/* ---------- End of PDP → next PDP slides up, current one leaves the top ---------- */
 
 function cancelAutoNext() {
   clearTimeout(autoTimer);
   autoTimer = undefined;
-  cards[active]?.querySelector(".ipdp-next")?.classList.remove("is-counting");
-  const caption = cards[active]?.querySelector("[data-ipdp-next-caption]");
-  if (caption) caption.textContent = "Keep scrolling to open";
+  cards[active]?.classList.remove("is-nudge", "is-counting");
 }
 
 function startAutoNext() {
   if (autoTimer || busy || active >= srpListings.length - 1) return;
-  const teaser = cards[active].querySelector(".ipdp-next");
-  teaser.classList.add("is-counting");
-  const caption = teaser.querySelector("[data-ipdp-next-caption]");
-  if (caption) caption.textContent = "Opening next property";
+  cards[active].classList.add("is-nudge", "is-counting");
   autoTimer = setTimeout(() => {
     autoTimer = undefined;
     stackNext();
@@ -412,9 +406,8 @@ function initGestures() {
           root.classList.add("is-dragging");
           const progress = Math.min(1, push / PUSH_COMMIT);
           g.push = progress;
-          const teaser = g.card.querySelector(".ipdp-next");
-          teaser?.style.setProperty("--ipdp-push", progress);
-          teaser?.classList.add("is-pushing");
+          g.card.style.setProperty("--ipdp-push", progress);
+          g.card.classList.add("is-nudge", "is-pushing");
         }
       }
     },
@@ -440,11 +433,11 @@ function initGestures() {
       else requestClose();
     }
 
-    const teaser = card.querySelector(".ipdp-next");
-    if (teaser?.classList.contains("is-pushing")) {
-      teaser.classList.remove("is-pushing");
-      teaser.style.removeProperty("--ipdp-push");
+    if (card.classList.contains("is-pushing")) {
+      card.classList.remove("is-pushing");
+      card.style.removeProperty("--ipdp-push");
       if (g.push >= 1) stackNext();
+      else if (!card.classList.contains("is-counting")) card.classList.remove("is-nudge");
     }
     g = null;
   };
