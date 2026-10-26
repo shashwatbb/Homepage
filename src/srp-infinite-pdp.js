@@ -14,14 +14,16 @@ import {
  * Tapping an SRP card opens a recents-style deck of PDP cards over the
  * SRP instead of navigating away:
  * - swipe left/right → neighbouring property
- * - scroll a card down → it expands to an immersive full-screen PDP
- * - pull down at the top → minimise (immersive) / dismiss (deck)
+ * - scroll a card down → it grows into a full-screen PDP, tracking the
+ *   scroll; scrolling back to the top shrinks it into the deck again
+ * - pull down at the top → dismiss
  * - reach the end of a PDP → "Up next" fills, then the next PDP stacks
  *   up over the current one
  * ------------------------------------------------------------------ */
 
 const MOBILE_MQ = "(max-width: 47.99rem)";
-const EXPAND_AT = 16;
+/** Scroll distance over which a deck card grows to full screen. */
+const EXPAND_RANGE = 180;
 const SWIPE_RATIO = 0.22;
 const PULL_COMMIT = 96;
 const PUSH_COMMIT = 110;
@@ -39,6 +41,10 @@ let stage;
 let cards = [];
 let active = 0;
 let immersive = false;
+let progress = 0;
+// After "Up next" stacks a PDP in full screen it stays expanded at scrollTop 0,
+// until the user scrolls past EXPAND_RANGE (then scroll drives it again).
+let pinned = false;
 let busy = false;
 let autoTimer;
 let nextObserver;
@@ -204,20 +210,40 @@ function layout() {
     card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
   });
   for (let i = active - 1; i <= active + 1; i++) hydrate(i);
-  const counter = root.querySelector("[data-ipdp-counter]");
-  if (counter) counter.textContent = `${active + 1} of ${srpListings.length}`;
   watchNextTeaser();
 }
 
-function setImmersive(on) {
+function inDeck() {
+  return progress < 0.04;
+}
+
+/** 0 = deck card, 1 = full-screen PDP. Drives card geometry via --p. */
+function setProgress(value) {
+  progress = Math.max(0, Math.min(1, value));
+  root.style.setProperty("--p", progress.toFixed(4));
+  const on = progress >= 0.98;
   if (immersive === on) return;
   immersive = on;
   root.classList.toggle("is-immersive", on);
-  if (!on) {
-    cancelAutoNext();
-    const scroller = scrollerOf(cards[active]);
-    if (scroller) scroller.scrollTop = 0;
-  }
+  if (!on) cancelAutoNext();
+}
+
+function syncProgressFromScroll() {
+  const scroller = scrollerOf(cards[active]);
+  if (!scroller) return;
+  if (pinned && scroller.scrollTop > EXPAND_RANGE) pinned = false;
+  setProgress(pinned ? 1 : scroller.scrollTop / EXPAND_RANGE);
+}
+
+/** Minimise: glide back into the deck card. */
+async function minimise() {
+  const scroller = scrollerOf(cards[active]);
+  pinned = false;
+  root.classList.add("is-settle");
+  if (scroller) scroller.scrollTop = 0;
+  setProgress(0);
+  await wait(ANIM_MS);
+  root.classList.remove("is-settle");
 }
 
 function goTo(index) {
@@ -229,7 +255,9 @@ function goTo(index) {
   cancelAutoNext();
   const prevScroller = scrollerOf(cards[active]);
   active = clamped;
+  pinned = false;
   layout();
+  syncProgressFromScroll();
   if (prevScroller) setTimeout(() => (prevScroller.scrollTop = 0), ANIM_MS);
 }
 
@@ -281,8 +309,7 @@ async function stackNext() {
   const next = cards[nextIndex];
   hydrate(nextIndex);
   scrollerOf(next).scrollTop = 0;
-  immersive = true;
-  root.classList.add("is-immersive", "is-stacking", "is-snap");
+  root.classList.add("is-stacking", "is-snap");
   next.classList.add("is-stack-over");
   void next.offsetWidth;
   root.classList.remove("is-snap");
@@ -296,11 +323,12 @@ async function stackNext() {
   next.classList.remove("is-stack-over", "is-stack-in");
   root.classList.remove("is-stacking");
   active = nextIndex;
+  pinned = true;
+  setProgress(1);
   layout();
   scrollerOf(current).scrollTop = 0;
   void root.offsetWidth;
   root.classList.remove("is-snap");
-  history.scrollRestoration = "auto";
   busy = false;
 }
 
@@ -336,7 +364,7 @@ function initGestures() {
         // Native horizontal scrollers (similar properties, immersive gallery) keep their swipe.
         skipX: Boolean(
           e.target.closest(".pdp-m-carousel, .pdp-m-tabs, [class*='__track']") &&
-            (immersive || !e.target.closest(".ipdp-hero"))
+            (!inDeck() || !e.target.closest(".ipdp-hero"))
         ),
       };
     },
@@ -353,7 +381,7 @@ function initGestures() {
 
       if (!g.lock) {
         if (Math.max(Math.abs(g.dx), Math.abs(g.dy)) < 8) return;
-        if (!immersive && !g.skipX && Math.abs(g.dx) > Math.abs(g.dy) * 1.2) g.lock = "x";
+        if (inDeck() && !g.skipX && Math.abs(g.dx) > Math.abs(g.dy) * 1.2) g.lock = "x";
         else if (g.dy > 0 && g.scroller.scrollTop <= 0 && Math.abs(g.dy) > Math.abs(g.dx)) g.lock = "pull";
         else g.lock = "native";
         if (g.lock !== "native") root.classList.add("is-dragging");
@@ -408,8 +436,8 @@ function initGestures() {
       if (Math.abs(dx) > width * SWIPE_RATIO || velocity > 0.45) goTo(active + (dx < 0 ? 1 : -1));
       else layout();
     } else if (lock === "pull" && dy > PULL_COMMIT) {
-      if (immersive) setImmersive(false);
-      else close();
+      if (pinned) minimise();
+      else requestClose();
     }
 
     const teaser = card.querySelector(".ipdp-next");
@@ -436,11 +464,6 @@ function buildRoot() {
   root.setAttribute("aria-modal", "true");
   root.setAttribute("aria-label", "Property quick view");
   root.innerHTML = `<div class="ipdp__scrim" data-action="ipdp-close"></div>
-    <div class="ipdp__topbar">
-      <button type="button" class="ipdp-icon-btn" data-action="ipdp-close" aria-label="Close">${ISP_ICONS.closeCross}</button>
-      <p class="ipdp__counter" data-ipdp-counter aria-live="polite"></p>
-      <p class="ipdp__hint">Swipe for more</p>
-    </div>
     <div class="ipdp__stage">${srpListings.map((_, i) => cardShellHtml(i)).join("")}</div>`;
   document.body.appendChild(root);
   stage = root.querySelector(".ipdp__stage");
@@ -451,7 +474,7 @@ function buildRoot() {
       "scroll",
       (e) => {
         if (busy || !card.classList.contains("is-active")) return;
-        if (!immersive && e.currentTarget.scrollTop > EXPAND_AT) setImmersive(true);
+        syncProgressFromScroll();
       },
       { passive: true }
     );
@@ -460,7 +483,7 @@ function buildRoot() {
   root.addEventListener("click", (e) => {
     const action = e.target.closest("[data-action]")?.dataset.action;
     if (action === "ipdp-close") return requestClose();
-    if (action === "ipdp-minimize") return setImmersive(false);
+    if (action === "ipdp-minimize") return minimise();
     if (action === "ipdp-next") return stackNext();
     if (action === "ipdp-contact") {
       window.dispatchEvent(new CustomEvent("srp:open-contact"));
@@ -468,7 +491,7 @@ function buildRoot() {
     }
     // Tapping a peeking neighbour brings it to the front.
     const card = e.target.closest(".ipdp-card");
-    if (card && !card.classList.contains("is-active") && !immersive) {
+    if (card && !card.classList.contains("is-active") && inDeck()) {
       e.preventDefault();
       goTo(Number(card.dataset.index));
     }
@@ -477,8 +500,8 @@ function buildRoot() {
   document.addEventListener("keydown", (e) => {
     if (root.hidden || document.querySelector(".srp-contact-sheet.is-visible")) return;
     if (e.key === "Escape") requestClose();
-    if (!immersive && e.key === "ArrowRight") goTo(active + 1);
-    if (!immersive && e.key === "ArrowLeft") goTo(active - 1);
+    if (inDeck() && e.key === "ArrowRight") goTo(active + 1);
+    if (inDeck() && e.key === "ArrowLeft") goTo(active - 1);
   });
 
   window.addEventListener("popstate", () => {
@@ -509,8 +532,9 @@ export async function openInfinitePdp(index) {
   if (busy || !root) return;
   busy = true;
   active = Math.max(0, Math.min(srpListings.length - 1, index));
-  immersive = false;
-  root.classList.remove("is-immersive", "is-closing");
+  pinned = false;
+  setProgress(0);
+  root.classList.remove("is-closing");
   root.hidden = false;
   document.documentElement.classList.add("ipdp-lock");
   root.classList.add("is-snap");
@@ -567,11 +591,14 @@ async function close() {
   root.hidden = true;
   root.classList.add("is-snap");
   root.classList.remove("is-closing");
-  setImmersive(false);
+  pinned = false;
+  scrollerOf(card).scrollTop = 0;
+  setProgress(0);
   card.style.transform = "";
   card.style.transformOrigin = "";
   void root.offsetWidth;
   root.classList.remove("is-snap");
+  history.scrollRestoration = "auto";
   busy = false;
 }
 

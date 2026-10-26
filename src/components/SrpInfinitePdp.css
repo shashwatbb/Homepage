@@ -10,9 +10,9 @@ html.ipdp-lock body {
   --ipdp-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --ipdp-dur: 0.42s;
   --ipdp-gap: var(--ds-space-s);
-  --ipdp-w: min(100vw - 3rem, 26rem);
-  --ipdp-top: calc(env(safe-area-inset-top, 0px) + 3.75rem);
-  --ipdp-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--ds-space-l));
+  --ipdp-w: min(100vw - 2.5rem, 28rem);
+  --ipdp-top: calc(env(safe-area-inset-top, 0px) + 2.75rem);
+  --ipdp-bottom: calc(env(safe-area-inset-bottom, 0px) + 2.75rem);
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -46,48 +46,6 @@ html.ipdp-lock body {
 
 .ipdp.is-immersive .ipdp__scrim {
   opacity: 1;
-}
-
-/* Deck top bar: close + position */
-.ipdp__topbar {
-  position: absolute;
-  top: calc(env(safe-area-inset-top, 0px) + var(--ds-space-s));
-  left: var(--ds-space-m);
-  right: var(--ds-space-m);
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-s);
-  opacity: 0;
-  transform: translateY(-0.5rem);
-  transition:
-    opacity 0.28s ease,
-    transform var(--ipdp-dur) var(--ipdp-ease);
-}
-
-.ipdp.is-open:not(.is-immersive) .ipdp__topbar {
-  opacity: 1;
-  transform: none;
-}
-
-.ipdp.is-immersive .ipdp__topbar {
-  pointer-events: none;
-}
-
-.ipdp__counter {
-  margin: 0;
-  padding: var(--ds-space-2xs) var(--ds-space-s);
-  border-radius: var(--ds-radius-full);
-  background: rgba(255, 255, 255, 0.16);
-  color: var(--ds-text-inverse);
-  font-size: var(--ds-font-size-m);
-  font-weight: var(--ds-font-weight-medium);
-  font-variant-numeric: tabular-nums;
-}
-
-.ipdp__hint {
-  margin: 0 0 0 auto;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: var(--ds-font-size-s);
 }
 
 /* Icon buttons (white chip on imagery/scrim, plain in bars) */
@@ -143,12 +101,26 @@ html.ipdp-lock body {
     transform var(--ipdp-dur) var(--ipdp-ease),
     translate var(--ipdp-dur) var(--ipdp-ease),
     scale var(--ipdp-dur) var(--ipdp-ease),
+    opacity 0.3s ease;
+}
+
+/* Active card grows with scroll: --p 0 = deck card, 1 = full screen. */
+.ipdp-card.is-active {
+  top: calc(var(--ipdp-top) * (1 - var(--p, 0)));
+  bottom: calc(var(--ipdp-bottom) * (1 - var(--p, 0)));
+  left: calc((100% - var(--ipdp-w)) / 2 * (1 - var(--p, 0)));
+  width: calc(var(--ipdp-w) + (100% - var(--ipdp-w)) * var(--p, 0));
+  border-radius: calc(var(--ds-radius-xl) * (1 - var(--p, 0)));
+}
+
+/* Minimise button: glide back instead of tracking scroll */
+.ipdp.is-settle .ipdp-card.is-active {
+  transition:
     top var(--ipdp-dur) var(--ipdp-ease),
     bottom var(--ipdp-dur) var(--ipdp-ease),
     left var(--ipdp-dur) var(--ipdp-ease),
     width var(--ipdp-dur) var(--ipdp-ease),
-    border-radius var(--ipdp-dur) var(--ipdp-ease),
-    opacity 0.3s ease;
+    border-radius var(--ipdp-dur) var(--ipdp-ease);
 }
 
 .ipdp-card:not(.is-active) {
@@ -156,15 +128,14 @@ html.ipdp-lock body {
 }
 
 .ipdp.is-open .ipdp-card:not(.is-active):not(.is-far) {
-  opacity: 1;
+  opacity: calc(1 - var(--p, 0));
 }
 
 .ipdp-card.is-far {
   visibility: hidden;
 }
 
-/* Immersive: active card takes the full screen, neighbours fade away */
-.ipdp.is-immersive .ipdp-card.is-active,
+/* Stacking card enters full screen; neighbours stay out of the way */
 .ipdp-card.is-stack-over {
   top: 0;
   bottom: 0;
@@ -181,8 +152,7 @@ html.ipdp-lock body {
 
 .ipdp.is-dragging .ipdp-card,
 .ipdp.is-snap .ipdp-card,
-.ipdp.is-snap .ipdp__scrim,
-.ipdp.is-snap .ipdp__topbar {
+.ipdp.is-snap .ipdp__scrim {
   transition: none;
 }
 
@@ -446,7 +416,7 @@ html.ipdp-lock body {
 }
 
 .ipdp-next__progress {
-  height: 0.25rem;
+  height: 0.5rem;
   margin-top: var(--ds-space-xs);
   overflow: hidden;
   border-radius: var(--ds-radius-full);
