@@ -2,6 +2,7 @@
 import "./styles/base.css";
 import "./styles/pdp-mobile.css";
 import { getPdpMobileListing, pdpMobileImageSrc } from "./data/pdpMobile.mock.js";
+import { isExperimentEnabled, PDP_PAID_LEADS_EXPERIMENT_ID } from "./experiments.js";
 
 const ICON_BACK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
 
@@ -561,6 +562,15 @@ export function initFloorPlanTabs(root = document) {
 function initPage() {
   const root = document.getElementById("pdp-m-root");
   if (!root) return;
+
+  /* "Free PDP paid leads" experiment: Figma NP PDP redesign (mweb). */
+  if (isExperimentEnabled(PDP_PAID_LEADS_EXPERIMENT_ID)) {
+    import("./pdp-np-mobile.js").then(({ renderPdpNpPage }) => {
+      renderPdpNpPage(root);
+      initEnterTransition();
+    });
+    return;
+  }
 
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id") ?? "0";
