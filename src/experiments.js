@@ -142,7 +142,9 @@ const EXPERIMENT_DEFINITIONS = [
     name: "Free PDP paid leads",
     platform: "mobile",
     exclusive: false,
-    // Free project PDP → paid leads (Oct 2026 brief). UI not built yet.
+    // Free project PDP → paid leads (Oct 2026 brief). Top 3 SRP cards open
+    // the 3 push options on srp.html, so it needs the m-web Buy SRP gate.
+    requires: [SRP_MWEB_BUY_EXPERIMENT_ID],
     apply(enabled) {
       document.documentElement.classList.toggle("experiment-pdp-paid-leads", enabled);
       window.dispatchEvent(

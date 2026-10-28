@@ -12,6 +12,7 @@ import {
   syncExperimentsToDocument,
   isExperimentEnabled,
   SRP_MWEB_BUY_EXPERIMENT_ID,
+  PDP_PAID_LEADS_EXPERIMENT_ID,
 } from "./experiments.js";
 import { initSrpInfinitePdp, openInfinitePdp, isInfinitePdpActive } from "./srp-infinite-pdp.js";
 import { initSrpBudgetBhkGuidance } from "./srp-budget-bhk-guidance.js";
@@ -744,6 +745,12 @@ function initSrpCardNavigation() {
   const navigateFromCard = (card) => {
     const id = card.dataset.listingId;
     if (id == null) return;
+    /* Free PDP paid leads: top 3 cards open the 3 push options (free → paid NP PDP). */
+    const index = Number(id);
+    if (isExperimentEnabled(PDP_PAID_LEADS_EXPERIMENT_ID) && index < 3) {
+      window.location.href = `/pdp-mobile.html?id=${encodeURIComponent(id)}&opt=${index + 1}`;
+      return;
+    }
     if (isInfinitePdpActive()) {
       openInfinitePdp(Number(id));
       return;

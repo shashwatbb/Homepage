@@ -78,6 +78,40 @@ const DATA = {
   crumbs: ["Home", "Mumbai", "Vikhroli West", "Dotom Blumen"],
 };
 
+/** Paid NP project the free PDP options push towards. */
+const PAID = {
+  name: "Godrej Aria",
+  price: "₹1.98 Cr - ₹3.20 Cr",
+  priceFrom: "₹1.98 Cr",
+  area: "1250 - 1900 sq. ft",
+  locality: "Sector 79, New Gurgaon",
+  short: "Sector 79",
+  distance: "2.1 km away",
+  possession: "Dec ‘27",
+  img: pdpMobileImageSrc(3),
+};
+
+const PAID_URL = "/pdp-mobile.html?paid=1";
+
+/** The paid PDP reuses the template with the paid project's data. */
+const PAID_DATA = {
+  ...DATA,
+  name: PAID.name,
+  price: PAID.price,
+  area: PAID.area,
+  locality: PAID.locality,
+  badges: [
+    { label: "Verified by developer", tone: "brand", icon: "sealCheck" },
+    { label: "RERA", icon: "sealCheck" },
+    { label: "Zero brokerage" },
+    { label: `Possession by ${PAID.possession}` },
+  ],
+  seller: { name: "Godrej Properties", role: "Developer", photo: `${A}agent.png` },
+  heroImg: PAID.img,
+};
+
+let D = DATA;
+
 const FOOTER_LINKS = [
   "Real Estate in Gurgaon",
   "Real Estate in Dwarka Expressway",
@@ -122,7 +156,7 @@ const avatarHtml = (person, showPhoto, cls) =>
 
 function heroHtml(showPhotos) {
   const slides = showPhotos
-    ? [`${A}hero.jpg`, ...[0, 1, 2, 3, 4].map((i) => pdpMobileImageSrc(i))]
+    ? [D.heroImg || `${A}hero.jpg`, ...[0, 1, 2, 4, 5].map((i) => pdpMobileImageSrc(i))]
         .map((src, i) => `<img class="pnp-hero__img" src="${src}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} />`)
         .join("")
     : "";
@@ -140,7 +174,7 @@ function heroHtml(showPhotos) {
       showPhotos
         ? `<div class="pnp-hero__meta">
       <span class="pnp-hero__dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></span>
-      <span class="pnp-hero__count" data-pnp-count>1 / ${DATA.photoCount}</span>
+      <span class="pnp-hero__count" data-pnp-count>1 / ${D.photoCount}</span>
     </div>`
         : ""
     }
@@ -148,7 +182,7 @@ function heroHtml(showPhotos) {
 }
 
 function summaryHtml(showSellerPhoto) {
-  const badges = DATA.badges
+  const badges = D.badges
     .map(
       (b) =>
         `<span class="pnp-badge${b.tone ? ` pnp-badge--${b.tone}` : ""}">${b.icon ? I[b.icon] : ""}${esc(b.label)}</span>`
@@ -157,19 +191,19 @@ function summaryHtml(showSellerPhoto) {
   return `<section class="pnp-sec pnp-summary">
     <div class="pnp-badges">${badges}</div>
     <div class="pnp-summary__title">
-      <h1 class="pnp-h1">${esc(DATA.name)}</h1>
-      <p class="pnp-summary__price"><strong>${esc(DATA.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(DATA.area)}</span></p>
+      <h1 class="pnp-h1">${esc(D.name)}</h1>
+      <p class="pnp-summary__price"><strong>${esc(D.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(D.area)}</span></p>
     </div>
     <div class="pnp-summary__rows">
       <button type="button" class="pnp-loc">
         <span class="pnp-loc__map" aria-hidden="true">${I.mapPin}</span>
-        <span class="pnp-loc__text"><strong>${esc(DATA.locality)}</strong><small>${esc(DATA.city)}</small></span>
+        <span class="pnp-loc__text"><strong>${esc(D.locality)}</strong><small>${esc(D.city)}</small></span>
         <span class="pnp-loc__chev" aria-hidden="true">${I.caretRight}</span>
       </button>
       <hr class="pnp-rule" />
       <div class="pnp-agent">
-        ${avatarHtml(DATA.seller, showSellerPhoto, "pnp-agent__photo")}
-        <span class="pnp-agent__text"><strong>${esc(DATA.seller.name)}</strong><small>${esc(DATA.seller.role)}</small></span>
+        ${avatarHtml(D.seller, showSellerPhoto, "pnp-agent__photo")}
+        <span class="pnp-agent__text"><strong>${esc(D.seller.name)}</strong><small>${esc(D.seller.role)}</small></span>
         ${btn("Contact", "primary", "pnp-btn--sm pnp-btn--contact")}
       </div>
     </div>
@@ -177,7 +211,7 @@ function summaryHtml(showSellerPhoto) {
 }
 
 function overviewHtml() {
-  const rows = DATA.overview
+  const rows = D.overview
     .map(
       (row) =>
         `<div class="pnp-ov__row">${row
@@ -189,8 +223,8 @@ function overviewHtml() {
     <h2 class="pnp-h2">Project overview</h2>
     <div class="pnp-ov__grid">${rows}</div>
     <div class="pnp-ov__ids">
-      <div class="pnp-idpill"><span>RERA ID:</span><button type="button" class="pnp-link pnp-link--s">${esc(DATA.rera)}</button><button type="button" class="pnp-idpill__copy" data-copy="${esc(DATA.rera)}" aria-label="Copy RERA ID">${I.copySimple}</button></div>
-      <div class="pnp-idpill"><span><b>Permit ID:</b> ${esc(DATA.permit)}</span><button type="button" class="pnp-idpill__copy" data-copy="${esc(DATA.permit)}" aria-label="Copy permit ID">${I.copySimple}</button></div>
+      <div class="pnp-idpill"><span>RERA ID:</span><button type="button" class="pnp-link pnp-link--s">${esc(D.rera)}</button><button type="button" class="pnp-idpill__copy" data-copy="${esc(D.rera)}" aria-label="Copy RERA ID">${I.copySimple}</button></div>
+      <div class="pnp-idpill"><span><b>Permit ID:</b> ${esc(D.permit)}</span><button type="button" class="pnp-idpill__copy" data-copy="${esc(D.permit)}" aria-label="Copy permit ID">${I.copySimple}</button></div>
     </div>
     ${btn("Ask for details", "outline")}
   </section>`;
@@ -214,7 +248,7 @@ function plansHtml() {
     </article>`;
   return `<section class="pnp-sec pnp-plans">
     <h2 class="pnp-h2 pnp-pad">Plot plan and pricing</h2>
-    ${tabsHtml(DATA.plans, "plans")}
+    ${tabsHtml(D.plans, "plans")}
     <div class="pnp-rail pnp-rail--plans">${card()}${card()}${card()}${card()}</div>
   </section>`;
 }
@@ -222,11 +256,11 @@ function plansHtml() {
 function aboutHtml() {
   return `<section class="pnp-sec pnp-about">
     <h2 class="pnp-h2">About this property</h2>
-    <ul class="pnp-about__list">${DATA.about
+    <ul class="pnp-about__list">${D.about
       .map(([icon, text]) => `<li>${I[icon]}<span>${esc(text)}</span></li>`)
       .join("")}</ul>
     <div class="pnp-more">
-      <p class="pnp-more__text pnp-clamp-2" data-pnp-clamp>${esc(DATA.description)}</p>
+      <p class="pnp-more__text pnp-clamp-2" data-pnp-clamp>${esc(D.description)}</p>
       <button type="button" class="pnp-link" data-action="pnp-more">Read more</button>
     </div>
   </section>`;
@@ -248,7 +282,7 @@ function paymentHtml() {
 }
 
 function investHtml() {
-  const rows = DATA.invest
+  const rows = D.invest
     .map(
       ([k, v, up], i) =>
         `${i ? `<hr class="pnp-rule${i === 3 ? " pnp-rule--dash" : ""}" />` : ""}<div class="pnp-kvrow"><span>${esc(k)}</span>${
@@ -268,14 +302,14 @@ function brochureHtml() {
     .map((src) => `<img class="pnp-brochure__img" src="${src}" alt="" loading="lazy" />`)
     .join("");
   return `<section class="pnp-sec pnp-brochure">
-    <h2 class="pnp-h2 pnp-brochure__title">${esc(DATA.name)}</h2>
+    <h2 class="pnp-h2 pnp-brochure__title">${esc(D.name)}</h2>
     <div class="pnp-rail pnp-rail--brochure">${imgs}</div>
     <div class="pnp-brochure__ctas">${btn("View brochure", "outline")}${btn("Download")}</div>
   </section>`;
 }
 
 function compareHtml() {
-  const c = DATA.compare;
+  const c = D.compare;
   const card = () => `<article class="pnp-card pnp-card--compare">
       <img class="pnp-card__img" src="${A}plot-card.jpg" alt="" loading="lazy" />
       <div class="pnp-card__body">
@@ -296,7 +330,7 @@ function compareHtml() {
 }
 
 function neighbourhoodHtml() {
-  const cats = Object.keys(DATA.places);
+  const cats = Object.keys(D.places);
   const icon = { Education: I.backpack, Healthcare: I.firstAid, Commute: I.trainSimple };
   return `<section class="pnp-sec pnp-hood">
     <h2 class="pnp-h2">Explore neighbourhood</h2>
@@ -313,13 +347,13 @@ function neighbourhoodHtml() {
 }
 
 function placeItems(cat) {
-  return DATA.places[cat]
+  return D.places[cat]
     .map((p) => `<li><strong>${esc(p)}</strong><small>1.3 km</small></li>`)
     .join("");
 }
 
 function projectCardHtml(withHeart = true) {
-  const b = DATA.better;
+  const b = D.better;
   return `<article class="pnp-card pnp-card--project">
       <div class="pnp-card__media">
         <img class="pnp-card__img" src="${A}project-card.jpg" alt="" loading="lazy" />
@@ -345,7 +379,7 @@ function betterHtml() {
 function sellersHtml(showSellerPhoto) {
   return `<section class="pnp-sec pnp-sellers">
     <h2 class="pnp-h2">Sellers for this project</h2>
-    <div class="pnp-sellers__list">${DATA.sellers
+    <div class="pnp-sellers__list">${D.sellers
       .map(
         (s, i) => `${i ? `<hr class="pnp-rule" />` : ""}<div class="pnp-person">
         ${avatarHtml(s, showSellerPhoto, "pnp-person__photo")}
@@ -358,7 +392,7 @@ function sellersHtml(showSellerPhoto) {
 }
 
 function developerHtml() {
-  const d = DATA.developer;
+  const d = D.developer;
   return `<section class="pnp-sec pnp-dev">
     <div class="pnp-dev__top">
       <h2 class="pnp-h2">About the developers</h2>
@@ -368,7 +402,7 @@ function developerHtml() {
       </div>
       <hr class="pnp-rule" />
       <div class="pnp-more">
-        <p class="pnp-more__text pnp-more__text--muted pnp-clamp-3" data-pnp-clamp>${esc(DATA.description)}</p>
+        <p class="pnp-more__text pnp-more__text--muted pnp-clamp-3" data-pnp-clamp>${esc(D.description)}</p>
         <button type="button" class="pnp-link" data-action="pnp-more">Read more</button>
       </div>
       <hr class="pnp-rule" />
@@ -386,7 +420,7 @@ function faqHtml() {
     </div>`;
   return `<section class="pnp-sec pnp-faq">
     <h2 class="pnp-h2">FAQ</h2>
-    <div class="pnp-faq__list">${DATA.faq.map(item).join("")}</div>
+    <div class="pnp-faq__list">${D.faq.map(item).join("")}</div>
     <button type="button" class="pnp-faq__more" data-action="pnp-faq-more"><span>View more</span>${I.caretDown}</button>
   </section>`;
 }
@@ -394,13 +428,13 @@ function faqHtml() {
 function linksHtml() {
   return `<section class="pnp-sec pnp-links">
     <h2 class="pnp-h2">Quick links</h2>
-    <p class="pnp-links__list">${DATA.links.map((l) => `<a href="#">${esc(l)}</a>`).join("")}</p>
+    <p class="pnp-links__list">${D.links.map((l) => `<a href="#">${esc(l)}</a>`).join("")}</p>
   </section>`;
 }
 
 function crumbsHtml() {
-  return `<nav class="pnp-sec pnp-crumbs" aria-label="Breadcrumb">${DATA.crumbs
-    .map((c, i) => (i === DATA.crumbs.length - 1 ? `<span aria-current="page">${esc(c)}</span>` : `<a href="#">${esc(c)}</a>${I.caretRight}`))
+  return `<nav class="pnp-sec pnp-crumbs" aria-label="Breadcrumb">${D.crumbs
+    .map((c, i) => (i === D.crumbs.length - 1 ? `<span aria-current="page">${esc(c)}</span>` : `<a href="#">${esc(c)}</a>${I.caretRight}`))
     .join("")}</nav>`;
 }
 
@@ -431,7 +465,7 @@ function footerHtml() {
 function stickyHeaderHtml() {
   return `<header class="pnp-sticky" data-pnp-sticky aria-hidden="true">
     <button type="button" class="pnp-sticky__back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
-    <span class="pnp-sticky__title"><small>${esc(DATA.name)}</small><strong>${esc(DATA.price)}</strong></span>
+    <span class="pnp-sticky__title"><small>${esc(D.name)}</small><strong>${esc(D.price)}</strong></span>
     ${toolsHtml()}
   </header>`;
 }
@@ -444,36 +478,163 @@ function bottomNavHtml() {
   </div>`;
 }
 
+/* ------------------------------------------------------------------ *
+ * Free → paid push options (experiment pdp_paid_leads, SRP cards 1–3).
+ * The free project's own Contact stays on every option (enquiry guardrail).
+ * ------------------------------------------------------------------ */
+
+const verifiedTag = () => `<span class="pnp-vtag">${I.sealCheck}Verified by developer</span>`;
+
+/** Compact paid project row used across options. */
+function paidRowHtml(cta = "View") {
+  return `<a class="pnp-paid" href="${PAID_URL}" data-pnp-paid>
+    <img class="pnp-paid__img" src="${PAID.img}" alt="" loading="lazy" />
+    <span class="pnp-paid__body">
+      ${verifiedTag()}
+      <strong>${esc(PAID.name)}</strong>
+      <small>${esc(PAID.short)}<span class="pnp-vsep" aria-hidden="true"></span>${esc(PAID.distance)}</small>
+      <span class="pnp-paid__price">${esc(PAID.price)}</span>
+    </span>
+    <span class="pnp-paid__cta">${esc(cta)}${I.caretRight}</span>
+  </a>`;
+}
+
+/* Option 1 — Side by side: a compare card right under the summary. */
+function vsHtml() {
+  const rows = [
+    ["Starting price", "₹2.23 Cr", PAID.priceFrom, "₹25 L lower"],
+    ["Possession", "May ‘29", PAID.possession, "17 months sooner"],
+    ["Price breakup", "Not shared", "Verified", null],
+    ["Floor plans", "Not shared", "All units", null],
+    ["Response time", "Unknown", "Under 30 min", null],
+  ];
+  return `<section class="pnp-sec pnp-vs" aria-label="Compare with a verified project">
+    <div class="pnp-vs__head">
+      <h2 class="pnp-h2">Compare before you decide</h2>
+      <p class="pnp-vs__sub">A verified new launch ${esc(PAID.distance)} matches your search</p>
+    </div>
+    <div class="pnp-vs__table" role="table">
+      <div class="pnp-vs__row pnp-vs__row--head" role="row">
+        <span role="columnheader"></span>
+        <span role="columnheader">This project</span>
+        <span role="columnheader" class="pnp-vs__paid"><img src="${PAID.img}" alt="" />${esc(PAID.name)}</span>
+      </div>
+      ${rows
+        .map(
+          ([k, a, b, gain]) => `<div class="pnp-vs__row" role="row">
+        <span role="rowheader">${esc(k)}</span>
+        <span role="cell" class="pnp-vs__free">${esc(a)}</span>
+        <span role="cell" class="pnp-vs__paid"><strong>${esc(b)}</strong>${gain ? `<em>${esc(gain)}</em>` : ""}</span>
+      </div>`
+        )
+        .join("")}
+    </div>
+    <a class="pnp-btn pnp-btn--primary" href="${PAID_URL}" data-pnp-paid>View ${esc(PAID.name)}</a>
+  </section>`;
+}
+
+/* Option 2 — Verified details gap: unverified sections point to the paid project. */
+function lockedHtml(title, note, rows = 3) {
+  const bars = Array.from({ length: rows }, (_, i) => `<span class="pnp-lock__bar" style="width:${[88, 64, 76, 52][i % 4]}%"></span>`).join("");
+  return `<section class="pnp-sec pnp-lock">
+    <h2 class="pnp-h2">${esc(title)}</h2>
+    <div class="pnp-lock__ghost" aria-hidden="true">${bars}</div>
+    <div class="pnp-lock__note">
+      <p>${esc(note)}</p>
+      ${paidRowHtml("See verified")}
+    </div>
+  </section>`;
+}
+
+function gapBannerHtml() {
+  return `<div class="pnp-gap" role="note">
+    <span class="pnp-gap__icon">${I.sealCheck}</span>
+    <p><strong>Some details here aren’t verified.</strong> ${esc(PAID.name)} nearby has verified prices, plans and payment terms.</p>
+    <a class="pnp-link pnp-link--s" href="${PAID_URL}" data-pnp-paid>View</a>
+  </div>`;
+}
+
+/* Option 3 — Paid takeover: entry sheet, paid bottom bar, auto-move at the end. */
+function takeoverSheetHtml() {
+  return `<div class="pnp-sheet" data-pnp-sheet hidden>
+    <button type="button" class="pnp-sheet__scrim" data-action="pnp-sheet-close" aria-label="Close"></button>
+    <div class="pnp-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="pnp-sheet-title">
+      <span class="pnp-sheet__grab" aria-hidden="true"></span>
+      <p class="pnp-sheet__eyebrow">Before you decide</p>
+      <h2 class="pnp-h2" id="pnp-sheet-title">A verified new launch matches your search</h2>
+      <a class="pnp-sheet__card" href="${PAID_URL}" data-pnp-paid>
+        <img src="${PAID.img}" alt="" />
+        <span class="pnp-sheet__info">
+          ${verifiedTag()}
+          <strong>${esc(PAID.name)}</strong>
+          <small>${esc(PAID.short)}<span class="pnp-vsep" aria-hidden="true"></span>${esc(PAID.distance)}</small>
+          <span class="pnp-sheet__facts"><b>${esc(PAID.priceFrom)}</b> onwards<span class="pnp-vsep" aria-hidden="true"></span>Possession ${esc(PAID.possession)}</span>
+        </span>
+      </a>
+      <a class="pnp-btn pnp-btn--primary" href="${PAID_URL}" data-pnp-paid>View ${esc(PAID.name)}</a>
+      <button type="button" class="pnp-sheet__stay" data-action="pnp-sheet-close">Continue with ${esc(DATA.name)}</button>
+    </div>
+  </div>`;
+}
+
+function paidBarHtml() {
+  return `<div class="pnp-pbar" data-pnp-pbar role="group" aria-label="Verified project nearby">
+    <a class="pnp-pbar__main" href="${PAID_URL}" data-pnp-paid>
+      <img src="${PAID.img}" alt="" />
+      <span class="pnp-pbar__text"><strong>${esc(PAID.name)}</strong><small>${I.sealCheck}Verified<span class="pnp-vsep" aria-hidden="true"></span>${esc(PAID.priceFrom)} onwards</small></span>
+      <span class="pnp-btn pnp-btn--primary pnp-btn--sm">View</span>
+    </a>
+    <a class="pnp-pbar__next" href="${PAID_URL}" data-pnp-paid tabindex="-1">
+      <span class="pnp-pbar__fill" aria-hidden="true"></span>
+      <span class="pnp-pbar__label">Moving to ${esc(PAID.name)}</span>
+    </a>
+  </div>`;
+}
+
+const OPTION_NAMES = { 1: "Side by side", 2: "Verified details gap", 3: "Paid takeover" };
+
 export function renderPdpNpPage(root) {
   const params = new URLSearchParams(window.location.search);
   const showPhotos = params.get("photos") !== "0";
   const showSellerPhoto = params.get("sellerPhoto") !== "0";
+  const isPaid = params.get("paid") === "1";
+  const opt = isPaid ? 0 : Number(params.get("opt")) || 0;
+  D = isPaid ? PAID_DATA : DATA;
+
+  const locked = opt === 2;
+  const sections = [
+    summaryHtml(showSellerPhoto),
+    opt === 1 ? vsHtml() : "",
+    locked ? gapBannerHtml() : "",
+    overviewHtml(),
+    locked
+      ? lockedHtml("Plot plan and pricing", `${DATA.name}’s developer hasn’t verified unit prices on Housing.`, 4)
+      : plansHtml(),
+    aboutHtml(),
+    locked ? lockedHtml("Payment plan", "The payment plan for this project isn’t verified.", 2) : paymentHtml(),
+    locked ? lockedHtml("Investment insights", "Not enough verified data to project returns here.", 4) : investHtml(),
+    locked ? lockedHtml("Brochure", "The developer hasn’t shared a brochure.", 2) : brochureHtml(),
+    compareHtml(),
+    neighbourhoodHtml(),
+    betterHtml(),
+    sellersHtml(showSellerPhoto),
+    developerHtml(),
+    faqHtml(),
+    linksHtml(),
+    crumbsHtml(),
+    disclaimerHtml(),
+    footerHtml(),
+  ];
 
   document.documentElement.classList.add("pnp-on");
-  document.title = `${DATA.name} — Housing`;
-  root.innerHTML = `<div class="pnp">
+  document.title = `${D.name} — Housing`;
+  root.innerHTML = `<div class="pnp${opt ? ` pnp--opt${opt}` : ""}${isPaid ? " pnp--paid" : ""}" data-pnp-opt="${opt}">
+    ${opt ? `<p class="pnp-optlabel" aria-hidden="true">Option ${opt} · ${OPTION_NAMES[opt]}</p>` : ""}
     ${stickyHeaderHtml()}
     ${heroHtml(showPhotos)}
-    <main class="pnp-tray">
-      ${summaryHtml(showSellerPhoto)}
-      ${overviewHtml()}
-      ${plansHtml()}
-      ${aboutHtml()}
-      ${paymentHtml()}
-      ${investHtml()}
-      ${brochureHtml()}
-      ${compareHtml()}
-      ${neighbourhoodHtml()}
-      ${betterHtml()}
-      ${sellersHtml(showSellerPhoto)}
-      ${developerHtml()}
-      ${faqHtml()}
-      ${linksHtml()}
-      ${crumbsHtml()}
-      ${disclaimerHtml()}
-      ${footerHtml()}
-    </main>
-    ${bottomNavHtml()}
+    <main class="pnp-tray">${sections.join("")}</main>
+    ${opt === 3 ? paidBarHtml() : bottomNavHtml()}
+    ${opt === 3 ? takeoverSheetHtml() : ""}
   </div>`;
   root.removeAttribute("aria-busy");
   document.documentElement.classList.remove("no-fouc");
@@ -481,6 +642,45 @@ export function renderPdpNpPage(root) {
   initGallery(root);
   initChrome(root);
   initInteractions(root);
+  if (opt === 3) initTakeover(root);
+}
+
+const AUTO_MOVE_MS = 3000;
+
+function initTakeover(root) {
+  const sheet = root.querySelector("[data-pnp-sheet]");
+  const open = () => {
+    sheet.hidden = false;
+    requestAnimationFrame(() => sheet.classList.add("is-open"));
+    setTimeout(() => sheet.classList.add("is-open"), 30);
+  };
+  const close = () => {
+    sheet.classList.remove("is-open");
+    setTimeout(() => (sheet.hidden = true), 320);
+  };
+  setTimeout(open, 900);
+  root.addEventListener("click", (e) => {
+    if (e.target.closest('[data-action="pnp-sheet-close"]')) close();
+  });
+
+  // End of the free PDP: the paid bar becomes "Moving to …" and fills, then opens the paid PDP.
+  const bar = root.querySelector("[data-pnp-pbar]");
+  const foot = root.querySelector(".pnp-foot");
+  let timer;
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        if (timer) return;
+        bar.classList.add("is-moving");
+        timer = setTimeout(() => (window.location.href = PAID_URL), AUTO_MOVE_MS);
+      } else {
+        clearTimeout(timer);
+        timer = undefined;
+        bar.classList.remove("is-moving");
+      }
+    },
+    { threshold: 0.35 }
+  ).observe(foot);
 }
 
 function initGallery(root) {
@@ -492,7 +692,7 @@ function initGallery(root) {
     "scroll",
     () => {
       const i = Math.round(track.scrollLeft / (track.clientWidth || 1));
-      if (count) count.textContent = `${i + 1} / ${DATA.photoCount}`;
+      if (count) count.textContent = `${i + 1} / ${D.photoCount}`;
       dots.forEach((d, j) => d.classList.toggle("is-on", j === Math.min(i, dots.length - 1)));
     },
     { passive: true }
@@ -502,7 +702,7 @@ function initGallery(root) {
 /** Sticky header once the hero scrolls away; bottom nav once the summary Contact leaves view. */
 function initChrome(root) {
   const sticky = root.querySelector("[data-pnp-sticky]");
-  const bnav = root.querySelector("[data-pnp-bnav]");
+  const bnav = root.querySelector("[data-pnp-bnav], [data-pnp-pbar]");
   const hero = root.querySelector(".pnp-hero");
   const contact = root.querySelector(".pnp-btn--contact");
   const update = () => {
