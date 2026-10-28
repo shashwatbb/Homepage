@@ -499,59 +499,102 @@ function paidRowHtml(cta = "View") {
   </a>`;
 }
 
-/* Option 1 — Side by side: a compare card right under the summary. */
-function vsHtml() {
-  const rows = [
-    ["Starting price", "₹2.23 Cr", PAID.priceFrom, "₹25 L lower"],
-    ["Possession", "May ‘29", PAID.possession, "17 months sooner"],
-    ["Price breakup", "Not shared", "Verified", null],
-    ["Floor plans", "Not shared", "All units", null],
-    ["Response time", "Unknown", "Under 30 min", null],
-  ];
-  return `<section class="pnp-sec pnp-vs" aria-label="Compare with a verified project">
-    <div class="pnp-vs__head">
-      <h2 class="pnp-h2">Compare before you decide</h2>
-      <p class="pnp-vs__sub">A verified new launch ${esc(PAID.distance)} matches your search</p>
-    </div>
-    <div class="pnp-vs__table" role="table">
-      <div class="pnp-vs__row pnp-vs__row--head" role="row">
-        <span role="columnheader"></span>
-        <span role="columnheader">This project</span>
-        <span role="columnheader" class="pnp-vs__paid"><img src="${PAID.img}" alt="" />${esc(PAID.name)}</span>
+/** Render with a given dataset (free or paid) — renderers read the module-level D. */
+function withData(data, fn) {
+  const prev = D;
+  D = data;
+  try {
+    return fn();
+  } finally {
+    D = prev;
+  }
+}
+
+/** Free PDP sections after the overview — shown on demand in options 1 and 2. */
+function freeRestHtml(showSellerPhoto) {
+  return withData(DATA, () =>
+    [
+      plansHtml(),
+      aboutHtml(),
+      paymentHtml(),
+      investHtml(),
+      brochureHtml(),
+      compareHtml(),
+      neighbourhoodHtml(),
+      betterHtml(),
+      sellersHtml(showSellerPhoto),
+      developerHtml(),
+      faqHtml(),
+    ].join("")
+  );
+}
+
+const matchFacts = () => [
+  `Possession ${PAID.possession}`,
+  `${PAID.distance.replace(" away", "")} from ${DATA.name}`,
+  "₹25 L lower start",
+];
+
+/* Option 1 — Paid first: the landing fold is the paid project; the free one shrinks to a card. */
+function paidFirstHtml(showSellerPhoto) {
+  return `<section class="pnp-match" aria-label="Best match for your search">
+      <img class="pnp-match__img" src="${PAID.img}" alt="" fetchpriority="high" />
+      <div class="pnp-hero__bar">
+        <button type="button" class="pnp-ico pnp-ico--back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
+        ${toolsHtml()}
       </div>
-      ${rows
-        .map(
-          ([k, a, b, gain]) => `<div class="pnp-vs__row" role="row">
-        <span role="rowheader">${esc(k)}</span>
-        <span role="cell" class="pnp-vs__free">${esc(a)}</span>
-        <span role="cell" class="pnp-vs__paid"><strong>${esc(b)}</strong>${gain ? `<em>${esc(gain)}</em>` : ""}</span>
-      </div>`
-        )
-        .join("")}
-    </div>
-    <a class="pnp-btn pnp-btn--primary" href="${PAID_URL}" data-pnp-paid>View ${esc(PAID.name)}</a>
-  </section>`;
+      <span class="pnp-match__flag">Best match for your search</span>
+    </section>
+    <main class="pnp-tray">
+      <section class="pnp-sec pnp-match__info">
+        ${verifiedTag()}
+        <div class="pnp-summary__title">
+          <h1 class="pnp-h1">${esc(PAID.name)}</h1>
+          <p class="pnp-summary__price"><strong>${esc(PAID.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(PAID.area)}</span></p>
+        </div>
+        <div class="pnp-badges">${matchFacts().map((f, i) => `<span class="pnp-badge${i === 2 ? " pnp-badge--green" : ""}">${esc(f)}</span>`).join("")}</div>
+        <div class="pnp-match__ctas">
+          <a class="pnp-btn pnp-btn--outline" href="${PAID_URL}" data-pnp-paid>View details</a>
+          <button type="button" class="pnp-btn pnp-btn--primary pnp-btn--contact">Contact developer</button>
+        </div>
+      </section>
+      <section class="pnp-sec pnp-was">
+        <p class="pnp-was__eyebrow">You were viewing</p>
+        <button type="button" class="pnp-was__row" data-action="pnp-free" aria-expanded="false">
+          <img src="${A}hero.jpg" alt="" />
+          <span class="pnp-was__text"><strong>${esc(DATA.name)}</strong><small>${esc(DATA.price)}<span class="pnp-vsep" aria-hidden="true"></span>${esc(DATA.locality)}</small></span>
+          <span class="pnp-was__cta"><span data-pnp-free-label>View details</span>${I.caretDown}</span>
+        </button>
+      </section>
+      <div class="pnp-free" data-pnp-free hidden>
+        ${withData(DATA, () => summaryHtml(showSellerPhoto) + overviewHtml())}
+        ${freeRestHtml(showSellerPhoto)}
+      </div>
+      ${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}
+    </main>`;
 }
 
-/* Option 2 — Verified details gap: unverified sections point to the paid project. */
-function lockedHtml(title, note, rows = 3) {
-  const bars = Array.from({ length: rows }, (_, i) => `<span class="pnp-lock__bar" style="width:${[88, 64, 76, 52][i % 4]}%"></span>`).join("");
-  return `<section class="pnp-sec pnp-lock">
-    <h2 class="pnp-h2">${esc(title)}</h2>
-    <div class="pnp-lock__ghost" aria-hidden="true">${bars}</div>
-    <div class="pnp-lock__note">
-      <p>${esc(note)}</p>
-      ${paidRowHtml("See verified")}
-    </div>
-  </section>`;
-}
-
-function gapBannerHtml() {
-  return `<div class="pnp-gap" role="note">
-    <span class="pnp-gap__icon">${I.sealCheck}</span>
-    <p><strong>Some details here aren’t verified.</strong> ${esc(PAID.name)} nearby has verified prices, plans and payment terms.</p>
-    <a class="pnp-link pnp-link--s" href="${PAID_URL}" data-pnp-paid>View</a>
-  </div>`;
+/* Option 2 — Flow into paid: free PDP keeps only its top, then the page runs into the paid PDP. */
+function flowHtml(showPhotos, showSellerPhoto) {
+  return `${heroHtml(showPhotos)}
+    <main class="pnp-tray">
+      ${summaryHtml(showSellerPhoto)}
+      ${overviewHtml()}
+      <section class="pnp-sec pnp-seeall">
+        <button type="button" class="pnp-seeall__btn" data-action="pnp-free" aria-expanded="false"><span data-pnp-free-label>See all details of ${esc(DATA.name)}</span>${I.caretDown}</button>
+      </section>
+      <div class="pnp-free" data-pnp-free hidden>${freeRestHtml(showSellerPhoto)}</div>
+      <section class="pnp-bridge" data-pnp-bridge>
+        <span class="pnp-bridge__chev" aria-hidden="true">${I.caretDown}</span>
+        <p class="pnp-bridge__eyebrow">Up next · Verified new launch ${esc(PAID.distance)}</p>
+        <div class="pnp-badges pnp-bridge__facts">${matchFacts().slice(0, 1).concat(matchFacts().slice(2)).map((f, i) => `<span class="pnp-badge${i ? " pnp-badge--green" : ""}">${esc(f)}</span>`).join("")}</div>
+      </section>
+      <section class="pnp-flow__media"><img src="${PAID.img}" alt="" loading="lazy" /></section>
+      ${withData(PAID_DATA, () =>
+        [summaryHtml(true), overviewHtml(), plansHtml(), paymentHtml(), investHtml(), neighbourhoodHtml(), developerHtml(), faqHtml()].join("")
+      )}
+      ${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}
+    </main>`;
 }
 
 /* Option 3 — Paid takeover: entry sheet, paid bottom bar, auto-move at the end. */
@@ -591,7 +634,7 @@ function paidBarHtml() {
   </div>`;
 }
 
-const OPTION_NAMES = { 1: "Side by side", 2: "Verified details gap", 3: "Paid takeover" };
+const OPTION_NAMES = { 1: "Paid first", 2: "Flow into paid", 3: "Paid takeover" };
 
 export function renderPdpNpPage(root) {
   const params = new URLSearchParams(window.location.search);
@@ -601,38 +644,38 @@ export function renderPdpNpPage(root) {
   const opt = isPaid ? 0 : Number(params.get("opt")) || 0;
   D = isPaid ? PAID_DATA : DATA;
 
-  const locked = opt === 2;
-  const sections = [
-    summaryHtml(showSellerPhoto),
-    opt === 1 ? vsHtml() : "",
-    locked ? gapBannerHtml() : "",
-    overviewHtml(),
-    locked
-      ? lockedHtml("Plot plan and pricing", `${DATA.name}’s developer hasn’t verified unit prices on Housing.`, 4)
-      : plansHtml(),
-    aboutHtml(),
-    locked ? lockedHtml("Payment plan", "The payment plan for this project isn’t verified.", 2) : paymentHtml(),
-    locked ? lockedHtml("Investment insights", "Not enough verified data to project returns here.", 4) : investHtml(),
-    locked ? lockedHtml("Brochure", "The developer hasn’t shared a brochure.", 2) : brochureHtml(),
-    compareHtml(),
-    neighbourhoodHtml(),
-    betterHtml(),
-    sellersHtml(showSellerPhoto),
-    developerHtml(),
-    faqHtml(),
-    linksHtml(),
-    crumbsHtml(),
-    disclaimerHtml(),
-    footerHtml(),
-  ];
+  const page =
+    opt === 1
+      ? paidFirstHtml(showSellerPhoto)
+      : opt === 2
+        ? flowHtml(showPhotos, showSellerPhoto)
+        : `${heroHtml(showPhotos)}
+    <main class="pnp-tray">${[
+      summaryHtml(showSellerPhoto),
+      overviewHtml(),
+      plansHtml(),
+      aboutHtml(),
+      paymentHtml(),
+      investHtml(),
+      brochureHtml(),
+      compareHtml(),
+      neighbourhoodHtml(),
+      betterHtml(),
+      sellersHtml(showSellerPhoto),
+      developerHtml(),
+      faqHtml(),
+      linksHtml(),
+      crumbsHtml(),
+      disclaimerHtml(),
+      footerHtml(),
+    ].join("")}</main>`;
 
   document.documentElement.classList.add("pnp-on");
-  document.title = `${D.name} — Housing`;
+  document.title = `${opt === 1 ? PAID.name : D.name} — Housing`;
   root.innerHTML = `<div class="pnp${opt ? ` pnp--opt${opt}` : ""}${isPaid ? " pnp--paid" : ""}" data-pnp-opt="${opt}">
     ${opt ? `<p class="pnp-optlabel" aria-hidden="true">Option ${opt} · ${OPTION_NAMES[opt]}</p>` : ""}
-    ${stickyHeaderHtml()}
-    ${heroHtml(showPhotos)}
-    <main class="pnp-tray">${sections.join("")}</main>
+    ${withData(opt === 1 ? PAID_DATA : D, stickyHeaderHtml)}
+    ${page}
     ${opt === 3 ? paidBarHtml() : bottomNavHtml()}
     ${opt === 3 ? takeoverSheetHtml() : ""}
   </div>`;
@@ -703,12 +746,20 @@ function initGallery(root) {
 function initChrome(root) {
   const sticky = root.querySelector("[data-pnp-sticky]");
   const bnav = root.querySelector("[data-pnp-bnav], [data-pnp-pbar]");
-  const hero = root.querySelector(".pnp-hero");
+  const hero = root.querySelector(".pnp-hero, .pnp-match");
+  const bridge = root.querySelector("[data-pnp-bridge]");
+  const titleName = sticky.querySelector(".pnp-sticky__title small");
+  const titlePrice = sticky.querySelector(".pnp-sticky__title strong");
   const contact = root.querySelector(".pnp-btn--contact");
   const update = () => {
     const heroGone = hero.getBoundingClientRect().bottom <= sticky.offsetHeight;
     sticky.classList.toggle("is-visible", heroGone);
     sticky.setAttribute("aria-hidden", heroGone ? "false" : "true");
+    if (bridge) {
+      const inPaid = bridge.getBoundingClientRect().top < sticky.offsetHeight;
+      titleName.textContent = inPaid ? PAID.name : DATA.name;
+      titlePrice.textContent = inPaid ? PAID.price : DATA.price;
+    }
     const contactGone = contact.getBoundingClientRect().bottom < 0;
     bnav.classList.toggle("is-visible", contactGone);
     root.querySelector(".pnp").classList.toggle("has-bnav", contactGone);
@@ -755,6 +806,17 @@ function initInteractions(root) {
       const wrap = t.closest(".pnp-more");
       const open = wrap.classList.toggle("is-open");
       t.closest("[data-action]").textContent = open ? "Read less" : "Read more";
+    } else if (action === "pnp-free") {
+      const toggle = t.closest("[data-action]");
+      const free = root.querySelector("[data-pnp-free]");
+      free.hidden = !free.hidden;
+      toggle.setAttribute("aria-expanded", String(!free.hidden));
+      toggle.classList.toggle("is-open", !free.hidden);
+      const label = toggle.querySelector("[data-pnp-free-label]");
+      if (label) {
+        label.dataset.closed ??= label.textContent;
+        label.textContent = free.hidden ? label.dataset.closed : "Hide details";
+      }
     } else if (action === "pnp-faq") {
       const item = t.closest(".pnp-faq__item");
       const open = item.classList.toggle("is-open");

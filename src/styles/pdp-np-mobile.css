@@ -144,6 +144,10 @@ html.pnp-on .pdp-m-page {
   color: var(--pnp-brand) !important;
 }
 
+a.pnp-btn {
+  text-decoration: none;
+}
+
 .pnp-btn--sm {
   width: auto;
   min-height: 40px;
@@ -1693,162 +1697,214 @@ html.pnp-on .pdp-m-page {
   height: 14px;
 }
 
-/* Option 1 — Side by side */
-.pnp-vs {
-  gap: 16px;
-}
-
-.pnp-vs__head {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.pnp-vs__sub {
-  color: var(--pnp-text);
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.pnp-vs__table {
-  border: 1px solid var(--pnp-line);
-  border-radius: 16px;
+/* Option 1 — Paid first */
+.pnp-match {
+  position: relative;
+  height: 360px;
   overflow: hidden;
+  background: var(--pnp-bg);
 }
 
-.pnp-vs__row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.15fr;
-  border-top: 1px solid var(--pnp-line);
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.pnp-vs__row:first-child {
-  border-top: 0;
-}
-
-.pnp-vs__row > span {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  padding: 10px 8px 10px 12px;
-}
-
-.pnp-vs__row > span:first-child {
-  color: var(--pnp-muted);
-}
-
-.pnp-vs__free {
-  color: var(--pnp-text);
-}
-
-.pnp-vs__paid {
-  background: var(--ds-color-lavender-mist-50);
-}
-
-.pnp-vs__paid strong {
-  color: var(--pnp-ink);
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: var(--ds-font-weight-medium);
-}
-
-.pnp-vs__paid em {
-  color: var(--pnp-green);
-  font-style: normal;
-}
-
-.pnp-vs__row--head > span {
-  color: var(--pnp-ink) !important;
-  font-weight: var(--ds-font-weight-medium);
-}
-
-.pnp-vs__row--head .pnp-vs__paid {
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-  color: var(--pnp-brand) !important;
-}
-
-.pnp-vs__row--head img {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
+.pnp-match__img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-a.pnp-btn {
-  text-decoration: none;
-}
-
-/* Option 2 — Verified details gap */
-.pnp-gap {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 12px 16px;
-  background: var(--ds-color-lavender-mist-50);
+.pnp-match__flag {
+  position: absolute;
+  left: 16px;
+  bottom: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--pnp-brand);
+  color: var(--ds-color-warm-neutral-0);
   font-size: 12px;
   line-height: 16px;
-  color: var(--pnp-text);
-}
-
-.pnp-gap p {
-  flex: 1;
-}
-
-.pnp-gap strong {
-  color: var(--pnp-ink);
   font-weight: var(--ds-font-weight-medium);
 }
 
-.pnp-gap__icon {
-  color: var(--pnp-brand);
-}
-
-.pnp-gap__icon svg {
-  width: 16px;
-  height: 16px;
-}
-
-.pnp-gap .pnp-link {
-  text-decoration: none;
-}
-
-.pnp-lock {
+.pnp-match__info {
   gap: 16px;
+  border-radius: 24px 24px 0 0;
 }
 
-.pnp-lock__ghost {
-  display: flex;
-  flex-direction: column;
+.pnp-match__ctas {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
   gap: 12px;
-  padding: 16px;
-  border: 1px dashed var(--pnp-line-2);
+  margin-top: 8px;
+}
+
+.pnp-was {
+  gap: 8px;
+}
+
+.pnp-was__eyebrow {
+  color: var(--pnp-muted);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.pnp-was__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--pnp-line);
   border-radius: 16px;
   background: var(--ds-color-warm-neutral-50);
+  text-align: left;
+  cursor: pointer;
 }
 
-.pnp-lock__bar {
-  display: block;
-  height: 12px;
-  border-radius: 6px;
-  background: var(--pnp-line);
+.pnp-was__row img {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
-.pnp-lock__note {
+.pnp-was__text {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 2px;
 }
 
-.pnp-lock__note p {
-  color: var(--pnp-text);
+.pnp-was__text strong {
   font-size: 14px;
   line-height: 20px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.pnp-was__text small {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: var(--pnp-text);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.pnp-was__cta,
+.pnp-seeall__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--pnp-brand);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+  white-space: nowrap;
+}
+
+.pnp-was__cta svg,
+.pnp-seeall__btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.is-open > .pnp-was__cta svg,
+.pnp-seeall__btn.is-open svg {
+  transform: rotate(180deg);
+}
+
+.pnp-free {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pnp-free[hidden] {
+  display: none;
+}
+
+/* Option 2 — Flow into paid */
+.pnp-seeall {
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.pnp-seeall__btn {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.pnp-bridge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px 20px;
+  text-align: center;
+}
+
+.pnp-bridge__chev {
+  color: var(--pnp-brand);
+  animation: pnp-bob 1.4s ease-in-out infinite;
+}
+
+.pnp-bridge__chev svg {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes pnp-bob {
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.pnp-bridge__eyebrow {
+  color: var(--pnp-brand);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.pnp-bridge__facts {
+  justify-content: center;
+}
+
+.pnp-bridge .pnp-badge {
+  background: var(--ds-color-warm-neutral-0);
+}
+
+.pnp-bridge .pnp-badge--green {
+  background: var(--ds-color-pistachio-sand-50);
+}
+
+.pnp-flow__media {
+  height: 240px;
+  margin-bottom: -32px;
+  overflow: hidden;
+  border-radius: 24px 24px 0 0;
+}
+
+.pnp-flow__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pnp-flow__media + .pnp-summary {
+  position: relative;
 }
 
 /* Option 3 — Paid takeover */
