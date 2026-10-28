@@ -1698,64 +1698,10 @@ a.pnp-btn {
 }
 
 /* Option 1 — Recommended first */
-.pnp-strip {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--ds-color-warm-neutral-0);
-  border-bottom: 1px solid var(--pnp-line);
-}
-
-.pnp-strip__text {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.pnp-strip__text small {
-  color: var(--pnp-muted);
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.pnp-strip__text strong {
-  overflow: hidden;
-  color: var(--pnp-text);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: var(--ds-font-weight-medium);
-  text-overflow: ellipsis;
-}
-
-.pnp-strip__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  color: var(--pnp-muted);
-  font-size: 12px;
-  line-height: 16px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.pnp-strip__link svg {
-  width: 14px;
-  height: 14px;
-}
-
-.pnp-rechero {
-  position: relative;
-}
-
 .pnp-rechero__flag {
   position: absolute;
-  left: 16px;
-  bottom: 64px;
+  left: 12px;
+  bottom: 12px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1892,6 +1838,210 @@ a.pnp-btn {
 .pnp-recsum .pnp-agent {
   padding-top: 16px;
   border-top: 1px solid var(--pnp-line);
+}
+
+/* Option 1 — two cards */
+.pnp-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.pnp-duo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px 24px;
+}
+
+.pnp-duo__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px !important;
+  color: var(--pnp-muted);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pnp-duo__label--brand {
+  margin-top: 12px !important;
+  color: var(--pnp-brand);
+}
+
+.pnp-duo__label svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pnp-duo__tail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px -16px -24px;
+}
+
+/* Card 1 — landed (free) project */
+.pnp-lcard,
+.pnp-rcard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--pnp-line-2);
+  border-radius: 20px;
+  background: var(--ds-color-warm-neutral-0);
+  overflow: hidden;
+}
+
+.pnp-lcard__img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.pnp-lcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.pnp-lcard__name {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.pnp-lcard .pnp-summary__price strong {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.pnp-lcard .pnp-agent {
+  padding-top: 16px;
+  border-top: 1px solid var(--pnp-line);
+}
+
+.pnp-lcard__more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-top: 1px solid var(--pnp-line);
+  color: var(--pnp-text);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--ds-font-weight-medium);
+  text-decoration: none;
+}
+
+.pnp-lcard__more svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Card 2 — recommended (paid) project */
+.pnp-rcard {
+  border: 1.5px solid var(--pnp-brand);
+  box-shadow: 0 12px 32px -12px rgba(74, 22, 217, 0.28);
+}
+
+.pnp-rcard__toggle {
+  cursor: pointer;
+}
+
+.pnp-rcard__media {
+  position: relative;
+  height: 220px;
+}
+
+.pnp-rcard__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pnp-rcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.pnp-rcard__titlerow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pnp-rcard__titlerow .pnp-summary__title {
+  flex: 1;
+  min-width: 0;
+}
+
+.pnp-rcard__chev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--ds-color-lavender-mist-50);
+  color: var(--pnp-brand);
+  transition: transform 0.25s ease;
+}
+
+.pnp-rcard__chev svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pnp-rcard.is-open .pnp-rcard__chev,
+.pnp-rcard.is-open .pnp-rcard__hint svg {
+  transform: rotate(180deg);
+}
+
+.pnp-rcard__hint {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 4px;
+  color: var(--pnp-brand);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.pnp-rcard__hint svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.pnp-rcard__cta {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 12px;
+  padding: 0 16px 16px;
+}
+
+.pnp-rcard__more {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--pnp-line);
+  background: var(--pnp-bg);
+}
+
+.pnp-rcard__more[hidden] {
+  display: none;
 }
 
 /* Option 2 — Bottom sheet takeover */
@@ -2158,10 +2308,9 @@ a.pnp-btn {
   }
 }
 
-/* Review label sits on the hero, clear of the "You were viewing" strip */
+/* Review label sits in the top bar, between back and the tools */
 .pnp--opt1 .pnp-optlabel {
-  top: 310px;
-  left: auto;
-  right: 16px;
+  top: 28px;
+  left: 68px;
   transform: none;
 }

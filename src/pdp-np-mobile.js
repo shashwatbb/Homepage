@@ -510,62 +510,84 @@ function withData(data, fn) {
   }
 }
 
-/* Option 1 — Recommended first: the landed (free) project is a slim strip with a
-   low-key "Keep exploring" that opens it as its own screen; the page itself is the
-   recommended paid project with richer, more persuasive detail. */
+/* Option 1 — Recommended first: two cards. Card 1 is the free project the buyer
+   landed on (basic details; full details open as their own screen). Card 2 is the
+   recommended paid project with more detail; its chevron expands the full PDP inline. */
 const FREE_URL = "/pdp-mobile.html?id=0&from=rec";
 
-function recSummaryHtml() {
+function landedCardHtml(showSellerPhoto) {
+  return `<article class="pnp-lcard" aria-label="Property you landed on">
+    <img class="pnp-lcard__img" src="${A}hero.jpg" alt="" />
+    <div class="pnp-lcard__body">
+      <div class="pnp-badges">
+        <span class="pnp-badge pnp-badge--green">New launch</span>
+        <span class="pnp-badge">${I.sealCheck}RERA</span>
+        <span class="pnp-badge">Possession by May ‘29</span>
+      </div>
+      <div class="pnp-summary__title">
+        <h1 class="pnp-lcard__name">${esc(DATA.name)}</h1>
+        <p class="pnp-summary__price"><strong>${esc(DATA.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(DATA.area)}</span></p>
+        <p class="pnp-recsum__loc">${I.mapPin}${esc(DATA.locality)}, ${esc(DATA.city)}</p>
+      </div>
+      <div class="pnp-agent">
+        ${avatarHtml(DATA.seller, showSellerPhoto, "pnp-agent__photo")}
+        <span class="pnp-agent__text"><strong>${esc(DATA.seller.name)}</strong><small>${esc(DATA.seller.role)}</small></span>
+        <button type="button" class="pnp-btn pnp-btn--outline pnp-btn--sm pnp-btn--contact">Contact</button>
+      </div>
+    </div>
+    <a class="pnp-lcard__more" href="${FREE_URL}">View full details${I.caretRight}</a>
+  </article>`;
+}
+
+function recCardHtml(showSellerPhoto) {
   const why = [
     ["Price from", PAID.priceFrom, "₹25 L lower"],
     ["Possession", PAID.possession, "17 months sooner"],
     ["Distance", PAID.distance.replace(" away", ""), "from your pick"],
   ];
-  return `<section class="pnp-sec pnp-summary pnp-recsum">
-    <div class="pnp-badges">
-      <span class="pnp-badge pnp-badge--brand">${I.sealCheck}Verified by developer</span>
-      <span class="pnp-badge pnp-badge--green">New launch</span>
-      <span class="pnp-badge">${I.sealCheck}RERA</span>
+  return `<article class="pnp-rcard" data-pnp-bridge aria-label="Recommended project">
+    <div class="pnp-rcard__toggle" data-action="pnp-rec" role="button" tabindex="0" aria-expanded="false">
+      <div class="pnp-rcard__media">
+        <img src="${PAID.img}" alt="" />
+        <span class="pnp-rechero__flag">${I.sealCheck}Recommended for you</span>
+      </div>
+      <div class="pnp-rcard__body">
+        <div class="pnp-badges">
+          <span class="pnp-badge pnp-badge--brand">${I.sealCheck}Verified by developer</span>
+          <span class="pnp-badge pnp-badge--green">New launch</span>
+          <span class="pnp-badge">${I.sealCheck}RERA</span>
+        </div>
+        <div class="pnp-rcard__titlerow">
+          <div class="pnp-summary__title">
+            <h2 class="pnp-h1">${esc(PAID.name)}</h2>
+            <p class="pnp-summary__price"><strong>${esc(PAID.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(PAID.area)}</span></p>
+            <p class="pnp-recsum__loc">${I.mapPin}${esc(PAID.locality)}</p>
+          </div>
+          <span class="pnp-rcard__chev" aria-hidden="true">${I.caretDown}</span>
+        </div>
+        <div class="pnp-recsum__why">
+          <p class="pnp-recsum__label">Why we recommend it</p>
+          <div class="pnp-recsum__tiles">${why
+            .map(([k, v, note]) => `<div><small>${esc(k)}</small><strong>${esc(v)}</strong><em>${esc(note)}</em></div>`)
+            .join("")}</div>
+        </div>
+        <div class="pnp-recsum__offer">
+          <span class="pnp-recsum__offer-tag">Offer</span>
+          <p><strong>Pay 10% now,</strong> rest on possession. Free club membership for early bookings.</p>
+        </div>
+        <ul class="pnp-recsum__perks">
+          <li>${I.sealCheck}Prices, floor plans and payment plan verified by the developer</li>
+          <li>${I.phone}Developer calls back in under 30 minutes</li>
+          <li>${I.tree}4.5 acres of central greens, 60+ amenities</li>
+        </ul>
+        <p class="pnp-rcard__hint"><span data-pnp-rec-label>See full details</span>${I.caretDown}</p>
+      </div>
     </div>
-    <div class="pnp-summary__title">
-      <h1 class="pnp-h1">${esc(PAID.name)}</h1>
-      <p class="pnp-summary__price"><strong>${esc(PAID.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(PAID.area)}</span></p>
-      <p class="pnp-recsum__loc">${I.mapPin}${esc(PAID.locality)}</p>
+    <div class="pnp-rcard__cta">
+      ${btn("View phone", "outline")}
+      <button type="button" class="pnp-btn pnp-btn--primary pnp-btn--contact">Contact developer</button>
     </div>
-    <div class="pnp-recsum__why">
-      <p class="pnp-recsum__label">Why we recommend it</p>
-      <div class="pnp-recsum__tiles">${why
-        .map(([k, v, note]) => `<div><small>${esc(k)}</small><strong>${esc(v)}</strong><em>${esc(note)}</em></div>`)
-        .join("")}</div>
-    </div>
-    <div class="pnp-recsum__offer">
-      <span class="pnp-recsum__offer-tag">Offer</span>
-      <p><strong>Pay 10% now,</strong> rest on possession. Free club membership for early bookings.</p>
-    </div>
-    <ul class="pnp-recsum__perks">
-      <li>${I.sealCheck}Prices, floor plans and payment plan verified by the developer</li>
-      <li>${I.phone}Developer calls back in under 30 minutes</li>
-      <li>${I.tree}4.5 acres of central greens, 60+ amenities</li>
-    </ul>
-    <div class="pnp-agent">
-      <span class="pnp-agent__photo pnp-agent__photo--initials" aria-hidden="true">GP</span>
-      <span class="pnp-agent__text"><strong>Godrej Properties</strong><small>Developer · 120+ projects</small></span>
-      <button type="button" class="pnp-btn pnp-btn--primary pnp-btn--sm pnp-btn--contact">Contact developer</button>
-    </div>
-  </section>`;
-}
-
-function landedHtml(showSellerPhoto) {
-  return `<div class="pnp-strip" aria-label="Property you were viewing">
-      <span class="pnp-strip__text"><small>You were viewing</small><strong>${esc(DATA.name)}</strong></span>
-      <a class="pnp-strip__link" href="${FREE_URL}">Keep exploring${I.caretRight}</a>
-    </div>
-    <div class="pnp-rechero">
-      ${withData(PAID_DATA, () => heroHtml(true))}
-      <span class="pnp-rechero__flag">${I.sealCheck}Recommended for you</span>
-    </div>
-    <main class="pnp-tray">
-      ${recSummaryHtml()}
+    <div class="pnp-rcard__more" data-pnp-rec-more hidden>
       ${withData(PAID_DATA, () =>
         [
           overviewHtml(),
@@ -580,7 +602,21 @@ function landedHtml(showSellerPhoto) {
           faqHtml(),
         ].join("")
       )}
-      ${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}
+    </div>
+  </article>`;
+}
+
+function landedHtml(showSellerPhoto) {
+  return `<header class="pnp-topbar">
+      <button type="button" class="pnp-ico pnp-ico--back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
+      ${toolsHtml()}
+    </header>
+    <main class="pnp-duo">
+      <p class="pnp-duo__label">You landed on</p>
+      ${landedCardHtml(showSellerPhoto)}
+      <p class="pnp-duo__label pnp-duo__label--brand">${I.sealCheck}We recommend this instead</p>
+      ${recCardHtml(showSellerPhoto)}
+      <div class="pnp-duo__tail">${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}</div>
     </main>`;
 }
 
@@ -656,7 +692,6 @@ export function renderPdpNpPage(root) {
     ].join("")}</main>`;
 
   document.documentElement.classList.add("pnp-on");
-  if (opt === 1) D = PAID_DATA;
   document.title = `${D.name} — Housing`;
   root.innerHTML = `<div class="pnp${opt ? ` pnp--opt${opt}` : ""}${isPaid ? " pnp--paid" : ""}" data-pnp-opt="${opt}">
     ${opt ? `<p class="pnp-optlabel" aria-hidden="true">Option ${opt} · ${OPTION_NAMES[opt]}</p>` : ""}
@@ -762,7 +797,7 @@ function initGallery(root) {
 function initChrome(root) {
   const sticky = root.querySelector("[data-pnp-sticky]");
   const bnav = root.querySelector("[data-pnp-bnav], [data-pnp-pbar]");
-  const hero = root.querySelector(".pnp-hero");
+  const hero = root.querySelector(".pnp-hero, .pnp-topbar");
   const bridge = root.querySelector("[data-pnp-bridge]");
   const titleName = sticky.querySelector(".pnp-sticky__title small");
   const titlePrice = sticky.querySelector(".pnp-sticky__title strong");
@@ -824,6 +859,14 @@ function initInteractions(root) {
       const wrap = t.closest(".pnp-more");
       const open = wrap.classList.toggle("is-open");
       t.closest("[data-action]").textContent = open ? "Read less" : "Read more";
+    } else if (action === "pnp-rec") {
+      const card = t.closest(".pnp-rcard");
+      const more = card.querySelector("[data-pnp-rec-more]");
+      more.hidden = !more.hidden;
+      const open = !more.hidden;
+      card.classList.toggle("is-open", open);
+      card.querySelector("[data-action='pnp-rec']").setAttribute("aria-expanded", String(open));
+      card.querySelector("[data-pnp-rec-label]").textContent = open ? "Hide details" : "See full details";
     } else if (action === "pnp-faq") {
       const item = t.closest(".pnp-faq__item");
       const open = item.classList.toggle("is-open");
