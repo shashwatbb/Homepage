@@ -529,75 +529,73 @@ function freeRestHtml(showSellerPhoto) {
   );
 }
 
-const matchFacts = () => [
-  `Possession ${PAID.possession}`,
-  `${PAID.distance.replace(" away", "")} from ${DATA.name}`,
-  "₹25 L lower start",
-];
-
-/* Option 1 — Paid first: the landing fold is the paid project; the free one shrinks to a card. */
-function paidFirstHtml(showSellerPhoto) {
-  return `<section class="pnp-match" aria-label="Best match for your search">
-      <img class="pnp-match__img" src="${PAID.img}" alt="" fetchpriority="high" />
-      <div class="pnp-hero__bar">
+/* Option 1 — Recommended first: the landed (free) project shrinks to a card,
+   and the rest of the page is the recommended paid project. */
+function landedHtml(showSellerPhoto) {
+  const why = [
+    ["Price from", PAID.priceFrom, "₹25 L lower"],
+    ["Possession", PAID.possession, "17 months sooner"],
+    ["Distance", PAID.distance.replace(" away", ""), `from ${DATA.name}`],
+  ];
+  return `<section class="pnp-landed" aria-label="Property you landed on">
+      <div class="pnp-landed__bar">
         <button type="button" class="pnp-ico pnp-ico--back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
+        <p class="pnp-landed__eyebrow">You landed on</p>
         ${toolsHtml()}
       </div>
-      <span class="pnp-match__flag">Best match for your search</span>
-    </section>
-    <main class="pnp-tray">
-      <section class="pnp-sec pnp-match__info">
-        ${verifiedTag()}
-        <div class="pnp-summary__title">
-          <h1 class="pnp-h1">${esc(PAID.name)}</h1>
-          <p class="pnp-summary__price"><strong>${esc(PAID.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(PAID.area)}</span></p>
+      <div class="pnp-landed__card">
+        <div class="pnp-landed__row">
+          <img class="pnp-landed__img" src="${A}hero.jpg" alt="" />
+          <div class="pnp-landed__text">
+            <strong>${esc(DATA.name)}</strong>
+            <span>${esc(DATA.price)}</span>
+            <small>${esc(DATA.locality)}<span class="pnp-vsep" aria-hidden="true"></span>Possession May ‘29</small>
+          </div>
         </div>
-        <div class="pnp-badges">${matchFacts().map((f, i) => `<span class="pnp-badge${i === 2 ? " pnp-badge--green" : ""}">${esc(f)}</span>`).join("")}</div>
-        <div class="pnp-match__ctas">
-          <a class="pnp-btn pnp-btn--outline" href="${PAID_URL}" data-pnp-paid>View details</a>
-          <button type="button" class="pnp-btn pnp-btn--primary pnp-btn--contact">Contact developer</button>
+        <div class="pnp-landed__actions">
+          <button type="button" class="pnp-landed__toggle" data-action="pnp-free" aria-expanded="false"><span data-pnp-free-label>View full details</span>${I.caretDown}</button>
+          <button type="button" class="pnp-btn pnp-btn--outline pnp-btn--sm">Contact</button>
         </div>
-      </section>
-      <section class="pnp-sec pnp-was">
-        <p class="pnp-was__eyebrow">You were viewing</p>
-        <button type="button" class="pnp-was__row" data-action="pnp-free" aria-expanded="false">
-          <img src="${A}hero.jpg" alt="" />
-          <span class="pnp-was__text"><strong>${esc(DATA.name)}</strong><small>${esc(DATA.price)}<span class="pnp-vsep" aria-hidden="true"></span>${esc(DATA.locality)}</small></span>
-          <span class="pnp-was__cta"><span data-pnp-free-label>View details</span>${I.caretDown}</span>
-        </button>
-      </section>
-      <div class="pnp-free" data-pnp-free hidden>
-        ${withData(DATA, () => summaryHtml(showSellerPhoto) + overviewHtml())}
-        ${freeRestHtml(showSellerPhoto)}
       </div>
-      ${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}
-    </main>`;
+    </section>
+    <div class="pnp-free pnp-free--landed" data-pnp-free hidden>
+      ${withData(DATA, () => heroHtml(true) + summaryHtml(showSellerPhoto) + overviewHtml())}
+      ${freeRestHtml(showSellerPhoto)}
+      <button type="button" class="pnp-free__close" data-action="pnp-free-close">Hide ${esc(DATA.name)} details ${I.caretDown}</button>
+    </div>
+    <section class="pnp-rec" data-pnp-bridge aria-label="Recommended for you">
+      <div class="pnp-rec__head">
+        <span class="pnp-rec__flag">${I.sealCheck}Recommended for you</span>
+        <p class="pnp-rec__sub">A verified new launch that fits your search better</p>
+      </div>
+      <div class="pnp-rec__why">${why
+        .map(([k, v, note]) => `<div><small>${esc(k)}</small><strong>${esc(v)}</strong><em>${esc(note)}</em></div>`)
+        .join("")}</div>
+    </section>
+    <div class="pnp-rec__pdp">
+      ${withData(PAID_DATA, () => heroHtml(true))}
+      <main class="pnp-tray">
+        ${withData(PAID_DATA, () =>
+          [
+            summaryHtml(true),
+            overviewHtml(),
+            plansHtml(),
+            aboutHtml(),
+            paymentHtml(),
+            investHtml(),
+            brochureHtml(),
+            neighbourhoodHtml(),
+            sellersHtml(true),
+            developerHtml(),
+            faqHtml(),
+          ].join("")
+        )}
+        ${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}
+      </main>
+    </div>`;
 }
 
-/* Option 2 — Flow into paid: free PDP keeps only its top, then the page runs into the paid PDP. */
-function flowHtml(showPhotos, showSellerPhoto) {
-  return `${heroHtml(showPhotos)}
-    <main class="pnp-tray">
-      ${summaryHtml(showSellerPhoto)}
-      ${overviewHtml()}
-      <section class="pnp-sec pnp-seeall">
-        <button type="button" class="pnp-seeall__btn" data-action="pnp-free" aria-expanded="false"><span data-pnp-free-label>See all details of ${esc(DATA.name)}</span>${I.caretDown}</button>
-      </section>
-      <div class="pnp-free" data-pnp-free hidden>${freeRestHtml(showSellerPhoto)}</div>
-      <section class="pnp-bridge" data-pnp-bridge>
-        <span class="pnp-bridge__chev" aria-hidden="true">${I.caretDown}</span>
-        <p class="pnp-bridge__eyebrow">Up next · Verified new launch ${esc(PAID.distance)}</p>
-        <div class="pnp-badges pnp-bridge__facts">${matchFacts().slice(0, 1).concat(matchFacts().slice(2)).map((f, i) => `<span class="pnp-badge${i ? " pnp-badge--green" : ""}">${esc(f)}</span>`).join("")}</div>
-      </section>
-      <section class="pnp-flow__media"><img src="${PAID.img}" alt="" loading="lazy" /></section>
-      ${withData(PAID_DATA, () =>
-        [summaryHtml(true), overviewHtml(), plansHtml(), paymentHtml(), investHtml(), neighbourhoodHtml(), developerHtml(), faqHtml()].join("")
-      )}
-      ${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}
-    </main>`;
-}
-
-/* Option 3 — Paid takeover: entry sheet, paid bottom bar, auto-move at the end. */
+/* Option 2 — Bottom sheet takeover: entry sheet, paid bottom bar, auto-move at the end. */
 function takeoverSheetHtml() {
   return `<div class="pnp-sheet" data-pnp-sheet hidden>
     <button type="button" class="pnp-sheet__scrim" data-action="pnp-sheet-close" aria-label="Close"></button>
@@ -634,7 +632,7 @@ function paidBarHtml() {
   </div>`;
 }
 
-const OPTION_NAMES = { 1: "Paid first", 2: "Flow into paid", 3: "Paid takeover" };
+const OPTION_NAMES = { 1: "Recommended first", 2: "Bottom sheet" };
 
 export function renderPdpNpPage(root) {
   const params = new URLSearchParams(window.location.search);
@@ -646,9 +644,7 @@ export function renderPdpNpPage(root) {
 
   const page =
     opt === 1
-      ? paidFirstHtml(showSellerPhoto)
-      : opt === 2
-        ? flowHtml(showPhotos, showSellerPhoto)
+      ? landedHtml(showSellerPhoto)
         : `${heroHtml(showPhotos)}
     <main class="pnp-tray">${[
       summaryHtml(showSellerPhoto),
@@ -671,13 +667,13 @@ export function renderPdpNpPage(root) {
     ].join("")}</main>`;
 
   document.documentElement.classList.add("pnp-on");
-  document.title = `${opt === 1 ? PAID.name : D.name} — Housing`;
+  document.title = `${D.name} — Housing`;
   root.innerHTML = `<div class="pnp${opt ? ` pnp--opt${opt}` : ""}${isPaid ? " pnp--paid" : ""}" data-pnp-opt="${opt}">
     ${opt ? `<p class="pnp-optlabel" aria-hidden="true">Option ${opt} · ${OPTION_NAMES[opt]}</p>` : ""}
-    ${withData(opt === 1 ? PAID_DATA : D, stickyHeaderHtml)}
+    ${stickyHeaderHtml()}
     ${page}
-    ${opt === 3 ? paidBarHtml() : bottomNavHtml()}
-    ${opt === 3 ? takeoverSheetHtml() : ""}
+    ${opt === 2 ? paidBarHtml() : bottomNavHtml()}
+    ${opt === 2 ? takeoverSheetHtml() : ""}
   </div>`;
   root.removeAttribute("aria-busy");
   document.documentElement.classList.remove("no-fouc");
@@ -685,7 +681,7 @@ export function renderPdpNpPage(root) {
   initGallery(root);
   initChrome(root);
   initInteractions(root);
-  if (opt === 3) initTakeover(root);
+  if (opt === 2) initTakeover(root);
 }
 
 const AUTO_MOVE_MS = 3000;
@@ -746,11 +742,11 @@ function initGallery(root) {
 function initChrome(root) {
   const sticky = root.querySelector("[data-pnp-sticky]");
   const bnav = root.querySelector("[data-pnp-bnav], [data-pnp-pbar]");
-  const hero = root.querySelector(".pnp-hero, .pnp-match");
+  const hero = root.querySelector(".pnp-landed, .pnp-hero");
   const bridge = root.querySelector("[data-pnp-bridge]");
   const titleName = sticky.querySelector(".pnp-sticky__title small");
   const titlePrice = sticky.querySelector(".pnp-sticky__title strong");
-  const contact = root.querySelector(".pnp-btn--contact");
+  const contacts = Array.from(root.querySelectorAll(".pnp-btn--contact"));
   const update = () => {
     const heroGone = hero.getBoundingClientRect().bottom <= sticky.offsetHeight;
     sticky.classList.toggle("is-visible", heroGone);
@@ -760,6 +756,8 @@ function initChrome(root) {
       titleName.textContent = inPaid ? PAID.name : DATA.name;
       titlePrice.textContent = inPaid ? PAID.price : DATA.price;
     }
+    // First visible Contact (option 1 keeps the free project's summary hidden until expanded).
+    const contact = contacts.find((el) => el.offsetParent) || contacts[0];
     const contactGone = contact.getBoundingClientRect().bottom < 0;
     bnav.classList.toggle("is-visible", contactGone);
     root.querySelector(".pnp").classList.toggle("has-bnav", contactGone);
@@ -806,6 +804,9 @@ function initInteractions(root) {
       const wrap = t.closest(".pnp-more");
       const open = wrap.classList.toggle("is-open");
       t.closest("[data-action]").textContent = open ? "Read less" : "Read more";
+    } else if (action === "pnp-free-close") {
+      root.querySelector('[data-action="pnp-free"]')?.click();
+      root.querySelector(".pnp-landed")?.scrollIntoView({ block: "start" });
     } else if (action === "pnp-free") {
       const toggle = t.closest("[data-action]");
       const free = root.querySelector("[data-pnp-free]");
