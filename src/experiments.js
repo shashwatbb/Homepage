@@ -28,10 +28,12 @@ export const SRP_BHK_BUDGET_CARD_EXPERIMENT_ID = "srp_bhk_budget_card";
 export const ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID = "onboarding_locality_discovery_flow";
 export const SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID = "srp_image_feature_pills";
 export const SRP_INFINITE_PDP_EXPERIMENT_ID = "srp_infinite_pdp";
+export const PDP_PAID_LEADS_EXPERIMENT_ID = "pdp_paid_leads";
 
 const EXPERIMENT_DEFINITIONS = [
   {
     id: SRP_MWEB_BUY_EXPERIMENT_ID,
+    added: "2026-07-31",
     name: "Buy SRP (m-web)",
     platform: "mobile",
     exclusive: false,
@@ -47,6 +49,7 @@ const EXPERIMENT_DEFINITIONS = [
   },
   {
     id: SRP_BUDGET_BHK_GUIDANCE_EXPERIMENT_ID,
+    added: "2026-07-20",
     name: "Budget and BHK filter on SRP",
     platform: "mobile",
     apply(enabled) {
@@ -61,6 +64,7 @@ const EXPERIMENT_DEFINITIONS = [
   },
   {
     id: SRP_BHK_BUDGET_CARD_EXPERIMENT_ID,
+    added: "2026-07-21",
     name: "Bottom sheet Budget and BHK",
     platform: "mobile",
     apply(enabled) {
@@ -75,6 +79,7 @@ const EXPERIMENT_DEFINITIONS = [
   },
   {
     id: ONBOARDING_LOCALITY_DISCOVERY_FLOW_EXPERIMENT_ID,
+    added: "2026-09-17",
     name: "Onboarding locality discovery flow",
     platform: "mobile",
     exclusive: false,
@@ -90,6 +95,7 @@ const EXPERIMENT_DEFINITIONS = [
   },
   {
     id: SRP_IMAGE_FEATURE_PILLS_EXPERIMENT_ID,
+    added: "2026-10-15",
     name: "Buy/SRP Seen in photos feature pills",
     platform: "mobile",
     exclusive: false,
@@ -112,6 +118,7 @@ const EXPERIMENT_DEFINITIONS = [
   },
   {
     id: SRP_INFINITE_PDP_EXPERIMENT_ID,
+    added: "2026-10-26",
     name: "Infinite PDP (SRP quick view)",
     platform: "mobile",
     exclusive: false,
@@ -124,6 +131,23 @@ const EXPERIMENT_DEFINITIONS = [
       window.dispatchEvent(
         new CustomEvent("housing:experiment-apply", {
           detail: { id: SRP_INFINITE_PDP_EXPERIMENT_ID, enabled },
+          bubbles: true,
+        })
+      );
+    },
+  },
+  {
+    id: PDP_PAID_LEADS_EXPERIMENT_ID,
+    added: "2026-10-28",
+    name: "Free PDP paid leads",
+    platform: "mobile",
+    exclusive: false,
+    // Free project PDP → paid leads (Oct 2026 brief). UI not built yet.
+    apply(enabled) {
+      document.documentElement.classList.toggle("experiment-pdp-paid-leads", enabled);
+      window.dispatchEvent(
+        new CustomEvent("housing:experiment-apply", {
+          detail: { id: PDP_PAID_LEADS_EXPERIMENT_ID, enabled },
           bubbles: true,
         })
       );
@@ -227,7 +251,10 @@ function flowRowHtml(flow) {
 
 function experimentsSectionsHtml() {
   return EXPERIMENT_CATEGORIES.map((category) => {
-    const items = EXPERIMENT_DEFINITIONS.filter((experiment) => experiment.platform === category.id);
+    // Newest experiments on top.
+    const items = EXPERIMENT_DEFINITIONS.filter((experiment) => experiment.platform === category.id).sort(
+      (a, b) => b.added.localeCompare(a.added)
+    );
     const flows = FLOW_DEFINITIONS.filter((flow) => flow.platform === category.id);
     const rowsHtml = items.map(experimentRowHtml).join("") + flows.map(flowRowHtml).join("");
     const listHtml = rowsHtml
