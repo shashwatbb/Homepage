@@ -2011,6 +2011,7 @@ a.pnp-btn {
 .pnp-sheet__scrim {
   position: absolute;
   inset: 0;
+  touch-action: none;
   border: 0;
   background: rgba(26, 24, 22, 0.32);
   opacity: 0;
@@ -2019,6 +2020,7 @@ a.pnp-btn {
 
 .pnp-sheet__panel {
   position: relative;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   gap: 16px;

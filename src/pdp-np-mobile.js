@@ -691,7 +691,18 @@ const AUTO_MOVE_MS = 3000;
 function initTakeover(root) {
   const sheet = root.querySelector("[data-pnp-sheet]");
   const panel = sheet.querySelector(".pnp-sheet__panel");
+  // Freeze the page behind the sheet (position: fixed also stops iOS Safari scrolling it).
+  let lockedY = 0;
+  const lockScroll = () => {
+    lockedY = window.scrollY;
+    Object.assign(document.body.style, { position: "fixed", top: `-${lockedY}px`, left: "0", right: "0" });
+  };
+  const unlockScroll = () => {
+    ["position", "top", "left", "right"].forEach((p) => document.body.style.removeProperty(p));
+    window.scrollTo(0, lockedY);
+  };
   const open = () => {
+    lockScroll();
     sheet.hidden = false;
     void sheet.offsetWidth;
     sheet.classList.add("is-open");
@@ -704,6 +715,7 @@ function initTakeover(root) {
     setTimeout(() => {
       sheet.hidden = true;
       sheet.classList.remove("is-closing");
+      unlockScroll();
     }, 360);
   };
   // Let the buyer see the page they picked before suggesting the alternative.
