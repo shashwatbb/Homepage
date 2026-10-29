@@ -2251,7 +2251,308 @@ a.pnp-btn {
   padding-bottom: 80px;
 }
 
+/* Option 3 — Picture-in-picture "Your pick" card */
+.pnp-pip {
+  position: fixed;
+  left: 12px;
+  bottom: 16px;
+  z-index: 45;
+  width: 232px;
+  height: 96px;
+  perspective: 800px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translate(calc(50vw - 128px), -70vh) scale(1.6);
+  transition:
+    transform 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 0.4s ease,
+    bottom 0.24s ease;
+}
+
+.pnp-pip.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.pnp.has-bnav .pnp-pip {
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+
+.pnp-pip__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.pnp-pip.is-flipped .pnp-pip__inner {
+  transform: rotateY(180deg);
+}
+
+.pnp-pip__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border: 1px solid var(--pnp-line-2);
+  border-radius: 16px;
+  background: var(--ds-color-warm-neutral-0);
+  box-shadow: 0 8px 24px rgba(15, 14, 13, 0.16);
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.pnp-pip__front {
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+}
+
+.pnp-pip__front img {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 78px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.pnp-pip__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pnp-pip__text small {
+  color: var(--pnp-muted);
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: var(--ds-font-weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pnp-pip__text strong {
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--ds-font-weight-semibold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pnp-pip__text span {
+  color: var(--pnp-text);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.pnp-pip__back {
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  transform: rotateY(180deg);
+}
+
+.pnp-pip__back dl {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.pnp-pip__back dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.pnp-pip__back dt {
+  color: var(--pnp-muted);
+}
+
+.pnp-pip__back dd {
+  overflow: hidden;
+  margin: 0;
+  color: var(--pnp-ink);
+  font-weight: var(--ds-font-weight-medium);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pnp-pip__open {
+  align-self: flex-start;
+  color: var(--pnp-text);
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: underline;
+}
+
+/* Option 4 — Deck: paid card in front, free card behind */
+.pnp-deck {
+  --w: calc(100% - 56px);
+  --gap: 12px;
+  --top: 72px;
+  --bottom: 16px;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  max-width: 30rem;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--ds-color-warm-neutral-100);
+}
+
+.pnp-deck__top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  opacity: calc(1 - var(--p, 0));
+}
+
+.pnp-deck__title {
+  flex: 1;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.pnp-deck__pick {
+  padding: 8px 12px;
+  border: 1px solid var(--pnp-line-2);
+  border-radius: 12px;
+  background: var(--ds-color-warm-neutral-0);
+  color: var(--pnp-text) !important;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+  cursor: pointer;
+}
+
+.pnp-deck.on-free .pnp-deck__title::after {
+  content: " · Your pick";
+  color: var(--pnp-muted);
+  font-weight: var(--ds-font-weight-regular);
+}
+
+.pnp-deck.is-full .pnp-deck__top {
+  pointer-events: none;
+}
+
+.pnp-deck__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.pnp-dcard {
+  position: absolute;
+  top: var(--top);
+  bottom: var(--bottom);
+  left: calc((100% - var(--w)) / 2);
+  width: var(--w);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--pnp-line-2);
+  border-radius: 20px;
+  background: var(--pnp-bg);
+  overflow: hidden;
+  box-shadow: 0 12px 32px -16px rgba(15, 14, 13, 0.28);
+  transform: translate3d(calc(var(--o, 0) * (var(--w) + var(--gap)) + var(--drag, 0px)), 0, 0) scale(0.94);
+  opacity: 0.5;
+  transition:
+    transform 0.42s cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 0.3s ease;
+}
+
+.pnp-dcard.is-active {
+  z-index: 2;
+  opacity: 1;
+  transform: translate3d(var(--drag, 0px), 0, 0);
+}
+
+/* Front (paid) card grows to full screen as it scrolls */
+.pnp-dcard.is-active[data-i="1"] {
+  top: calc(var(--top) * (1 - var(--p, 0)));
+  bottom: calc(var(--bottom) * (1 - var(--p, 0)));
+  left: calc((100% - var(--w)) / 2 * (1 - var(--p, 0)));
+  width: calc(var(--w) + (100% - var(--w)) * var(--p, 0));
+  border-radius: calc(20px * (1 - var(--p, 0)));
+}
+
+.pnp-deck.is-full .pnp-dcard:not(.is-active) {
+  opacity: 0;
+}
+
+.pnp-deck.is-dragging .pnp-dcard {
+  transition: none;
+}
+
+.pnp-dcard__tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(33, 29, 25, 0.8);
+  color: var(--ds-color-warm-neutral-0);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.pnp-dcard__scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pnp-dcard:not(.is-active) .pnp-dcard__scroller {
+  overflow: hidden;
+}
+
+.pnp-dcard .pnp-hero {
+  height: 300px;
+}
+
+.pnp-dcard .pnp-hero__bar {
+  display: none;
+}
+
+.pnp-deck.is-full .pnp-dcard.is-active .pnp-hero__bar {
+  display: flex;
+}
+
+.pnp-dcard__openwrap {
+  padding: 16px;
+}
+
+.pnp-dcard__cta {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px) * var(--p, 0));
+  background: var(--ds-color-warm-neutral-0);
+  border-top: 1px solid var(--pnp-line);
+}
+
+.pnp-dcard__cta .pnp-btn {
+  flex: 1;
+  padding: 12px;
+}
+
 @media (min-width: 48rem) {
+  .pnp-pip,
+  .pnp-deck,
   .pnp-pbar,
   .pnp-sheet {
     display: none;

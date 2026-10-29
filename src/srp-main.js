@@ -745,9 +745,9 @@ function initSrpCardNavigation() {
   const navigateFromCard = (card) => {
     const id = card.dataset.listingId;
     if (id == null) return;
-    /* Free PDP paid leads: top 2 cards open the 2 push options (free → paid NP PDP). */
+    /* Free PDP paid leads: top 4 cards open the 4 push options (free → paid NP PDP). */
     const index = Number(id);
-    if (isExperimentEnabled(PDP_PAID_LEADS_EXPERIMENT_ID) && index < 2) {
+    if (isExperimentEnabled(PDP_PAID_LEADS_EXPERIMENT_ID) && index < 4) {
       window.location.href = `/pdp-mobile.html?id=${encodeURIComponent(id)}&opt=${index + 1}`;
       return;
     }

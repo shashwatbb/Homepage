@@ -637,18 +637,9 @@ function paidBarHtml() {
 }
 
 
-export function renderPdpNpPage(root) {
-  const params = new URLSearchParams(window.location.search);
-  const showPhotos = params.get("photos") !== "0";
-  const showSellerPhoto = params.get("sellerPhoto") !== "0";
-  const isPaid = params.get("paid") === "1";
-  const opt = isPaid ? 0 : Number(params.get("opt")) || 0;
-  D = isPaid ? PAID_DATA : DATA;
-
-  const page =
-    opt === 1
-      ? landedHtml(showSellerPhoto)
-        : `${heroHtml(showPhotos)}
+/** Full PDP for the active dataset D (hero + every section + footer). */
+function fullPdpHtml(showPhotos, showSellerPhoto) {
+  return `${heroHtml(showPhotos)}
     <main class="pnp-tray">${[
       summaryHtml(showSellerPhoto),
       overviewHtml(),
@@ -668,22 +659,219 @@ export function renderPdpNpPage(root) {
       disclaimerHtml(),
       footerHtml(),
     ].join("")}</main>`;
+}
+
+/* Option 3 — Picture-in-picture: the page is the paid PDP; the free project the
+   buyer tapped floats as a small card that flips to its basics. */
+function pipHtml() {
+  return `<div class="pnp-pip" data-pnp-pip role="button" tabindex="0" aria-expanded="false" aria-label="Your pick, ${esc(DATA.name)}">
+    <div class="pnp-pip__inner">
+      <div class="pnp-pip__face pnp-pip__front">
+        <img src="${A}hero.jpg" alt="" />
+        <span class="pnp-pip__text"><small>Your pick</small><strong>${esc(DATA.name)}</strong><span>${esc(DATA.price)}</span></span>
+      </div>
+      <div class="pnp-pip__face pnp-pip__back">
+        <dl>
+          <div><dt>Price</dt><dd>${esc(DATA.price)}</dd></div>
+          <div><dt>Possession</dt><dd>May ‘29</dd></div>
+          <div><dt>Locality</dt><dd>${esc(DATA.locality)}</dd></div>
+        </dl>
+        <a class="pnp-pip__open" href="${FREE_URL}">Open anyway</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+function initPip(root) {
+  const pip = root.querySelector("[data-pnp-pip]");
+  // Arrive from the top of the screen, as if the page the buyer tapped shrank into the corner.
+  requestAnimationFrame(() => pip.classList.add("is-in"));
+  setTimeout(() => pip.classList.add("is-in"), 50);
+  const flip = (e) => {
+    if (e.target.closest(".pnp-pip__open")) return;
+    const open = pip.classList.toggle("is-flipped");
+    pip.setAttribute("aria-expanded", String(open));
+  };
+  pip.addEventListener("click", flip);
+}
+
+/* Option 4 — Deck: the paid PDP is the front card; the free project sits behind it,
+   dimmed and peeking. Swiping to it takes effort and the deck leans back to paid. */
+function deckHtml(showPhotos, showSellerPhoto) {
+  const free = withData(DATA, () => `${heroHtml(showPhotos)}
+    <div class="pnp-tray">${summaryHtml(showSellerPhoto)}${overviewHtml()}
+      <section class="pnp-sec pnp-dcard__openwrap"><a class="pnp-btn pnp-btn--outline" href="${FREE_URL}">Open full page</a></section>
+    </div>`);
+  const paid = withData(PAID_DATA, () => `${heroHtml(true)}
+    <div class="pnp-tray">${[
+      summaryHtml(true),
+      overviewHtml(),
+      plansHtml(),
+      aboutHtml(),
+      paymentHtml(),
+      investHtml(),
+      brochureHtml(),
+      neighbourhoodHtml(),
+      sellersHtml(true),
+      developerHtml(),
+      faqHtml(),
+      disclaimerHtml(),
+    ].join("")}</div>`);
+  return `<div class="pnp-deck" data-pnp-deck>
+    <header class="pnp-deck__top">
+      <button type="button" class="pnp-ico pnp-ico--back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
+      <p class="pnp-deck__title">Recommended for you</p>
+      <button type="button" class="pnp-deck__pick" data-action="pnp-deck-free">Your pick</button>
+    </header>
+    <div class="pnp-deck__stage" data-pnp-stage>
+      <article class="pnp-dcard" data-i="0" aria-label="Your pick, ${esc(DATA.name)}">
+        <span class="pnp-dcard__tag">Your pick</span>
+        <div class="pnp-dcard__scroller">${free}</div>
+      </article>
+      <article class="pnp-dcard" data-i="1" aria-label="Recommended, ${esc(PAID.name)}">
+        <div class="pnp-dcard__scroller">${paid}</div>
+        <div class="pnp-dcard__cta">
+          <button type="button" class="pnp-bnav__wa" aria-label="WhatsApp">${I.whatsapp}</button>
+          ${btn("View phone", "outline")}
+          ${btn("Contact developer")}
+        </div>
+      </article>
+    </div>
+  </div>`;
+}
+
+const DECK_EXPAND = 180;
+
+function initDeck(root) {
+  const deck = root.querySelector("[data-pnp-deck]");
+  const stage = deck.querySelector("[data-pnp-stage]");
+  const cards = Array.from(stage.querySelectorAll(".pnp-dcard"));
+  const scrollerOf = (i) => cards[i].querySelector(".pnp-dcard__scroller");
+  let active = 1;
+  let p = 0;
+
+  const setP = (v) => {
+    p = Math.max(0, Math.min(1, v));
+    deck.style.setProperty("--p", p.toFixed(4));
+    deck.classList.toggle("is-full", p >= 0.98);
+  };
+  const layout = () => {
+    cards.forEach((c, i) => {
+      c.style.setProperty("--o", i - active);
+      c.classList.toggle("is-active", i === active);
+    });
+    deck.classList.toggle("on-free", active === 0);
+  };
+  const go = (i) => {
+    active = i;
+    scrollerOf(0).scrollTop = 0;
+    if (i === 0) {
+      scrollerOf(1).scrollTop = 0;
+      setP(0);
+    }
+    layout();
+  };
+  layout();
+
+  // The paid card grows to full screen as it scrolls (and shrinks back at the top).
+  scrollerOf(1).addEventListener(
+    "scroll",
+    (e) => {
+      if (active === 1) setP(e.currentTarget.scrollTop / DECK_EXPAND);
+    },
+    { passive: true }
+  );
+
+  deck.addEventListener("click", (e) => {
+    if (e.target.closest('[data-action="pnp-deck-free"]')) return go(active === 0 ? 1 : 0);
+    const card = e.target.closest(".pnp-dcard");
+    if (card && !card.classList.contains("is-active") && p < 0.04) {
+      e.preventDefault();
+      go(Number(card.dataset.i));
+    }
+  });
+
+  // Horizontal swipe, weighted towards the paid card.
+  let g = null;
+  stage.addEventListener(
+    "touchstart",
+    (e) => {
+      const t = e.touches[0];
+      g = { x: t.clientX, y: t.clientY, dx: 0, lock: null };
+    },
+    { passive: true }
+  );
+  stage.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!g) return;
+      const t = e.touches[0];
+      g.dx = t.clientX - g.x;
+      const dy = t.clientY - g.y;
+      if (!g.lock) {
+        if (Math.max(Math.abs(g.dx), Math.abs(dy)) < 8) return;
+        g.lock = p < 0.04 && !e.target.closest(".pnp-rail, .pnp-tabs, .pnp-hero__track") && Math.abs(g.dx) > Math.abs(dy) * 1.2 ? "x" : "y";
+        if (g.lock === "x") deck.classList.add("is-dragging");
+      }
+      if (g.lock !== "x") return;
+      e.preventDefault();
+      const towardFree = active === 1 && g.dx > 0;
+      const towardPaid = active === 0 && g.dx < 0;
+      const k = towardFree ? 0.45 : towardPaid ? 1 : 0.2;
+      deck.style.setProperty("--drag", `${g.dx * k}px`);
+    },
+    { passive: false }
+  );
+  const end = () => {
+    if (!g) return;
+    deck.classList.remove("is-dragging");
+    deck.style.removeProperty("--drag");
+    if (g.lock === "x") {
+      const w = stage.clientWidth;
+      if (active === 1 && g.dx > w * 0.55) go(0);
+      else if (active === 0 && g.dx < -w * 0.12) go(1);
+      else layout();
+    }
+    g = null;
+  };
+  stage.addEventListener("touchend", end);
+  stage.addEventListener("touchcancel", end);
+}
+
+export function renderPdpNpPage(root) {
+  const params = new URLSearchParams(window.location.search);
+  const showPhotos = params.get("photos") !== "0";
+  const showSellerPhoto = params.get("sellerPhoto") !== "0";
+  const isPaid = params.get("paid") === "1";
+  const opt = isPaid ? 0 : Number(params.get("opt")) || 0;
+  D = isPaid ? PAID_DATA : DATA;
+
+  if (opt === 3) D = PAID_DATA;
+  const page =
+    opt === 1
+      ? landedHtml(showSellerPhoto)
+      : opt === 4
+        ? deckHtml(showPhotos, showSellerPhoto)
+        : fullPdpHtml(showPhotos, showSellerPhoto);
 
   document.documentElement.classList.add("pnp-on");
   document.title = `${D.name} — Housing`;
   root.innerHTML = `<div class="pnp${opt ? ` pnp--opt${opt}` : ""}${isPaid ? " pnp--paid" : ""}" data-pnp-opt="${opt}">
-    ${stickyHeaderHtml()}
+    ${opt === 4 ? "" : stickyHeaderHtml()}
     ${page}
-    ${opt === 2 ? paidBarHtml() : bottomNavHtml()}
+    ${opt === 2 ? paidBarHtml() : opt === 4 ? "" : bottomNavHtml()}
     ${opt === 2 ? takeoverSheetHtml() : ""}
+    ${opt === 3 ? pipHtml() : ""}
   </div>`;
   root.removeAttribute("aria-busy");
   document.documentElement.classList.remove("no-fouc");
 
   initGallery(root);
-  initChrome(root);
+  if (opt !== 4) initChrome(root);
   initInteractions(root);
   if (opt === 2) initTakeover(root);
+  if (opt === 3) initPip(root);
+  if (opt === 4) initDeck(root);
 }
 
 const AUTO_MOVE_MS = 3000;
