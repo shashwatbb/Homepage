@@ -515,28 +515,16 @@ function withData(data, fn) {
    recommended paid project with more detail; its chevron expands the full PDP inline. */
 const FREE_URL = "/pdp-mobile.html?id=0&from=rec";
 
-function landedCardHtml(showSellerPhoto) {
-  return `<article class="pnp-lcard" aria-label="Property you landed on">
+function landedCardHtml() {
+  return `<a class="pnp-lcard" href="${FREE_URL}" aria-label="View full details of ${esc(DATA.name)}">
     <img class="pnp-lcard__img" src="${A}hero.jpg" alt="" />
-    <div class="pnp-lcard__body">
-      <div class="pnp-badges">
-        <span class="pnp-badge pnp-badge--green">New launch</span>
-        <span class="pnp-badge">${I.sealCheck}RERA</span>
-        <span class="pnp-badge">Possession by May ‘29</span>
-      </div>
-      <div class="pnp-summary__title">
-        <h1 class="pnp-lcard__name">${esc(DATA.name)}</h1>
-        <p class="pnp-summary__price"><strong>${esc(DATA.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(DATA.area)}</span></p>
-        <p class="pnp-recsum__loc">${I.mapPin}${esc(DATA.locality)}, ${esc(DATA.city)}</p>
-      </div>
-      <div class="pnp-agent">
-        ${avatarHtml(DATA.seller, showSellerPhoto, "pnp-agent__photo")}
-        <span class="pnp-agent__text"><strong>${esc(DATA.seller.name)}</strong><small>${esc(DATA.seller.role)}</small></span>
-        <button type="button" class="pnp-btn pnp-btn--outline pnp-btn--sm pnp-btn--contact">Contact</button>
-      </div>
-    </div>
-    <a class="pnp-lcard__more" href="${FREE_URL}">View full details${I.caretRight}</a>
-  </article>`;
+    <span class="pnp-lcard__text">
+      <strong>${esc(DATA.name)}</strong>
+      <span>${esc(DATA.price)}</span>
+      <small>${esc(DATA.locality)}</small>
+    </span>
+    <span class="pnp-lcard__chev" aria-hidden="true">${I.caretRight}</span>
+  </a>`;
 }
 
 function recCardHtml(showSellerPhoto) {
@@ -549,14 +537,8 @@ function recCardHtml(showSellerPhoto) {
     <div class="pnp-rcard__toggle" data-action="pnp-rec" role="button" tabindex="0" aria-expanded="false">
       <div class="pnp-rcard__media">
         <img src="${PAID.img}" alt="" />
-        <span class="pnp-rechero__flag">${I.sealCheck}Recommended for you</span>
       </div>
       <div class="pnp-rcard__body">
-        <div class="pnp-badges">
-          <span class="pnp-badge pnp-badge--brand">${I.sealCheck}Verified by developer</span>
-          <span class="pnp-badge pnp-badge--green">New launch</span>
-          <span class="pnp-badge">${I.sealCheck}RERA</span>
-        </div>
         <div class="pnp-rcard__titlerow">
           <div class="pnp-summary__title">
             <h2 class="pnp-h1">${esc(PAID.name)}</h2>
@@ -609,12 +591,11 @@ function recCardHtml(showSellerPhoto) {
 function landedHtml(showSellerPhoto) {
   return `<header class="pnp-topbar">
       <button type="button" class="pnp-ico pnp-ico--back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
-      ${toolsHtml()}
     </header>
     <main class="pnp-duo">
-      <p class="pnp-duo__label">You landed on</p>
-      ${landedCardHtml(showSellerPhoto)}
-      <p class="pnp-duo__label pnp-duo__label--brand">${I.sealCheck}We recommend this instead</p>
+      <p class="pnp-duo__label">You’re viewing</p>
+      ${landedCardHtml()}
+      <p class="pnp-duo__label pnp-duo__label--brand">This is what we recommend</p>
       ${recCardHtml(showSellerPhoto)}
       <div class="pnp-duo__tail">${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}</div>
     </main>`;
@@ -657,7 +638,6 @@ function paidBarHtml() {
   </div>`;
 }
 
-const OPTION_NAMES = { 1: "Recommended first", 2: "Bottom sheet" };
 
 export function renderPdpNpPage(root) {
   const params = new URLSearchParams(window.location.search);
@@ -694,7 +674,6 @@ export function renderPdpNpPage(root) {
   document.documentElement.classList.add("pnp-on");
   document.title = `${D.name} — Housing`;
   root.innerHTML = `<div class="pnp${opt ? ` pnp--opt${opt}` : ""}${isPaid ? " pnp--paid" : ""}" data-pnp-opt="${opt}">
-    ${opt ? `<p class="pnp-optlabel" aria-hidden="true">Option ${opt} · ${OPTION_NAMES[opt]}</p>` : ""}
     ${stickyHeaderHtml()}
     ${page}
     ${opt === 2 ? paidBarHtml() : bottomNavHtml()}

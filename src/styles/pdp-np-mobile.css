@@ -1590,24 +1590,6 @@ a.pnp-btn {
  * Free → paid push options (pdp_paid_leads, SRP cards 1–3)
  * ================================================================== */
 
-/* Internal review label (which option this PDP is) */
-.pnp-optlabel {
-  position: absolute;
-  top: 2px;
-  left: 50%;
-  z-index: 5;
-  margin: 0;
-  padding: 2px 8px;
-  border-radius: 8px;
-  background: rgba(33, 29, 25, 0.8);
-  color: var(--ds-color-warm-neutral-0);
-  font-size: 10px;
-  line-height: 12px;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
 .pnp-badge--brand {
   background: var(--ds-color-lavender-mist-50);
   color: var(--pnp-brand);
@@ -1841,6 +1823,11 @@ a.pnp-btn {
 }
 
 /* Option 1 — two cards */
+/* Option 1 keeps only Back at the top (no share / shortlist / call) */
+.pnp--opt1 .pnp-sticky .pnp-tools {
+  display: none;
+}
+
 .pnp-topbar {
   display: flex;
   align-items: center;
@@ -1870,7 +1857,7 @@ a.pnp-btn {
 
 .pnp-duo__label--brand {
   margin-top: 12px !important;
-  color: var(--pnp-brand);
+  color: var(--pnp-ink);
 }
 
 .pnp-duo__label svg {
@@ -1885,69 +1872,74 @@ a.pnp-btn {
   margin: 12px -16px -24px;
 }
 
-/* Card 1 — landed (free) project */
+/* Card 1 — landed (free) project: one compact row, opens its own screen */
 .pnp-lcard,
 .pnp-rcard {
   display: flex;
-  flex-direction: column;
   border: 1px solid var(--pnp-line-2);
   border-radius: 20px;
   background: var(--ds-color-warm-neutral-0);
   overflow: hidden;
 }
 
-.pnp-lcard__img {
-  display: block;
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-.pnp-lcard__body {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-}
-
-.pnp-lcard__name {
-  font-size: 16px;
-  line-height: 22px;
-  font-weight: var(--ds-font-weight-semibold);
-}
-
-.pnp-lcard .pnp-summary__price strong {
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.pnp-lcard .pnp-agent {
-  padding-top: 16px;
-  border-top: 1px solid var(--pnp-line);
-}
-
-.pnp-lcard__more {
-  display: flex;
+.pnp-lcard {
   align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  border-top: 1px solid var(--pnp-line);
-  color: var(--pnp-text);
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: var(--ds-font-weight-medium);
+  gap: 12px;
+  padding: 10px 12px 10px 10px;
+  border-radius: 16px;
+  color: var(--pnp-ink);
   text-decoration: none;
 }
 
-.pnp-lcard__more svg {
-  width: 16px;
-  height: 16px;
+.pnp-lcard__img {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.pnp-lcard__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pnp-lcard__text strong {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.pnp-lcard__text span {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.pnp-lcard__text small {
+  overflow: hidden;
+  color: var(--pnp-text);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pnp-lcard__chev {
+  color: var(--pnp-text);
+}
+
+.pnp-lcard__chev svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Card 2 — recommended (paid) project */
 .pnp-rcard {
-  border: 1.5px solid var(--pnp-brand);
-  box-shadow: 0 12px 32px -12px rgba(74, 22, 217, 0.28);
+  flex-direction: column;
 }
 
 .pnp-rcard__toggle {
@@ -2308,9 +2300,3 @@ a.pnp-btn {
   }
 }
 
-/* Review label sits in the top bar, between back and the tools */
-.pnp--opt1 .pnp-optlabel {
-  top: 28px;
-  left: 68px;
-  transform: none;
-}
