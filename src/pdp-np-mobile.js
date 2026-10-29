@@ -712,7 +712,7 @@ function popupHtml() {
         <button type="button" class="pnp-ico pnp-pop__close" data-action="pnp-pop-close" aria-label="Close">${ISP_ICONS.closeCross}</button>
       </div>
       <div class="pnp-pop__body">
-        <p class="pnp-pop__eyebrow">Recommended for you</p>
+        <span class="pnp-pop__pill">${I.sealCheck}Recommended for you</span>
         <div class="pnp-summary__title">
           <h2 class="pnp-h1" id="pnp-pop-title">${esc(PAID.name)}</h2>
           <p class="pnp-summary__price"><strong>${esc(PAID.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(PAID.area)}</span></p>

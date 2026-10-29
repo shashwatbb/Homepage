@@ -2475,15 +2475,57 @@ a.pnp-btn {
   padding: 16px;
 }
 
-.pnp-pop__eyebrow {
-  margin-bottom: -8px !important;
-  color: var(--pnp-muted);
+.pnp-pop__pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 4px;
+  margin-bottom: -4px;
+  padding: 4px 10px 4px 8px;
+  border-radius: var(--ds-radius-full);
+  background: var(--ds-color-lavender-mist-50);
+  color: var(--pnp-brand);
   font-size: 12px;
   line-height: 16px;
   font-weight: var(--ds-font-weight-medium);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  overflow: hidden;
 }
+
+.pnp-pop__pill svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Subtle sheen sweeping across the pill */
+.pnp-pop__pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.85) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: pnp-shine 3.2s ease-in-out 0.8s infinite;
+  pointer-events: none;
+}
+
+@keyframes pnp-shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+
+  85%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pnp-pop__pill::after {
+    animation: none;
+  }
+}
+
 
 .pnp-pop__ctas {
   margin-top: auto;
