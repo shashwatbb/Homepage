@@ -721,6 +721,14 @@ function popupHtml() {
         <div class="pnp-recsum__tiles">${why
           .map(([k, v, note]) => `<div><small>${esc(k)}</small><strong>${esc(v)}</strong><em>${esc(note)}</em></div>`)
           .join("")}</div>
+        <div class="pnp-recsum__offer">
+          <span class="pnp-recsum__offer-tag">Offer</span>
+          <p><strong>Pay 10% now,</strong> rest on possession.</p>
+        </div>
+        <ul class="pnp-recsum__perks">
+          <li>${I.sealCheck}Prices and floor plans verified by the developer</li>
+          <li>${I.phone}Developer calls back in under 30 minutes</li>
+        </ul>
         <div class="pnp-pop__ctas">
           <a class="pnp-btn pnp-btn--outline" href="${PAID_URL}" data-pnp-paid>View details</a>
           <button type="button" class="pnp-btn pnp-btn--primary">Contact developer</button>
