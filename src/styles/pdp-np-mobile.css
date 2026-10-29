@@ -2392,167 +2392,115 @@ a.pnp-btn {
   text-decoration: underline;
 }
 
-/* Option 4 — Deck: paid card in front, free card behind */
-.pnp-deck {
-  --w: calc(100% - 56px);
-  --gap: 12px;
-  --top: 72px;
-  --bottom: 16px;
+/* Option 4 — Pop-up over the free PDP */
+.pnp-pop {
   position: fixed;
   inset: 0;
-  z-index: 10;
-  max-width: 30rem;
-  margin: 0 auto;
-  overflow: hidden;
-  background: var(--ds-color-warm-neutral-100);
-}
-
-.pnp-deck__top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  z-index: 60;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
-  opacity: calc(1 - var(--p, 0));
+  justify-content: center;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 24px 16px;
 }
 
-.pnp-deck__title {
-  flex: 1;
-  font-size: 16px;
-  line-height: 22px;
-  font-weight: var(--ds-font-weight-semibold);
+.pnp-pop[hidden] {
+  display: none;
 }
 
-.pnp-deck__pick {
-  padding: 8px 12px;
-  border: 1px solid var(--pnp-line-2);
-  border-radius: 12px;
+.pnp-pop__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(26, 24, 22, 0.55);
+  opacity: 0;
+  touch-action: none;
+  transition: opacity 0.3s ease;
+}
+
+.pnp-pop__card {
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 20px;
   background: var(--ds-color-warm-neutral-0);
-  color: var(--pnp-text) !important;
+  box-shadow: 0 24px 48px -16px rgba(15, 14, 13, 0.35);
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  transition:
+    opacity 0.28s ease,
+    transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.pnp-pop.is-open .pnp-pop__scrim {
+  opacity: 1;
+}
+
+.pnp-pop.is-open .pnp-pop__card {
+  opacity: 1;
+  transform: none;
+}
+
+.pnp-pop__media {
+  position: relative;
+  height: 200px;
+}
+
+.pnp-pop__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pnp-pop__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.pnp-pop__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.pnp-pop__eyebrow {
+  margin-bottom: -8px !important;
+  color: var(--pnp-muted);
   font-size: 12px;
   line-height: 16px;
+  font-weight: var(--ds-font-weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pnp-pop__ctas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pnp-pop__stay {
+  align-self: center;
+  margin-top: -4px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: var(--pnp-text) !important;
+  font-size: 14px;
+  line-height: 20px;
   font-weight: var(--ds-font-weight-medium);
   cursor: pointer;
 }
 
-.pnp-deck.on-free .pnp-deck__title::after {
-  content: " · Your pick";
-  color: var(--pnp-muted);
-  font-weight: var(--ds-font-weight-regular);
-}
-
-.pnp-deck.is-full .pnp-deck__top {
-  pointer-events: none;
-}
-
-.pnp-deck__stage {
-  position: absolute;
-  inset: 0;
-}
-
-.pnp-dcard {
-  position: absolute;
-  top: var(--top);
-  bottom: var(--bottom);
-  left: calc((100% - var(--w)) / 2);
-  width: var(--w);
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--pnp-line-2);
-  border-radius: 20px;
-  background: var(--pnp-bg);
-  overflow: hidden;
-  box-shadow: 0 12px 32px -16px rgba(15, 14, 13, 0.28);
-  transform: translate3d(calc(var(--o, 0) * (var(--w) + var(--gap)) + var(--drag, 0px)), 0, 0) scale(0.94);
-  opacity: 0.5;
-  transition:
-    transform 0.42s cubic-bezier(0.32, 0.72, 0, 1),
-    opacity 0.3s ease;
-}
-
-.pnp-dcard.is-active {
-  z-index: 2;
-  opacity: 1;
-  transform: translate3d(var(--drag, 0px), 0, 0);
-}
-
-/* Front (paid) card grows to full screen as it scrolls */
-.pnp-dcard.is-active[data-i="1"] {
-  top: calc(var(--top) * (1 - var(--p, 0)));
-  bottom: calc(var(--bottom) * (1 - var(--p, 0)));
-  left: calc((100% - var(--w)) / 2 * (1 - var(--p, 0)));
-  width: calc(var(--w) + (100% - var(--w)) * var(--p, 0));
-  border-radius: calc(20px * (1 - var(--p, 0)));
-}
-
-.pnp-deck.is-full .pnp-dcard:not(.is-active) {
-  opacity: 0;
-}
-
-.pnp-deck.is-dragging .pnp-dcard {
-  transition: none;
-}
-
-.pnp-dcard__tag {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 3;
-  padding: 4px 8px;
-  border-radius: 8px;
-  background: rgba(33, 29, 25, 0.8);
-  color: var(--ds-color-warm-neutral-0);
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.pnp-dcard__scroller {
-  flex: 1;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.pnp-dcard:not(.is-active) .pnp-dcard__scroller {
-  overflow: hidden;
-}
-
-.pnp-dcard .pnp-hero {
-  height: 300px;
-}
-
-.pnp-dcard .pnp-hero__bar {
-  display: none;
-}
-
-.pnp-deck.is-full .pnp-dcard.is-active .pnp-hero__bar {
-  display: flex;
-}
-
-.pnp-dcard__openwrap {
-  padding: 16px;
-}
-
-.pnp-dcard__cta {
-  display: flex;
-  gap: 12px;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px) * var(--p, 0));
-  background: var(--ds-color-warm-neutral-0);
-  border-top: 1px solid var(--pnp-line);
-}
-
-.pnp-dcard__cta .pnp-btn {
-  flex: 1;
-  padding: 12px;
-}
-
 @media (min-width: 48rem) {
   .pnp-pip,
-  .pnp-deck,
+  .pnp-pop,
   .pnp-pbar,
   .pnp-sheet {
     display: none;
