@@ -591,9 +591,9 @@ function landedHtml(showSellerPhoto) {
       <button type="button" class="pnp-ico pnp-ico--back" data-action="pnp-back" aria-label="Back">${I.arrowLeft}</button>
     </header>
     <main class="pnp-duo">
-      <p class="pnp-duo__label">You’re viewing</p>
+      <p class="pnp-duo__label">Continue viewing</p>
       ${landedCardHtml()}
-      <p class="pnp-duo__label pnp-duo__label--brand">This is what we recommend</p>
+      <p class="pnp-duo__label pnp-duo__label--brand">Pick this better option</p>
       ${recCardHtml(showSellerPhoto)}
       <div class="pnp-duo__tail">${linksHtml()}${crumbsHtml()}${disclaimerHtml()}${footerHtml()}</div>
     </main>`;
