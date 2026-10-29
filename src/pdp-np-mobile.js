@@ -534,7 +534,7 @@ function recCardHtml(showSellerPhoto) {
     ["Distance", PAID.distance.replace(" away", ""), "from your pick"],
   ];
   return `<article class="pnp-rcard" data-pnp-bridge aria-label="Recommended project">
-    <div class="pnp-rcard__toggle" data-action="pnp-rec" role="button" tabindex="0" aria-expanded="false">
+    <div class="pnp-rcard__summary">
       <div class="pnp-rcard__media">
         <img src="${PAID.img}" alt="" />
       </div>
@@ -545,7 +545,6 @@ function recCardHtml(showSellerPhoto) {
             <p class="pnp-summary__price"><strong>${esc(PAID.price)}</strong><span class="pnp-vsep" aria-hidden="true"></span><span>${esc(PAID.area)}</span></p>
             <p class="pnp-recsum__loc">${I.mapPin}${esc(PAID.locality)}</p>
           </div>
-          <span class="pnp-rcard__chev" aria-hidden="true">${I.caretDown}</span>
         </div>
         <div class="pnp-recsum__why">
           <p class="pnp-recsum__label">Why we recommend it</p>
@@ -562,11 +561,10 @@ function recCardHtml(showSellerPhoto) {
           <li>${I.phone}Developer calls back in under 30 minutes</li>
           <li>${I.tree}4.5 acres of central greens, 60+ amenities</li>
         </ul>
-        <p class="pnp-rcard__hint"><span data-pnp-rec-label>See full details</span>${I.caretDown}</p>
       </div>
     </div>
     <div class="pnp-rcard__cta">
-      ${btn("View phone", "outline")}
+      <button type="button" class="pnp-btn pnp-btn--outline" data-action="pnp-rec" aria-expanded="false" data-pnp-rec-label>See full details</button>
       <button type="button" class="pnp-btn pnp-btn--primary pnp-btn--contact">Contact developer</button>
     </div>
     <div class="pnp-rcard__more" data-pnp-rec-more hidden>
@@ -844,8 +842,9 @@ function initInteractions(root) {
       more.hidden = !more.hidden;
       const open = !more.hidden;
       card.classList.toggle("is-open", open);
-      card.querySelector("[data-action='pnp-rec']").setAttribute("aria-expanded", String(open));
-      card.querySelector("[data-pnp-rec-label]").textContent = open ? "Hide details" : "See full details";
+      const toggle = card.querySelector("[data-action='pnp-rec']");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? "Hide details" : "See full details";
     } else if (action === "pnp-faq") {
       const item = t.closest(".pnp-faq__item");
       const open = item.classList.toggle("is-open");
