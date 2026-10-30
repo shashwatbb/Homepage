@@ -1,7 +1,7 @@
 // RFE: Buy SRP "Seen in photos" feature pills (srp_image_feature_pills), m-Web.
 // Run: node figma-rfe/run.mjs "Search Results Page" figma-rfe/lib.js figma-rfe/build-isp.js
 // Every screen is a whole-page Demand Component Kit instance, no detached or local UI:
-//   SRP (m-web page) Property 2=Buy: Feature pills | (1 selected) | (2 selected)
+//   SRP (m-web page) Property 2=Buy: Feature pills | (1 selected) | (2 selected) | (few results) | (no results)
 //   SRP / Filters    Property 3=Filters: Features
 // The variants themselves are built in the kit by kit-isp-components.js.
 
@@ -51,24 +51,30 @@ const SCREENS = [
   ["SRP: Default with tip", srpPages, "Property 2=Buy: Feature pills"],
   ["SRP: One feature selected", srpPages, "Property 2=Buy: Feature pills (1 selected)"],
   ["SRP: Two features selected", srpPages, "Property 2=Buy: Feature pills (2 selected)"],
+  // Full length: at 800 the "Keep exploring" break sits below the fold.
+  ["SRP: Few results", srpPages, "Property 2=Buy: Feature pills (few results)", true],
+  ["SRP: No results", srpPages, "Property 2=Buy: Feature pills (no results)"],
   ["SRP Rent: Default with tip", srpPages, "Property 2=Rent: Feature pills"],
   ["Filters: Features", filtersScreens, "Property 1=Android, Property 2=Buy, Property 3=Filters: Features"],
 ];
 let x = 101, maxBottom = 0;
-for (const [label, set, variantName] of SCREENS) {
+for (const [label, set, variantName, fullLength] of SCREENS) {
   const pill = await kit("Flow small", x, 585, 360);
   await setInstanceText(pill, "Flow/states", label);
   const s = variant(set, variantName).createInstance();
   section.appendChild(s);
   s.name = label;
   // RFE rule: show mobile screens at the 800 viewport (nav/bottom bar is pinned in the kit variants).
-  if (!FULL_LENGTH) s.resize(360, SCREEN_H);
+  if (!FULL_LENGTH && !fullLength) s.resize(360, SCREEN_H);
   s.x = x; s.y = 702;
   maxBottom = Math.max(maxBottom, s.y + s.height);
   x += 360 + 150;
 }
-// Section hugs its content: same 100 margin below as the Page kit header has above.
-section.resizeWithoutConstraints(Math.max(3280, x - 150 + 101), maxBottom + 100);
+// Header and Info strip span the screen row: left edge = first screen, right edge = last screen.
+const right = x - 150;
+for (const k of [header, info]) k.resize(right - 101, k.height);
+// Section hugs its content: 101 side margins, same 100 margin below as the Page kit header has above.
+section.resizeWithoutConstraints(right + 101, maxBottom + 100);
 section.x = 0; section.y = 0;
 figma.currentPage.selection = [section];
 figma.viewport.scrollAndZoomIntoView([section]);
@@ -76,4 +82,4 @@ figma.viewport.scrollAndZoomIntoView([section]);
 const screens = section.children.filter((n) => SCREENS.some(([l]) => l === n.name));
 const sources = await Promise.all(screens.map(async (n) => n.name + " <- " + (await n.getMainComponentAsync()).parent.name + " / " + (await n.getMainComponentAsync()).name));
 dropProbe();
-return JSON.stringify({ page: page.name, section: section.id, size: [section.width, section.height], screens: sources });
+return JSON.stringify({ header: [header.x, header.width], info: [info.x, info.width], right, page: page.name, section: section.id, size: [section.width, section.height], screens: sources });
