@@ -176,6 +176,7 @@ export function openPopup(name) {
   document.documentElement.classList.add("crfd-lock");
   box.focus({ preventScroll: true });
 }
+window.__npOpen = openPopup; // prototype QA hook (edge-padding audit)
 
 function close() {
   root.classList.remove("is-visible");

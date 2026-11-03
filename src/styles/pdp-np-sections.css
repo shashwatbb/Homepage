@@ -22,7 +22,8 @@ body .pnp-card {
   font-family: var(--ds-font-family-primary);
   overflow: hidden;
 }
-body .pnp-card p, body .pnp-card h2, body .pnp-card h3, body .pnp-card ul, body .pnp-card ol, body .pnp-card dl, body .pnp-card dd { margin: 0; padding: 0; list-style: none; }
+/* Element resets stay in :where() so they never beat component class padding. QA: scripts/qa-edge-audit.js */
+body .pnp-card :where(p, h2, h3, ul, ol, dl, dd) { margin: 0; padding: 0; list-style: none; }
 body .pnp-card button, body .pnp-side button, body .pnp-crumbs button { font-family: inherit; cursor: pointer; }
 body .pnp-card svg, body .pnp-side svg, body .pnp-crumbs svg { display: block; width: 20px; height: 20px; flex-shrink: 0; }
 
@@ -234,7 +235,7 @@ body .pnp-crumbs .pnp-fine { margin: 0; font-size: 14px; line-height: 20px; colo
 
 /* Sticky summary card (right column, 384) */
 body .pnp-side { display: flex; flex-direction: column; align-items: center; gap: 16px; font-family: var(--ds-font-family-primary); color: var(--ds-text-primary); }
-body .pnp-side p { margin: 0; }
+body .pnp-side :where(p) { margin: 0; }
 body .pnp-side__card { display: flex; flex-direction: column; gap: 16px; width: 100%; padding: 24px; border: 1px solid var(--ds-border-subtle); border-radius: var(--ds-radius-2xl); background: var(--ds-surface-white); box-sizing: border-box; }
 body .pnp-side__top { display: flex; align-items: center; justify-content: space-between; }
 body .pnp-side__icons { display: flex; align-items: center; gap: 12px; }

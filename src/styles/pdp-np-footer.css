@@ -2,7 +2,7 @@
 body .npft { display: flex; flex-direction: column; gap: 2px; margin-top: 24px; font-family: var(--ds-font-family-primary); }
 body .npft a { color: var(--ds-text-inverse); text-decoration: none; font-size: 12px; line-height: 16px; letter-spacing: 0.1px; white-space: nowrap; }
 body .npft a:hover { text-decoration: underline; }
-body .npft p { margin: 0; }
+body .npft :where(p) { margin: 0; }
 body .npft__cap { font-size: 10px; line-height: 12px; letter-spacing: 0.2px; text-transform: uppercase; color: var(--ds-text-inverse); }
 body .npft__seo { display: flex; flex-direction: column; gap: 32px; padding: 40px 20px 40px 64px; background: var(--ds-color-warm-neutral-800); }
 body .npft__row { display: flex; gap: 40px; }

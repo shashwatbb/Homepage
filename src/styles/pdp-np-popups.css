@@ -10,7 +10,8 @@ body .npp.mm-closing::before { animation: mm-fade-out 250ms var(--mm-spring) bot
 body .npp__box { position: relative; display: flex; flex-direction: column; max-width: calc(100vw - 48px); overflow: hidden; border: 0.76px solid var(--ds-border-subtle); border-radius: var(--ds-radius-2xl); background: var(--ds-surface-white); outline: none; }
 body .npp.is-visible .npp__box { animation: mm-panel-in 400ms var(--mm-in) both, mm-fade-in 75ms linear both; }
 body .npp.mm-closing .npp__box { animation: mm-panel-out 150ms var(--mm-out) both, mm-fade-out 75ms linear 75ms both; }
-body .npp p, body .npp h2, body .npp ul { margin: 0; padding: 0; list-style: none; }
+/* Element resets stay in :where() so they never beat component class padding (RERA IDs bug). QA: scripts/qa-edge-audit.js */
+body .npp :where(p, h2, ul) { margin: 0; padding: 0; list-style: none; }
 body .npp button { font-family: inherit; cursor: pointer; }
 body .npp svg { display: block; width: 20px; height: 20px; flex-shrink: 0; }
 body .npp__head { display: flex; align-items: center; gap: 12px; flex-shrink: 0; height: 70px; padding: 0 24px; border-bottom: 1px solid var(--ds-border-subtle); box-sizing: border-box; }
@@ -76,7 +77,7 @@ body .npt button { display: grid; place-items: center; padding: 0 0 0 12px; bord
 /* RERA tooltip (Figma 219x211, dark, caret up) */
 body .npr { position: absolute; z-index: 1100; display: flex; flex-direction: column; gap: 4px; width: 219px; padding: 16px; box-sizing: border-box; border-radius: var(--ds-radius-m); background: var(--ds-color-warm-neutral-900); color: var(--ds-color-warm-neutral-200); font-family: var(--ds-font-family-primary); font-size: 14px; line-height: 20px; }
 body .npr::before { content: ""; position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; transform: translateX(-50%) rotate(45deg); background: inherit; border-radius: 2px; }
-body .npr p { margin: 0; }
+body .npr :where(p) { margin: 0; }
 body .npr img { width: 60px; height: 60px; margin-bottom: 8px; border-radius: 4px; background: #fff; }
 body .npr__t { margin-bottom: 4px !important; color: var(--ds-text-inverse); font-weight: 500; }
 body .npr a { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.15); color: var(--ds-text-inverse); }

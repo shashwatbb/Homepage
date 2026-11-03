@@ -18,7 +18,7 @@ body .npf {
   color: var(--ds-text-primary);
   box-sizing: border-box;
 }
-body .npf p, body .npf h1 { margin: 0; }
+body .npf :where(p, h1) { margin: 0; }
 body .npf button { font-family: inherit; cursor: pointer; }
 body .npf [data-icon] { display: inline-grid; place-items: center; }
 body .npf [data-icon] svg { width: 18px; height: 18px; display: block; }
