@@ -2,10 +2,12 @@
 // "PDP: Scroll" variant: once the first fold scrolls under it, the same 64 bar shows section tabs (active = pill).
 import "./styles/pdp-np-header.css";
 import { PDP_NP_ICONS as I } from "./data/pdpNpDesktopIcons.js";
+import { BRICKS_ICONS as BI } from "./data/bricksIcons.js";
 
 const B = import.meta.env.BASE_URL;
 const TABS = [["About", "pnp-about"], ["Floor plan and pricing", "pnp-floor"], ["Project plan", "pnp-overview"], ["Payment plan", "pnp-payment"], ["Investment insights", "pnp-insights"], ["Government registry records", "pnp-registry"], ["Amenities", "pnp-amenities"], ["Ratings and reviews", "pnp-reviews"], ["About the developer", "pnp-developers"], ["Explore neighbourhood", "pnp-hood"], ["FAQs", "pnp-faq"]];
 
+const SUGG = [["pinArea", "2BHK is ", "Bangalore", "City"], ["buildingOffice", "2 BHK in Indranagar,", "Bangalore", "Project"], ["pinArea", "2 BHK in Indranagar,", "Bangalore", "Locality"], ["buildingOffice", "2 BHK in Indranagar,", "Bangalore", "Developer"], ["pinArea", "2 BHK in Indranagar,", "Bangalore", "District"], ["pinArea", "2 BHK in Indranagar,", "Bangalore", "District"], ["pinArea", "2 BHK in Indranagar,", "Bangalore", "District"]];
 const html = () => `
 <header class="nph" id="nph">
   <div class="nph__main">
@@ -15,8 +17,10 @@ const html = () => `
     </div>
     <div class="nph__search" role="search">
       <button type="button" class="nph__svc">Buy${I.caretDown}</button><span class="nph__line" aria-hidden="true"></span>
-      <input type="search" placeholder="What are you looking for?" aria-label="Search">
+      <input type="text" placeholder="What are you looking for?" aria-label="Search" autocomplete="off" data-nph-q>
+      <button type="button" class="nph__clear" aria-label="Clear search" hidden>${I.x}</button>
       <button type="button" class="nph__go" aria-label="Search">${I.search}</button>
+      <ul class="nph__drop" hidden>${SUGG.map(([icon, t, b, type]) => `<li><button type="button"><span class="nph__dico">${I[icon] || BI[icon]}</span><span class="nph__dtxt">${t}<b>${b}</b></span><span class="nph__dtype">${type}</span></button></li>`).join("")}</ul>
     </div>
     <div class="nph__right">
       <button type="button" class="nph__login">Login</button>
@@ -61,4 +65,14 @@ export function initPdpNpHeader() {
     setTimeout(() => { if (Math.abs(window.scrollY - top) > 4) window.scrollTo(0, top); update(); }, 900); // fallback if smooth scroll is paused
   });
   update();
+
+  // open search state (Figma "Header: User starts searching"): suggestions while typing, Bricks X clears
+  const q = bar.querySelector("[data-nph-q]"), drop = bar.querySelector(".nph__drop"), clear = bar.querySelector(".nph__clear");
+  const sync = () => { clear.hidden = !q.value; drop.hidden = !q.value; bar.classList.toggle("is-searching", !!q.value); };
+  q.addEventListener("input", sync);
+  q.addEventListener("click", sync);
+  clear.addEventListener("click", () => { q.value = ""; sync(); q.focus(); });
+  drop.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; q.value = b.querySelector(".nph__dtxt").textContent; drop.hidden = true; });
+  document.addEventListener("click", (e) => { if (!bar.querySelector(".nph__search").contains(e.target)) drop.hidden = true; });
+  q.addEventListener("keydown", (e) => { if (e.key === "Escape") { drop.hidden = true; q.blur(); } });
 }
