@@ -493,3 +493,6 @@ body .pnp-faq p { padding: 0; margin-top: 16px; }
 body .pnp-viewmore { margin-top: -4px; }
 body .pnp-card p.pnp-offers { padding: 8px 12px; }
 body .pnp-rows > div + div { padding-top: 15px; }
+/* restore paddings the card-level ul/p reset removed */
+body .pnp-card ul.pnp-sellers { padding: 0 16px; }
+body .pnp-card ul.pnp-acc__list { padding: 0 0 12px; }
