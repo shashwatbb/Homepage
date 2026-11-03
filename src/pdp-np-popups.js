@@ -27,6 +27,7 @@ function shell() {
     if (act === "contact") { close(); return setTimeout(openCrf, 260); }
     if (act === "tab" || act === "pill" || act === "chip") { if (act !== "chip") a.parentElement.querySelectorAll(".is-on").forEach((x) => x.classList.remove("is-on")); a.classList.toggle("is-on", act !== "chip" || !a.classList.contains("is-on")); return; }
     if (act === "city") { const c = a.dataset.city; document.querySelectorAll(".nph__loc span:not(.nph__pin)").forEach((x) => (x.textContent = c)); return close(); }
+    if (act === "copyid") { navigator.clipboard?.writeText(a.dataset.id).catch(() => {}); a.innerHTML = I.check; return; }
     if (act === "prev" || act === "next") return broGo(act === "next" ? 1 : -1);
     if (act === "ask") return render("asked");
     if (act === "add") { const t = a.querySelector("span").textContent; const chips = box.querySelector(".npp__cchips"); [...chips.children].forEach((c) => { if (c.textContent.trim() === t) c.remove(); }); chips.insertAdjacentHTML("afterbegin", `<button type="button" class="npp__cchip is-on">${t}${I.xCircleFill}</button>`); box.querySelector(".npp__drop").hidden = true; return; }
@@ -141,6 +142,13 @@ const V = {
   menu: () => ({ drawer: true, w: 320, html: `${head("Explore more")}<div class="npp__body npm"><ul>${[["diamond", "Zero brokerage properties"], ["heart", "Saved properties"], ["card", "My transactions"], ["starLine", "My reviews"], ["bell", "Subscription alerts"], ["fraud", "Report a fraud"], ["question", "Visit help center"], ["signOut", "Logout", "danger"]].map(([k, t, c]) => `<li><button type="button" class="${c ? "is-" + c : ""}" data-npp="close"><span class="npm__ic">${I[k]}</span>${t}</button></li>`).join("")}</ul></div>
     <div class="npm__foot"><p class="pnp-muted--md">Follow us on</p><div>${["facebook", "instagram", "linkedin", "xlogo", "youtube"].map((k) => `<a href="#" class="npm__ic" aria-label="${k}">${I[k]}</a>`).join("")}</div></div>` }),
 
+  rera: () => ({ w: 740, h: 664, html: `${head("RERA details")}<div class="npp__body npp__stack nprd">
+    <p class="npp__sub">How to check RERA status</p>
+    <ol>${["Visit <a href=\"https://maharera.maharashtra.gov.in\" target=\"_blank\" rel=\"noopener\">maharera.maharashtra.gov.in</a>. Under <b>Homebuyers Corner</b>, click <b>Project Progress</b>.", "Enter the project name, promoter name, pincode, state, division and district, then click <b>Search</b>.", "Click <b>View</b> to see the status details of the project."].map((t, i) => `<li><span>${i + 1}</span><p>${t}</p></li>`).join("")}</ol>
+    <hr><p class="npp__sub">All RERA IDs (4)</p>
+    <ul class="nprd__ids">${[["MM Valley C1", "P51700009447"], ["MM Valley A2", "P51700010237"], ["MM Valley D1 D2", "P51700049697"], ["MM Valley A1", "P51700024240"]].map(([n, id]) => `<li><span>${n}</span><b>${id}</b><button type="button" data-npp="copyid" data-id="${id}" aria-label="Copy ${id}">${I.copy}</button></li>`).join("")}</ul>
+  </div>` }),
+
   asked: () => ({ w: 600, h: 570, html: `${head("Ask a question")}<div class="npp__body npp__done"><span class="npp__tick">${I.check}</span><p>Your question has been submitted!</p></div>` }),
 };
 
@@ -212,6 +220,7 @@ export function initPdpNpPopups() {
     if (hit("#pnp-insights .pnp-head .pnp-link")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("insights"); }
     if (hit("#pnp-amenities .pnp-link")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("amenities"); }
     if (hit("#pnp-brochure .pnp-btn--secondary, #pnp-brochure .pnp-page")) { e.stopImmediatePropagation(); return openPopup("brochure"); }
+    if (hit("#pnp-overview .pnp-id:first-child a, #pnp-overview .pnp-id:first-child u")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("rera"); }
     if (hit(".nph__loc")) { e.stopImmediatePropagation(); return openPopup("city"); }
     if (hit(".nph__menu")) { e.stopImmediatePropagation(); return openPopup("menu"); }
     if (hit(".nph__post, .npft__stores img, .npft__qr")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("app"); }
