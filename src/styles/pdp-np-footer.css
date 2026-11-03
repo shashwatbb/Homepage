@@ -1,0 +1,35 @@
+/* Desktop NP PDP footer (Figma Footer 1280x1445). warm_neutral/800 bands, Web/Label type (12/16, caps 10/12). */
+body .npft { display: flex; flex-direction: column; gap: 2px; margin-top: 24px; font-family: var(--ds-font-family-primary); }
+body .npft a { color: var(--ds-text-inverse); text-decoration: none; font-size: 12px; line-height: 16px; letter-spacing: 0.1px; white-space: nowrap; }
+body .npft a:hover { text-decoration: underline; }
+body .npft p { margin: 0; }
+body .npft__cap { font-size: 10px; line-height: 12px; letter-spacing: 0.2px; text-transform: uppercase; color: var(--ds-text-inverse); }
+body .npft__seo { display: flex; flex-direction: column; gap: 32px; padding: 40px 20px 40px 64px; background: var(--ds-color-warm-neutral-800); }
+body .npft__row { display: flex; gap: 40px; }
+body .npft__row > .npft__cap { flex: 0 0 82px; }
+body .npft__grid { display: grid; grid-template-columns: repeat(4, 280px); row-gap: 4px; }
+body .npft__rea { display: flex; align-items: center; justify-content: center; gap: 8px; height: 132px; background: var(--ds-surface-white); font-size: 28px; line-height: 40px; font-weight: 500; color: var(--ds-text-primary); }
+body .npft__rea img { width: 200px; height: 52px; }
+body .npft__bottom { background: var(--ds-color-warm-neutral-800); }
+body .npft__cities { display: grid; grid-template-columns: 250px 304px 303px auto; padding: 32px 64px; }
+body .npft__cities > div { display: flex; flex-direction: column; gap: 4px; }
+body .npft__brand { display: flex; gap: 0; padding: 51px 35px 60px 70px; border-top: 0; }
+body .npft__brandcol { display: flex; flex-direction: column; gap: 16px; width: 305px; }
+body .npft__brandcol > img:first-child { width: 184px; height: 24px; }
+body .npft__awards { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+body .npft__awards img:first-child { width: 200px; height: 84px; }
+body .npft__awards img:last-child { width: 83px; height: 72px; }
+body .npft__cap--sm { margin-top: 2px !important; font-size: 12px; line-height: 16px; }
+body .npft__social { width: 250px; height: auto; }
+body .npft__col { display: flex; flex-direction: column; gap: 20px; width: 190px; }
+body .npft__col > div { display: flex; flex-direction: column; gap: 0; }
+body .npft__col a { white-space: normal; }
+body .npft__app { display: flex; flex-direction: column; gap: 20px; margin-left: auto; width: 205px; }
+body .npft__stores { display: flex; gap: 8px; }
+body .npft__stores img { width: 98px; height: 30px; }
+body .npft__qr { display: flex; align-items: center; gap: 16px; }
+body .npft__qr img { width: 84px; height: 84px; }
+body .npft__qr p { font-size: 12px; line-height: 16px; color: var(--ds-text-inverse); }
+/* height match: Figma bands 578 / 132 / 731 */
+body .npft__seo { min-height: 578px; box-sizing: border-box; }
+body .npft__bottom { min-height: 731px; box-sizing: border-box; }

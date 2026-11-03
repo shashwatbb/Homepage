@@ -1,0 +1,71 @@
+/* Desktop NP PDP first fold + page shell, 1:1 with Figma PDP [Demand] 3602:23538 (First fold, Property 1=Full view).
+   Page: surface/default bg, 1200 column at x40, 24 below the 64 header, 24 between blocks. */
+body:has(#pdp-page) { background: var(--ds-surface-default); }
+body #pdp-page { padding-block: 24px 0; }
+body #pdp-page .pdp-page__inner.layout-container { max-width: 1200px; margin-inline: auto; padding-inline: 0; box-sizing: content-box; }
+@media (max-width: 1279px) { body #pdp-page .pdp-page__inner.layout-container { padding-inline: 40px; max-width: none; } }
+body #pdp-page .pdp-body-layout { margin-inline: 0; width: 100%; }
+
+body .npf {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px;
+  border-radius: var(--ds-radius-2xl);
+  background: var(--ds-surface-white);
+  font-family: var(--ds-font-family-primary);
+  color: var(--ds-text-primary);
+  box-sizing: border-box;
+}
+body .npf p, body .npf h1 { margin: 0; }
+body .npf button { font-family: inherit; cursor: pointer; }
+body .npf [data-icon] { display: inline-grid; place-items: center; }
+body .npf [data-icon] svg { width: 18px; height: 18px; display: block; }
+
+body .npf__head { display: flex; align-items: flex-start; gap: 24px; }
+body .npf__titles { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+body .npf__title { font-size: 28px; line-height: 36px; font-weight: 600; letter-spacing: 0; } /* Web/Heading/H2 SemiBold */
+body .npf__meta { display: flex; align-items: center; gap: 8px; font-size: 16px; line-height: 22px; } /* H6 Regular */
+body .npf__line { width: 1px; height: 22px; border-radius: var(--ds-radius-full); background: var(--ds-border-default); }
+body .npf__by { color: var(--ds-text-primary); text-decoration: underline; text-underline-offset: 3px; }
+body .npf__updated { display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; font-size: 16px; line-height: 22px; color: var(--ds-text-muted); } /* Body default */
+body .npf__updated svg { width: 16px !important; height: 16px !important; color: var(--ds-icon-grey-3); }
+body .npf__tools { display: flex; gap: 16px; }
+body .npf__tool { display: grid; place-items: center; width: 42px; height: 42px; padding: 0; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: var(--ds-surface-subtle); color: var(--ds-icon-grey-1); box-sizing: border-box; }
+body .npf__tool[aria-pressed="true"] { color: var(--ds-color-red-500); }
+body .npf__tool[aria-pressed="true"] svg path { fill: currentColor; }
+
+body .npf__body { display: flex; gap: 24px; }
+body .npf__gallery { display: grid; grid-template-columns: 329px 329px; grid-template-rows: 208px 208px; gap: 8px; width: 666px; height: 424px; flex-shrink: 0; }
+body .npf__gallery img, body .npf__last { width: 329px; height: 208px; border-radius: var(--ds-radius-l); object-fit: cover; display: block; }
+body .npf__last { position: relative; overflow: hidden; }
+body .npf__viewall { position: absolute; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 4px; height: 42px; padding: 0 12px; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: var(--ds-surface-white); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.1px; color: var(--ds-text-primary); box-sizing: border-box; } /* Label Default Medium */
+
+body .npf__panel { flex: 1; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+body .npf__badges { display: flex; gap: 12px; }
+body .npf__badge { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 8px; border: 0; border-radius: var(--ds-radius-s); background: var(--ds-surface-default); font-size: 14px; line-height: 20px; color: var(--ds-text-secondary); white-space: nowrap; box-sizing: border-box; } /* Body Small Regular */
+body .npf__badge--new { background: var(--ds-color-pistachio-sand-50); color: var(--ds-semantic-text-success); font-weight: 500; }
+body .npf__seal svg, body .npf__star svg { width: 16px !important; height: 16px !important; }
+body .npf__seal { color: var(--ds-color-pistachio-sand-500); }
+body .npf__star { color: var(--ds-color-soft-butter-500); }
+body .npf__rating u { text-underline-offset: 2px; }
+body .npf__tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+body .npf__tile { display: flex; flex-direction: column; justify-content: center; gap: 8px; height: 82px; padding: 16px; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-l); box-sizing: border-box; }
+body .npf__label { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ds-text-muted); } /* Body Small Medium */
+body .npf__value { display: flex; align-items: center; gap: 8px; font-size: 16px; line-height: 22px; font-weight: 500; } /* H6 Medium */
+body .npf__unit { padding: 0; border: 0; border-bottom: 1px solid var(--ds-text-primary); background: none; font-size: 16px; line-height: 20px; font-weight: 500; color: var(--ds-text-primary); }
+body .npf__unit-caret { margin-left: -4px; }
+body .npf__unit-caret svg { width: 16px !important; height: 16px !important; }
+body .npf__rule { height: 1px; background: var(--ds-border-subtle); }
+body .npf__price { display: flex; flex-direction: column; gap: 8px; }
+body .npf__price-row { display: flex; align-items: center; gap: 8px; }
+body .npf__amount { font-size: 18px; line-height: 26px; font-weight: 600; } /* H5 SemiBold */
+body .npf__emi { padding: 8px 12px; border-radius: var(--ds-radius-s); background: var(--ds-color-pistachio-sand-50); font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ds-semantic-text-success); }
+body .npf__contact { display: flex; align-items: center; justify-content: center; gap: 4px; height: 48px; padding: 12px 20px; border: 0; border-radius: var(--ds-radius-m); background: var(--ds-surface-brand); color: var(--ds-text-inverse); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; box-sizing: border-box; } /* Bricks Button Primary L */
+body .npf__contact:hover { background: var(--ds-color-purple-800); }
+/* no grey plate behind the photos (old .pdp-topfold-gallery__grid styles) */
+body .npf .npf__gallery { background: none; padding: 0; border-radius: 0; box-shadow: none; overflow: visible; }
+/* Figma: only the gallery's outer corners are rounded (frame clip r16); tiles are sharp inside */
+body .npf .npf__gallery { border-radius: var(--ds-radius-l); overflow: hidden; }
+body .npf__gallery img, body .npf__last, body .npf__last img { border-radius: 0; }

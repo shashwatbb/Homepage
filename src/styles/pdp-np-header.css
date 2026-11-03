@@ -1,0 +1,35 @@
+/* Desktop NP PDP header (Figma Headers: SRP Header + PDP: Scroll). 64 high, padding 8/24. */
+body .nph-hidden { display: none !important; }
+body .nph { position: sticky; top: 0; z-index: 1000; height: 64px; box-sizing: border-box; border-bottom: 1px solid var(--ds-border-default); background: var(--ds-surface-subtle); font-family: var(--ds-font-family-primary); color: var(--ds-text-primary); }
+body .nph button { font-family: inherit; cursor: pointer; }
+body .nph svg { display: block; }
+body .nph__main { display: flex; align-items: center; justify-content: space-between; gap: 48px; height: 100%; padding: 8px 24px; box-sizing: border-box; }
+body .nph__left, body .nph__right { display: flex; align-items: center; gap: 12px; }
+body .nph__logo img { display: block; width: 149px; height: 20px; }
+body .nph__loc { display: flex; align-items: center; gap: 4px; height: 48px; padding: 0 16px; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: none; font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ds-text-primary); box-sizing: border-box; }
+body .nph__loc svg { width: 16px; height: 16px; }
+body .nph__pin { color: var(--ds-text-brand); }
+body .nph__search { display: flex; align-items: center; gap: 12px; width: 498px; height: 48px; padding: 8px 8px 8px 16px; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: var(--ds-surface-white); box-sizing: border-box; }
+body .nph__svc { display: flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ds-text-primary); }
+body .nph__svc svg { width: 16px; height: 16px; }
+body .nph__line { width: 1px; height: 24px; background: var(--ds-border-default); }
+body .nph__search input { flex: 1; min-width: 0; height: 32px; border: 0; outline: 0; background: none; font: inherit; font-size: 14px; line-height: 20px; color: var(--ds-text-primary); }
+body .nph__search input::placeholder { color: var(--ds-text-muted); }
+body .nph__go { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 8.7px; background: var(--ds-surface-brand); color: var(--ds-text-inverse); }
+body .nph__go svg { width: 17.5px; height: 17.5px; }
+body .nph__login { height: 48px; padding: 12px 20px; border: 0; border-radius: var(--ds-radius-m); background: var(--ds-surface-brand); color: var(--ds-text-inverse); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; }
+body .nph__login:hover { background: var(--ds-color-purple-800); }
+body .nph__post { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 20px; border: 1px solid var(--ds-border-brand); border-radius: var(--ds-radius-m); background: none; color: var(--ds-text-brand); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; box-sizing: border-box; }
+body .nph__post span { padding: 2px 6px; border-radius: var(--ds-radius-xs); background: var(--ds-semantic-icon-success); color: var(--ds-text-inverse); font-size: 10px; line-height: 12px; font-weight: 500; letter-spacing: 0.2px; }
+body .nph__menu { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: none; color: var(--ds-text-primary); box-sizing: border-box; }
+body .nph__menu svg { width: 20px; height: 20px; }
+
+/* Scroll state: same bar, white, section tabs */
+body .nph__tabs { display: none; align-items: center; gap: 24px; height: 100%; padding: 8px 24px; overflow-x: auto; scrollbar-width: none; box-sizing: border-box; }
+body .nph__tabs::-webkit-scrollbar { display: none; }
+body .nph__tabs a { flex-shrink: 0; height: 40px; padding: 12px; border-radius: var(--ds-radius-s); font-size: 14px; line-height: 16px; color: var(--ds-text-primary); text-decoration: none; white-space: nowrap; box-sizing: border-box; transition: background-color 0.15s ease; }
+body .nph__tabs a:hover { background: var(--ds-surface-subtle); }
+body .nph__tabs a.is-on { background: var(--ds-surface-default); }
+body .nph.is-nav { background: var(--ds-surface-white); }
+body .nph.is-nav .nph__main { display: none; }
+body .nph.is-nav .nph__tabs { display: flex; }

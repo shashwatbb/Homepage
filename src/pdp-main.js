@@ -1,17 +1,23 @@
 import "./main.js";
 import { initPdpCompare } from "./pdp-compare.js";
+import { initCrfDweb } from "./crf-dweb.js";
+import { initPdpNpSections } from "./pdp-np-sections.js";
+import { initPdpNpFooter } from "./pdp-np-footer.js";
+import { initPdpNpHeader } from "./pdp-np-header.js";
+import { initPdpNpPopups } from "./pdp-np-popups.js";
+import "./styles/modal-motion.css";
 
 const PDP_AREA_RANGE_SQFT = { min: 1125, max: 5250 };
 
 function formatAreaRangeEnIn(minVal, maxVal) {
-  const fmt = n => Math.round(n).toLocaleString("en-IN");
-  return `${fmt(minVal)} – ${fmt(maxVal)}`;
+  const fmt = n => String(Math.round(n));
+  return `${fmt(minVal)} - ${fmt(maxVal)}`; // Figma NP PDP: "1125 - 5250"
 }
 
 const PDP_AREA_UNITS = [
   {
     key: "sqft",
-    label: "sq.ft",
+    label: "sq.ft.",
     format: () => formatAreaRangeEnIn(PDP_AREA_RANGE_SQFT.min, PDP_AREA_RANGE_SQFT.max),
   },
   {
@@ -20,7 +26,7 @@ const PDP_AREA_UNITS = [
     format: () => {
       const toSqm = s => s * 0.09290304;
       const r = n => Math.round(n * 10) / 10;
-      return `${r(toSqm(PDP_AREA_RANGE_SQFT.min))} – ${r(toSqm(PDP_AREA_RANGE_SQFT.max))}`;
+      return `${r(toSqm(PDP_AREA_RANGE_SQFT.min))} - ${r(toSqm(PDP_AREA_RANGE_SQFT.max))}`;
     },
   },
   {
@@ -150,7 +156,7 @@ function initPdpShareSheet() {
 
   const scrim = document.getElementById("pdp-share-sheet-scrim");
   const closeBtn = document.getElementById("pdp-share-sheet-close");
-  const CLOSE_MS = 480;
+  const CLOSE_MS = 250; // Airbnb modal close, src/styles/modal-motion.css
 
   let escHandler;
   let closeTimer;
@@ -186,6 +192,7 @@ function initPdpShareSheet() {
   const closeSheet = () => {
     if (!sheet.classList.contains("is-visible")) return;
     sheet.classList.remove("is-visible");
+    sheet.classList.add("mm-closing");
     document.documentElement.style.overflow = "";
     if (escHandler) {
       document.removeEventListener("keydown", escHandler);
@@ -193,6 +200,7 @@ function initPdpShareSheet() {
     }
     window.clearTimeout(closeTimer);
     closeTimer = window.setTimeout(() => {
+      sheet.classList.remove("mm-closing");
       sheet.setAttribute("hidden", "");
     }, CLOSE_MS);
   };
@@ -200,6 +208,8 @@ function initPdpShareSheet() {
   const openSheet = () => {
     if (sheet.classList.contains("is-visible")) return;
     syncPreview();
+    window.clearTimeout(closeTimer);
+    sheet.classList.remove("mm-closing");
     sheet.removeAttribute("hidden");
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -507,19 +517,20 @@ function initPdpEmiModal() {
   // Open modal
   card.addEventListener("click", () => {
     modal.removeAttribute("hidden");
-    setTimeout(() => {
-      modal.classList.add("is-visible");
-    }, 10);
+    modal.classList.remove("mm-closing");
+    modal.classList.add("is-visible");
     document.documentElement.style.overflow = "hidden";
   });
 
   // Close modal
   const closeModal = () => {
     modal.classList.remove("is-visible");
-    document.documentElement.style.overflow = "";
+    modal.classList.add("mm-closing");
     setTimeout(() => {
+      modal.classList.remove("mm-closing");
       modal.setAttribute("hidden", "");
-    }, 300);
+      document.documentElement.style.overflow = "";
+    }, 250); // Airbnb modal close, src/styles/modal-motion.css
   };
 
   closeBtn.addEventListener("click", closeModal);
@@ -636,6 +647,11 @@ function initPdpPage() {
   initPdpReviewsScroller();
   initPdpEmiModal();
   initPdpCompare();
+  initPdpNpSections();
+  initPdpNpFooter();
+  initPdpNpHeader();
+  initPdpNpPopups();
+  initCrfDweb();
 }
 
 if (document.readyState === "loading") {

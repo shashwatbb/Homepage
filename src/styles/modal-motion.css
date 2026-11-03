@@ -1,0 +1,46 @@
+/* Desktop pop-up motion, measured from Airbnb's "Log in or sign up" modal (2026-11-03, getAnimations()).
+   Used by the CRF, Share and EMI pop-ups on desktop PDP. Root gets .is-visible on open and .mm-closing while closing.
+   Open : panel translateY 100px -> 0, 400ms cubic-bezier(0.1, 0.9, 0.2, 1) + opacity 0 -> 1, 75ms linear;
+          overlay opacity 0 -> its value, 400ms spring.
+   Close: panel translateY 0 -> 50px, 150ms cubic-bezier(0.4, 0, 1, 1) + opacity 1 -> 0, 75ms linear after 75ms;
+          overlay opacity -> 0, 250ms spring. Hide the root after 250ms. */
+:root {
+  --mm-in: cubic-bezier(0.1, 0.9, 0.2, 1);
+  --mm-out: cubic-bezier(0.4, 0, 1, 1);
+  --mm-spring: linear(0 0%, 0.158 9.09%, 0.415 18.18%, 0.63 27.27%, 0.78 36.36%, 0.875 45.45%, 0.932 54.55%, 0.964 63.64%, 0.982 72.73%, 0.992 81.82%, 0.997 90.91%, 1 100%);
+  --mm-close-ms: 250ms;
+}
+
+@keyframes mm-panel-in { from { transform: translate3d(0, 100px, 0); } to { transform: none; } }
+@keyframes mm-panel-out { from { transform: none; } to { transform: translate3d(0, 50px, 0); } }
+@keyframes mm-fade-in { from { opacity: 0; } }
+@keyframes mm-fade-out { to { opacity: 0; } }
+
+/* CRF */
+body .crfd-overlay.is-visible .crfd-modal { animation: mm-panel-in 400ms var(--mm-in) both, mm-fade-in 75ms linear both; }
+body .crfd-overlay.mm-closing .crfd-modal { animation: mm-panel-out 150ms var(--mm-out) both, mm-fade-out 75ms linear 75ms both; }
+body .crfd-overlay.is-visible::before { animation: mm-fade-in 400ms var(--mm-spring) both; }
+body .crfd-overlay.mm-closing::before { animation: mm-fade-out var(--mm-close-ms) var(--mm-spring) both; }
+
+/* Share pop-up */
+body .pdp-share-sheet .pdp-share-sheet__panel { transform: none; transition: none; }
+body .pdp-share-sheet.mm-closing { visibility: visible; pointer-events: none; }
+body .pdp-share-sheet.is-visible .pdp-share-sheet__panel { animation: mm-panel-in 400ms var(--mm-in) both, mm-fade-in 75ms linear both; }
+body .pdp-share-sheet.mm-closing .pdp-share-sheet__panel { animation: mm-panel-out 150ms var(--mm-out) both, mm-fade-out 75ms linear 75ms both; }
+body .pdp-share-sheet.is-visible .pdp-share-sheet__scrim { animation: mm-fade-in 400ms var(--mm-spring) both; }
+body .pdp-share-sheet.mm-closing .pdp-share-sheet__scrim { animation: mm-fade-out var(--mm-close-ms) var(--mm-spring) both; }
+
+/* EMI pop-up: the overlay itself was the scrim, so the scrim moves to ::before and only it fades */
+html .pdp-modal-overlay { opacity: 1; transition: none; background-color: transparent; backdrop-filter: none; visibility: hidden; }
+body .pdp-modal-overlay::before { content: ""; position: absolute; inset: 0; background-color: rgba(15, 15, 15, 0.6); backdrop-filter: blur(8px); }
+html .pdp-modal-overlay .pdp-modal-card { position: relative; transform: none; transition: none; }
+body .pdp-modal-overlay.is-visible, body .pdp-modal-overlay.mm-closing { visibility: visible; }
+body .pdp-modal-overlay.mm-closing { pointer-events: none; }
+body .pdp-modal-overlay.is-visible .pdp-modal-card { animation: mm-panel-in 400ms var(--mm-in) both, mm-fade-in 75ms linear both; }
+body .pdp-modal-overlay.mm-closing .pdp-modal-card { animation: mm-panel-out 150ms var(--mm-out) both, mm-fade-out 75ms linear 75ms both; }
+body .pdp-modal-overlay.is-visible::before { animation: mm-fade-in 400ms var(--mm-spring) both; }
+body .pdp-modal-overlay.mm-closing::before { animation: mm-fade-out var(--mm-close-ms) var(--mm-spring) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  body .crfd-overlay .crfd-modal, body .crfd-overlay::before, body .pdp-share-sheet__panel, body .pdp-share-sheet__scrim, body .pdp-modal-overlay .pdp-modal-card, body .pdp-modal-overlay::before { animation: none !important; }
+}

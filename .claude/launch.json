@@ -10,20 +10,40 @@
     {
       "name": "bricks",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/Bricks Design System\" && ./node_modules/.bin/vite --port 5174"],
+      "runtimeArgs": [
+        "-c",
+        "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/Bricks Design System\" && ./node_modules/.bin/vite --port 5174"
+      ],
       "port": 5174
     },
     {
       "name": "bricks-site",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/bricks-design-system/site\" && python3 -m http.server 5175"],
+      "runtimeArgs": [
+        "-c",
+        "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/bricks-design-system/site\" && python3 -m http.server 5175"
+      ],
       "port": 5175
     },
     {
       "name": "framer-portfolio",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/final-master-framer/site\" && node serve.js 3000"],
+      "runtimeArgs": [
+        "-c",
+        "cd \"/Users/shashwat/Documents/Work/Cursor:Claude/final-master-framer/site\" && node serve.js 3000"
+      ],
       "port": 3000
+    },
+    {
+      "name": "prod-preview",
+      "runtimeExecutable": "./node_modules/.bin/vite",
+      "runtimeArgs": [
+        "preview",
+        "--port",
+        "4173",
+        "--strictPort"
+      ],
+      "port": 4173
     }
   ]
 }

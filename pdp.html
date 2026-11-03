@@ -688,171 +688,53 @@
       <main class="pdp-page" id="pdp-page" aria-label="Property details">
         <div class="pdp-page__inner layout-container">
           <!-- PDP top fold — aligned to Demand Component Kit frame 3677:12987 (see design-system/figma-pdp-topfold-reference.json) -->
-          <section class="pdp-topfold" aria-label="Property overview">
-            <header class="pdp-topfold__header">
-              <div class="pdp-topfold__titles">
-                <h1 class="pdp-topfold__title">Emaar MGF The Palm Drive</h1>
-                <p class="pdp-topfold__meta">
+          <!-- First fold: Figma PDP [Demand] 3602:23538 > First fold (Property 1=Full view), 1:1 -->
+          <section class="pdp-topfold npf" aria-label="Property overview">
+            <div class="npf__head">
+              <div class="npf__titles">
+                <h1 class="npf__title pdp-topfold__title">Emaar MGF The Palm Drive</h1>
+                <p class="npf__meta">
                   <span class="pdp-topfold__location">Sector 66, Gurgaon</span>
-                  <span class="pdp-topfold__meta-sep" aria-hidden="true">|</span>
-                  <span class="pdp-topfold__byline">By EMAAR INDIA</span>
-                  <span class="pdp-topfold__meta-sep" aria-hidden="true">|</span>
-                  <span class="pdp-topfold__updated">Updated on: Jun 2, 2026</span>
+                  <span class="npf__line" aria-hidden="true"></span>
+                  <a href="#" class="npf__by pdp-topfold__byline">By EMAAR INDIA</a>
+                  <span class="npf__line" aria-hidden="true"></span>
+                  <button type="button" class="npf__updated">Last updated: 4d ago<span data-icon="caretDown"></span></button>
                 </p>
               </div>
-              <div class="pdp-topfold__tools" role="group" aria-label="Share and save listing">
-                <button type="button" class="pdp-topfold__tool-btn" id="pdp-share-btn" aria-label="Share this listing">
-                  <svg
-                    class="pdp-topfold__tool-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    viewBox="0 0 256 256"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  class="pdp-topfold__tool-btn pdp-topfold__tool-btn--save"
-                  id="pdp-save-btn"
-                  aria-pressed="false"
-                  aria-label="Save this listing"
-                >
-                  <svg
-                    class="pdp-topfold__tool-heart"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    viewBox="0 0 256 256"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"
-                    />
-                  </svg>
-                </button>
+              <div class="npf__tools" role="group" aria-label="Share and save listing">
+                <button type="button" class="npf__tool" id="pdp-share-btn" aria-label="Share this listing"><span data-icon="share"></span></button>
+                <button type="button" class="npf__tool" id="pdp-save-btn" aria-pressed="false" aria-label="Save this listing"><span data-icon="heart"></span></button>
               </div>
-            </header>
-            <div class="pdp-topfold__body">
-              <div class="pdp-topfold__gallery pdp-topfold-gallery" role="group" aria-label="Property photos (decorative)">
-                <div class="pdp-topfold-gallery__grid">
-                  <div class="pdp-topfold-gallery__cell">
-                    <img
-                      class="pdp-topfold-gallery__img"
-                      src="/pdp-gallery/1.png"
-                      width="1944"
-                      height="1300"
-                      alt=""
-                      decoding="async"
-                      loading="eager"
-                      fetchpriority="high"
-                    />
-                  </div>
-                  <div class="pdp-topfold-gallery__cell">
-                    <img
-                      class="pdp-topfold-gallery__img"
-                      src="/pdp-gallery/2.png"
-                      width="1038"
-                      height="1300"
-                      alt=""
-                      decoding="async"
-                      loading="eager"
-                    />
-                  </div>
-                  <div class="pdp-topfold-gallery__cell">
-                    <img
-                      class="pdp-topfold-gallery__img"
-                      src="/pdp-gallery/3.png"
-                      width="1038"
-                      height="1300"
-                      alt=""
-                      decoding="async"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="pdp-topfold-gallery__cell pdp-topfold-gallery__cell--view-all">
-                    <img
-                      class="pdp-topfold-gallery__img"
-                      src="/pdp-gallery/5.png"
-                      width="1948"
-                      height="1292"
-                      alt=""
-                      decoding="async"
-                      loading="lazy"
-                    />
-                    <button type="button" class="pdp-topfold-gallery__view-all" id="pdp-view-all-photos-btn">
-                      <svg
-                        class="pdp-topfold-gallery__view-all-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        fill="currentColor"
-                        viewBox="0 0 256 256"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M88,56H40a8,8,0,0,0-8,8V112a8,8,0,0,0,8,8H88a8,8,0,0,0,8-8V64A8,8,0,0,0,88,56Zm32,152h48a8,8,0,0,0,8-8V152a8,8,0,0,0-8-8H120a8,8,0,0,0-8,8v48A8,8,0,0,0,120,208ZM216,56H168a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V64A8,8,0,0,0,216,56Zm0,104H168a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V168A8,8,0,0,0,216,160ZM88,208H40a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8H88a8,8,0,0,0,8-8V216A8,8,0,0,0,88,208Z"
-                        />
-                      </svg>
-                      <span>View all</span>
-                    </button>
-                  </div>
+            </div>
+            <div class="npf__body">
+              <div class="npf__gallery pdp-topfold-gallery__grid" role="group" aria-label="Property photos">
+                <img class="pdp-topfold-gallery__img" src="/pdp-gallery/1.png" alt="" decoding="async" fetchpriority="high" />
+                <img class="pdp-topfold-gallery__img" src="/pdp-gallery/2.png" alt="" decoding="async" />
+                <img class="pdp-topfold-gallery__img" src="/pdp-gallery/3.png" alt="" decoding="async" loading="lazy" />
+                <div class="npf__last">
+                  <img class="pdp-topfold-gallery__img" src="/pdp-gallery/5.png" alt="" decoding="async" loading="lazy" />
+                  <button type="button" class="npf__viewall" id="pdp-view-all-photos-btn"><span data-icon="dots"></span>View all</button>
                 </div>
               </div>
-              <aside class="pdp-topfold__panel" aria-label="Listing summary">
-                <div class="pdp-topfold__badges">
-                  <span class="pdp-topfold__badge pdp-topfold__badge--rera">RERA</span>
-                  <button type="button" class="pdp-topfold__badge pdp-topfold__badge--rating" id="pdp-rating-badge-fold" aria-label="View 27 reviews, average rating 4.2 out of 5">
-                    <svg class="pdp-topfold__rating-star-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
-                      <path d="M234,111.65l-45.42,39.35,13.58,58.29a8,8,0,0,1-11.93,8.69L128,191.36,61.78,218a8,8,0,0,1-11.93-8.69l13.58-58.29L18,111.65a8,8,0,0,1,4.48-14.12l59.19-5.05L115.93,39a8,8,0,0,1,14.14,0l34.26,53.48,59.19,5.05a8,8,0,0,1,4.48,14.12Z" />
-                    </svg>
-                    <span class="pdp-topfold__rating-val">4.2</span>
-                    <span class="pdp-topfold__rating-count">(27)</span>
-                  </button>
+              <aside class="npf__panel" aria-label="Listing summary">
+                <div class="npf__badges">
+                  <span class="npf__badge npf__badge--new">New launch</span>
+                  <span class="npf__badge"><span data-icon="sealFill" class="npf__seal"></span>RERA</span>
+                  <span class="npf__badge">Zero brokerage</span>
+                  <button type="button" class="npf__badge" id="pdp-rating-badge-fold" aria-label="View 27 reviews, average rating 4.2 out of 5"><span data-icon="star" class="npf__star"></span><span class="npf__rating">4.2 (<u>27</u>)</span></button>
                 </div>
-                <div class="pdp-topfold-specs">
-                  <div class="pdp-topfold-specs__tile">
-                    <p class="pdp-topfold-specs__label">Configuration</p>
-                    <p class="pdp-topfold-specs__value">1, 2 BHK apartments</p>
-                  </div>
-                  <div class="pdp-topfold-specs__tile">
-                    <p class="pdp-topfold-specs__label">Status</p>
-                    <p class="pdp-topfold-specs__value">Ready to move</p>
-                  </div>
-                  <div class="pdp-topfold-specs__tile">
-                    <p class="pdp-topfold-specs__label">Sizes</p>
-                    <p class="pdp-topfold-specs__value pdp-topfold-specs__value--sizes">
-                      <span id="pdp-area-range">1,125 – 5,250</span>
-                      <button type="button" class="pdp-topfold-specs__unit" id="pdp-unit-toggle" aria-label="Change area unit">sq.ft</button>
-                    </p>
-                  </div>
-                  <div class="pdp-topfold-specs__tile">
-                    <p class="pdp-topfold-specs__label">Average price</p>
-                    <p class="pdp-topfold-specs__value">₹47.45 K/sq.ft</p>
-                  </div>
+                <div class="npf__tiles">
+                  <div class="npf__tile"><p class="npf__label">Configuration</p><p class="npf__value">1, 2 BHK apartments</p></div>
+                  <div class="npf__tile"><p class="npf__label">Status</p><p class="npf__value">Ready to move</p></div>
+                  <div class="npf__tile"><p class="npf__label">Sizes</p><p class="npf__value"><span id="pdp-area-range">1125 - 5250</span><button type="button" class="npf__unit" id="pdp-unit-toggle" aria-label="Change area unit">sq.ft.</button><span data-icon="caretDown" class="npf__unit-caret"></span></p></div>
+                  <div class="npf__tile"><p class="npf__label">Average price</p><p class="npf__value">₹47.45 K/sq.ft.</p></div>
                 </div>
-                <div class="pdp-topfold__panel-rule" aria-hidden="true"></div>
-                <div class="pdp-topfold__price-block">
-                  <p class="pdp-topfold__price-label">Price</p>
-                  <div class="pdp-topfold__price-row">
-                    <span class="pdp-topfold__price-main">₹1.4 Cr - ₹2.5 Cr</span>
-                    <span class="pdp-topfold__emi-pill">EMI at ₹1.12 L</span>
-                  </div>
+                <div class="npf__rule" aria-hidden="true"></div>
+                <div class="npf__price">
+                  <p class="npf__label">Price</p>
+                  <div class="npf__price-row"><span class="npf__amount">₹1.4 Cr - ₹2.5 Cr</span><span class="npf__emi">EMI at ₹1.12 L</span></div>
                 </div>
-                <button type="button" class="pdp-topfold__contact" id="pdp-contact-btn" aria-label="Contact seller about this listing">
-                  <svg class="pdp-topfold__contact-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
-                    <path
-                      d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,1-10.73-10.73,16,16,0,0,0,1.35-15.18l.07-.14L97.54,33.64a8,8,0,0,0-10.94-2.59A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,48.91-54.6A8,8,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,42.86L125.93,89.52l-1,1.83a32,32,0,0,0,42.45,42.45l1.83-1L213.14,173.12A40.18,40.18,0,0,1,176,208Z"
-                    />
-                  </svg>
-                  <span>Contact seller</span>
-                </button>
+                <button type="button" class="npf__contact" id="pdp-contact-btn" aria-label="Contact seller about this listing"><span data-icon="phoneFill"></span><span>Contact seller</span></button>
               </aside>
             </div>
           </section>
