@@ -26,6 +26,7 @@ function shell() {
     if (act === "close") return close();
     if (act === "contact") { close(); return setTimeout(openCrf, 260); }
     if (act === "tab" || act === "pill" || act === "chip") { if (act !== "chip") a.parentElement.querySelectorAll(".is-on").forEach((x) => x.classList.remove("is-on")); a.classList.toggle("is-on", act !== "chip" || !a.classList.contains("is-on")); return; }
+    if (act === "city") { const c = a.dataset.city; document.querySelectorAll(".nph__loc span:not(.nph__pin)").forEach((x) => (x.textContent = c)); return close(); }
     if (act === "prev" || act === "next") return broGo(act === "next" ? 1 : -1);
     if (act === "ask") return render("asked");
     if (act === "add") { const t = a.querySelector("span").textContent; const chips = box.querySelector(".npp__cchips"); [...chips.children].forEach((c) => { if (c.textContent.trim() === t) c.remove(); }); chips.insertAdjacentHTML("afterbegin", `<button type="button" class="npp__cchip is-on">${t}${I.xCircleFill}</button>`); box.querySelector(".npp__drop").hidden = true; return; }
@@ -56,6 +57,7 @@ function broGo(d) {
   box.querySelector(".npb__count").textContent = `${broAt + 1}/${BRO.length}`;
   box.querySelector(".npb__bar i").style.width = `${((broAt + 1) / BRO.length) * 100}%`;
 }
+const CITIES = ["Mumbai", "Bengaluru", "Hyderabad", "Pune", "Chennai", "Delhi", "Gurgaon", "Noida", "Thane", "Navi Mumbai", "Kolkata", "Ahmedabad"];
 const AMEN = [["gazebo", "Gazebo"], ["sprinkler", "Fire sprinklers"], ["pingPong", "Table tennis"], ["medical", "Medical store"], ["drop", "Water softener plant"], ["medical", "Medical store"], ["gazebo", "Gazebo"], ["sprinkler", "Fire sprinklers"]];
 
 const V = {
@@ -122,6 +124,23 @@ const V = {
       <button type="button" class="npb__arrow npb__arrow--l" data-npp="prev" aria-label="Previous">${I.caretRight}</button><button type="button" class="npb__arrow npb__arrow--r" data-npp="next" aria-label="Next">${I.caretRight}</button></div>
     <div class="npb__foot"><span class="npb__bar"><i></i></span><span class="npb__count">1/${BRO.length}</span></div>` }),
 
+  city: () => ({ w: 680, h: 560, html: `${head("Choose city")}<div class="npp__body npp__stack npc">
+    <div class="npc__top"><label class="npc__search">${I.search}<input type="search" placeholder="Search city" aria-label="Search city"></label><button type="button" class="pnp-btn pnp-btn--secondary pnp-btn--auto npc__detect" data-npp="close">${I.crosshair}Detect location</button></div>
+    <p class="pnp-muted--md">Popular cities</p>
+    <div class="npc__grid">${CITIES.map((c, i) => `<button type="button" data-npp="city" data-city="${c}"><img src="${img(`pdp-np/city-${i}.png`)}" alt="" width="28" height="28"><span>${c}</span></button>`).join("")}</div>
+    <p class="pnp-muted--md">Other cities</p>
+    <div class="npc__other">${["Abohar", "Abu Dhabi", "Adilabad", "Agarmalwa", "Agartala", "Agra", "Ahmednagar", "Aizawl", "Ajman", "Akola", "Alappuzha", "Alibag", "Aligarh", "Alipurduar", "Alirajpur", "Allahabad", "Almora", "Aluva"].map((c) => `<button type="button" data-npp="city" data-city="${c}">${c}</button>`).join("")}</div>
+  </div><div class="npp__fade"></div>` }),
+
+  app: () => ({ w: 860, h: 536, html: `<button type="button" class="npb__x npa__x" data-npp="close" aria-label="Close">${I.x}</button><div class="npa">
+    <div class="npa__left"><img class="npa__logo" src="${img("pdp-np/app-logo.png")}" alt="" width="60" height="60"><h2 class="npa__title">Get the Housing app</h2><span class="npa__rule"></span>
+      <ul>${["Faster property search", "Instant alerts for new matches", "Trusted by 1Cr+ users", "4.4 rating on the app stores"].map((t) => `<li>${t}</li>`).join("")}</ul>
+      <div class="npa__dl"><img class="npa__qr" src="${img("pdp-footer/qr.png")}" alt="QR code" width="118" height="118"><div class="npa__stores"><a href="#" class="npa__store">${I.apple}<span><small>GET IT ON</small>App store</span></a><a href="#" class="npa__store">${I.play}<span><small>GET IT ON</small>Play store</span></a></div></div></div>
+    <img class="npa__art" src="${img("pdp-np/app-art.png")}" alt="" width="445" height="446"></div>` }),
+
+  menu: () => ({ drawer: true, w: 320, html: `${head("Explore more")}<div class="npp__body npm"><ul>${[["diamond", "Zero brokerage properties"], ["heart", "Saved properties"], ["card", "My transactions"], ["starLine", "My reviews"], ["bell", "Subscription alerts"], ["fraud", "Report a fraud"], ["question", "Visit help center"], ["signOut", "Logout", "danger"]].map(([k, t, c]) => `<li><button type="button" class="${c ? "is-" + c : ""}" data-npp="close"><span class="npm__ic">${I[k]}</span>${t}</button></li>`).join("")}</ul></div>
+    <div class="npm__foot"><p class="pnp-muted--md">Follow us on</p><div>${["facebook", "instagram", "linkedin", "xlogo", "youtube"].map((k) => `<a href="#" class="npm__ic" aria-label="${k}">${I[k]}</a>`).join("")}</div></div>` }),
+
   asked: () => ({ w: 600, h: 570, html: `${head("Ask a question")}<div class="npp__body npp__done"><span class="npp__tick">${I.check}</span><p>Your question has been submitted!</p></div>` }),
 };
 
@@ -129,6 +148,8 @@ function render(name) {
   const v = V[name]();
   root.classList.toggle("npp--full", !!v.full);
   root.classList.toggle("npp--dark", !!v.dark);
+  root.classList.toggle("npp--drawer", !!v.drawer);
+  box.style.height = v.drawer ? "" : box.style.height;
   box.style.width = v.full ? "" : v.w + "px";
   box.style.height = v.full ? "" : `min(${v.h}px, calc(100vh - 80px))`;
   box.innerHTML = v.html;
@@ -191,6 +212,9 @@ export function initPdpNpPopups() {
     if (hit("#pnp-insights .pnp-head .pnp-link")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("insights"); }
     if (hit("#pnp-amenities .pnp-link")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("amenities"); }
     if (hit("#pnp-brochure .pnp-btn--secondary, #pnp-brochure .pnp-page")) { e.stopImmediatePropagation(); return openPopup("brochure"); }
+    if (hit(".nph__loc")) { e.stopImmediatePropagation(); return openPopup("city"); }
+    if (hit(".nph__menu")) { e.stopImmediatePropagation(); return openPopup("menu"); }
+    if (hit(".nph__post, .npft__stores img, .npft__qr")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("app"); }
     if (hit(".nph__login")) { e.stopImmediatePropagation(); return openCrf(); } // Figma "Login flow" = CRF phone + OTP
     if (hit("#pnp-compare .pnp-cmp-chip")) { e.stopImmediatePropagation(); return openPopup("compare"); }
     if (hit("#pnp-qna [data-action=pnp-contact]")) { e.stopImmediatePropagation(); return openPopup("ask"); }
