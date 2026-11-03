@@ -9,7 +9,9 @@ export const FILES = {
   "Component Kit": "https://www.figma.com/design/xYC0W1LzOyf0ll2LF5iCZq/Demand%E2%80%A8Component-Kit",
   "Iconography": "https://www.figma.com/design/Rq1j8iqvbJBYRb52tdpgFg/Iconography--Bricks-",
   "Bricks Design System": "https://www.figma.com/design/ZGl9LhEtqlE9JiMKBuYrdT/Bricks-Design-System",
+  "CRF": "https://www.figma.com/design/wNK4x8jVjM9BrVaj7zYUjx/CRF--Demand-",
   "Sample File": "https://www.figma.com/design/13QumTZLIxuCIPzCyhg1tM/Sample-File--Demand-",
+  "PDP": "https://www.figma.com/design/NU6ksSaeo8ATDjgcTWnhrc/PDP--Demand-",
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const targets = async () => (await (await fetch("http://localhost:9222/json")).json());

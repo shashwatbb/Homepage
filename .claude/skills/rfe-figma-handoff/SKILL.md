@@ -77,16 +77,38 @@ Scratch inspection scripts go in the session scratchpad, not the repo.
 8. **Verify** with scripts (sizes, bindings, which variant each screen uses, annotations count). One export/screenshot only for real visual judgement (`node.exportAsync` → base64 through `run.mjs`; it writes stdout fully).
 9. **Report** plainly what changed, what was published, what was not verified.
 
+## 3b. Changes after the first build (hard rule)
+
+Small change = in-place patch script on the existing kit variants (`patch-crf-dweb.js` pattern), `publish.mjs` the touched sets, `accept-updates.mjs` on the RFE page. Never rerun the full kit builder or the RFE builder for it: those recreate variant ids and redraw every frame (notes lost). Rebuild only when screens/variants are added or removed. Instance-locked properties (absolute child position inside a Bricks instance): hide the layer and draw an overlay in the variant.
+Ship with `node figma-rfe/ship.mjs "<consumer tab>" <screen id> <changed set ids + every parent set that nests them> -- "<set names>"`: publish, reload the consumer tab, wait, accept once. Never loop on accept-updates; "none" means a parent set wasn't republished or the tab didn't reload.
+
 ## 4. RFE page layout
 
 - New page under "✅ Tech hand-over: SRP" (insert before the first `--` separator), name `      ↳ <Feature>` (copy the prefix from the Buy page name). Canvas bg copied from a sibling page (`#f2f2f2`); API-created pages default to dark `#1e1e1e`.
 - If the page or an RFE section already exists, reuse it; never duplicate.
 - One SECTION, white (`surface/white`), corner radius 100 (like "RFE: Android"), name `RFE: <platform> · <Feature>` (no dashes).
+- Header state (HARD, 2026-11-03): work on a Design Draft page uses Page kit **Type=In review** (own #Title + reviewer layers, reset overrides after swapping); switch to **Type=Ready** only when it moves to the RFE / tech hand-over section. `patch-crf-dweb-rfe-inreview.js` swaps it.
 - Page kit (instances from the library): Type=Ready at (101,100) with `#Label` "Sprint" and subline = flag/rollout; Type=Info strip at (101,361) text "Android/iOS/mweb"; Type=Flow small above each screen at y 585, resized to screen width (360), text = screen name.
 - Screens: one whole-page kit instance each at y 702, x from 101 stepping 510 (360 + 150 gap), named like the flow pill. Mobile screens 360x800 (`instance.resize(360, 800)`) unless the user asks for full length. Kit page variants pin the bottom nav / bottom bar (absolute, constraint bottom, matching bottom padding `5xl` / `6xl`) so 800-tall views keep it visible.
 - Ready header and Info strip span the screen row (hard rule): x = first screen left, width = last screen right minus first screen left. Re-do on every screen add/remove.
 - Section size hugs content: width = last screen right + 101, height = lowest screen bottom + 100 (same margin as the top). No empty space.
 - Empty-state icon containers: rounded square (radius `l`), never a full circle.
+
+## 4b. Desktop web RFEs (learned 2026-11-02, CRF revamp)
+
+- Design language = NP PDP desktop (PDP [Demand] `NU6ksSaeo8ATDjgcTWnhrc`, section `3602:23537`). Screen = `Web / Homepage / NP / PDP` instance (key `0919f3a70fe22e6c5c6ecc8d48560fe5135057c8`) at 1280x800 + `Overlay` Device=Desktop (`21be53303048d321068d3304cff7401b02749ba4`, black 30%) + centred modal instance.
+- Modal: `surface/white`, 1px `border/subtle`, radius `2xl`, clip. Flows like CRF/login: 480 for every step including the final screen (Airbnb login size), max height min(720, viewport), body scrolls. Header 70 = pad `xl`, `Web/Heading/h6_medium`, X 20, divider `border/subtle`; body pad 24. Text = `Web/*` styles, CTAs Bricks Button L. Template: `kit-rera-modal.js`, `kit-crf-dweb.js`.
+- Modal micro details (copy every time): INNER_SHADOW white @0.86 y -18 blur 20 (bottom fade), stroke 0.76 `border/subtle`, and on overflowing screens a 4px full-radius `border/default` scrollbar at x = W - 10, y = 70 + 32. Before any desktop build, run a micro-audit script over the NP PDP modals (effects, gradients, strokes, scroll, absolute layers) and look at 1x exports.
+- Info strip "Desktop web", flow pills 1280 wide, screens step 1280 + 150.
+- Mobile to desktop: bottom sheet becomes centred modal, same width throughout; no keyboard frames; tel: becomes Copy number (Bricks Snackbar "Number copied"), WhatsApp opens WhatsApp web; OTP = one rectangular Bricks OTPField, paste + auto-submit, no auto-fetch state.
+- Final/confirmation screens: lay out with the impeccable skill. Outcome headline + what next, contacts as a divided list (WhatsApp IconButton + copy icon), one row of 2 borderless cards, one muted safety line. No banners, no stacked buttons, no second carousel.
+- Bricks components first: InputField (Phone Number type), OTPField, Checkbox (label off + own wrapping text when copy is long), IconButton, Snackbar, Country Flag Icons. Dropdowns copy the NP PDP dropdown (r16, pad 12, 32 rows, dividers, `surface/subtle` selected row, soft shadow).
+- WhatsApp = official glyph component `Dweb / CRF revamp / WhatsApp` (swaps into IconButton/Button icon slots).
+- Old `Input fields` set (`3a32309d…`) can't be imported (unpublished): use Bricks `InputField`.
+- Desktop CRF kit: Component Kit page CRF `2016:179`, section `CRF/Dweb revamp` (old `CRF/Dweb` = naive port, leave it).
+- `figma-cli connect` quits and relaunches Figma (ask the user first) when port 9222 is down. Add new files to the `FILES` map in `tabs.mjs`.
+
+- Rows of bare components (full-length scroll views, single component cases like "Seller: No photo"): item left edge = pill left edge, pill width = item width, next item at previous right + 150. Not centred in 1280 slots. Fix with `patch-crf-dweb-rfe-fulllength.js`; `audit-crf-dweb-rfe.js` checks it.
 
 ## 5. Visual rules (all hard)
 
@@ -106,7 +128,7 @@ Scratch inspection scripts go in the session scratchpad, not the repo.
 
 - Native Figma annotations on the layer inside the screen instance; max ~5-7 per RFE, one short line each, only behaviour invisible in the frame: haptics, durations, rotation intervals, show-once/persistence, flags, ordering, data swaps.
 - Every note has a category: **Interaction** (preset) = motion, haptics, durations, gestures; **Development** (create green via `figma.annotations.addAnnotationCategoryAsync` if missing) = flags, logic, ordering, persistence, data. One note per category per layer.
-- Re-run notes after every RFE rebuild (instances are recreated).
+- Re-run notes after every RFE rebuild (instances are recreated) AND after accepting a library update that changed nested layers (an annotation on a nested layer can drop; audit note count catches it).
 
 ## 7. Iconography additions
 
@@ -132,6 +154,10 @@ Scratch inspection scripts go in the session scratchpad, not the repo.
 - Annotations survive library updates; they are lost on rebuild.
 - Never chain `sleep` for waits in Bash; poll a condition.
 
+## 8b. Final audit (run before saying done)
+
+`node figma-rfe/run.mjs "Component Kit" figma-rfe/lib.js figma-rfe/audit-crf-dweb.js` (raw hex/strokes, raw padding/gap/radius, unstyled or <14px text, instance sources, dashes, absolute layers) and `node figma-rfe/run.mjs "CRF" figma-rfe/lib.js figma-rfe/audit-crf-dweb-rfe.js` (1280x800 frames, centred modals, backdrop/overlay, scroll treatment, pill per slot, even 1430 slots, overlaps, header/strip span, section margins, notes). Copy and retarget both for a new feature. Expected exceptions only: NP inner-shadow fade + dropdown shadow (no elevation tokens), white-to-transparent fades (no alpha token), -6 avatar overlap (no negative spacing token).
+
 ## 9. Done checklist
 
 - [ ] Every RFE screen is one kit page instance at 360x800 (or full length on request).
@@ -147,3 +173,7 @@ Scratch inspection scripts go in the session scratchpad, not the repo.
 ## Worked example: Seen in photos pills (2026-10-21)
 
 RFE page `↳ Image search pills` (page `6687:3997`, section rebuilt each run, `6926:27096` on 2026-10-30) in the SRP file: SRP Default with tip (Buy), One feature selected, Two features selected, Few results (full length), No results, SRP Rent Default with tip, Filters: Features. Kit additions: Search bar `Search + AI: Feature pills` `6914:50920`; header variants `6915:50938`, `6916:51335`, `6916:51622`; page variants `6916:51912`, `6916:52850`, `6916:53713`, Rent `6923:29822`, few results `7255:39372` + no results `7255:36437` (`kit-isp-results.js`, empty state = Binoculars in 64 white rounded square (radius l), h5_semibold heading, Secondary M "Clear features"); Filters: Features `6916:54579`; Right column Features `6912:49510`; navs `6923:29437` (Buy resale), `6923:29562` (Rent SRP); Iconography Lightbulb set `11447:140` (wrapper `11447:141`, Regular 24 key `0942cac9cdbbc2f12b0fe8816783e453f4c7e55a`). Feature pills use Duotone icons: Natural light Sun (soft_butter/200, yellow/600), Modular kitchen CookingPot (red/200, red/500), Balcony BuildingApartment (pistachio_sand/200, /500), Good ventilation Wind (blue/100, blue/500), Sea view Waves (blue/200, blue/700), Spacious rooms ArrowsOut (pink/200, pink/600), Terrace SunHorizon (soft_butter/200, green/600), Garden view Tree (green/200, green/600), Features SquaresFour (purple/200, purple/700). Tooltip copy "Most searched features".
+
+## Worked example: CRF revamp, Desktop web (2026-11-02, v2)
+
+Kit (Component Kit, page CRF, section `CRF/Dweb revamp` `7293:22853`): `Modal` `7293:23739` (key `742db484…`, 11 Step variants), `Post CRF` `7293:25390` (key `b1a1e60d…`, 7 Type variants, all 480), `Seller` row `7293:22982`, `Property card` `7293:23027`, `WhatsApp` glyph `7296:42626`. v1 custom Input/OTP sets deleted locally (their library removal is unpublished, ships with the next full kit publish). `kit-crf-dweb.js` rebuilds variants inside the existing sets (keys stay stable), then `publish.mjs`, `accept-updates.mjs "CRF" --page <screen id>`, `build-crf-dweb.js` (25 screens incl. Snackbar "Number copied"), `notes-crf-dweb.js` (20 notes). RFE page `↳ CRF: Desktop` `9466:22969`.
