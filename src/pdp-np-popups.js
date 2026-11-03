@@ -26,6 +26,7 @@ function shell() {
     if (act === "close") return close();
     if (act === "contact") { close(); return setTimeout(openCrf, 260); }
     if (act === "tab" || act === "pill" || act === "chip") { if (act !== "chip") a.parentElement.querySelectorAll(".is-on").forEach((x) => x.classList.remove("is-on")); a.classList.toggle("is-on", act !== "chip" || !a.classList.contains("is-on")); return; }
+    if (act === "prev" || act === "next") return broGo(act === "next" ? 1 : -1);
     if (act === "ask") return render("asked");
     if (act === "add") { const t = a.querySelector("span").textContent; const chips = box.querySelector(".npp__cchips"); [...chips.children].forEach((c) => { if (c.textContent.trim() === t) c.remove(); }); chips.insertAdjacentHTML("afterbegin", `<button type="button" class="npp__cchip is-on">${t}${I.xCircleFill}</button>`); box.querySelector(".npp__drop").hidden = true; return; }
     if (act === "copy") { navigator.clipboard?.writeText(location.href).catch(() => {}); a.querySelector("span").textContent = "Link copied"; return; }
@@ -35,13 +36,26 @@ function shell() {
   root.addEventListener("click", (e) => { if (e.target.matches("[data-npp-search]")) box.querySelector(".npp__drop").hidden = false; });
   root.addEventListener("input", (e) => { if (e.target.matches("[data-npp-search]")) box.querySelector(".npp__drop").hidden = false; });
   root.addEventListener("input", (e) => { if (e.target.matches("textarea")) { const n = e.target.value.length; box.querySelector(".npp__count").textContent = `${n}/250`; box.querySelector("[data-npp=ask]").disabled = !n; } });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && root.classList.contains("is-visible")) close(); });
+  document.addEventListener("keydown", (e) => {
+    if (!root.classList.contains("is-visible")) return;
+    if (e.key === "Escape") close();
+    if (box.dataset.view === "brochure" && (e.key === "ArrowRight" || e.key === "ArrowLeft")) broGo(e.key === "ArrowRight" ? 1 : -1);
+  });
   document.body.appendChild(root);
 }
 
 const head = (title, back) => `<header class="npp__head">${back ? `<button type="button" class="npp__x" data-npp="close" aria-label="Back">${I.arrowLeft || I.caretRight}</button>` : ""}<h2>${title}</h2><button type="button" class="npp__x" data-npp="close" aria-label="Close">${I.x || "×"}</button></header>`;
 const foot = (label) => `<footer class="npp__foot"><button type="button" class="pnp-btn pnp-btn--primary pnp-btn--auto pnp-btn--l" data-npp="contact">${label}</button></footer>`;
 
+const BRO = ["pdp-np/brochure-1.jpg", "pdp-np/brochure-2.jpg", "pdp-gallery/1.png", "pdp-gallery/2.png", "pdp-gallery/3.png", "pdp-gallery/5.png"];
+let broAt = 0;
+function broGo(d) {
+  broAt = Math.max(0, Math.min(BRO.length - 1, broAt + d));
+  box.querySelector(".npb__track").style.transform = `translateX(calc(${-broAt} * (804px + 24px)))`;
+  box.querySelectorAll(".npb__track img").forEach((im, i) => im.classList.toggle("is-on", i === broAt));
+  box.querySelector(".npb__count").textContent = `${broAt + 1}/${BRO.length}`;
+  box.querySelector(".npb__bar i").style.width = `${((broAt + 1) / BRO.length) * 100}%`;
+}
 const AMEN = [["gazebo", "Gazebo"], ["sprinkler", "Fire sprinklers"], ["pingPong", "Table tennis"], ["medical", "Medical store"], ["drop", "Water softener plant"], ["medical", "Medical store"], ["gazebo", "Gazebo"], ["sprinkler", "Fire sprinklers"]];
 
 const V = {
@@ -101,16 +115,25 @@ const V = {
       </tbody></table></div></div>` };
   },
 
+  brochure: () => ({ full: true, dark: true, html: `<button type="button" class="npb__x" data-npp="close" aria-label="Close">${I.x}</button>
+    <div class="npb__top"><div><p class="npb__name">Emaar MGF The Palm Drive</p><p class="npb__price">₹1.4 Cr - ₹2.5 Cr</p></div>
+      <div class="npb__acts"><button type="button" class="npb__ic" data-npp="close" aria-label="Share">${I.share}</button><button type="button" class="npb__ic" aria-label="Save">${I.heart}</button><button type="button" class="pnp-btn pnp-btn--primary pnp-btn--auto" data-npp="contact">Contact seller</button></div></div>
+    <div class="npb__stage"><div class="npb__track">${BRO.map((p) => `<img src="${img(p)}" alt="">`).join("")}</div>
+      <button type="button" class="npb__arrow npb__arrow--l" data-npp="prev" aria-label="Previous">${I.caretRight}</button><button type="button" class="npb__arrow npb__arrow--r" data-npp="next" aria-label="Next">${I.caretRight}</button></div>
+    <div class="npb__foot"><span class="npb__bar"><i></i></span><span class="npb__count">1/${BRO.length}</span></div>` }),
+
   asked: () => ({ w: 600, h: 570, html: `${head("Ask a question")}<div class="npp__body npp__done"><span class="npp__tick">${I.check}</span><p>Your question has been submitted!</p></div>` }),
 };
 
 function render(name) {
   const v = V[name]();
   root.classList.toggle("npp--full", !!v.full);
+  root.classList.toggle("npp--dark", !!v.dark);
   box.style.width = v.full ? "" : v.w + "px";
   box.style.height = v.full ? "" : `min(${v.h}px, calc(100vh - 80px))`;
   box.innerHTML = v.html;
   box.dataset.view = name;
+  if (name === "brochure") { broAt = 0; broGo(0); }
 }
 
 export function openPopup(name) {
@@ -167,6 +190,8 @@ export function initPdpNpPopups() {
     if (hit("[data-action=pnp-emi]")) { e.stopImmediatePropagation(); return openPopup("payment"); }
     if (hit("#pnp-insights .pnp-head .pnp-link")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("insights"); }
     if (hit("#pnp-amenities .pnp-link")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("amenities"); }
+    if (hit("#pnp-brochure .pnp-btn--secondary, #pnp-brochure .pnp-page")) { e.stopImmediatePropagation(); return openPopup("brochure"); }
+    if (hit(".nph__login")) { e.stopImmediatePropagation(); return openCrf(); } // Figma "Login flow" = CRF phone + OTP
     if (hit("#pnp-compare .pnp-cmp-chip")) { e.stopImmediatePropagation(); return openPopup("compare"); }
     if (hit("#pnp-qna [data-action=pnp-contact]")) { e.stopImmediatePropagation(); return openPopup("ask"); }
     if (hit("#pdp-share-btn, [data-action=pnp-share]")) { e.preventDefault(); e.stopImmediatePropagation(); return openPopup("share"); }

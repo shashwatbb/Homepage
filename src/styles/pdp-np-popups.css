@@ -113,3 +113,27 @@ body .npp__ctop th { vertical-align: bottom; }
 body .npp__ctable td { padding: 16px 12px 12px; border-left: 1px solid var(--ds-border-subtle); text-align: center; vertical-align: top; font-size: 14px; line-height: 20px; color: var(--ds-text-secondary); }
 body .npp__ctop td { padding: 16px; }
 body .npp__ctop img { display: block; width: 100%; height: 72px; margin-bottom: 16px; border-radius: var(--ds-radius-s); object-fit: cover; }
+
+/* Brochure full screen (Figma 1280x800, black): 804 stage, side peeks dimmed, arrows 42 white r12, progress + count */
+body .npp--dark::before { background: #000; }
+body .npp--dark .npp__box { background: #000; color: var(--ds-text-inverse); display: grid; grid-template-rows: auto 1fr auto; padding: 40px 0 24px; box-sizing: border-box; }
+body .npb__x { position: absolute; top: 20px; right: 20px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; background: none; color: var(--ds-text-inverse); }
+body .npb__top { display: flex; align-items: center; justify-content: space-between; width: 804px; margin: 0 auto 16px; }
+body .npb__name { font-size: 16px; line-height: 22px; font-weight: 500; }
+body .npb__price { font-size: 16px; line-height: 22px; font-weight: 600; }
+body .npb__acts { display: flex; align-items: center; gap: 16px; }
+body .npb__ic { display: grid; place-items: center; width: 42px; height: 42px; padding: 0; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: var(--ds-surface-subtle); color: var(--ds-text-primary); box-sizing: border-box; }
+body .npb__ic svg { width: 18px; height: 18px; }
+body .npb__stage { position: relative; overflow: hidden; min-height: 0; }
+body .npb__track { display: flex; gap: 24px; height: 100%; padding-left: calc(50% - 402px); transition: transform 0.4s var(--mm-in); }
+body .npb__track img { flex: 0 0 804px; height: 100%; max-height: 580px; object-fit: cover; border-radius: var(--ds-radius-l); opacity: 0.4; transition: opacity 0.3s ease; }
+body .npb__track img.is-on { opacity: 1; }
+body .npb__arrow { position: absolute; top: 50%; display: grid; place-items: center; width: 42px; height: 42px; padding: 0; border: 0; border-radius: var(--ds-radius-m); background: var(--ds-surface-white); color: var(--ds-text-primary); transform: translateY(-50%); }
+body .npb__arrow svg { width: 18px; height: 18px; }
+body .npb__arrow--l { left: 24px; }
+body .npb__arrow--l svg { transform: rotate(180deg); }
+body .npb__arrow--r { right: 24px; }
+body .npb__foot { display: flex; align-items: center; gap: 16px; width: 804px; margin: 24px auto 0; font-size: 14px; }
+body .npb__bar { position: relative; flex: 1; height: 2px; border-radius: var(--ds-radius-full); background: rgba(255, 255, 255, 0.3); }
+body .npb__bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: inherit; background: var(--ds-text-inverse); transition: width 0.3s ease; }
+body .npb__bar i::after { content: ""; position: absolute; right: -6px; top: -5px; width: 12px; height: 12px; border-radius: var(--ds-radius-full); background: var(--ds-text-inverse); }
