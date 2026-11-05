@@ -16,7 +16,7 @@ const NOTES = [
   ["SRP: Default with tip", "Feature Pills", "Development", "Behind flag srp_image_feature_pills."],
   ["SRP: Default with tip", "Feature Guide", "Development", "Show once. Hide for good after close."],
   ["SRP: One feature selected", "Property cards / M-Web", "Development", "First 2 cards: cover photo = feature photo."],
-  ["SRP: Few results", "Other Homes Line", "Development", "Shown once feature matches run out. Rest of the feed: default results."],
+  ["SRP: Few results", "Feed break", "Development", "Shown once feature matches run out. Rest of the feed: default results."],
   ["SRP: No results", "Clear features Button", "Development", "Clears all feature pills and reloads default results."],
   ["Filters: Features", "Balcony", "Interaction", "Tap a selected pill again to unselect. No close icon here."],
 ];

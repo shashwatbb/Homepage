@@ -3,7 +3,8 @@
 // --page: any node on the RFE page (e.g. the RFE section id); switches the file to that page first.
 // Always makes the product file the visible tab first (after publishing, the kit tab is in front).
 // Opens Assets > library icon > Manage libraries > Updates (page-scoped list), checks every listed row is
-// one of the expected components (ours), then clicks "Update all" for this page. Never uses
+// one of the expected components (ours), then clicks "Update all" for this page. If others' updates are
+// also pending (e.g. Page kit), it clicks only our rows' own "Update" buttons instead. Never uses
 // "Show updates for all pages": other pages hold other people's published changes (e.g. PDP / d-web).
 import { execFileSync } from "child_process";
 import { join, dirname } from "path";
@@ -50,7 +51,21 @@ for (let i = 0; i < 6; i++) {
 console.log("updates on this page: " + (list.join(", ") || "none"));
 if (!list.length) { ui("escape"); process.exit(4); }
 const foreign = list.filter((n) => !expected.some((e) => n === e || n.startsWith(e)));
-if (expected.length && foreign.length) { ui("escape"); console.error("ABORT: unexpected updates: " + foreign.join(", ")); process.exit(2); }
+if (expected.length && foreign.length) {
+  // Others' updates are pending on this page too (e.g. Page kit): never "Update all". Click the per-row
+  // "Update" of our rows only (real mouse click at the button centre), leave the rest untouched.
+  const ours = list.filter((n) => !foreign.includes(n));
+  if (!ours.length) { ui("escape"); console.error("ABORT: only foreign updates: " + foreign.join(", ")); process.exit(2); }
+  console.log("leaving foreign updates: " + foreign.join(", "));
+  for (const name of ours) {
+    const at = JSON.parse(await ev(`JSON.stringify((() => { const b = [...document.querySelectorAll('button')].filter(b => b.offsetParent && b.innerText.trim() === 'Update').find(b => { let n = b; for (let k = 0; k < 6; k++) { n = n.parentElement; if ((n.innerText || '').split('\\n').length > 1) break; } return n.innerText.split('\\n')[0].trim() === ${JSON.stringify(name)}; }); if (!b) return null; const r = b.getBoundingClientRect(); return [Math.round(r.x + r.width / 2), Math.round(r.y + r.height / 2)]; })())`) || "null");
+    if (!at) { console.error("row button not found: " + name); continue; }
+    ui("click-at", at.join(","));
+    console.log("updated row: " + name);
+    await sleep(6000);
+  }
+  ui("escape"); ws.close(); process.exit(0);
+}
 console.log(ui("click", "Update all").trim().split("\n")[0]);
 await sleep(8000);
 ui("escape");

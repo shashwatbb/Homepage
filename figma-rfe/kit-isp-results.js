@@ -2,7 +2,7 @@
 // Run: node figma-rfe/run.mjs "Component Kit" figma-rfe/lib.js figma-rfe/isp-blocks.js figma-rfe/kit-isp-results.js
 // Rerunnable: an existing variant keeps its id and only its content is rebuilt.
 //   SRP (m-web page) + Property 2=Buy: Feature pills (no results)   2 features, nothing matches
-//   SRP (m-web page) + Property 2=Buy: Feature pills (few results)  2 matches, then other homes
+//   SRP (m-web page) + Property 2=Buy: Feature pills (few results)  2 matches, Feed break (Dashed line), other homes
 // New variants go right of the existing row (same grid as the other page variants).
 
 const LOCAL = { srpHeader: "2533:3148", srpPage: "5355:24263" };
@@ -74,22 +74,24 @@ const out = [];
   out.push("no results: " + p.id + " " + Math.round(p.width) + "x" + Math.round(p.height));
 }
 
-// 2. Few results: only 2 homes have Balcony, then the feed continues with other homes in the locality.
-{
-  const p = await shell("Property 2=Buy: Feature pills (few results)", "Buy: Feature pills (1 selected)");
+// 2. Few results: only 2 homes have Balcony, then a Feed break and the feed continues with other homes.
+// One variant per Feed break option under review (kit-isp-break.js).
+const feedBreak = (await figma.getNodeByIdAsync("2068:3909")).children.find((n) => n.type === "COMPONENT_SET" && n.name === "Feed break");
+// Review variants (one per option) collapse back into the original variant, which keeps its id and RFE instances.
+const FEW = "Property 2=Buy: Feature pills (few results)";
+for (const c of pageSet.children.filter((c) => c.name.startsWith(FEW + " "))) {
+  if (c.id === "7255:39372") c.name = FEW; else c.remove();
+}
+for (const [suffix, option] of [["", "Option=Dashed line"]]) {
+  const p = await shell(FEW + suffix, "Buy: Feature pills (1 selected)");
   await countLine(p, "2 homes", " with a balcony");
   await card(p, "SEO cards", "owner-balcony");
   await card(p, "Project card", "ultra-balcony");
-  const line = frame("Other Homes Line", "HORIZONTAL", p);
-  fillW(line);
-  await pad(line, "m", "m", "none", "m");
-  await stroke(line, "border/subtle", "t");
-  line.strokesIncludedInLayout = false;
-  const t = await text("Label", "Keep exploring other properties", "Mobile/Body/small_regular", "text/secondary", line);
-  fillW(t); t.maxLines = 1; t.textTruncation = "ENDING";
+  const br = variant(feedBreak, option).createInstance();
+  p.appendChild(br); fillW(br); br.name = "Feed break";
   await card(p, "SEO cards");
   await nav(p);
-  out.push("few results: " + p.id + " " + Math.round(p.width) + "x" + Math.round(p.height));
+  out.push("few results" + suffix + ": " + p.id + " " + Math.round(p.width) + "x" + Math.round(p.height));
 }
 fitSet(pageSet);
 
@@ -119,7 +121,7 @@ const vs = pageSet.children.map(box);
 vs.forEach((a, i) => vs.forEach((b, j) => { if (i < j && hit(a, b)) overlaps.push("variants " + pageSet.children[i].name + " x " + pageSet.children[j].name); }));
 out.push("set " + Math.round(pageSet.width) + "x" + Math.round(pageSet.height) + " section " + Math.round(sec.width) + "x" + Math.round(sec.height));
 out.push("overlaps: " + (overlaps.length ? overlaps.join("; ") : "none"));
-for (const id of out.filter((l) => /results/.test(l)).map((l) => l.split(" ")[2])) {
+for (const id of out.filter((l) => /results/.test(l)).map((l) => l.split(": ")[1].split(" ")[0])) {
   const a = await audit(await figma.getNodeByIdAsync(id));
   out.push(id + " audit: frames " + a.frames + " texts " + a.texts + " issues " + JSON.stringify(a.issues));
 }
