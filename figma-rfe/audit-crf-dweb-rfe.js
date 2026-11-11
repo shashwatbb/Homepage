@@ -1,17 +1,21 @@
 // Final audit of the CRF desktop RFE page layout: screen sizes, centring, pill alignment, even spacing, overlaps,
 // header/strip span, section margins, notes, stray layers.
 // run: node figma-rfe/run.mjs "CRF" figma-rfe/lib.js figma-rfe/audit-crf-dweb-rfe.js
-const page = figma.root.children.find((p) => p.name.trim() === "↳ CRF: Desktop"); await page.loadAsync();
-const s = page.children.find((n) => n.name === "RFE: Desktop web CRF revamp");
+// 2026-11-11: the desktop RFE lives on "↳ Global", section "CRF:", D-Web rows (from the "Desktop web: Buy" strip down)
+const page = figma.root.children.find((p) => p.name.trim() === "↳ Global"); await page.loadAsync();
+const s = page.children.find((n) => n.type === "SECTION" && n.name === "CRF:");
+const dwebTop = s.children.find((n) => n.name === "Page kit" && n.findOne((t) => t.type === "TEXT" && /^Desktop web: Buy/.test(t.characters))).y;
+const ref = s.children.find((n) => n.name === "Page kit" && n.findOne((t) => t.type === "TEXT" && /^M-Web$/.test(t.characters))); // page convention for platform strips (all strips share x/width)
 const issues = []; const r = (n) => Math.round(n);
-const kids = s.children;
-const screens = kids.filter((n) => n.type === "FRAME" || (n.type === "INSTANCE" && /^(Full length|Seller: )/.test(n.name)));
+const kids = s.children.filter((n) => n.y >= dwebTop - 1);
+const screens = kids.filter((n) => n.type === "FRAME" || (n.type === "INSTANCE" && /^(Full length|Seller: |Gallery: )/.test(n.name)));
 const pills = kids.filter((n) => n.name === "Page kit" && r(n.height) === 60);
 const wide = kids.filter((n) => n.name === "Page kit" && r(n.height) !== 60);
 // rows by y
 const rows = [...new Set(screens.map((n) => r(n.y)))].sort((a, b) => a - b).map((y) => screens.filter((n) => r(n.y) === y).sort((a, b) => a.x - b.x));
 for (const fr of screens.filter((n) => n.type === "FRAME")) {
   if (r(fr.width) !== 1280 || r(fr.height) !== 800) issues.push("frame size " + fr.name + " " + r(fr.width) + "x" + r(fr.height));
+  if (/^PDP section: /.test(fr.name)) continue; // 1280x800 crop of the NP PDP page (no modal by design)
   const m = fr.children.find((n) => n.type === "INSTANCE" && /CRF revamp \/ (Modal|Post CRF)$/.test(n.name));
   if (!m) { issues.push("no modal in " + fr.name); continue; }
   if (Math.abs(m.x + m.width / 2 - 640) > 1) issues.push("modal not centred x " + fr.name);
@@ -42,8 +46,8 @@ for (let i = 0; i < kids.length; i++) for (let j = i + 1; j < kids.length; j++) 
 // header + strips span first..last screen slot
 const left = Math.min(...screens.map((n) => n.x));
 const right = Math.max(...screens.map((n) => n.x + n.width));
-for (const w of wide) if (Math.abs(w.x - left) > 1 || Math.abs(w.x + w.width - right) > 1) issues.push("span " + w.findOne((n) => n.type === "TEXT").characters.slice(0, 30) + " x" + r(w.x) + " w" + r(w.width) + " (want " + r(left) + "-" + r(right) + ")");
-if (Math.abs(s.width - (right + 101)) > 1) issues.push("section width " + r(s.width) + " want " + r(right + 101));
+for (const w of wide) if (Math.abs(w.x - ref.x) > 1 || Math.abs(w.width - ref.width) > 1) issues.push("span " + w.findOne((n) => n.type === "TEXT").characters.slice(0, 30) + " x" + r(w.x) + " w" + r(w.width) + " (want " + r(left) + "-" + r(right) + ")");
+for (const n of kids) if (n.x < 0 || n.x + n.width > s.width) issues.push("outside section " + n.name);
 const bottom = Math.max(...kids.map((n) => n.y + n.height)); if (Math.abs(s.height - (bottom + 100)) > 1) issues.push("section height " + r(s.height) + " want " + r(bottom + 100));
-const notes = s.findAll((n) => "annotations" in n && n.annotations.length).reduce((a, n) => a + n.annotations.length, 0);
+const notes = kids.reduce((a, k) => a + ("annotations" in k ? k.annotations.length : 0) + (k.findAll ? k.findAll((n) => "annotations" in n && n.annotations.length).reduce((b, n) => b + n.annotations.length, 0) : 0), 0);
 return JSON.stringify({ screens: screens.length, rows: rows.map((rw) => rw.length), pills: pills.length, notes, issues }, null, 1);

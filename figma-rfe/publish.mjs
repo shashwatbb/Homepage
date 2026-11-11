@@ -21,6 +21,15 @@ const runPlugin = (code) => {
 };
 const ui = (...args) => { try { return execFileSync("node", [join(here, "figma-ui.mjs"), title, ...args], { encoding: "utf8" }); } catch (e) { return String(e.stdout || ""); } };
 
+// 0. HARD RULE: kit hygiene before any kit publish (sets hug variants, sections hug content, no overlaps,
+//    nothing sticking out). Fixes what it can; aborts the publish if anything is still wrong.
+if (/Component Kit/.test(title)) {
+  const res = execFileSync("node", [join(here, "run.mjs"), title, join(here, "lib.js"), join(here, "kit-hygiene.js")], { encoding: "utf8" }).trim().split("\n").pop();
+  const h = JSON.parse(res);
+  if (h.fixed.length) console.log("hygiene fixed: " + h.fixed.join(" | "));
+  if (!h.ok) { console.error("ABORT publish, kit hygiene: " + h.issues.join(" | ")); process.exit(1); }
+}
+
 // 1. select exactly these nodes
 const names = JSON.parse(runPlugin(`
 const nodes = await Promise.all(${JSON.stringify(ids)}.map(id => figma.getNodeByIdAsync(id)));
