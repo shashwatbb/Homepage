@@ -140,7 +140,7 @@ const VIEWS = {
         <div class="crfd-outcome__limit"><span class="crfd-alert">${I.info}</span><p>You've reached your enquiry limit. For concerns contact <a href="mailto:support@housing.com">support@housing.com</a></p></div>` : ""}
       </div>
       ${limit ? "" : `<section class="crfd-stack-12">
-        <h3 class="crfd-label">Sellers</h3>
+        <h3 class="crfd-label">Reach out to</h3>
         <div class="crfd-sellers">
           <div class="crfd-sellers__list">${SELLERS.slice(0, 2).map(sellerRow).join(`<hr class="crfd-rule">`)}
             <div class="crfd-more-rows ${st.expanded ? "is-open" : ""}"><div>${SELLERS.slice(2).map((r) => `<hr class="crfd-rule">${sellerRow(r)}`).join("")}</div></div></div>
