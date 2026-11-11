@@ -203,6 +203,14 @@
 .crfd-btn--secondary svg { width: 16px; height: 16px; }
 .crfd-btn--google { height: 48px; border: 1px solid var(--ds-border-default); background: var(--ds-surface-white); color: var(--ds-text-primary); font-size: 14px; }
 .crfd-btn--google:hover { border-color: var(--ds-border-selected); }
+/* WhatsApp me the details: Bricks Secondary L, official green glyph */
+.crfd-btn--wa { height: 48px; border: 1px solid var(--ds-border-brand); background: var(--ds-surface-white); color: var(--ds-text-brand); font-size: 16px; line-height: 24px; } /* Bricks Button Secondary L + WhatsApp glyph */
+.crfd-btn--wa:hover { background: var(--ds-surface-brand-subtle); }
+.crfd-btn--wa svg, .crfd-call__tile svg[viewBox="0 0 20 21"] { width: 20px; height: 20px; }
+/* Post CRF seller row WhatsApp (Bricks IconButton Secondary L), opens WhatsApp Web chat */
+.crfd-wa-btn { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; margin-left: auto; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-m); background: var(--ds-surface-white); }
+.crfd-wa-btn:hover { border-color: var(--ds-border-selected); }
+.crfd-wa-btn svg { width: 20px; height: 20px; }
 .crfd-legal { text-align: center; font-size: 14px; line-height: 20px; color: var(--ds-text-secondary); }
 .crfd-legal a { color: var(--ds-text-brand); text-decoration: none; }
 
@@ -261,6 +269,7 @@
 @keyframes crfd-digit-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .crfd-resend { align-self: flex-start; line-height: 14px; } /* Bricks Link purple S = 14 high */
 .crfd-call { display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; font-size: 14px; line-height: 20px; color: var(--ds-text-primary); text-align: left; }
+.crfd-call u { text-decoration: underline; text-underline-offset: 3px; }
 .crfd-call__tile { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--ds-radius-s); background: var(--ds-surface-default); }
 
 /* Connecting */
@@ -350,3 +359,17 @@
 .crfd-more-rows.is-open { grid-template-rows: 1fr; opacity: 1; }
 .crfd-more-rows > div { min-height: 0; overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .crfd-more-rows { transition: none; } }
+
+/* Post CRF: Smart deals for you + What to expect? (m-web sections, kit Deal card / What to expect, 2026-11-11) */
+.crfd-deal, .crfd-expect { display: flex; flex-direction: column; gap: 16px; padding: 16px; border: 1px solid var(--ds-border-subtle); border-radius: var(--ds-radius-l); background: var(--ds-surface-white); }
+.crfd-deal .crfd-rule, .crfd-expect .crfd-rule { margin: 0; }
+.crfd-deal__top { display: flex; gap: 12px; }
+.crfd-deal__top > div { min-width: 0; }
+.crfd-deal__photo { width: 96px; height: 96px; flex-shrink: 0; border-radius: var(--ds-radius-m); object-fit: cover; }
+.crfd-deal__seller { display: flex; align-items: center; gap: 12px; }
+.crfd-deal__seller > div { flex: 1; min-width: 0; }
+.crfd-deal__av { width: 36px; height: 36px; flex-shrink: 0; border-radius: var(--ds-radius-s); object-fit: cover; }
+.crfd-deal .crfd-wa-btn { margin-left: 0; }
+.crfd-deal__cta { width: auto; padding: 0 16px; }
+.crfd-expect__row { display: flex; gap: 8px; margin: 0; font-size: 14px; line-height: 20px; color: var(--ds-text-secondary); }
+.crfd-expect__row svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--ds-semantic-icon-success); }

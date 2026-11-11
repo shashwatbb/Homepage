@@ -17,6 +17,12 @@ const SELLERS = [
   { name: "Amit Verma", role: "Builder", phone: "+91 9711663206", initials: "AV" },
   { name: "Rahul Jain", role: "Agent", phone: "+91 9711663207", initials: "RJ" },
 ];
+// Post CRF Smart deals for you (m-web section, kit Deal card)
+const DEALS = [
+  { price: "₹1.62 - 1.94 Cr", bhk: "2, 3 BHK", loc: "Sector 92, Gurgaon", size: "1,240 sq.ft.", rate: "₹13.1K/sq.ft.", dev: "DLF Developers", photo: "buy1.png", av: "seller.png" },
+  { price: "₹2.10 - 2.48 Cr", bhk: "3 BHK", loc: "Sector 65, Gurgaon", size: "1,610 sq.ft.", rate: "₹13.4K/sq.ft.", dev: "M3M India", photo: "buy2.png", av: "seller2.png" },
+  { price: "₹98 L - 1.21 Cr", bhk: "2 BHK", loc: "Sohna Road, Gurgaon", size: "1,080 sq.ft.", rate: "₹9.1K/sq.ft.", dev: "Godrej Properties", photo: "property.png", av: "seller.png" },
+];
 const HOMES = [
   { price: "₹1.79 Cr", bhk: "2 BHK", type: "Apartment", loc: "Sector 91, Gurgaon", photo: "buy1.png" },
   { price: "₹1.79 Cr", bhk: "2 BHK", type: "Apartment", loc: "Sector 91, Gurgaon", photo: "buy2.png" },
@@ -55,7 +61,9 @@ const VIEWS = {
         ${open ? `<div class="crfd-dd" role="listbox">${COUNTRIES.map(([n, c]) => `<button type="button" role="option" class="crfd-dd__row ${c === st.cc && n === st.ccName ? "is-selected" : ""}" data-action="crfd-cc-pick" data-cc="${c}" data-name="${n}"><span>${n}</span><span class="crfd-muted">${c}</span></button>`).join("")}</div>` : ""}
         ${st.err ? `<p class="crfd-error">${st.err}</p>` : ""}
       </div>
-      <button type="button" class="crfd-btn crfd-btn--primary" data-action="crfd-continue">Continue</button></div>
+      <button type="button" class="crfd-btn crfd-btn--primary" data-action="crfd-continue">Continue</button>
+      <div class="crfd-or"><span>OR</span></div>
+      <button type="button" class="crfd-btn crfd-btn--wa" data-action="crfd-wa">${I.whatsapp}WhatsApp me the details</button></div>
       <p class="crfd-legal">By continuing, you agree to our <a href="#" data-action="crfd-noop">terms and conditions</a></p>
     </div>`;
   },
@@ -90,7 +98,8 @@ const VIEWS = {
     const resend = st.left > 0
       ? `<p class="crfd-muted">Resend OTP in 00:${String(st.left).padStart(2, "0")}</p>`
       : `<button type="button" class="crfd-link crfd-resend" data-action="crfd-resend">Resend OTP</button>`;
-    const callRow = `<button type="button" class="crfd-call" data-action="crfd-call"><span class="crfd-call__tile">${I.phone}</span><span>Send OTP on call</span></button>`;
+    const callRow = `<div class="crfd-stack-8"><button type="button" class="crfd-call" data-action="crfd-call-wa"><span class="crfd-call__tile">${I.whatsapp}</span><span>Send OTP on <u>WhatsApp</u></span></button>
+      <button type="button" class="crfd-call" data-action="crfd-call"><span class="crfd-call__tile">${I.phone}</span><span>Send OTP on <u>call</u></span></button></div>`;
     return `${head("Verify your phone", true)}<div class="crfd-body">
       <div class="crfd-stack-4">
         <h3 class="crfd-h3 crfd-h3--lg">Enter OTP to verify details</h3>
@@ -116,7 +125,7 @@ const VIEWS = {
   },
   post() {
     const limit = st.limit;
-    const sellerRow = (s) => `<div class="crfd-seller">${avatar(s)}<div><p class="crfd-meta"><span class="crfd-strong">${s.name}</span>${sep}<span>${s.role}</span></p><p class="crfd-sec">${s.phone}</p></div></div>`;
+    const sellerRow = (s) => `<div class="crfd-seller">${avatar(s)}<div><p class="crfd-meta"><span class="crfd-strong">${s.name}</span>${sep}<span>${s.role}</span></p><p class="crfd-sec">${s.phone}</p></div><a class="crfd-wa-btn" href="https://web.whatsapp.com/send?phone=${s.phone.replace(/\D/g, "")}" target="_blank" rel="noopener" aria-label="WhatsApp ${s.name}">${I.whatsapp}</a></div>`;
     return `${head("Sellers details", false)}<div class="crfd-body crfd-body--scroll crfd-body--post" data-crfd-scroll>
       <div class="crfd-outcome">
         <div class="crfd-outcome__ok">
@@ -153,6 +162,21 @@ const VIEWS = {
           </article>`).join("")}</div>
       </section>
       <div class="crfd-safety"><img src="${IMG("shield.png")}" alt="" width="20" height="20"><p>Never pay before a visit or signed agreement</p></div>
+      <section class="crfd-stack-16">
+        <div class="crfd-title-row"><h3 class="crfd-h3">Smart deals for you</h3><a href="#" class="crfd-link" data-action="crfd-noop">See all</a></div>
+        <div class="crfd-stack-12">${DEALS.map((d) => `
+          <article class="crfd-deal">
+            <div class="crfd-deal__top"><img class="crfd-deal__photo" src="${IMG(d.photo)}" alt="" width="96" height="96">
+              <div class="crfd-stack-4"><p class="crfd-h3">${d.price}</p><p class="crfd-meta crfd-meta--sec"><span>${d.bhk}</span>${sep}<span>Apartment</span></p><p class="crfd-sec">${d.loc}</p><p class="crfd-meta crfd-meta--sec"><span>${d.size}</span>${sep}<span>${d.rate}</span></p></div></div>
+            <hr class="crfd-rule">
+            <div class="crfd-deal__seller"><img class="crfd-deal__av" src="${IMG(d.av)}" alt="" width="36" height="36"><div><p class="crfd-strong">${d.dev}</p><p class="crfd-muted">Developer</p></div>
+              <a class="crfd-wa-btn" href="https://web.whatsapp.com/" target="_blank" rel="noopener" aria-label="WhatsApp ${d.dev}">${I.whatsapp}</a>
+              <button type="button" class="crfd-btn crfd-btn--secondary crfd-deal__cta" data-action="crfd-noop">Contact</button></div>
+          </article>`).join("")}</div>
+      </section>
+      <section class="crfd-expect"><h3 class="crfd-h3">What to expect?</h3><hr class="crfd-rule">
+        ${["A seller or agent may contact you on call or WhatsApp", "You can also reach out to the sellers using the details above"].map((t) => `<p class="crfd-expect__row">${I.checkCircle}<span>${t}</span></p>`).join(`<hr class="crfd-rule">`)}
+      </section>
     </div>
     <div class="crfd-fade" aria-hidden="true"></div>`;
   },
@@ -225,7 +249,7 @@ function onClick(e) {
   if (act === "crfd-edit-phone") { st.err = ""; return render("phone"); }
   if (act === "crfd-cc") { st.ccOpen = !st.ccOpen; return render("phone", { fade: false }); }
   if (act === "crfd-cc-pick") { st.cc = a.dataset.cc; st.ccName = a.dataset.name; st.ccOpen = false; return render("phone", { fade: false }); }
-  if (act === "crfd-continue") {
+  if (act === "crfd-continue" || act === "crfd-wa") {
     st.phone = body.querySelector("#crfd-phone").value.replace(/\D/g, "");
     if (st.phone.length !== 10) { st.err = "Enter a valid phone number"; return render("phone", { fade: false }); }
     st.err = ""; return render("details");
@@ -237,7 +261,7 @@ function onClick(e) {
     if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(st.email)) { st.err = "Enter a valid email ID"; return render("details", { fade: false }); }
     st.err = ""; st.otp = ""; st.otpState = ""; render("otp"); return startTimer();
   }
-  if (act === "crfd-resend" || act === "crfd-call") { st.otp = ""; st.otpState = ""; render("otp", { fade: false }); return startTimer(); }
+  if (act === "crfd-resend" || act === "crfd-call" || act === "crfd-call-wa") { st.otp = ""; st.otpState = ""; render("otp", { fade: false }); return startTimer(); }
   if (act === "crfd-verify") return verify();
   if (act === "crfd-more") {
     st.expanded = !st.expanded;
